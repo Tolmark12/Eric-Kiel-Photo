@@ -1,0 +1,25 @@
+	Jun 04 - loading.DataLoader : Added public vars "vars" and "meth". Vars is URLVariables. Meth is POST or GET
+	Jun 04 - utils.NumFormatter : New class for formatting numbers, dollars, commas, etc 
+	May 12 - utils.SendBytes : New class for sending POSTs with multiple types of data
+	Feb 25 - deleted echo package, moved echoing to utils
+	Feb 23 - utils.Inspector : New class for inspecting public vars
+	Fev 23 - utils.* : Created new package
+	Feb 16 - Pixasso : Added the border texture method
+	Feb 13 - loading.* : Added the cancelLoad(), removeItemFromLoadQueue(), etc methods.
+
+       /\
+///   2009
+		
+	(I haven't been entirely consistent with tracking changes :-)
+	Dec 29 - Major updates to the echo Machine to output to AIR app.
+	Dec 23 - Created text package for an easy bitmap text class
+	Dec xx - Scrolling package needs some work
+	Aug 27 - Made pixasso's EffectList able to parse an array of effects. also improved example
+	Aug 27 - Added upload/FileUploader.as
+	Aug 20 - Scroller : modularizing the scroll bar and the scroll track
+	Aug 18 - Pixasso : Added a roundCorners() method.
+	Aug 19 - added the loading.DataLoader class. Should probably delete the XMLloader. They are the same thing. 
+	Aug 15 - Consolidating the code library into one location.
+	
+       /\
+///   2008 

@@ -1,0 +1,20 @@
+{
+	"pages" : 
+	[                                                
+		{  	"id" : "/",     		"text" : null, 		 	"dataFeed" : "content/json/GetPortfolio.json", "isLogo" : true },
+		{  	"id" : "/portfolio", 	"text" : "Portfolio", 	"dataFeed" : "content/json/GetPortfolio.json", "pageType" : "portfolio",
+			"sub" : {
+				"kind" : "subNav",
+				"pages" : [
+					{"id" : "/portfolio/current", "text" : "Current", "pageType" : "portfolio",	"dataFeed" : "content/json/GetPortfolio.json"}, 
+					{"id" : "/portfolio/people",  "text" : "People",  "pageType" : "portfolio", "dataFeed" : "content/json/GetPortfolio.json"}, 
+					{"id" : "/portfolio/places",  "text" : "Places",  "pageType" : "portfolio", "dataFeed" : "content/json/GetPortfolio.json"}, 
+					{"id" : "/portfolio/motion",  "text" : "Motion",  "pageType" : "portfolio", "dataFeed" : "content/json/GetPortfolio.json"}
+				]
+			}
+		},
+		{  	"id" : "/stock",    	"text" : "Stock"   ,  "pageType" : "portfolio",  "dataFeed" : "content/json/GetPortfolio.json" },
+		{  	"id" : "/sign_in",  	"text" : "Sigh In" ,  "pageType" : "portfolio",  "dataFeed" : "content/json/GetPortfolio.json" },
+		{  	"id" : "/contact",  	"text" : "Contact" ,  "pageType" : "portfolio",  "dataFeed" : "content/json/GetPortfolio.json" }
+	]
+}
