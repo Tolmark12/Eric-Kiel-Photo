@@ -7,6 +7,7 @@ import delorum.loading.ImageLoader;
 import flash.events.*;
 import app.view.components.events.NavEvent;
 import caurina.transitions.Tweener;
+import app.view.components.events.ImageLoadEvent;
 
 public class PortfolioItem extends Sprite
 {
@@ -29,7 +30,8 @@ public class PortfolioItem extends Sprite
 	public function buildAndLoad ( $portfolioItemVo:PortfolioItemVo ):void
 	{
 		_portfolioItemVo = $portfolioItemVo;
-		_portfolioImages = new PortfolioImage();
+		_portfolioImages = new PortfolioImage(_portfolioItemVo.index);
+		_portfolioImages.addEventListener( ImageLoadEvent.HIGH_RES_IMAGE_LOADED, _onHighResImageLoaded, false,0,true );
 		this.addChild(_portfolioImages);
 		_portfolioImages.loadImages( _portfolioItemVo.lowResSrc, _portfolioItemVo.src );
 		deactivate();
@@ -40,13 +42,17 @@ public class PortfolioItem extends Sprite
 		_removeTweens()
 		Tweener.addTween( super, { y:0, scaleX:1, scaleY:1, time:_TIME, transition:"EaseInOutQuint"} );
 		this.isActive = true;
-		this.alpha = 0.3;
+		this.alpha = 1;
 	}
 	
-	public function deactivate (  ):void
+	public function deactivate ( $doTween:Boolean = true ):void
 	{
 		_removeTweens()
-		Tweener.addTween( this, { y:_LOWER_Y, scaleX:_portfolioImages.shrinkPercentage, scaleY:_portfolioImages.shrinkPercentage, time:_TIME, transition:"EaseInOutQuint"} );
+		if( $doTween )
+			Tweener.addTween( this, { y:_LOWER_Y, scaleX:_portfolioImages.shrinkPercentage, scaleY:_portfolioImages.shrinkPercentage, time:_TIME, transition:"EaseInOutQuint"} );
+		else
+			this.scaleX = this.scaleY = _portfolioImages.shrinkPercentage;
+			
 		this.isActive = false;
 		this.alpha = 0.8;
 	}
@@ -66,6 +72,11 @@ public class PortfolioItem extends Sprite
 		var navEvent:NavEvent = new NavEvent( NavEvent.PORTFOLIO_ITEM_CLICK, true );
 		navEvent.portfolioItemIndex = _portfolioItemVo.index;
 		dispatchEvent( navEvent );
+	}
+	
+	private function _onHighResImageLoaded ( e:ImageLoadEvent ):void
+	{
+		deactivate(true);
 	}
 	
 	// _____________________________ Getters + Setters

@@ -11,6 +11,7 @@ public class PortfolioImage extends Sprite
 	public var highResLoaded:Boolean	= false;
 	public var lowResLoaded:Boolean		= false;	
 	public var shrinkPercentage:Number 	= 1;
+	public var index:Number;
 	
 	private var _lowResHolder:Sprite 	= new Sprite();
 	private var _highResHolder:Sprite	= new Sprite();
@@ -19,8 +20,9 @@ public class PortfolioImage extends Sprite
 	private var _bigWidth:Number;
 	private var _smallWidth:Number;
 	
-	public function PortfolioImage():void
+	public function PortfolioImage($index:Number):void
 	{
+		index = $index;
 		_drawTempBox();
 	}
 	
@@ -60,8 +62,6 @@ public class PortfolioImage extends Sprite
 		shrinkPercentage 		= _lowResHolder.scaleY/10;
 		_lowResHolder.scaleX 	= shrinkPercentage * 10;
 		_bigWidth 				= _lowResHolder.width;
-		trace( "Big" + '  :  ' + _bigWidth );
-		trace( "Sml" + '  :  ' + _smallWidth );
 		_lowResHolder.scaleX 	= _lowResHolder.scaleY = shrinkPercentage * 10;
 		
 		this.addChild( _lowResHolder );
@@ -77,13 +77,13 @@ public class PortfolioImage extends Sprite
 	}
 	
 	private function _onHighResLoaded ( e:Event ):void {
+		_bigWidth 				= _highResHolder.width;
+		_smallWidth				= _bigWidth * shrinkPercentage;
 		this.removeChild(_lowResHolder);
 		this.addChild( _highResHolder );
 		var imgEv:ImageLoadEvent = new ImageLoadEvent( ImageLoadEvent.HIGH_RES_IMAGE_LOADED, true );
 		dispatchEvent( imgEv );
 	}
-	
-
 	
 	// _____________________________ Helpers
 	

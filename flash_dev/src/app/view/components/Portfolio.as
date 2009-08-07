@@ -10,7 +10,7 @@ import app.view.components.events.ImageLoadEvent;
 
 public class Portfolio extends Page
 {
-	private static const _ITEM_PADDING:Number = 0// = 40;
+	private static const _ITEM_PADDING:Number = 10;
 	private var _imageHolder:Sprite;
 	private var _currentItem:PortfolioItem;
 	private var _currentIndex:uint;
@@ -92,11 +92,15 @@ public class Portfolio extends Page
 	// _____________________________ Events
 	
 	private function _onLowResImageLoaded ( e:ImageLoadEvent ):void {
-		_centerStripOnImage(_currentIndex);
+		//var len:uint = _items.length;
+		//for ( var i:uint=e.; i<len; i++ ) 
+		//{
+		//	
+		//}
 	}
 	
 	private function _onHighResImageLoaded ( e:ImageLoadEvent ):void {
-		_centerStripOnImage(_currentIndex);
+		//_centerStripOnImage(_currentIndex);
 	}
 
 }
