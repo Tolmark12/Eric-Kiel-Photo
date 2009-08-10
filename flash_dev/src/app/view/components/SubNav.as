@@ -61,30 +61,28 @@ package app.view.components
 	
 		public function activate (  ):void
 		{			
+			isActive = true;
+			
 			Tweener.addTween(_arrow, {alpha:1, time:_TIMEIN, delay:_DELAY, transition:_TRANSITION});
-			Tweener.addTween(_background, {alpha:1, time:_TIMEIN, delay:_DELAY, transition:_TRANSITION});
+			Tweener.addTween(_background, {alpha:1, time:_TIMEIN, delay:_DELAY, transition:_TRANSITION, onComplete:function(){ _setVisible(isActive); }});
 			
 			for(var i:uint = 0; i < _subNavArray.length; i++)
 			{
 				Tweener.addTween(_subNavArray[i], {alpha:1, time:_TIMEIN, delay:_DELAY, transition:_TRANSITION});
 			}
-			
-			isActive = true;
-			_setVisible(isActive);
 		}
 	
 		public function deactivate (  ):void
 		{	
+			isActive = false;
+			
 			Tweener.addTween(_arrow, {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION});
-			Tweener.addTween(_background, {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION, onComplete:function(){ _background.alpha = 0; }});
+			Tweener.addTween(_background, {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION, onComplete:function(){ _setVisible(isActive); }});
 			
 			for(var i:int = _subNavArray.length; i >= 0; i--)
 			{
 				Tweener.addTween(_subNavArray[i], {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION});
 			}
-			
-			isActive = false;
-			_setVisible(isActive);
 		}
 	
 		public function activateNavItem ( $id:String ):void

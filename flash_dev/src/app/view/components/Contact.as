@@ -76,11 +76,11 @@ package app.view.components
 		}
 		
 		public function deactivate (  ):void
-		{	
-			isActive 		= false;
+		{			
+			isActive = false;
 			
 			Tweener.addTween(_arrow, {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION});
-			Tweener.addTween(_background, {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION, onComplete:function(){ _background.alpha = 0; }});
+			Tweener.addTween(_background, {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION});
 			
 			Tweener.addTween(_contentHolder, {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION, onComplete:function(){ _setVisible(isActive); }});
 		}
