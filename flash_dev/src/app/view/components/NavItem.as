@@ -59,7 +59,6 @@ public class NavItem extends Sprite
 			
 			this.addChild(hitAreaMc)
 			
-			
 			if( $navItemVo.subNav != null ) {
 				_subNav = new SubNav();
 				_subNav.build( $navItemVo.subNav );

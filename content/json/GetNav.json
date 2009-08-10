@@ -14,7 +14,7 @@
 			}
 		},
 		{  	"id" : "/stock",    	"text" : "Stock"   ,  "pageType" : "portfolio",  "dataFeed" : "content/json/GetPortfolio.json" },
-		{  	"id" : "/sign_in",  	"text" : "Sigh In" ,  "pageType" : "portfolio",  "dataFeed" : "content/json/GetPortfolio.json" },
+		{  	"id" : "/sign_in",  	"text" : "Sign In" ,  "pageType" : "portfolio",  "dataFeed" : "content/json/GetPortfolio.json" },
 		{  	"id" : "/contact",  	"text" : "Contact" ,  "pageType" : "portfolio",  "dataFeed" : "content/json/GetPortfolio.json",
 			"sub" : {
 				"kind" : "contact"
