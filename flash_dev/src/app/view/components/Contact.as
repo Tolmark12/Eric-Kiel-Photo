@@ -48,8 +48,6 @@ package app.view.components
 			_contentHolder.addChild(_txt2);
 			_contentHolder.addChild(_txt3);
 			
-			trace(_contentHolder.width);
-			
 			_arrow = new SubNavArrow();
 			_arrow.x = 0 + _arrow.width;
 			_arrow.y = 0 - _arrow.height;
