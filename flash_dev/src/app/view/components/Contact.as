@@ -1,12 +1,14 @@
 package app.view.components
 {
-	import flash.display.Sprite;
-	
-	public class Contact extends Sprite
+import flash.display.Sprite;
+import app.model.vo.ContactVo;
+
+public class Contact extends Sprite
+{
+	public function Contact( $contactVo:ContactVo ):void
 	{
-		public function Contact(  ):void
-		{
-			
-		}
+		this.graphics.beginFill(0xFFFF00);
+		this.graphics.drawRect(0,0,40,40)
 	}
+}
 }
