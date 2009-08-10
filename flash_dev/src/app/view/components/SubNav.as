@@ -56,14 +56,14 @@ package app.view.components
 	
 		public function activate (  ):void
 		{
-			_background.alpha = 1;
+			//_background.alpha = 1;
 			
-			Tweener.addTween(_arrow, {alpha:1, time:.5, delay:0, transition:"easeOutExpo"});
-			Tweener.addTween(_background, {alpha:1, time:.5, delay:0, transition:"easeOutExpo"});
+			Tweener.addTween(_arrow, {alpha:1, time:.25, delay:0, transition:"easeOutExpo"});
+			Tweener.addTween(_background, {alpha:1, time:.25, delay:0, transition:"easeOutExpo"});
 			
 			for(var i:uint = 0; i < _subNavArray.length; i++)
 			{
-				Tweener.addTween(_subNavArray[i], {alpha:1, time:.5, delay:.15, transition:"easeOutExpo"});
+				Tweener.addTween(_subNavArray[i], {alpha:1, time:.25, delay:.15, transition:"easeOutExpo"});
 			}
 			
 			isActive = true;
