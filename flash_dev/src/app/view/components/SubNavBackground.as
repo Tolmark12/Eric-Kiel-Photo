@@ -8,6 +8,7 @@ package app.view.components
 		{
 			this.graphics.beginFill(0x000000, 0.5);
 			this.graphics.drawRect(0, 0, $width, $height);
+			this.graphics.endFill();
 		}
 	}
 }
