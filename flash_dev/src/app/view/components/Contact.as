@@ -66,23 +66,34 @@ package app.view.components
 		}
 		
 		public function activate(  ):void
-		{
+		{			
+			isActive = true;
+			
 			Tweener.addTween(_arrow, {alpha:1, time:_TIMEIN, delay:_DELAY, transition:_TRANSITION});
 			Tweener.addTween(_background, {alpha:1, time:_TIMEIN, delay:_DELAY, transition:_TRANSITION});
 			
-			Tweener.addTween(_contentHolder, {alpha:1, time:_TIMEIN, delay:_DELAY, transition:_TRANSITION});
-			
-			isActive = true;
+			Tweener.addTween(_contentHolder, {alpha:1, time:_TIMEIN, delay:_DELAY, transition:_TRANSITION, onComplete:function(){ _setVisible(isActive); }});			
 		}
 		
 		public function deactivate (  ):void
 		{	
+			isActive 		= false;
+			
 			Tweener.addTween(_arrow, {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION});
 			Tweener.addTween(_background, {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION, onComplete:function(){ _background.alpha = 0; }});
 			
-			Tweener.addTween(_contentHolder, {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION});
-			
-			isActive = false;
+			Tweener.addTween(_contentHolder, {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION, onComplete:function(){ _setVisible(isActive); }});
+		}
+		
+		private function _setVisible( $bool:Boolean ):void
+		{
+			if( $bool )
+			{
+				this.visible = true;
+				
+			}else{
+				this.visible = false;
+			}	
 		}
 	}
 }

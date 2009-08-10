@@ -70,6 +70,7 @@ package app.view.components
 			}
 			
 			isActive = true;
+			_setVisible(isActive);
 		}
 	
 		public function deactivate (  ):void
@@ -83,11 +84,23 @@ package app.view.components
 			}
 			
 			isActive = false;
+			_setVisible(isActive);
 		}
 	
 		public function activateNavItem ( $id:String ):void
 		{
 		
+		}
+		
+		private function _setVisible( $bool:Boolean ):void
+		{
+			if( $bool )
+			{
+				this.visible = true;
+				
+			}else{
+				this.visible = false;
+			}	
 		}
 	}
 }
