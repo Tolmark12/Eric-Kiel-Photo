@@ -49,19 +49,20 @@ package app.view.components
 			_contentHolder.addChild(_txt3);
 			
 			_arrow = new SubNavArrow();
-			_arrow.x = 0 + _arrow.width;
-			_arrow.y = 0 - _arrow.height;
-			_arrow.alpha = 0;
+			_arrow.x 		= 0 + _arrow.width;
+			_arrow.y 		= 0 - _arrow.height;
+			_arrow.alpha 	= 0;
 			this.addChild(_arrow);
 			
 			_background = new SubNavBackground( (_contentHolder.width + _PADDING), (_contentHolder.height + _PADDING));
-			_background.x = -150;
-			_background.y = 0;
-			_background.alpha = 0;
+			_background.x 		= -150;
+			_background.y 		= 0;
+			_background.alpha 	= 0;
 			this.addChild(_background);
 			
-			_contentHolder.x = (_background.width - _contentHolder.width)/2 + _background.x;
-			_contentHolder.y = (_background.height - _contentHolder.height)/2;
+			_contentHolder.x 		= (_background.width - _contentHolder.width)/2 + _background.x;
+			_contentHolder.y 		= (_background.height - _contentHolder.height)/2;
+			_contentHolder.alpha 	= 0;
 			this.addChild(_contentHolder);
 		}
 		
