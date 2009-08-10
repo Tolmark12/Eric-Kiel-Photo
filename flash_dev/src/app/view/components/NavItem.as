@@ -48,7 +48,7 @@ public class NavItem extends Sprite
 			_txt = new NavText_swc();
 			this.addChild( _txt );
 			_txt.titleTxt.autoSize = "left";
-			_txt.titleTxt.text = $navItemVo.text.toLowerCase();
+			_txt.titleTxt.text = $navItemVo.text;
 			_txt.y = 24;
 			
 			// Create hit area and add event listeners to that
