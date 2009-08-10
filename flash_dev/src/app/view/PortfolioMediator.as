@@ -18,6 +18,7 @@ public class PortfolioMediator extends Mediator implements IMediator
 	public function PortfolioMediator( $stage:Sprite ):void
 	{
 		super( NAME );
+		_portfolio.init();
 		_portfolio.addEventListener( NavEvent.PORTFOLIO_ITEM_CLICK, _onPortfolioItemClick, false,0,true );
 		$stage.addChild( _portfolio );
    	}
@@ -26,7 +27,8 @@ public class PortfolioMediator extends Mediator implements IMediator
 	override public function listNotificationInterests():Array
 	{
 		return [ AppFacade.PORTFOLIO_DATA_PARSED, 
-		 		 AppFacade.ACTIVATE_PORTFOLIO_ITEM ];
+		 		 AppFacade.ACTIVATE_PORTFOLIO_ITEM,
+		 		 AppFacade.STAGE_RESIZE];
 	}
 	
 	// PureMVC: Handle notifications
@@ -39,6 +41,9 @@ public class PortfolioMediator extends Mediator implements IMediator
 			break;
 			case AppFacade.ACTIVATE_PORTFOLIO_ITEM :
 				_portfolio.activateItem( note.getBody() as uint );
+			break;
+			case AppFacade.STAGE_RESIZE :
+				_portfolio.onStageResize( note.getBody() as StageResizeVo )
 			break;
 		}
 	}

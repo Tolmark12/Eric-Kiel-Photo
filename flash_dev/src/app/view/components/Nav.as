@@ -24,10 +24,14 @@ public class Nav extends Sprite
 		for ( var i:uint=0; i<len; i++ ) 
 		{
 			var navItemVo:NavItemVo = $navVo.pages[i];
-			var navItem:NavItem 	= new NavItem( navItemVo );
-			navItem.x = xPos;
-			xPos += navItem.width + 12;
-			this.addChild( navItem );
+			
+			// Make sure this isn't a sub nav item
+			if( navItemVo.parentNavItemId == null  ) {
+				var navItem:NavItem 	= new NavItem( navItemVo );
+				navItem.x = xPos;
+				xPos += navItem.width + 12;
+				this.addChild( navItem );
+			}
 		}
 		this.y = 40
 		this.x = StageResizeVo.CENTER - this.width/2;

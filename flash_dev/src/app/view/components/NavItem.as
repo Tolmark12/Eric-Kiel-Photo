@@ -56,7 +56,8 @@ public class NavItem extends Sprite
 			var hitPadding:Number  = 5;
 			this.graphics.drawRect( -hitPadding, 19,this.width + hitPadding*3, this.height + hitPadding );
 			if( $navItemVo.subNav != null ) {
-				_subNav = new SubNav($navItemVo.subNav);
+				_subNav = new SubNav();
+				_subNav.build( $navItemVo.subNav );
 			}
 		}else{
 			var logo:Logo_swc = new Logo_swc();
@@ -78,6 +79,10 @@ public class NavItem extends Sprite
 	
 	private function _onClick ( e:Event ):void {
 		if( _subNav != null ) {
+			if( _subNav.isActive )
+				_subNav.deactivate();
+			else
+				_subNav.activate();
 			
 		}else {
 			var navBtnClick:NavEvent = new NavEvent( NavEvent.NAV_BTN_CLICK, true );

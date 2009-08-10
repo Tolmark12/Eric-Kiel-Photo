@@ -20,10 +20,9 @@ public class NavItemVo
 		pageType	= $json.pageType;
 		
 		if( $json.sub != null ) {
-			if( $json.sub.kind == "subnav" )
-				subNav = new SubNavVo( $json.subNav, id )
+			if( $json.sub.kind == "subNav" )
+				subNav = new SubNavVo( $json.sub, id );
 		}
-		
 	}
 }
 

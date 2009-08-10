@@ -103,7 +103,7 @@ public class Scroller extends Sprite
 	*	@param		Size of the arrow buttons
 	*	@param		Button Color
 	*/
-	public function createDefaultScroller ( $barFill:uint=0xFFFFFF, $trackFill:uint=0xDDDDDD, $trackStroke:uint=0xBBBBBB, $padding:Number=-1, $buttonPadding:Number=10, $buttonSize:Number=7, $buttonColor:uint=0xFFFFFF ):void
+	public function createDefaultScroller ( $barFill:uint=0xFFFFFF, $trackFill:uint=0xDDDDDD, $trackStroke:uint=0xFFFFFF, $padding:Number=-1, $buttonPadding:Number=10, $buttonSize:Number=7, $buttonColor:uint=0xFFFFFF ):void
 	{
 		_barHeight	=  barHeight = _barHeight - $padding;
 		$padding	= ( $padding   != -1   )? $padding	 : 4;
