@@ -54,28 +54,26 @@ public class NavItem extends Sprite
 			
 			// Create hit area and add event listeners to that
 			var hitPadding:Number  	= 5;
-			_hitArea.graphics.beginFill(0x99FF00, 0.4);
+			_hitArea.graphics.beginFill(0x99FF00, 0);
 			_hitArea.graphics.drawRect( 0,0,this.width + hitPadding*3, this.height + hitPadding );
 			_hitArea.x = -hitPadding;
 			_hitArea.y = 19;
 			_hitArea.buttonMode = true;
-			
-
-
 			this.addChild(_hitArea)
 			
+			// Add subnav if there is one, with special roll
+			// over and rollout handlers:
 			if( $navItemVo.subNav != null ) {
 				_subNav = new SubNav();
 				_subNav.build( $navItemVo.subNav );
-				_subNav.y = this.y + this.height + 34;
+				_subNav.y = this.y + this.height + 20;
 				this.addChild( _subNav );				
 				_hitArea.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOverWithSub, false,0,true );
 			}else{
 				_hitArea.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOver, false,0,true );
 				_hitArea.addEventListener( MouseEvent.MOUSE_OUT, _onMouseOut, false,0,true );
+				_hitArea.addEventListener( MouseEvent.CLICK, _onClick, false,0,true );
 			}
-
-			_hitArea.addEventListener( MouseEvent.CLICK, _onClick, false,0,true );
 			
 		}else{
 			var logo:Logo_swc = new Logo_swc();
@@ -120,15 +118,15 @@ public class NavItem extends Sprite
 	
 	private function _onMouseOverWithSub ( e:Event ):void {
 		if( !_subNav.isActive ){
-			
 			// Resize hit area
 			_hitAreaWidth 		= _hitArea.width;
 			_hitAreaHeight		= _hitArea.height;
-			_hitArea.height 	= _subNav.y + _subNav.height + 10;
-			_hitArea.width 		= _subNav.x + _subNav.width + 10;
+			_hitArea.height 	= _subNav.y + _subNav.height +3;
+			_hitArea.width 		= _subNav.x + _subNav.width;
 			
 			_subNav.activate();
-			this.stage.addEventListener( MouseEvent.MOUSE_MOVE, _onMouseMove, false,0,true );
+			this.stage.addEventListener( Event.ENTER_FRAME, _onMouseMove, false,0,true );
+			_onMouseOver(null);
 		}
 	}
 	
@@ -138,7 +136,8 @@ public class NavItem extends Sprite
 		
 		_hitArea.height 	= _hitAreaHeight;
 		_hitArea.width 		= _hitAreaWidth;
-		this.stage.removeEventListener( MouseEvent.MOUSE_MOVE, _onMouseMove );
+		this.stage.removeEventListener( Event.ENTER_FRAME, _onMouseMove );
+		_onMouseOut(null);
 	}
 	
 
