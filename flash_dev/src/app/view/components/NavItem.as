@@ -12,12 +12,11 @@ public class NavItem extends Sprite
 	private var _txt:NavText_swc;
 	private var _isSelected:Boolean = false;
 	private var _id:String;
-	private var _subNav:SubNav;
-	private var _hitArea:Sprite = new Sprite();
+	protected var _hitArea:Sprite = new Sprite();
 	
 	// Hit area size snapshot
-	private var _hitAreaWidth:Number;
-	private var _hitAreaHeight:Number;
+	protected var _hitAreaWidth:Number;
+	protected var _hitAreaHeight:Number;
 	
 	public function NavItem( $navItemVo:NavItemVo ):void
 	{
@@ -41,7 +40,7 @@ public class NavItem extends Sprite
 	
 	// _____________________________ Helpers
 	
-	private function _build ( $navItemVo:NavItemVo ):void
+	protected function _build ( $navItemVo:NavItemVo ):void
 	{
 		if( !$navItemVo.isLogo ) {
 			
@@ -61,29 +60,10 @@ public class NavItem extends Sprite
 			_hitArea.buttonMode = true;
 			this.addChild(_hitArea)
 			
-			// Add subnav if there is one, with special roll
-			// over and rollout handlers:
-			if( $navItemVo.subNav != null ) {
-				_subNav = new SubNav();
-				_subNav.build( $navItemVo.subNav );
-				_subNav.y = this.y + this.height + 20;
-				this.addChild( _subNav );				
-				_hitArea.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOverWithSub, false,0,true );
-			} 
-			
-			// Contact Sub nav
-			else if( $navItemVo.sub != null ) {
-				//_sub
-				trace( $navItemVo.sub );
-				var contact:Contact = new Contact($navItemVo.sub)
-				contact.y = this.y + this.height + 20;
-				contact.activate();
-				this.addChild(contact);
-			} else {
-				_hitArea.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOver, false,0,true );
-				_hitArea.addEventListener( MouseEvent.MOUSE_OUT, _onMouseOut, false,0,true );
-				_hitArea.addEventListener( MouseEvent.CLICK, _onClick, false,0,true );
-			}
+
+			_hitArea.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOver, false,0,true );
+			_hitArea.addEventListener( MouseEvent.MOUSE_OUT, _onMouseOut, false,0,true );
+			_hitArea.addEventListener( MouseEvent.CLICK, _onClick, false,0,true );
 			
 		}else{
 			var logo:Logo_swc = new Logo_swc();
@@ -93,63 +73,25 @@ public class NavItem extends Sprite
 	
 	// _____________________________ Events
 	
-	private function _onMouseOver ( e:Event ):void {
+	protected function _onMouseOver ( e:Event ):void {
 		// Change text color
 		if( !_isSelected && _txt != null)
 			Tweener.addTween(_txt, {_color: 0xFFFFFF, time:0});
 	}
 	
-	private function _onMouseOut ( e:Event ):void {
+	protected function _onMouseOut ( e:Event ):void {
 		// Change text Color
 		if( !_isSelected && _txt != null )
 			Tweener.addTween(_txt, {_color: 0x000000, time:0});
 	}
 	
-	private function _onClick ( e:Event ):void {
-		if( _subNav != null ) {
-			if( _subNav.isActive )
-				_subNav.deactivate();
-			else
-				_subNav.activate();
-			
-		}else {
+	protected function _onClick ( e:Event ):void {
 			var navBtnClick:NavEvent = new NavEvent( NavEvent.NAV_BTN_CLICK, true );
 			navBtnClick.id = _id;
 			dispatchEvent( navBtnClick );
-		}
 	}
 	
-	// _____________________________ Events with sub menu
-	
-	private function _onMouseMove ( e:Event ):void {
-		if( _hitArea.mouseX < 0 || _hitArea.mouseY < 0 || _hitArea.mouseX > _hitArea.width ||  _hitArea.mouseY > _hitArea.height/_hitArea.scaleY )
-			_onMouseOutWithSub(null);
-	}
-	
-	private function _onMouseOverWithSub ( e:Event ):void {
-		if( !_subNav.isActive ){
-			// Resize hit area
-			_hitAreaWidth 		= _hitArea.width;
-			_hitAreaHeight		= _hitArea.height;
-			_hitArea.height 	= _subNav.y + _subNav.height - 31;
-			_hitArea.width 		= _subNav.x + _subNav.width + 4;
-			
-			_subNav.activate();
-			this.stage.addEventListener( Event.ENTER_FRAME, _onMouseMove, false,0,true );
-			_onMouseOver(null);
-		}
-	}
-	
-	private function _onMouseOutWithSub ( e:Event ):void {
-		if( _subNav.isActive )
-			_subNav.deactivate();
-		
-		_hitArea.height 	= _hitAreaHeight;
-		_hitArea.width 		= _hitAreaWidth;
-		this.stage.removeEventListener( Event.ENTER_FRAME, _onMouseMove );
-		_onMouseOut(null);
-	}
-	
+
 
 	
 	// _____________________________ Getters / Setters
