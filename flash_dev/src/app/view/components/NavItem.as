@@ -69,7 +69,17 @@ public class NavItem extends Sprite
 				_subNav.y = this.y + this.height + 20;
 				this.addChild( _subNav );				
 				_hitArea.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOverWithSub, false,0,true );
-			}else{
+			} 
+			
+			// Contact Sub nav
+			else if( $navItemVo.sub != null ) {
+				//_sub
+				trace( $navItemVo.sub );
+				var contact:Contact = new Contact($navItemVo.sub)
+				contact.y = this.y + this.height + 20;
+				contact.activate();
+				this.addChild(contact);
+			} else {
 				_hitArea.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOver, false,0,true );
 				_hitArea.addEventListener( MouseEvent.MOUSE_OUT, _onMouseOut, false,0,true );
 				_hitArea.addEventListener( MouseEvent.CLICK, _onClick, false,0,true );
