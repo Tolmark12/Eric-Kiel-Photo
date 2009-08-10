@@ -11,9 +11,13 @@ package app.view.components
 	{
 		private var _txt:NavText_swc;
 		private var _isSelected:Boolean = false;
+		
+		private var _id:String;
 	
-		public function SubNavItem( $text:String ):void
+		public function SubNavItem( $text:String, $id:String ):void
 		{
+			_id = $id;
+			
 			// Text
 			_txt = new NavText_swc();
 			this.addChild( _txt );
@@ -50,12 +54,10 @@ package app.view.components
 		}
 
 		private function _onClick ( e:Event ):void
-		{
-			trace("clicked");
-			
-			//var navBtnClick:NavEvent = new NavEvent( NavEvent.NAV_BTN_CLICK, true );
-			//navBtnClick.id = _id;
-			//dispatchEvent( navBtnClick );
+		{			
+			var navBtnClick:NavEvent = new NavEvent( NavEvent.NAV_BTN_CLICK, true );
+			navBtnClick.id = _id;
+			dispatchEvent( navBtnClick );
 		}
 	}
 }

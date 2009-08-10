@@ -27,7 +27,7 @@ package app.view.components
 			// build submenu of subMenuItems			
 			for(var i:uint = 0; i < $subNavVo.pages.length; i++)
 			{
-				var subNavItem:SubNavItem = new SubNavItem( $subNavVo.pages[i].text );
+				var subNavItem:SubNavItem = new SubNavItem( $subNavVo.pages[i].text, $subNavVo.pages[i].id );
 				subNavItem.y = (subNavItem.height*i);
 				subNavItem.alpha = 0;
 				_subNavHolder.addChild( subNavItem );
