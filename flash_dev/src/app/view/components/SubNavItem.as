@@ -37,6 +37,8 @@ package app.view.components
 			hit.addEventListener( MouseEvent.CLICK, _onClick, false, 0, true );
 			
 			this.addChild(hit)
+			
+			_onMouseOut( null );
 		}
 		
 		// _____________________________ Events
@@ -44,13 +46,13 @@ package app.view.components
 		private function _onMouseOver ( e:Event ):void
 		{
 			if( !_isSelected && _txt != null)
-				Tweener.addTween(_txt, {_color: 0xFFFFFF, time:0});
+				Tweener.addTween(_txt, {_color: 0x99E6F9, time:0});
 		}
 
 		private function _onMouseOut ( e:Event ):void
 		{
 			if( !_isSelected && _txt != null )
-				Tweener.addTween(_txt, {_color: 0x000000, time:0});
+				Tweener.addTween(_txt, {_color: 0xFFFFFF, time:0});
 		}
 
 		private function _onClick ( e:Event ):void
