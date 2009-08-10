@@ -16,7 +16,7 @@ public class NavItemSubNav extends NavItem
 		super($navItemVo);
 	}
 	
-	// _____________________________ API
+	// _____________________________ Build
 	
 	override protected function _build ( $navItemVo:NavItemVo ):void
 	{

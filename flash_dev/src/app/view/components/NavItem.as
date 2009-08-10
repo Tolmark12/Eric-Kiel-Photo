@@ -9,6 +9,9 @@ import caurina.transitions.Tweener;
 
 public class NavItem extends Sprite
 {
+	public var hoverColor:uint	= 0xFFFFFF;
+	public var color:uint		= 0x000000;	
+	
 	private var _txt:NavText_swc;
 	private var _isSelected:Boolean = false;
 	private var _id:String;
@@ -76,13 +79,13 @@ public class NavItem extends Sprite
 	protected function _onMouseOver ( e:Event ):void {
 		// Change text color
 		if( !_isSelected && _txt != null)
-			Tweener.addTween(_txt, {_color: 0xFFFFFF, time:0});
+			Tweener.addTween(_txt, {_color: hoverColor, time:0});
 	}
 	
 	protected function _onMouseOut ( e:Event ):void {
 		// Change text Color
 		if( !_isSelected && _txt != null )
-			Tweener.addTween(_txt, {_color: 0x000000, time:0});
+			Tweener.addTween(_txt, {_color: color, time:0});
 	}
 	
 	protected function _onClick ( e:Event ):void {
