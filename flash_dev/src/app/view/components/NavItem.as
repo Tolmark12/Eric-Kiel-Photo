@@ -77,6 +77,7 @@ public class NavItem extends Sprite
 				trace( $navItemVo.sub );
 				var contact:Contact = new Contact($navItemVo.sub)
 				contact.y = this.y + this.height + 20;
+				contact.activate();
 				this.addChild(contact);
 			} else {
 				_hitArea.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOver, false,0,true );
