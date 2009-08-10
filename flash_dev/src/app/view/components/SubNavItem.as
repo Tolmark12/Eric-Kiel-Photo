@@ -23,7 +23,7 @@ package app.view.components
 			this.addChild( _txt );
 			
 			_txt.titleTxt.autoSize = "left";
-			_txt.titleTxt.text = $text.toLowerCase();
+			_txt.titleTxt.text = $text;
 			
 			// Create hit area and add event listeners to that
 			var hit:Sprite 			= new Sprite();
