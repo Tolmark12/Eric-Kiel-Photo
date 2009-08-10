@@ -63,7 +63,7 @@ package app.view.components
 		{	
 			Tweener.addTween(_background, {scaleY:0, time:.25, delay:.25, transition:"easeOutExpo", onComplete:function(){ _background.alpha = 0; }});
 			
-			for(var i:uint = _subNavArray.length; i > 0; i--)
+			for(var i:int = _subNavArray.length; i >= 0; i--)
 			{
 				Tweener.addTween(_subNavArray[i], {alpha:0, time:.25*i, delay:0, transition:"easeOutExpo"});
 			}
