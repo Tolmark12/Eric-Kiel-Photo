@@ -50,6 +50,9 @@ public class Portfolio extends Page
 		_scroller.visible = true;
 //		this.stage.addEventListener( MouseEvent.MOUSE_MOVE, _onMouseMove, false,0,true );
 		
+		this.alpha = 0;
+		Tweener.addTween( this, { alpha:1, time:1, transition:"EaseInOutQuint"} );
+		
 		// Clean up an existing portfolio
 		if( _imageHolder != null )
 			_removeExistingPortfolio();
@@ -132,7 +135,6 @@ public class Portfolio extends Page
 		var xPos:Number = _ITEM_PADDING;
 		var item:PortfolioItem;
 		
-		
 		for ( var i:uint=$startingIndex; i<len; i++ ) 
 		{
 			item = _items[i] as PortfolioItem
@@ -165,7 +167,10 @@ public class Portfolio extends Page
 	private function _onScroll ( e:ScrollEvent ):void
 	{
 		var sidePadding = (StageResizeVo.lastResize.width/2 - _currentItem.width/2);
-		_imageHolder.x = StageResizeVo.lastResize.left + sidePadding + (( - _totalWidth()-sidePadding*2 + StageResizeVo.lastResize.width )   * e.percent);		
+		
+		var xTarget:Number = StageResizeVo.lastResize.left + sidePadding + (( - _totalWidth()-sidePadding*2 + StageResizeVo.lastResize.width )   * e.percent);
+		Tweener.addTween( _imageHolder, { x:xTarget, time:0.5} );
+		//_imageHolder.x = xTarget;
 	}
 
 }
