@@ -7,9 +7,7 @@ public class SubNavVo extends NavVo
 	
 	public function SubNavVo ( $json:Object, $parentNavId:String ):void
 	{
-		trace( "a" );
 		super( $json );
-		trace( "" );
 		kind = $json.kind;
 		
 		// Add the parent nav item id to all the
