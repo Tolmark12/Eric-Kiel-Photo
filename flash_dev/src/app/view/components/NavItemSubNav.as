@@ -21,20 +21,22 @@ public class NavItemSubNav extends NavItem
 	override protected function _build ( $navItemVo:NavItemVo ):void
 	{
 		super._build($navItemVo);
-
-		if( !$navItemVo.isLogo ) {
-			
-			_subNav = new SubNav();
-			_subNav.build( $navItemVo.subNav );
-			_subNav.y = this.y + this.height + 20;
-			this.addChild( _subNav );				
-			_hitArea.removeEventListener( MouseEvent.MOUSE_OUT, _onMouseOut );
-		}
+		
+		// Add the sub nav
+		_subNav 	= new SubNav();
+		_subNav.y 	= this.y + this.height + 20;
+		_subNav.build( $navItemVo.subNav );
+		this.addChild( _subNav );
+		
+		// Remove the rollout handler since we're
+		// handling that below with enterframe
+		_hitArea.removeEventListener( MouseEvent.MOUSE_OUT, _onMouseOut );
 	}
 	
 	// _____________________________ Events
 	
 	private function _onEnterFrame ( e:Event ):void {
+		// If the mouse is outside the bounds...
 		if( _hitArea.mouseX < 0 || _hitArea.mouseY < 0 || _hitArea.mouseX > _hitArea.width ||  _hitArea.mouseY > _hitArea.height/_hitArea.scaleY )
 			_onMouseOut(null);
 	}

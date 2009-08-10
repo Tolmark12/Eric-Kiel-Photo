@@ -22,14 +22,16 @@ public class NavItemContact extends NavItem
 	override protected function _build ( $navItemVo:NavItemVo ):void
 	{
 		super._build($navItemVo);
-
-		if( !$navItemVo.isLogo ) {
-			_hitArea.removeEventListener( MouseEvent.MOUSE_OUT, _onMouseOut );
-			_contact = new Contact($navItemVo.sub)
-			_contact.y = this.y + this.height + 20;
-			_contact.deactivate();
-			this.addChild(_contact);
-		}
+		
+		// Build the contact
+		_contact 	= new Contact($navItemVo.sub)
+		_contact.y 	= this.y + this.height + 20;
+		_contact.deactivate();
+		this.addChild(_contact);
+		
+		// Remove the rollout handler since we're
+		// handling that below with enterframe
+		_hitArea.removeEventListener( MouseEvent.MOUSE_OUT, _onMouseOut );
 	}
 	
 	// _____________________________ Events
