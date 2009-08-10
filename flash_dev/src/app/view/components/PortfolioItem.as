@@ -8,6 +8,9 @@ import flash.events.*;
 import app.view.components.events.NavEvent;
 import caurina.transitions.Tweener;
 import app.view.components.events.ImageLoadEvent;
+import flash.filters.BitmapFilter;
+import flash.filters.BitmapFilterQuality;
+import flash.filters.GlowFilter;
 
 public class PortfolioItem extends Sprite
 {
@@ -21,6 +24,7 @@ public class PortfolioItem extends Sprite
 	
 	public function PortfolioItem():void
 	{
+		this.cacheAsBitmap = true;
 		this.visible = false;
 		this.y = _LOWER_Y;
 		this.addEventListener( MouseEvent.CLICK, _onClick, false,0,true );
@@ -51,6 +55,8 @@ public class PortfolioItem extends Sprite
 	{
 		_removeTweens()
 		Tweener.addTween( super, { y:0, scaleX:1, scaleY:1, time:_TIME, transition:"EaseInOutQuint"} );
+		blur = 0;
+		Tweener.addTween( this, { blur:30, time:0.6, delay:0.3, transition:"EaseInOutQuint", onUpdate:_updateGlow} );
 		this.isActive = true;
 		this.alpha = 1;
 	}
@@ -61,13 +67,17 @@ public class PortfolioItem extends Sprite
 	public function deactivate ( $doTween:Boolean = true ):void
 	{
 		_removeTweens();
-		if( $doTween )
+		if( $doTween ){
 			Tweener.addTween( this, { y:_LOWER_Y, scaleX:_portfolioImages.shrinkPercentage, scaleY:_portfolioImages.shrinkPercentage, time:_TIME, transition:"EaseInOutQuint"} );
-		else
+			Tweener.addTween( this, { blur:0, time:0.3, transition:"EaseInOutQuint", onUpdate:_updateGlow} );
+		}else{
 			this.scaleX = this.scaleY = _portfolioImages.shrinkPercentage;
-			
+			filters = [];
+		}
+		
 		this.isActive = false;
 		this.alpha = 0.8;
+		this.filters = [];
 	}
 	
 	/** 
@@ -124,7 +134,35 @@ public class PortfolioItem extends Sprite
 	
 	private function _removeTweens (  ):void
 	{
-		Tweener.removeTweens( this, "scaleX", "scaleY" );
+		Tweener.removeTweens( this, "scaleX", "scaleY", "blur" );
+	}
+	
+	// _____________________________ Glow
+	
+	public var blur:Number = 0;
+	
+	private function _getGlow (  ):GlowFilter
+	{
+		var color:Number = 0x000000;
+		var alpha:Number = 0.3;
+		var strength:Number = 2;
+		var inner:Boolean = false;
+		var knockout:Boolean = false;
+		var quality:Number = BitmapFilterQuality.MEDIUM;
+        
+		return new GlowFilter(color,
+		                      alpha,
+		                      blur,
+		                      blur,
+		                      strength,
+		                      quality,
+		                      inner,
+		                      knockout);
+	}
+	
+	private function _updateGlow (  ):void
+	{
+		this.filters = [_getGlow()];
 	}
 }
 

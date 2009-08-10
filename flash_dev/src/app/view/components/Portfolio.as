@@ -47,6 +47,9 @@ public class Portfolio extends Page
 	*/
 	public function showNewPortfolio ( $portfolioVo:PortfolioVo ):void
 	{
+		_currentIndex 	= 0;
+		_currentItem	= null;
+		
 		_scroller.visible = true;
 //		this.stage.addEventListener( MouseEvent.MOUSE_MOVE, _onMouseMove, false,0,true );
 		

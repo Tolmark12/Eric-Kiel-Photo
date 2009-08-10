@@ -112,7 +112,7 @@ public class NavItem extends Sprite
 	// _____________________________ Events with sub menu
 	
 	private function _onMouseMove ( e:Event ):void {
-		if( _hitArea.mouseX < 0 || _hitArea.mouseY < 0 || _hitArea.mouseX > _hitArea.width ||  _hitArea.mouseY > _hitArea.height )
+		if( _hitArea.mouseX < 0 || _hitArea.mouseY < 0 || _hitArea.mouseX > _hitArea.width ||  _hitArea.mouseY > _hitArea.height/_hitArea.scaleY )
 			_onMouseOutWithSub(null);
 	}
 	
@@ -121,8 +121,8 @@ public class NavItem extends Sprite
 			// Resize hit area
 			_hitAreaWidth 		= _hitArea.width;
 			_hitAreaHeight		= _hitArea.height;
-			_hitArea.height 	= _subNav.y + _subNav.height +3;
-			_hitArea.width 		= _subNav.x + _subNav.width;
+			_hitArea.height 	= _subNav.y + _subNav.height - 31;
+			_hitArea.width 		= _subNav.x + _subNav.width + 4;
 			
 			_subNav.activate();
 			this.stage.addEventListener( Event.ENTER_FRAME, _onMouseMove, false,0,true );
