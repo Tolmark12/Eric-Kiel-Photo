@@ -27,7 +27,7 @@ public class Nav extends Sprite
 			
 			// Make sure this isn't a sub nav item
 			if( navItemVo.parentNavItemId == null  ) {
-				var navItem:NavItem 	= new NavItem( navItemVo );
+				var navItem:NavItem = _getNavItem( navItemVo );
 				navItem.x = xPos;
 				xPos += navItem.width + 12;
 				this.addChild( navItem );
@@ -59,6 +59,17 @@ public class Nav extends Sprite
 				return navItem;
 		}
 		return null;
+	}
+	
+	private function _getNavItem ( $navItemVo ):NavItem
+	{
+		if( $navItemVo.subNav != null )
+			return new NavItemSubNav( $navItemVo );
+		else if( $navItemVo.sub != null )
+			return new NavItemContact( $navItemVo );
+		else
+			return new NavItem( $navItemVo );
+		
 	}
 }
 
