@@ -7,6 +7,11 @@ package app.view.components
 	
 	public class SubNav extends Sprite
 	{
+		private static const _TIMEIN:Number 		= 0;
+		private static const _TIMEOUT:Number 		= .25;
+		private static const _DELAY:Number			= 0;
+		private static const _TRANSITION:String 	= "easeOutExpo";
+		
 		private static const _PADDING:uint			= 25;
 		
 		private var _arrow:SubNavArrow;
@@ -55,15 +60,13 @@ package app.view.components
 		}
 	
 		public function activate (  ):void
-		{
-			//_background.alpha = 1;
-			
-			Tweener.addTween(_arrow, {alpha:1, time:.25, delay:0, transition:"easeOutExpo"});
-			Tweener.addTween(_background, {alpha:1, time:.25, delay:0, transition:"easeOutExpo"});
+		{			
+			Tweener.addTween(_arrow, {alpha:1, time:_TIMEIN, delay:_DELAY, transition:_TRANSITION});
+			Tweener.addTween(_background, {alpha:1, time:_TIMEIN, delay:_DELAY, transition:_TRANSITION});
 			
 			for(var i:uint = 0; i < _subNavArray.length; i++)
 			{
-				Tweener.addTween(_subNavArray[i], {alpha:1, time:.25, delay:.15, transition:"easeOutExpo"});
+				Tweener.addTween(_subNavArray[i], {alpha:1, time:_TIMEIN, delay:_DELAY, transition:_TRANSITION});
 			}
 			
 			isActive = true;
@@ -71,12 +74,12 @@ package app.view.components
 	
 		public function deactivate (  ):void
 		{	
-			Tweener.addTween(_arrow, {alpha:0, time:.5, delay:.25, transition:"easeOutExpo"});
-			Tweener.addTween(_background, {alpha:0, time:.5, delay:.25, transition:"easeOutExpo", onComplete:function(){ _background.alpha = 0; }});
+			Tweener.addTween(_arrow, {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION});
+			Tweener.addTween(_background, {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION, onComplete:function(){ _background.alpha = 0; }});
 			
 			for(var i:int = _subNavArray.length; i >= 0; i--)
 			{
-				Tweener.addTween(_subNavArray[i], {alpha:0, time:.5, delay:0, transition:"easeOutExpo"});
+				Tweener.addTween(_subNavArray[i], {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION});
 			}
 			
 			isActive = false;
