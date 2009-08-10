@@ -58,12 +58,12 @@ package app.view.components
 		{
 			_background.alpha = 1;
 			
-			Tweener.addTween(_arrow, {alpha:1, time:1, delay:0, transition:"easeOutExpo"});
-			Tweener.addTween(_background, {scaleY:1, time:1, delay:.15, transition:"easeOutExpo"});
+			Tweener.addTween(_arrow, {alpha:1, time:.5, delay:0, transition:"easeOutExpo"});
+			Tweener.addTween(_background, {alpha:1, time:.5, delay:0, transition:"easeOutExpo"});
 			
 			for(var i:uint = 0; i < _subNavArray.length; i++)
 			{
-				Tweener.addTween(_subNavArray[i], {alpha:1, time:(1*i), delay:.25, transition:"easeOutExpo"});
+				Tweener.addTween(_subNavArray[i], {alpha:1, time:(1*i), delay:.15, transition:"easeOutExpo"});
 			}
 			
 			isActive = true;
@@ -71,12 +71,12 @@ package app.view.components
 	
 		public function deactivate (  ):void
 		{	
-			Tweener.addTween(_arrow, {alpha:0, time:.25, delay:.33, transition:"easeOutExpo"});
-			Tweener.addTween(_background, {scaleY:0, time:.25, delay:.15, transition:"easeOutExpo", onComplete:function(){ _background.alpha = 0; }});
+			Tweener.addTween(_arrow, {alpha:0, time:1.5, delay:.25, transition:"easeOutExpo"});
+			Tweener.addTween(_background, {alpha:0, time:1.5, delay:.25, transition:"easeOutExpo", onComplete:function(){ _background.alpha = 0; }});
 			
 			for(var i:int = _subNavArray.length; i >= 0; i--)
 			{
-				Tweener.addTween(_subNavArray[i], {alpha:0, time:.25*i, delay:0, transition:"easeOutExpo"});
+				Tweener.addTween(_subNavArray[i], {alpha:0, time:1*i, delay:0, transition:"easeOutExpo"});
 			}
 			
 			isActive = false;
