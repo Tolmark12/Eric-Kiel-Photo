@@ -9,7 +9,9 @@ package app.view.components
 	{
 		private static const _PADDING:uint			= 25;
 		
+		private var _arrow:SubNavArrow;
 		private var _background:SubNavBackground;
+		
 		private var _subNavHolder:Sprite 			= new Sprite();
 		private var _subNavArray:Array 				= new Array();
 	
@@ -35,6 +37,12 @@ package app.view.components
 				_subNavArray.push(subNavItem);
 			}
 			
+			_arrow = new SubNavArrow();
+			_arrow.x = 0 + _arrow.width;
+			_arrow.y = 0 - _arrow.height;
+			_arrow.alpha = 0;
+			this.addChild(_arrow);
+			
 			_background = new SubNavBackground( (_subNavHolder.width + _PADDING), (_subNavHolder.height + _PADDING));
 			_background.alpha = 0;
 			this.addChild(_background);
@@ -48,8 +56,10 @@ package app.view.components
 	
 		public function activate (  ):void
 		{
-			Tweener.addTween(_background, {scaleY:1, time:1, delay:0, transition:"easeOutExpo"});
 			_background.alpha = 1;
+			
+			Tweener.addTween(_arrow, {alpha:1, time:1, delay:0, transition:"easeOutExpo"});
+			Tweener.addTween(_background, {scaleY:1, time:1, delay:.15, transition:"easeOutExpo"});
 			
 			for(var i:uint = 0; i < _subNavArray.length; i++)
 			{
@@ -61,7 +71,8 @@ package app.view.components
 	
 		public function deactivate (  ):void
 		{	
-			Tweener.addTween(_background, {scaleY:0, time:.25, delay:.25, transition:"easeOutExpo", onComplete:function(){ _background.alpha = 0; }});
+			Tweener.addTween(_arrow, {alpha:0, time:.25, delay:.33, transition:"easeOutExpo"});
+			Tweener.addTween(_background, {scaleY:0, time:.25, delay:.15, transition:"easeOutExpo", onComplete:function(){ _background.alpha = 0; }});
 			
 			for(var i:int = _subNavArray.length; i >= 0; i--)
 			{
