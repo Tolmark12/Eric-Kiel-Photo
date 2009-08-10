@@ -13,6 +13,11 @@ public class NavItem extends Sprite
 	private var _isSelected:Boolean = false;
 	private var _id:String;
 	private var _subNav:SubNav;
+	private var _hitArea:Sprite = new Sprite();
+	
+	// Hit area size snapshot
+	private var _hitAreaWidth:Number;
+	private var _hitAreaHeight:Number;
 	
 	public function NavItem( $navItemVo:NavItemVo ):void
 	{
@@ -39,6 +44,7 @@ public class NavItem extends Sprite
 	private function _build ( $navItemVo:NavItemVo ):void
 	{
 		if( !$navItemVo.isLogo ) {
+			
 			// Text
 			_txt = new NavText_swc();
 			this.addChild( _txt );
@@ -47,24 +53,28 @@ public class NavItem extends Sprite
 			_txt.y = 24;
 			
 			// Create hit area and add event listeners to that
-			var hitAreaMc:Sprite 	= new Sprite();
 			var hitPadding:Number  	= 5;
-			hitAreaMc.graphics.beginFill(0x99FF00, 0);
-			hitAreaMc.graphics.drawRect( -hitPadding, 19,this.width + hitPadding*3, this.height + hitPadding );
-			hitAreaMc.buttonMode = true;
+			_hitArea.graphics.beginFill(0x99FF00, 0);
+			_hitArea.graphics.drawRect( 0,0,this.width + hitPadding*3, this.height + hitPadding );
+			_hitArea.x = -hitPadding;
+			_hitArea.y = 19;
+			_hitArea.buttonMode = true;
+			this.addChild(_hitArea)
 			
-			hitAreaMc.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOver, false,0,true );
-			hitAreaMc.addEventListener( MouseEvent.MOUSE_OUT, _onMouseOut, false,0,true );
-			hitAreaMc.addEventListener( MouseEvent.CLICK, _onClick, false,0,true );
-			
-			this.addChild(hitAreaMc)
-			
+			// Add subnav if there is one, with special roll
+			// over and rollout handlers:
 			if( $navItemVo.subNav != null ) {
 				_subNav = new SubNav();
 				_subNav.build( $navItemVo.subNav );
-				_subNav.y = this.y + this.height + 34;
-				this.addChild( _subNav );
+				_subNav.y = this.y + this.height + 20;
+				this.addChild( _subNav );				
+				_hitArea.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOverWithSub, false,0,true );
+			}else{
+				_hitArea.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOver, false,0,true );
+				_hitArea.addEventListener( MouseEvent.MOUSE_OUT, _onMouseOut, false,0,true );
+				_hitArea.addEventListener( MouseEvent.CLICK, _onClick, false,0,true );
 			}
+			
 		}else{
 			var logo:Logo_swc = new Logo_swc();
 			this.addChild(logo);
@@ -74,11 +84,13 @@ public class NavItem extends Sprite
 	// _____________________________ Events
 	
 	private function _onMouseOver ( e:Event ):void {
+		// Change text color
 		if( !_isSelected && _txt != null)
 			Tweener.addTween(_txt, {_color: 0xFFFFFF, time:0});
 	}
 	
 	private function _onMouseOut ( e:Event ):void {
+		// Change text Color
 		if( !_isSelected && _txt != null )
 			Tweener.addTween(_txt, {_color: 0x000000, time:0});
 	}
@@ -96,6 +108,39 @@ public class NavItem extends Sprite
 			dispatchEvent( navBtnClick );
 		}
 	}
+	
+	// _____________________________ Events with sub menu
+	
+	private function _onMouseMove ( e:Event ):void {
+		if( _hitArea.mouseX < 0 || _hitArea.mouseY < 0 || _hitArea.mouseX > _hitArea.width ||  _hitArea.mouseY > _hitArea.height )
+			_onMouseOutWithSub(null);
+	}
+	
+	private function _onMouseOverWithSub ( e:Event ):void {
+		if( !_subNav.isActive ){
+			// Resize hit area
+			_hitAreaWidth 		= _hitArea.width;
+			_hitAreaHeight		= _hitArea.height;
+			_hitArea.height 	= _subNav.y + _subNav.height +3;
+			_hitArea.width 		= _subNav.x + _subNav.width;
+			
+			_subNav.activate();
+			this.stage.addEventListener( Event.ENTER_FRAME, _onMouseMove, false,0,true );
+			_onMouseOver(null);
+		}
+	}
+	
+	private function _onMouseOutWithSub ( e:Event ):void {
+		if( _subNav.isActive )
+			_subNav.deactivate();
+		
+		_hitArea.height 	= _hitAreaHeight;
+		_hitArea.width 		= _hitAreaWidth;
+		this.stage.removeEventListener( Event.ENTER_FRAME, _onMouseMove );
+		_onMouseOut(null);
+	}
+	
+
 	
 	// _____________________________ Getters / Setters
 	
