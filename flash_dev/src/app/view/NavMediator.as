@@ -43,12 +43,16 @@ public class NavMediator extends Mediator implements IMediator
 				// Activate the main nav item
 				if( pathVo.path[0].hasChanged )
 					_nav.activateNavItem( pathVo.path[0].id );
-					
+				
+				trace( pathVo.path[1] );	
+				
 				// Activate any sub nav items
 				if( pathVo.path[1] != null){
 					if( pathVo.path[1].hasChanged )
 						_nav.activateSubNavItem( pathVo.path[1].id );
-				}					
+				} else
+					_nav.activateSubNavItem(null);
+								
 			break;
 		}
 	}
