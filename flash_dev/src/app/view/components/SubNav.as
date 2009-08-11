@@ -95,10 +95,13 @@ package app.view.components
 		{
 			if( _currentItem != null )
 				_currentItem.deactivate();
-			
+
 			_currentItem = _getSubNavItemById( $id );
-			_currentItem.activate();
+
+			if( _currentItem != null )
+				_currentItem.activate();
 		}
+	
 		
 		
 		private function _setVisible(  ):void
