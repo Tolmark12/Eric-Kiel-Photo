@@ -15,7 +15,7 @@ package app.view.components
 			this.graphics.drawRect(0, 0, $width, $height);
 			this.graphics.endFill();
 			
-			this.filters = [ _dropShadowFilter ];
+			//this.filters = [ _dropShadowFilter ];
 		}
 	}
 }
