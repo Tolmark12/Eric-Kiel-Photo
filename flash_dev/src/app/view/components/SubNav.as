@@ -85,10 +85,12 @@ package app.view.components
 			}
 		}
 	
+		/*
 		public function activateNavItem ( $id:String ):void
 		{
 		
 		}
+		*/
 		
 		private function _setVisible( $bool:Boolean ):void
 		{
