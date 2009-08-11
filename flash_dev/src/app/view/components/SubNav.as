@@ -19,6 +19,8 @@ package app.view.components
 		
 		private var _subNavHolder:Sprite 			= new Sprite();
 		private var _subNavArray:Array 				= new Array();
+		
+		private var _currentItem:SubNavItem;
 	
 		public var isActive:Boolean;
 	
@@ -68,7 +70,7 @@ package app.view.components
 			isActive = true;
 			
 			Tweener.addTween(_arrow, {alpha:1, time:_TIMEIN, delay:_DELAY, transition:_TRANSITION});
-			Tweener.addTween(_background, {alpha:1, time:_TIMEIN, delay:_DELAY, transition:_TRANSITION, onComplete:function(){ _setVisible(isActive); }});
+			Tweener.addTween(_background, {alpha:1, time:_TIMEIN, delay:_DELAY, transition:_TRANSITION, onComplete:_setVisible});
 			
 			for(var i:uint = 0; i < _subNavArray.length; i++)
 			{
@@ -81,7 +83,7 @@ package app.view.components
 			isActive = false;
 			
 			Tweener.addTween(_arrow, {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION});
-			Tweener.addTween(_background, {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION, onComplete:function(){ _setVisible(isActive); }});
+			Tweener.addTween(_background, {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION, onComplete:_setVisible});
 			
 			for(var i:int = _subNavArray.length; i >= 0; i--)
 			{
@@ -90,39 +92,37 @@ package app.view.components
 		}
 	
 		
-//		public function activateNavItem ( $id:String ):void
-//		{
-//			if( _currentItem != null )
-//				_currentItem.deactivate();
-//			
-//			_currentItem = _getSubNavItemById( $id );
-//			_currentItem.activate();
-//		}
+		public function activateSubNavItem ( $id:String ):void
+		{			
+			if( _currentItem != null )
+				_currentItem.deactivate();
+			
+			_currentItem = _getSubNavItemById( $id );
+			_currentItem.activate();
+		}
 		
 		
-		private function _setVisible( $bool:Boolean ):void
+		private function _setVisible(  ):void
 		{
-			if( $bool )
-			{
+			if( isActive )
 				this.visible = true;
-				
-			}else{
+			else
 				this.visible = false;
-			}	
 		}
 		
 		// _____________________________ Helpers
 		
-//		private function _getSubNavItemById ( $id:String ):SubNavItem
-//		{
-//			var subNavItem:SubNavItem;
-//			var len:uint = _subNavArray.length;
-//			for ( var i:uint=0; i<len; i++ ) 
-//			{
-//				subNavItem = _subNavArray[i];
-//				if( subNavItem.id == $id )
-//					return subNavItem;
-//			}
-//		}
+		private function _getSubNavItemById ( $id:String ):SubNavItem
+		{			
+			var subNavItem:SubNavItem;
+			for ( var i:uint=0; i < _subNavArray.length; i++ ) 
+			{
+				subNavItem = _subNavArray[i];
+				if( subNavItem.id == $id )
+					return subNavItem;
+			}
+			
+			return null;
+		}
 	}
 }

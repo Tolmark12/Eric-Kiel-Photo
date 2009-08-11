@@ -41,6 +41,20 @@ package app.view.components
 			_onMouseOut( null );
 		}
 		
+		// _____________________________ API
+
+		public function activate (  ):void
+		{
+			_onMouseOver(null);
+			_isSelected = true;
+		}
+
+		public function deactivate (  ):void
+		{
+			_isSelected = false;
+			_onMouseOut(null);
+		}
+		
 		// _____________________________ Events
 
 		private function _onMouseOver ( e:Event ):void
@@ -62,5 +76,9 @@ package app.view.components
 			dispatchEvent( navBtnClick );
 		}
 		
+		public function get id (  ):String
+		{
+			return _id;
+		}
 	}
 }

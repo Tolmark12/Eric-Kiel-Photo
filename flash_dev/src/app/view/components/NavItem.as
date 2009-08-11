@@ -94,9 +94,6 @@ public class NavItem extends Sprite
 			dispatchEvent( navBtnClick );
 	}
 	
-
-
-	
 	// _____________________________ Getters / Setters
 	
 	override public function get width (  ):Number

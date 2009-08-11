@@ -14,6 +14,7 @@ public class NavMediator extends Mediator implements IMediator
 	public static const NAME:String = "nav_mediator";
 	
 	private var _nav:Nav = new Nav();
+	private var _subNav:SubNav = new SubNav();
 	
 	public function NavMediator( $stage:Sprite ):void
 	{
@@ -41,10 +42,10 @@ public class NavMediator extends Mediator implements IMediator
 				var pathVo:PathVo = note.getBody() as PathVo;
 				if( pathVo.path[0].hasChanged )
 					_nav.activateNavItem( pathVo.path[0].id );
-				//if( pathVo.path[1] != null){
-				//	if( pathVo.path[1].hasChanged )
-				//		_subNav.activateItem( pathVo.path[1].id );
-				//}					
+				if( pathVo.path[1] != null){
+					if( pathVo.path[1].hasChanged )
+						_subNav.activateSubNavItem( pathVo.path[1].id );
+				}					
 			break;
 		}
 	}
