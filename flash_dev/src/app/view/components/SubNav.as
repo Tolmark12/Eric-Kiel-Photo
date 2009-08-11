@@ -42,20 +42,24 @@ package app.view.components
 				_subNavArray.push(subNavItem);
 			}
 			
+			// This is that top arrow:
 			_arrow = new SubNavArrow();
 			_arrow.x = 0 + _arrow.width;
 			_arrow.y = 0 - _arrow.height;
 			_arrow.alpha = 0;
-			this.addChild(_arrow);
 			
+			// This is that dark shape behind the text:
 			_background = new SubNavBackground( (_subNavHolder.width + _PADDING), (_subNavHolder.height + _PADDING));
 			_background.alpha = 0;
-			this.addChild(_background);
 			
+			// Create sub nav Holder:
 			_subNavHolder.x = (_background.width - _subNavHolder.width)/2;
 			_subNavHolder.y = (_background.height - _subNavHolder.height)/2;
+			
+			// Place children
+			this.addChild(_arrow);
+			this.addChild(_background);
 			this.addChild(_subNavHolder);
-		
 			this.deactivate();
 		}
 	
@@ -68,7 +72,7 @@ package app.view.components
 			
 			for(var i:uint = 0; i < _subNavArray.length; i++)
 			{
-				Tweener.addTween(_subNavArray[i], {alpha:1, time:_TIMEIN, delay:_DELAY, transition:_TRANSITION});
+				Tweener.addTween( _subNavArray[i], {alpha:1, time:_TIMEIN, delay:_DELAY, transition:_TRANSITION} );
 			}
 		}
 	
@@ -85,12 +89,16 @@ package app.view.components
 			}
 		}
 	
-		/*
-		public function activateNavItem ( $id:String ):void
-		{
 		
-		}
-		*/
+//		public function activateNavItem ( $id:String ):void
+//		{
+//			if( _currentItem != null )
+//				_currentItem.deactivate();
+//			
+//			_currentItem = _getSubNavItemById( $id );
+//			_currentItem.activate();
+//		}
+		
 		
 		private function _setVisible( $bool:Boolean ):void
 		{
@@ -102,5 +110,19 @@ package app.view.components
 				this.visible = false;
 			}	
 		}
+		
+		// _____________________________ Helpers
+		
+//		private function _getSubNavItemById ( $id:String ):SubNavItem
+//		{
+//			var subNavItem:SubNavItem;
+//			var len:uint = _subNavArray.length;
+//			for ( var i:uint=0; i<len; i++ ) 
+//			{
+//				subNavItem = _subNavArray[i];
+//				if( subNavItem.id == $id )
+//					return subNavItem;
+//			}
+//		}
 	}
 }

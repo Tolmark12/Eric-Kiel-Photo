@@ -61,5 +61,6 @@ package app.view.components
 			navBtnClick.id = _id;
 			dispatchEvent( navBtnClick );
 		}
+		
 	}
 }

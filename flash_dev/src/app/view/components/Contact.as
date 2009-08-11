@@ -48,7 +48,7 @@ package app.view.components
 			Tweener.addTween(_arrow, {alpha:1, time:_TIMEIN, delay:_DELAY, transition:_TRANSITION});
 			Tweener.addTween(_background, {alpha:1, time:_TIMEIN, delay:_DELAY, transition:_TRANSITION});
 			
-			Tweener.addTween(_contactInfo, {alpha:1, time:_TIMEIN, delay:_DELAY, transition:_TRANSITION, onComplete:function(){ _setVisible(isActive); }});			
+			Tweener.addTween(_contactInfo, {alpha:1, time:_TIMEIN, delay:_DELAY, transition:_TRANSITION, onComplete:_setVisible } );			
 		}
 		
 		public function deactivate (  ):void
@@ -58,18 +58,15 @@ package app.view.components
 			Tweener.addTween(_arrow, {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION});
 			Tweener.addTween(_background, {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION});
 			
-			Tweener.addTween(_contactInfo, {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION, onComplete:function(){ _setVisible(isActive); }});
+			Tweener.addTween(_contactInfo, {alpha:0, time:_TIMEOUT, delay:_DELAY, transition:_TRANSITION, onComplete:_setVisible });
 		}
 		
-		private function _setVisible( $bool:Boolean ):void
+		private function _setVisible(  ):void
 		{
-			if( $bool )
-			{
+			if( isActive )
 				this.visible = true;
-				
-			}else{
+			else
 				this.visible = false;
-			}	
 		}
 	}
 }
