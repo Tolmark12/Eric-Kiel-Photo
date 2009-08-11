@@ -1,7 +1,7 @@
 package app.view.components
 {
 	import flash.display.*;
-	import flash.filters.BlurFilter;
+	import flash.filters.*;
 	
 	public class SubNavBackground extends Sprite
 	{
