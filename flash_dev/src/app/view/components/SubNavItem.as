@@ -2,28 +2,27 @@ package app.view.components
 {
 	import flash.display.Sprite;
 	import flash.events.*;
-	
 	import caurina.transitions.Tweener;
-	
 	import app.view.components.events.NavEvent;
+	import app.model.vo.NavItemVo;
 	
 	public class SubNavItem extends Sprite
 	{
 		private var _txt:NavText_swc;
 		private var _isSelected:Boolean = false;
 		
-		private var _id:String;
+		public var id:String;
 	
-		public function SubNavItem( $text:String, $id:String ):void
+		public function SubNavItem( $navItemVo:NavItemVo ):void
 		{
-			_id = $id;
+			id = $navItemVo.id;
 			
 			// Text
 			_txt = new NavText_swc();
 			this.addChild( _txt );
 			
 			_txt.titleTxt.autoSize = "left";
-			_txt.titleTxt.text = $text;
+			_txt.titleTxt.text = $navItemVo.text;
 			
 			// Create hit area and add event listeners to that
 			var hit:Sprite 			= new Sprite();
@@ -72,13 +71,8 @@ package app.view.components
 		private function _onClick ( e:Event ):void
 		{			
 			var navBtnClick:NavEvent = new NavEvent( NavEvent.NAV_BTN_CLICK, true );
-			navBtnClick.id = _id;
+			navBtnClick.id = id;
 			dispatchEvent( navBtnClick );
-		}
-		
-		public function get id (  ):String
-		{
-			return _id;
 		}
 	}
 }

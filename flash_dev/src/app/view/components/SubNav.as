@@ -36,11 +36,10 @@ package app.view.components
 			// build submenu of subMenuItems			
 			for(var i:uint = 0; i < $subNavVo.pages.length; i++)
 			{
-				var subNavItem:SubNavItem = new SubNavItem( $subNavVo.pages[i].text, $subNavVo.pages[i].id );
+				var subNavItem:SubNavItem = new SubNavItem( $subNavVo.pages[i] );
 				subNavItem.y = (subNavItem.height*i);
 				subNavItem.alpha = 0;
 				_subNavHolder.addChild( subNavItem );
-				
 				_subNavArray.push(subNavItem);
 			}
 			
@@ -93,7 +92,7 @@ package app.view.components
 	
 		
 		public function activateSubNavItem ( $id:String ):void
-		{			
+		{
 			if( _currentItem != null )
 				_currentItem.deactivate();
 			

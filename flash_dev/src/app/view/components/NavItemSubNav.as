@@ -33,6 +33,11 @@ public class NavItemSubNav extends NavItem
 		_hitArea.removeEventListener( MouseEvent.MOUSE_OUT, _onMouseOut );
 	}
 	
+	public function activateSubItem ( $id:String ):void
+	{
+		_subNav.activateSubNavItem( $id );
+	}
+	
 	// _____________________________ Events
 	
 	private function _onEnterFrame ( e:Event ):void {

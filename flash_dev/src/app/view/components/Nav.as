@@ -46,6 +46,12 @@ public class Nav extends Sprite
 		_selectedItem.activate();
 	}
 	
+	public function activateSubNavItem ( $id:String ):void
+	{
+		if( _selectedItem != null )
+			( _selectedItem as NavItemSubNav ).activateSubItem( $id );
+	}
+	
 	// _____________________________ Helpers
 	
 	private function _getNavItemById ( $id:String ):NavItem
