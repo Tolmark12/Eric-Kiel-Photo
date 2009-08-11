@@ -16,6 +16,14 @@ public class NavItemSubNav extends NavItem
 		super($navItemVo);
 	}
 	
+	// _____________________________ API
+	
+	override public function deactivate (  ):void
+	{
+		_subNav.activateSubNavItem( null );
+		super.deactivate();
+	}
+	
 	// _____________________________ Build
 	
 	override protected function _build ( $navItemVo:NavItemVo ):void
