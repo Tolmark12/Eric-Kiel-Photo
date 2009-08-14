@@ -23,6 +23,19 @@ public class Clicks extends SimpleCommand implements ICommand
 			case AppFacade.PORTFOLIO_ITEM_CLICK :
 				portfolioProxy.changeActiveItemByIndex( note.getBody() as uint );
 			break;
+			case AppFacade.PORTFOLIO_NEXT :
+				portfolioProxy.next();
+			break
+			case AppFacade.PORTFOLIO_PREV :
+				portfolioProxy.prev();
+			break
+			case AppFacade.PORTFOLIO_START :
+				portfolioProxy.first();
+			break
+			case AppFacade.PORTFOLIO_END :
+				portfolioProxy.last();
+			break
+			
 		}
 	}
 }
