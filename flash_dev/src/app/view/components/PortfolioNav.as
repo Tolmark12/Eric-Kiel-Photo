@@ -34,6 +34,8 @@ package app.view.components
 			_left 		= new PortfolioBtn_swc();
 			_right 		= new PortfolioBtn_swc();
 			
+			_start.titleTxt.autoSize 		= "left";
+			_end.titleTxt.autoSize 			= "left";
 			_start.titleTxt.text 	= "start";
 			_end.titleTxt.text 		= "end";
 			
@@ -84,22 +86,22 @@ package app.view.components
 			switch(e.currentTarget)
 			{
 				case _controllerArray[0]:
-					trace("start");					
+					//trace("start");					
 					_navEvent = new NavEvent(NavEvent.PORTFOLIO_START, true);
 					dispatchEvent(_navEvent);
 				break;       
 				case _controllerArray[1]:
-					trace("end");
+					//trace("end");
 					_navEvent = new NavEvent(NavEvent.PORTFOLIO_END, true);
 					dispatchEvent(_navEvent);
 				break;       
 				case _controllerArray[2]:
-					trace("prev");
+					//trace("prev");
 					_navEvent = new NavEvent(NavEvent.PORTFOLIO_PREV, true);
 					dispatchEvent(_navEvent);
 				break;       
 				case _controllerArray[3]:
-					trace("next");
+					//trace("next");
 					_navEvent = new NavEvent(NavEvent.PORTFOLIO_NEXT, true);
 					dispatchEvent(_navEvent);
 				break;
