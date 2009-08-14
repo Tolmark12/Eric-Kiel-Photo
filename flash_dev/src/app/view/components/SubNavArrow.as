@@ -6,7 +6,7 @@ package app.view.components
 	{
 		public function SubNavArrow(  ):void
 		{
-			this.graphics.beginFill(0x000000, 0.75);
+			this.graphics.beginFill(0x000000, 0.66);
 			this.graphics.moveTo(0, 0);
 			this.graphics.lineTo(-5, 5);
 			this.graphics.lineTo(5, 5);
