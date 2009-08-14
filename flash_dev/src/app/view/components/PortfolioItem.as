@@ -28,6 +28,8 @@ public class PortfolioItem extends Sprite
 		this.visible = false;
 		this.y = _LOWER_Y;
 		this.addEventListener( MouseEvent.CLICK, _onClick, false,0,true );
+		this.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOver, false,0,true );
+		this.addEventListener( MouseEvent.MOUSE_OUT, _onMouseOut, false,0,true );
 		this.buttonMode = true;
 	}
 	
@@ -45,7 +47,6 @@ public class PortfolioItem extends Sprite
 		_portfolioImages.addEventListener( ImageLoadEvent.LOW_RES_IMAGE_LOADED, _onLowResImageLoaded, false,0,true );
 		this.addChild(_portfolioImages);
 		_portfolioImages.loadImages( _portfolioItemVo.lowResSrc, _portfolioItemVo.src );
-		deactivate();
 	}
 	
 	/** 
@@ -53,12 +54,14 @@ public class PortfolioItem extends Sprite
 	*/
 	public function activate (  ):void
 	{
-		_removeTweens()
+		_portfolioImages.loadLargeImage()
+		_removeTweens();
 		Tweener.addTween( super, { y:0, scaleX:1, scaleY:1, time:_TIME, transition:"EaseInOutQuint"} );
 		blur = 0;
 		Tweener.addTween( this, { blur:30, time:0.6, delay:0.3, transition:"EaseInOutQuint", onUpdate:_updateGlow} );
+		
+		_onMouseOver(null);
 		this.isActive = true;
-		this.alpha = 1;
 	}
 	
 	/** 
@@ -76,7 +79,7 @@ public class PortfolioItem extends Sprite
 		}
 		
 		this.isActive = false;
-		this.alpha = 0.8;
+		_onMouseOut(null);
 		this.filters = [];
 	}
 	
@@ -104,16 +107,25 @@ public class PortfolioItem extends Sprite
 		dispatchEvent( navEvent );
 	}
 	
+	private function _onMouseOver ( e:Event ):void {
+		if( !isActive )
+			this.alpha = 1;
+	}
+	
+	private function _onMouseOut ( e:Event ):void {
+		if( !isActive )
+			this.alpha = 0.8;
+	}
+	
 	private function _onLowResImageLoaded ( e:ImageLoadEvent ):void
 	{
 		this.visible = true;
-		Tweener.addTween( this, { alpha:1, time:1, transition:"EaseInOutQuint"} );
+		//Tweener.addTween( this, { alpha:0.8, time:1, transition:"EaseInOutQuint"} );
 		_onHighResImageLoaded(null);
 	}
 	
 	private function _onHighResImageLoaded ( e:ImageLoadEvent ):void
 	{
-		Tweener.addTween( this, { alpha:1, time:1, transition:"EaseInOutQuint"} );
 		if( !isActive )
 			deactivate(false);
 		else

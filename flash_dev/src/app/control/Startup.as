@@ -36,7 +36,7 @@ public class Startup extends SimpleCommand implements ICommand
 		facade.registerProxy( navProxy );
 		facade.registerProxy( portfolioProxy );
 		
-		// Start Dat load
+		// Start Data load
 		externalDataProxy.getConfigData(kielRoot.stage);
 		// Fire first stage resize event
 		kielRoot.stage.dispatchEvent( new Event(Event.RESIZE, true) );

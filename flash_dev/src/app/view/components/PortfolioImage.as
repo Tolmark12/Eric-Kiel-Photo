@@ -33,6 +33,12 @@ public class PortfolioImage extends Sprite
 		ldr.addEventListener( Event.COMPLETE, _onLowResLoaded );
 		ldr.addItemToLoadQueue();
 	}
+	
+	public function loadLargeImage (  ):void
+	{
+		//if( !highResLoaded )
+			
+	}
 
 	public function get activeWidth (  ):Number
 	{

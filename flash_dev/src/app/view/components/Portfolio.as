@@ -50,8 +50,8 @@ public class Portfolio extends Page
 		_currentIndex 	= 0;
 		_currentItem	= null;
 		
-		_scroller.visible = true;
-//		this.stage.addEventListener( MouseEvent.MOUSE_MOVE, _onMouseMove, false,0,true );
+//		_scroller.visible = true;
+		this.stage.addEventListener( Event.ENTER_FRAME, _onEnterFrame, false,0,true );
 		
 		this.alpha = 0;
 		Tweener.addTween( this, { alpha:1, time:1, transition:"EaseInOutQuint"} );
@@ -76,6 +76,7 @@ public class Portfolio extends Page
 			portfolioItem	= new PortfolioItem();
 			portfolioItem.buildAndLoad( portfolioItemVo );
 			portfolioItem.x = i * 200;
+			portfolioItem.deactivate();
 			_items.push( portfolioItem )
 			_imageHolder.addChild( portfolioItem );
 		}
@@ -128,8 +129,9 @@ public class Portfolio extends Page
 	private function _centerStripOnImage ( $index:uint ):void
 	{
 		_distributeObjects(0);
-		Tweener.addTween( _imageHolder, { x:StageResizeVo.CENTER - _currentItem.targetX - _currentItem.width/2, time:0.5, transition:"EaseInOutQuint"} );
-		_scroller.changeScrollPosition( (_currentItem.targetX) / (_totalWidth() -_currentItem.width) );
+		_lastXmouse = this.mouseX;
+		Tweener.addTween( _imageHolder, { x:StageResizeVo.CENTER - _currentItem.targetX - _currentItem.width/2, time:1.3, transition:"EaseInOutQuint"} );
+//		_scroller.changeScrollPosition( (_currentItem.targetX) / (_totalWidth() -_currentItem.width) );
 	}
 	
 	private function _distributeObjects ( $startingIndex:Number, $doTween:Boolean=true ):void
@@ -151,7 +153,7 @@ public class Portfolio extends Page
 	
 	private function _onLowResImageLoaded ( e:ImageLoadEvent ):void {
 		_distributeObjects( e.imageIndex, false );
-		_scroller.updateScrollWindow( StageResizeVo.lastResize.width / _imageHolder.width, 0 );
+//		_scroller.updateScrollWindow( StageResizeVo.lastResize.width / _imageHolder.width, 0 );
 	}
 	
 	private function _onHighResImageLoaded ( e:ImageLoadEvent ):void {
@@ -163,8 +165,35 @@ public class Portfolio extends Page
 		_centerStripOnImage(_currentIndex);
 	}
 	
-	private function _onMouseMove ( e:Event ):void{
-		_imageHolder.x =  -_imageHolder.width * ( this.mouseX - StageResizeVo.lastResize.left ) / StageResizeVo.lastResize.width + StageResizeVo.lastResize.width;
+	private var _scrollWindowWidth:Number = 250
+	private var _isScrolling:Boolean = false;
+	private var _lastXmouse:Number = 0;
+	private function _onEnterFrame ( e:Event ):void{
+		_isScrolling = false
+		if( this.mouseY > 120 && Math.abs( _lastXmouse - this.mouseX ) > 13 ) {
+			_lastXmouse = StageResizeVo.CENTER;
+			var pos:Number = StageResizeVo.CENTER - this.stage.mouseX;
+			if( Math.abs(pos) > _scrollWindowWidth ){
+				_isScrolling = true;
+				pos += (pos < 1)? _scrollWindowWidth : -_scrollWindowWidth ;
+				var xTarg:Number = Math.round( _imageHolder.x + pos * 0.07 );
+				
+				var sidePadding = (StageResizeVo.lastResize.width/2 - _currentItem.width/2);
+				
+				if( pos > 1 ){
+					if( xTarg < StageResizeVo.lastResize.left + sidePadding )
+						_imageHolder.x = xTarg;
+					else
+						_imageHolder.x = StageResizeVo.lastResize.left + sidePadding 
+				}else{
+					if( xTarg > StageResizeVo.lastResize.right - _totalWidth() - sidePadding )
+						_imageHolder.x = xTarg;
+					else
+						_imageHolder.x = StageResizeVo.lastResize.right - _totalWidth() - sidePadding
+				}
+			}			
+		}
+
 	}
 	
 	private function _onScroll ( e:ScrollEvent ):void

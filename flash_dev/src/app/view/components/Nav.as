@@ -5,6 +5,7 @@ import flash.display.Sprite;
 import app.model.vo.NavVo;
 import app.model.vo.NavItemVo;
 import app.model.vo.StageResizeVo;
+import flash.events.*;
 
 public class Nav extends Sprite
 {
@@ -29,6 +30,8 @@ public class Nav extends Sprite
 			if( navItemVo.parentNavItemId == null  ) {
 				var navItem:NavItem = _getNavItem( navItemVo );
 				navItem.x = xPos;
+				navItem.addEventListener( MouseEvent.MOUSE_OVER, _onNavMouseOver, false,0,true );
+				navItem.addEventListener( MouseEvent.MOUSE_OUT, _onNavMouseOut, false,0,true );
 				xPos += navItem.width + 12;
 				this.addChild( navItem );
 			}
@@ -76,6 +79,21 @@ public class Nav extends Sprite
 		else
 			return new NavItem( $navItemVo );
 		
+	}
+	
+	// _____________________________ Events	
+	
+	private var _currentRolledNavItem:NavItem;
+	
+	private function _onNavMouseOver ( e:Event ):void {
+		if( _currentRolledNavItem != null && _currentRolledNavItem != e.currentTarget )
+			_currentRolledNavItem.dispatchEvent( new Event( "forceMouseOut", true ) );
+			
+		_currentRolledNavItem = e.currentTarget as NavItem;
+	}
+	
+	private function _onNavMouseOut ( e:Event ):void{
+
 	}
 }
 

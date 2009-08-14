@@ -20,6 +20,7 @@ public class NavItem extends Sprite
 	// Hit area size snapshot
 	protected var _hitAreaWidth:Number;
 	protected var _hitAreaHeight:Number;
+	protected var _hitAreaX:Number;
 	
 	public function NavItem( $navItemVo:NavItemVo ):void
 	{
@@ -57,7 +58,7 @@ public class NavItem extends Sprite
 			// Create hit area and add event listeners to that
 			var hitPadding:Number  	= 5;
 			_hitArea.graphics.beginFill(0x99FF00, 0);
-			_hitArea.graphics.drawRect( 0,0,this.width + hitPadding*3, this.height + hitPadding );
+			_hitArea.graphics.drawRect( 0,0,this.width + hitPadding*2.4, this.height + hitPadding );
 			_hitArea.x = -hitPadding;
 			_hitArea.y = 19;
 			_hitArea.buttonMode = true;
@@ -67,6 +68,8 @@ public class NavItem extends Sprite
 			_hitArea.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOver, false,0,true );
 			_hitArea.addEventListener( MouseEvent.MOUSE_OUT, _onMouseOut, false,0,true );
 			_hitArea.addEventListener( MouseEvent.CLICK, _onClick, false,0,true );
+			// Allow nav to manually call mouse out
+			this.addEventListener( "forceMouseOut", _onMouseOut, false,0,true );
 			
 		}else{
 			var logo:Logo_swc = new Logo_swc();
@@ -77,6 +80,8 @@ public class NavItem extends Sprite
 	// _____________________________ Events
 	
 	protected function _onMouseOver ( e:Event ):void {
+		// Make sure the item rolled over is always on the bottom
+		this.parent.swapChildrenAt( 0, this.parent.getChildIndex(this) );
 		// Change text color
 		if( !_isSelected && _txt != null)
 			Tweener.addTween(_txt, {_color: hoverColor, time:0});

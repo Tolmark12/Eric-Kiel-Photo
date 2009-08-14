@@ -47,8 +47,10 @@ public class NavItemContact extends NavItem
 			// Resize hit area
 			_hitAreaWidth 		= _hitArea.width;
 			_hitAreaHeight		= _hitArea.height;
-			_hitArea.height 	= _contact.y + _contact.width;
-			_hitArea.width 		= _contact.x + _contact.height;
+			_hitAreaX			= _hitArea.x;
+			_hitArea.height 	= _contact.y + _contact.height;
+			_hitArea.width 		= _contact.x + _contact.width;
+			_hitArea.x 			= -_contact.width + 50;
 			_contact.activate();
 
 			this.stage.addEventListener( Event.ENTER_FRAME, _onEnterFrame, false,0,true );
@@ -60,6 +62,7 @@ public class NavItemContact extends NavItem
 		if( _contact.isActive )
 			_contact.deactivate();
 		
+		_hitArea.x			= _hitAreaX;
 		_hitArea.height 	= _hitAreaHeight;
 		_hitArea.width 		= _hitAreaWidth;
 		this.stage.removeEventListener( Event.ENTER_FRAME, _onEnterFrame );
