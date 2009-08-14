@@ -11,7 +11,7 @@ package app.view.components
 		
 		public function SubNavBackground( $width:uint, $height:uint ):void
 		{
-			this.graphics.beginFill(0x000000, 0.75);
+			this.graphics.beginFill(0x000000, 0.66);
 			this.graphics.drawRect(0, 0, $width, $height);
 			this.graphics.endFill();
 			

@@ -10,7 +10,6 @@ import app.view.components.events.ImageLoadEvent;
 import flash.events.*;
 import delorum.scrolling.*;
 
-
 public class Portfolio extends Page
 {
 	private static const _ITEM_PADDING:Number = 10;
@@ -20,6 +19,7 @@ public class Portfolio extends Page
 	private var _currentIndex:uint;
 	private var _items:Array;
 	private var _scroller:Scroller;
+	private var _portfolioNav:PortfolioNav;
 	
 	public function Portfolio():void
 	{
@@ -31,12 +31,17 @@ public class Portfolio extends Page
 		_scroller = new Scroller(20,20);
 		_scroller.createDefaultScroller();
 		_scroller.build();
-		_scroller.visible = false
+		_scroller.visible = false;
 		this.addChild(_scroller);
 		_scroller.addEventListener( Scroller.SCROLL, _onScroll, false,0,true );
 		this.addEventListener( ImageLoadEvent.HIGH_RES_IMAGE_LOADED, _onHighResImageLoaded, false,0,true );
 		this.addEventListener( ImageLoadEvent.LOW_RES_IMAGE_LOADED, _onLowResImageLoaded, false,0,true );
 		this.addEventListener( ImageLoadEvent.RECENTER_STRIP, _onRecenterStrip, false,0,true );
+		
+		_portfolioNav = new PortfolioNav();
+		_portfolioNav.build();
+		_portfolioNav.visible = false;
+		this.addChild(_portfolioNav);
 	}
 	
 	// _____________________________ API
@@ -50,7 +55,7 @@ public class Portfolio extends Page
 		_currentIndex 	= 0;
 		_currentItem	= null;
 		
-//		_scroller.visible = true;
+		//_scroller.visible = true;
 		this.stage.addEventListener( Event.ENTER_FRAME, _onEnterFrame, false,0,true );
 		
 		this.alpha = 0;
@@ -80,6 +85,8 @@ public class Portfolio extends Page
 			_items.push( portfolioItem )
 			_imageHolder.addChild( portfolioItem );
 		}
+		
+		_portfolioNav.visible = true;
 	}
 	
 	/** 
