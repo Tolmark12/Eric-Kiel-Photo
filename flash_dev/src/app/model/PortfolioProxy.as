@@ -25,22 +25,29 @@ public class PortfolioProxy extends Proxy implements IProxy
 		_sendNewIndex();
 	}
 	
-	public function changeActiveItemByIndex ( $index:uint ):void
-	{
+	public function changeActiveItemByIndex ( $index:uint ):void{
 		if( _sequence.changeItemByIndex($index) )
 			_sendNewIndex();
 	}
 	
-	public function nextItem (  ):void
-	{
+	public function next (  ):void{
 		if( _sequence.next() )
 			_sendNewIndex();
 	}
 	
-	public function prefItem (  ):void
-	{
+	public function prev (  ):void{
 		if( _sequence.prev() )
 			_sendNewIndex()
+	}
+	
+	public function first (  ):void{
+		if( _sequence.changeItemByIndex(0) )
+			_sendNewIndex();
+	}
+	
+	public function last (  ):void{
+		if( _sequence.changeItemByIndex( _sequence.totalItems - 1 ) )
+			_sendNewIndex();
 	}
 	
 	// _____________________________ Helpers

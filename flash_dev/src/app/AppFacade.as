@@ -26,6 +26,10 @@ public class AppFacade extends Facade implements IFacade
 	public static const STAGE_RESIZE:String 				= "stage_resize";
 	public static const NAV_BTN_CLICK:String 				= "nav_btn_click";
 	public static const PORTFOLIO_ITEM_CLICK:String 		= "portfolio_item_click";
+	public static const PORTFOLIO_NEXT:String 				= "portfolio_next";
+	public static const PORTFOLIO_PREV:String 				= "portfolio_prev";
+	public static const PORTFOLIO_START:String 				= "portfolio_start";
+	public static const PORTFOLIO_END:String 				= "portfolio_end";
 	
 	// Misc
 	public static const REFRESH_ALIGN:String 				= "refresh_align";
@@ -63,6 +67,10 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( PORTFOLIO_DATA_LOADED, DataRequests );
 		registerCommand( NAV_BTN_CLICK, Clicks );
 		registerCommand( PORTFOLIO_ITEM_CLICK, Clicks );
+		registerCommand( PORTFOLIO_NEXT, Clicks );
+		registerCommand( PORTFOLIO_PREV, Clicks );
+		registerCommand( PORTFOLIO_START, Clicks );
+		registerCommand( PORTFOLIO_END, Clicks );
 	}
 
 }

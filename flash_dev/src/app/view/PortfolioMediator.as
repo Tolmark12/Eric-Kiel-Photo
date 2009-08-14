@@ -20,6 +20,12 @@ public class PortfolioMediator extends Mediator implements IMediator
 		super( NAME );
 		_portfolio.init();
 		_portfolio.addEventListener( NavEvent.PORTFOLIO_ITEM_CLICK, _onPortfolioItemClick, false,0,true );
+		_portfolio.addEventListener( NavEvent.PORTFOLIO_NEXT, _onPortfolioNext, false,0,true );
+		_portfolio.addEventListener( NavEvent.PORTFOLIO_PREV, _onPortfolioPrev, false,0,true );
+		_portfolio.addEventListener( NavEvent.PORTFOLIO_START, _onPortfolioStart, false,0,true );
+		_portfolio.addEventListener( NavEvent.PORTFOLIO_END, _onPortfolioEnd, false,0,true );
+		
+		
 		$stage.addChild( _portfolio );
    	}
 	
@@ -50,10 +56,24 @@ public class PortfolioMediator extends Mediator implements IMediator
 	
 	// _____________________________ Events
 	
-	private function _onPortfolioItemClick ( e:NavEvent ):void
-	{
+	private function _onPortfolioItemClick ( e:NavEvent ):void{
 		sendNotification( AppFacade.PORTFOLIO_ITEM_CLICK, e.portfolioItemIndex );
 	}
 	
+	private function _onPortfolioNext ( e:Event ):void {
+		sendNotification( AppFacade.PORTFOLIO_NEXT );
+	}
+	
+	private function _onPortfolioPrev ( e:Event ):void {
+		sendNotification( AppFacade.PORTFOLIO_PREV );
+	}
+	
+	private function _onPortfolioStart ( e:Event ):void {
+		sendNotification( AppFacade.PORTFOLIO_START );
+	}
+	
+	private function _onPortfolioEnd ( e:Event ):void {
+		sendNotification( AppFacade.PORTFOLIO_END );
+	}
 }
 }
