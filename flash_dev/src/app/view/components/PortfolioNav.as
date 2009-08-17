@@ -67,8 +67,9 @@ package app.view.components
 			_start.x 			= 0;
 			                
 			_left.x 			= (_start.x + _start.width) + _PADDING;
+			_left.y 			= 5;
 			_right.x 			= (_left.x + _left.width*2) + _PADDING;
-			_right.y			= _right.height;
+			_right.y			= _right.height + 5;
 			_right.rotation 	= 180;
 			_end.x 				= (_right.x + _right.width) + _PADDING;			
 		}
