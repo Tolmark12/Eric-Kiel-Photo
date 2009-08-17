@@ -41,6 +41,8 @@ public class Portfolio extends Page
 		_portfolioNav = new PortfolioNav();
 		_portfolioNav.build();
 		_portfolioNav.visible = false;
+		_portfolioNav.x = StageResizeVo.CENTER - _portfolioNav.width/2;
+		_portfolioNav.y = 640;
 		this.addChild(_portfolioNav);
 	}
 	

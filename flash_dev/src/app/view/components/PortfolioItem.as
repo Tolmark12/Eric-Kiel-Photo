@@ -91,7 +91,7 @@ public class PortfolioItem extends Sprite
 		Tweener.removeTweens( this, "x" );
 		targetX = $x;
 		if( this.x != $x ){
-			if( $doTween )
+			if( $doTween || isActive )
 				Tweener.addTween( this, { x:$x, time:_TIME, transition:"EaseInOutQuint"} );
 			else
 				this.x = $x;
