@@ -21,6 +21,7 @@ public class PortfolioItem extends Sprite
 	private var _portfolioItemVo:PortfolioItemVo;
 	private var _portfolioImages:PortfolioImage;
 	public var targetX:Number;
+	private var _isTweening:Boolean = false;
 	
 	public function PortfolioItem():void
 	{
@@ -88,14 +89,21 @@ public class PortfolioItem extends Sprite
 	*/
 	public function moveTo ( $x:Number, $doTween:Boolean ):void
 	{
-		Tweener.removeTweens( this, "x" );
-		targetX = $x;
 		if( this.x != $x ){
-			if( $doTween || isActive )
-				Tweener.addTween( this, { x:$x, time:_TIME, transition:"EaseInOutQuint"} );
-			else
+			if( $doTween || isActive ){
+				if( !_isTweening && targetX != $x ){
+					_isTweening = true
+					Tweener.addTween( this, { x:$x, time:_TIME, transition:"EaseInOutQuint", onComplete:_arrivedAtTarget} );
+				}
+			}else{
+				if( !isActive ){
+					_isTweening = false;
+					Tweener.removeTweens( this, "x" );
+				}
 				this.x = $x;
+			}
 		}
+		targetX = $x;
 	}
 	
 	// _____________________________ Event Handlers
@@ -130,6 +138,11 @@ public class PortfolioItem extends Sprite
 			deactivate(false);
 		else
 			dispatchEvent( new ImageLoadEvent(ImageLoadEvent.RECENTER_STRIP, true) );
+	}
+	
+	private function _arrivedAtTarget (  ):void
+	{
+		_isTweening = false;
 	}
 	
 	// _____________________________ Getters + Setters

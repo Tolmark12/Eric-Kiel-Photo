@@ -22,7 +22,7 @@ public class PortfolioProxy extends Proxy implements IProxy
 		sendNotification( AppFacade.PORTFOLIO_DATA_PARSED, _portfolioVo );
 		
 		_sequence = new Sequence( _portfolioVo.items );
-		_sendNewIndex();
+//		_sendNewIndex();
 	}
 	
 	public function changeActiveItemByIndex ( $index:uint ):void{

@@ -139,8 +139,8 @@ public class Portfolio extends Page
 	{
 		_distributeObjects(0);
 		_lastXmouse = this.mouseX;
-		Tweener.addTween( _imageHolder, { x:StageResizeVo.CENTER - _currentItem.targetX - _currentItem.width/2, time:1.3, transition:"EaseInOutQuint"} );
-//		_scroller.changeScrollPosition( (_currentItem.targetX) / (_totalWidth() -_currentItem.width) );
+		Tweener.addTween( _imageHolder, { x:StageResizeVo.CENTER - _currentItem.targetX - _currentItemWidth/2, time:1.3, transition:"EaseInOutQuint"} );
+//		_scroller.changeScrollPosition( (_currentItem.targetX) / (_totalWidth() -_currentItemWidth) );
 	}
 	
 	private function _distributeObjects ( $startingIndex:Number, $doTween:Boolean=true ):void
@@ -187,7 +187,7 @@ public class Portfolio extends Page
 				pos += (pos < 1)? _scrollWindowWidth : -_scrollWindowWidth ;
 				var xTarg:Number = Math.round( _imageHolder.x + pos * 0.07 );
 				
-				var sidePadding = (StageResizeVo.lastResize.width/2 - _currentItem.width/2);
+				var sidePadding = (StageResizeVo.lastResize.width/2 - _currentItemWidth/2);
 				
 				if( pos > 1 ){
 					if( xTarg < StageResizeVo.lastResize.left + sidePadding )
@@ -207,11 +207,18 @@ public class Portfolio extends Page
 	
 	private function _onScroll ( e:ScrollEvent ):void
 	{
-		var sidePadding = (StageResizeVo.lastResize.width/2 - _currentItem.width/2);
+		var sidePadding = (StageResizeVo.lastResize.width/2 - _currentItemWidth/2);
 		
 		var xTarget:Number = StageResizeVo.lastResize.left + sidePadding + (( - _totalWidth()-sidePadding*2 + StageResizeVo.lastResize.width )   * e.percent);
 		Tweener.addTween( _imageHolder, { x:xTarget, time:0.5} );
 		//_imageHolder.x = xTarget;
+	}
+	
+	private function get _currentItemWidth():Number{
+		if( _currentItem != null )
+			return _currentItem.width;
+		else 
+			return StageResizeVo.lastResize.width;
 	}
 
 }
