@@ -71,7 +71,7 @@ package app.view.components
 			_right.x 			= (_left.x + _left.width*2) + _PADDING;
 			_right.y			= _right.height + 5;
 			_right.rotation 	= 180;
-			_end.x 				= (_right.x + _right.width) + _PADDING - 12;			
+			_end.x 				= (_right.x + _right.width) + _PADDING-6;			
 		}
 		
 		private function _addEvents():void
