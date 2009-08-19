@@ -61,7 +61,7 @@ public class NavItem extends Sprite
 			_hitArea.graphics.drawRect( 0,0,this.width + hitPadding*2.4, this.height + hitPadding );
 			_hitArea.x = -hitPadding;
 			_hitArea.y = 19;
-			_hitArea.buttonMode = true;
+//			_hitArea.buttonMode = true;
 			this.addChild(_hitArea)
 			
 

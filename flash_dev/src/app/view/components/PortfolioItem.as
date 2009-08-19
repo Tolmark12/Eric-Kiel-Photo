@@ -30,7 +30,7 @@ public class PortfolioItem extends Sprite
 		this.addEventListener( MouseEvent.CLICK, _onClick, false,0,true );
 		this.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOver, false,0,true );
 		this.addEventListener( MouseEvent.MOUSE_OUT, _onMouseOut, false,0,true );
-		this.buttonMode = true;
+//		this.buttonMode = true;
 	}
 	
 	// _____________________________ API

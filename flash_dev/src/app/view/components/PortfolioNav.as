@@ -52,7 +52,7 @@ package app.view.components
 			for each(var $button in _controllerArray)
 			{
 				$button.useHandCursor 	= true;
-				$button.buttonMode 		= true;
+//				$button.buttonMode 		= true;
 			}
 			
 			_positionElements();
@@ -70,7 +70,7 @@ package app.view.components
 			_right.x 			= (_left.x + _left.width*2) + _PADDING;
 			_right.y			= _right.height;
 			_right.rotation 	= 180;
-			_end.x 				= (_right.x + _right.width) + _PADDING;			
+			_end.x 				= (_right.x + _right.width) + _PADDING - 12;			
 		}
 		
 		private function _addEvents():void

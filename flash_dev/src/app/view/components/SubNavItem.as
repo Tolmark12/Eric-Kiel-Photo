@@ -29,7 +29,7 @@ package app.view.components
 			var hitPadding:Number  	= 5;
 			hit.graphics.beginFill(0xFFDEAD, 0);
 			hit.graphics.drawRect( 0, 0, this.width, this.height );
-			hit.buttonMode = true;
+//			hit.buttonMode = true;
 			
 			hit.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOver, false, 0, true );
 			hit.addEventListener( MouseEvent.MOUSE_OUT, _onMouseOut, false, 0, true );

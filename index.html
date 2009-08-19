@@ -3,7 +3,7 @@
     <head>
         <title>Eric Kiel Photography</title>
         <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-		<link rel="stylesheet" href="style.css" type="text/css" media="screen" charset="utf-8">
+		<link rel="stylesheet" href="style.css" type="text/css" media="screen" charset="utf-8" />
     </head>
 
     <body id="body">
@@ -11,20 +11,21 @@
         <!-- Javascript for embedding flash and checking for flash plugin -->
         <script type="text/javascript" src="js/swfobject/swfobject.js"></script>
         <script type="text/javascript" src="js/swfaddress/swfaddress.js"></script>
-        <script type="text/javascript" src="js/swffit/swffit.js"></script>
+        <!-- script type="text/javascript" src="js/swffit/swffit.js"></script -->
         <script type="text/javascript">
             /* <![CDATA[ */
 				defaultColor = "222222";
                 flashVars   = { defaultBg:"0x" + defaultColor }; // Set the json location here:
                 flashParams = { bgcolor: "#" + defaultColor, menu: 'false', allowfullscreen:"true" };
 				attributes  = {id: 'kiel_swf'};
-                swfobject.embedSWF( 'Kiel09.swf', 'flash_div', '850', '400', '9.0.45', 
+                swfobject.embedSWF( 'Kiel09.swf', 'flash_div', '100%', '100%', '9.0.45', 
                                     'js/swfobject/expressinstall.swf', flashVars, flashParams, attributes );
-				swffit.fit("kiel_swf",20,20);
+			//	swffit.fit("kiel_swf",20,20);
             /* ]]> */
         </script>
         <!-- Javascript END -->
         
+		<div id="flash_wrapper">
             <div id="flash_div" >
                 <p>In order to view this page you need Flash Player 9+ support. Click on the following link to download it.</p>
                 <p>
@@ -33,6 +34,7 @@
                     </a>
                 </p>
             </div>
+		</div>	
     </body>
 </html>
 

@@ -179,7 +179,7 @@ public class Portfolio extends Page
 	private var _lastXmouse:Number = 0;
 	private function _onEnterFrame ( e:Event ):void{
 		_isScrolling = false
-		if( this.mouseY > 120 && Math.abs( _lastXmouse - this.mouseX ) > 13 ) {
+		if( this.mouseY > 200 && Math.abs( _lastXmouse - this.mouseX ) > 13 ) {
 			_lastXmouse = StageResizeVo.CENTER;
 			var pos:Number = StageResizeVo.CENTER - this.stage.mouseX;
 			if( Math.abs(pos) > _scrollWindowWidth ){
