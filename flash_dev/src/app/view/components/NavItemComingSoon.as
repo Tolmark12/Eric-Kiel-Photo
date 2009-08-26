@@ -25,7 +25,7 @@ public class NavItemComingSoon extends NavItem
 		
 		// Build the contact
 		_comingSoon 	= new ComingSoon($navItemVo.sub)
-		_comingSoon.y 	= this.y + this.height + 20;
+		_comingSoon.y 	= Math.round( this.y + this.height + 20 );
 		_comingSoon.deactivate();
 		this.addChild(_comingSoon);
 		

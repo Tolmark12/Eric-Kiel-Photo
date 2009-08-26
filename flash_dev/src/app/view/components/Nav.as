@@ -29,7 +29,7 @@ public class Nav extends Sprite
 			// Make sure this isn't a sub nav item
 			if( navItemVo.parentNavItemId == null  ) {
 				var navItem:NavItem = _getNavItem( navItemVo );
-				navItem.x = xPos;
+				navItem.x = Math.round( xPos );
 				navItem.addEventListener( MouseEvent.MOUSE_OVER, _onNavMouseOver, false,0,true );
 				navItem.addEventListener( MouseEvent.MOUSE_OUT, _onNavMouseOut, false,0,true );
 				xPos += navItem.width + 12;
@@ -37,7 +37,7 @@ public class Nav extends Sprite
 			}
 		}
 		this.y = 40
-		this.x = StageResizeVo.CENTER - this.width/2;
+		this.x = Math.round( StageResizeVo.CENTER - this.width/2 );
 	}
 	
 	public function activateNavItem ( $id:String ):void
@@ -78,23 +78,18 @@ public class Nav extends Sprite
 	
 	private function _getNavItem ( $navItemVo ):NavItem
 	{
-		trace( $navItemVo.kind );
 		switch ($navItemVo.kind)
 		{
 			case "subNav" :
-			trace( "a" );
 				return new NavItemSubNav( $navItemVo );
 			break;
 			case "contact" :
-			trace( "b" );
 				return new NavItemContact( $navItemVo );
 			break;
 			case "coming_soon" :
-				trace( "c" );
 				return new NavItemComingSoon( $navItemVo );
 			break;
 			default :
-			trace( "d" );
 				return new NavItem( $navItemVo );
 			break
 		}

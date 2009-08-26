@@ -72,7 +72,8 @@ public class NavItemSubNav extends NavItem
 			_hitArea.height 	= _subNav.y + _subNav.height - 31;
 			_hitArea.width 		= _subNav.x + _subNav.width + 4;
 			
-			_subNav.activate();
+			if( e != null )
+				_subNav.activate();
 			this.stage.addEventListener( Event.ENTER_FRAME, _onEnterFrame, false,0,true );
 			super._onMouseOver(e);
 		}
