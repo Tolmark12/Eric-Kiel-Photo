@@ -25,7 +25,6 @@ public class PortfolioMediator extends Mediator implements IMediator
 		_portfolio.addEventListener( NavEvent.PORTFOLIO_START, _onPortfolioStart, false,0,true );
 		_portfolio.addEventListener( NavEvent.PORTFOLIO_END, _onPortfolioEnd, false,0,true );
 		
-		
 		$stage.addChild( _portfolio );
    	}
 	
@@ -34,7 +33,10 @@ public class PortfolioMediator extends Mediator implements IMediator
 	{
 		return [ AppFacade.PORTFOLIO_DATA_PARSED, 
 		 		 AppFacade.ACTIVATE_PORTFOLIO_ITEM,
-		 		 AppFacade.STAGE_RESIZE];
+		 		 AppFacade.STAGE_RESIZE,
+				 AppFacade.APPLY_PORTFOLIO_FILTERS,
+				 AppFacade.DEACTIVATE_ACTIVE_PORTFOLIO_ITEM,
+				 AppFacade.ACTIVE_ITEM_CLICKED_AGAIN ];
 	}
 	
 	// PureMVC: Handle notifications
@@ -50,6 +52,16 @@ public class PortfolioMediator extends Mediator implements IMediator
 			break;
 			case AppFacade.STAGE_RESIZE :
 				_portfolio.onStageResize( note.getBody() as StageResizeVo )
+			break;
+			case AppFacade.APPLY_PORTFOLIO_FILTERS :
+				_portfolio.filterImages( note.getBody() as Array );
+			break;
+			case AppFacade.DEACTIVATE_ACTIVE_PORTFOLIO_ITEM :
+				trace( note.getBody() );
+				_portfolio.deactivateCurrentItem( note.getBody() as uint );
+			break;
+			case AppFacade.ACTIVE_ITEM_CLICKED_AGAIN :
+				_portfolio.activeItemClickedAgain();
 			break;
 		}
 	}

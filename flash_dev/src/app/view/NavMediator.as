@@ -20,13 +20,16 @@ public class NavMediator extends Mediator implements IMediator
 		super( NAME );
 		$stage.addChild( _nav );
 		_nav.addEventListener( NavEvent.NAV_BTN_CLICK, _onNavBtnClick, false,0,true );
+		_nav.addEventListener( NavEvent.ADD_FILTER, _onAddFilter, false,0,true );
+		_nav.addEventListener( NavEvent.REMOVE_FILTER, _onRemoveFilter, false,0,true );
    	}
 	
 	// PureMVC: List notifications
 	override public function listNotificationInterests():Array
 	{
 		return [ AppFacade.NAV_DATA_PARSED, 
-		 		 AppFacade.UPDATE_PATH];
+		 		 AppFacade.UPDATE_PATH,
+				 AppFacade.ACTIVE_PORTFOLIO_TAGS ];
 	}
 	
 	// PureMVC: Handle notifications
@@ -49,7 +52,9 @@ public class NavMediator extends Mediator implements IMediator
 					if( pathVo.path[1].hasChanged )
 						_nav.activateSubNavItem( pathVo.path[1].id );
 				}
-								
+			break;
+			case AppFacade.ACTIVE_PORTFOLIO_TAGS :
+				_nav.changeActiveSubItems(note.getBody() as Array)
 			break;
 		}
 	}
@@ -58,6 +63,14 @@ public class NavMediator extends Mediator implements IMediator
 	
 	private function _onNavBtnClick ( e:NavEvent ):void {
 		sendNotification( AppFacade.NAV_BTN_CLICK, e.id );
+	}
+	
+	private function _onAddFilter ( e:NavEvent ):void {
+		sendNotification( AppFacade.ADD_FILTER, e.tag );
+	}
+	
+	private function _onRemoveFilter ( e:NavEvent ):void {
+		sendNotification( AppFacade.REMOVE_FILTER, e.tag );
 	}
 	
 }

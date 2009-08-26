@@ -22,6 +22,8 @@ public class PortfolioItem extends Sprite
 	private var _portfolioImages:PortfolioImage;
 	public var targetX:Number;
 	private var _isTweening:Boolean = false;
+	public var isHidden:Boolean = false;
+	public var index:uint;
 	
 	public function PortfolioItem():void
 	{
@@ -42,6 +44,7 @@ public class PortfolioItem extends Sprite
 	*/
 	public function buildAndLoad ( $portfolioItemVo:PortfolioItemVo ):void
 	{
+		index = $portfolioItemVo.index;
 		_portfolioItemVo = $portfolioItemVo;
 		_portfolioImages = new PortfolioImage(_portfolioItemVo.index);
 		_portfolioImages.addEventListener( ImageLoadEvent.HIGH_RES_IMAGE_LOADED, _onHighResImageLoaded, false,0,true );
@@ -57,7 +60,7 @@ public class PortfolioItem extends Sprite
 	{
 		_portfolioImages.loadLargeImage()
 		_removeTweens();
-		Tweener.addTween( super, { y:0, scaleX:1, scaleY:1, time:_TIME, transition:"EaseInOutQuint"} );
+		Tweener.addTween( super, { y:0, scaleX:1, scaleY:1, time:_TIME, transition:"EaseInOutQuint", onComplete:_sendActivationEvent} );
 		blur = 0;
 		Tweener.addTween( this, { blur:30, time:0.6, delay:0.3, transition:"EaseInOutQuint", onUpdate:_updateGlow} );
 		
@@ -72,7 +75,7 @@ public class PortfolioItem extends Sprite
 	{
 		_removeTweens();
 		if( $doTween ){
-			Tweener.addTween( this, { y:_LOWER_Y, scaleX:_portfolioImages.shrinkPercentage, scaleY:_portfolioImages.shrinkPercentage, time:_TIME, transition:"EaseInOutQuint"} );
+			Tweener.addTween( this, { y:_LOWER_Y, scaleX:_portfolioImages.shrinkPercentage, scaleY:_portfolioImages.shrinkPercentage, time:_TIME, transition:"EaseInOutQuint", onComplete:_fadeBack} );
 			Tweener.addTween( this, { blur:0, time:0.3, transition:"EaseInOutQuint", onUpdate:_updateGlow} );
 		}else{
 			this.scaleX = this.scaleY = _portfolioImages.shrinkPercentage;
@@ -80,30 +83,50 @@ public class PortfolioItem extends Sprite
 		}
 		
 		this.isActive = false;
-		_onMouseOut(null);
 		this.filters = [];
+	}
+	
+	public function hide (  ):void
+	{
+		isHidden = true;
+		if( isActive ){
+			this.isActive = false;
+			_onMouseOut(null);
+			this.filters = [];
+		}
+		Tweener.addTween( this, { alpha:0, scaleX:0, scaleY:0, time:0, transition:"EaseInOutQuint"} );
+	}
+	
+	public function show (  ):void
+	{
+		this.alpha = 1;
+		isHidden = false;
+		deactivate();
 	}
 	
 	/** 
 	*	Tween this item to a new x position
 	*/
-	public function moveTo ( $x:Number, $doTween:Boolean ):void
+	public function moveTo ( $x:Number, $doTween:Boolean, $speed:Number=_TIME ):void
 	{
-		if( this.x != $x ){
-			if( $doTween || isActive ){
-				if( !_isTweening && targetX != $x ){
-					_isTweening = true
-					Tweener.addTween( this, { x:$x, time:_TIME, transition:"EaseInOutQuint", onComplete:_arrivedAtTarget} );
+			if( targetX != $x ){
+				if( $doTween || isActive ){
+					if( !_isTweening || targetX != $x ){
+						_isTweening = true
+						Tweener.removeTweens( this, "x" );
+						Tweener.addTween( this, { x:$x, time:$speed, transition:"EaseInOutQuint", onComplete:_arrivedAtTarget} );
+					}
+				}else{
+					if( !isActive ){
+						_isTweening = false;
+						Tweener.removeTweens( this, "x" );
+					}
 				}
-			}else{
-				if( !isActive ){
-					_isTweening = false;
-					Tweener.removeTweens( this, "x" );
-				}
+			}
+			else{
 				this.x = $x;
 			}
-		}
-		targetX = $x;
+			targetX = $x;
 	}
 	
 	// _____________________________ Event Handlers
@@ -145,11 +168,25 @@ public class PortfolioItem extends Sprite
 		_isTweening = false;
 	}
 	
+	// _____________________________ Tween completes
+	
+	private function _sendActivationEvent (  ):void
+	{
+		dispatchEvent( new Event("madeBig", true) );
+	}
+	
+	private function _fadeBack (  ):void
+	{
+		_onMouseOut(null);
+	}
+	
 	// _____________________________ Getters + Setters
 	
 	override public function get width (  ):Number
 	{
-		if( this.isActive ) 
+		if( this.isHidden )
+			return 0;
+		else if( this.isActive ) 
 			return _portfolioImages.activeWidth;
 		else
 			return _portfolioImages.inactiveWidth;

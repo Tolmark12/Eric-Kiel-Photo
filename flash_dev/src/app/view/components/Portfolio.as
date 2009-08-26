@@ -84,6 +84,7 @@ public class Portfolio extends Page
 			portfolioItem.buildAndLoad( portfolioItemVo );
 			portfolioItem.x = i * 200;
 			portfolioItem.deactivate();
+			portfolioItem.addEventListener( "madeBig", _onItemActivationComplete, false,0,true );
 			_items.push( portfolioItem )
 			_imageHolder.addChild( portfolioItem );
 		}
@@ -102,10 +103,61 @@ public class Portfolio extends Page
 	
 		_currentIndex = $index;
 		_currentItem = _items[$index] as PortfolioItem;
-		_imageHolder.swapChildrenAt( _imageHolder.numChildren-1, _imageHolder.getChildIndex(_currentItem) );
 		_currentItem.activate();
 		_centerStripOnImage( $index );
-		_distributeObjects(0);
+		this.stage.removeEventListener( Event.ENTER_FRAME, _onEnterFrame )
+		//_distributeObjects(0);
+	}
+	
+	public function deactivateCurrentItem ( $index:uint ):void
+	{
+		if( _currentItem != null )
+			_currentItem.deactivate();
+		
+		_currentItem = _items[$index] as PortfolioItem
+			
+		this.stage.addEventListener( Event.ENTER_FRAME, _onEnterFrame, false,0,true );
+		_centerStripOnImage( $index );
+		
+		if( _currentItem != null )
+			_currentItem.deactivate();
+	}
+	
+	/** 
+	*	Turns images on (or off) based on a list of active / inactive items
+	*	@param		list of items
+	*/
+	public function filterImages ( $images:Array ):void
+	{
+		var portfolioItem:PortfolioItem;
+		var len:uint = $images.length;
+		var firstIndex:int = -1;
+		
+		for ( var i:uint=0; i<len; i++ ) 
+		{
+			portfolioItem = _items[i] as PortfolioItem;
+			if( $images[i] && portfolioItem.isHidden )
+				portfolioItem.show()
+			else if( !$images[i] && !portfolioItem.isHidden )
+				portfolioItem.hide();
+				
+			if( $images[i] && firstIndex < 0 )
+				firstIndex = i;
+		}
+		
+		if( _currentItem != null )
+			if( _currentItem.isHidden )
+				_currentItem = null;
+		
+		if( _currentItem != null )
+			_centerStripOnImage( _currentItem.index, 0, 0)
+		else 
+			_centerStripOnImage( firstIndex, 0, 0 )
+	}
+	
+	public function activeItemClickedAgain (  ):void
+	{
+		this.stage.addEventListener( Event.ENTER_FRAME, _onEnterFrame, false,0,true );
 	}
 	
 	public function onStageResize ( $vo:StageResizeVo ):void
@@ -135,15 +187,17 @@ public class Portfolio extends Page
 	
 	// _____________________________ Strip
 	
-	private function _centerStripOnImage ( $index:uint ):void
+	private function _centerStripOnImage ( $index:uint, $speed:Number =1.3, $speed2:Number=0.8 ):void
 	{
-		_distributeObjects(0);
+		_distributeObjects(0,true,$speed2);
 		_lastXmouse = this.mouseX;
-		Tweener.addTween( _imageHolder, { x:StageResizeVo.CENTER - _currentItem.targetX - _currentItemWidth/2, time:1.3, transition:"EaseInOutQuint"} );
+		var xTarg:Number = (_currentItem != null)? StageResizeVo.CENTER - _currentItem.targetX - _currentItemWidth/2 : StageResizeVo.lastResize.left ;
+		Tweener.addTween( _imageHolder, { x:xTarg, time:$speed, transition:"EaseInOutQuint"} );
 //		_scroller.changeScrollPosition( (_currentItem.targetX) / (_totalWidth() -_currentItemWidth) );
 	}
 	
-	private function _distributeObjects ( $startingIndex:Number, $doTween:Boolean=true ):void
+	public var count:Number = 0;
+	private function _distributeObjects ( $startingIndex:Number, $doTween:Boolean=true, $speed:Number=0.8 ):void
 	{
 		var len:uint 	= _items.length;
 		var xPos:Number = _ITEM_PADDING;
@@ -152,8 +206,10 @@ public class Portfolio extends Page
 		for ( var i:uint=$startingIndex; i<len; i++ ) 
 		{
 			item = _items[i] as PortfolioItem
-			item.moveTo( xPos, $doTween );
-			xPos += item.width + _ITEM_PADDING;
+			item.moveTo( xPos, $doTween, $speed );
+			xPos += item.width;
+			if( item.width != 0 )
+				xPos += _ITEM_PADDING;
 		}
 	}
 	
@@ -179,7 +235,7 @@ public class Portfolio extends Page
 	private var _lastXmouse:Number = 0;
 	private function _onEnterFrame ( e:Event ):void{
 		_isScrolling = false
-		if( this.mouseY > 200 && Math.abs( _lastXmouse - this.mouseX ) > 13 ) {
+		if( this.mouseY > 200 && this.mouseY < 380 && Math.abs( _lastXmouse - this.mouseX ) > 13 ) {
 			_lastXmouse = StageResizeVo.CENTER;
 			var pos:Number = StageResizeVo.CENTER - this.stage.mouseX;
 			if( Math.abs(pos) > _scrollWindowWidth ){
@@ -203,6 +259,11 @@ public class Portfolio extends Page
 			}			
 		}
 
+	}
+	
+	private function _onItemActivationComplete ( e:Event ):void
+	{
+		_imageHolder.swapChildrenAt( _imageHolder.numChildren-1, _imageHolder.getChildIndex(_currentItem) );
 	}
 	
 	private function _onScroll ( e:ScrollEvent ):void

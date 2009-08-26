@@ -11,11 +11,15 @@ package app.view.components
 		private var _txt:NavText_swc;
 		private var _isSelected:Boolean = false;
 		
+		public var kind:String;
 		public var id:String;
+		public var tag:String;
 	
 		public function SubNavItem( $navItemVo:NavItemVo ):void
 		{
-			id = $navItemVo.id;
+			id 		= $navItemVo.id;
+			kind	= $navItemVo.pageType;
+			tag		= $navItemVo.tag;
 			
 			// Text
 			_txt = new NavText_swc();
@@ -69,10 +73,23 @@ package app.view.components
 		}
 
 		private function _onClick ( e:Event ):void
-		{			
-			var navBtnClick:NavEvent = new NavEvent( NavEvent.NAV_BTN_CLICK, true );
-			navBtnClick.id = id;
+		{
+			var navBtnClick:NavEvent;
+			
+			if( kind != "filter" ) {
+				navBtnClick = new NavEvent( NavEvent.NAV_BTN_CLICK, true );
+				navBtnClick.id = id;
+			} else {
+				if( _isSelected )
+					navBtnClick = new NavEvent( NavEvent.REMOVE_FILTER, true );
+				else
+					navBtnClick = new NavEvent( NavEvent.ADD_FILTER, true );
+					navBtnClick.tag = tag;
+			}
+			
 			dispatchEvent( navBtnClick );
+			
+
 		}
 	}
 }

@@ -21,6 +21,7 @@ public class DataRequests extends SimpleCommand implements ICommand
 			case AppFacade.CONFIG_LOADED_AND_PARSED :
 				var configVo:ConfigVo = note.getBody() as ConfigVo;
 				navProxy.config( configVo );
+				portfolioProxy.config( configVo );
 			break;
 			case AppFacade.LOAD_NAV_DATA :
 				externalDataProxy.loadNavData();

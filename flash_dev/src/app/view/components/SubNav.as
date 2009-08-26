@@ -39,6 +39,7 @@ package app.view.components
 				var subNavItem:SubNavItem = new SubNavItem( $subNavVo.pages[i] );
 				subNavItem.y = (subNavItem.height*i);
 				subNavItem.alpha = 0;
+				subNavItem.activate();
 				_subNavHolder.addChild( subNavItem );
 				_subNavArray.push(subNavItem);
 			}
@@ -100,7 +101,33 @@ package app.view.components
 		 		_currentItem = _getSubNavItemById( $id );
 				_currentItem.activate();
 			}
-		}		
+		}
+		
+		public function activateSubItems ( $tags:Array ):void
+		{
+			var len:uint = _subNavArray.length;
+			var len2:uint = $tags.length;
+			var subNavItem:SubNavItem;
+			var tagFound:Boolean
+			
+			for ( var i:uint=0; i<len; i++ ) 
+			{
+				tagFound	= false;
+				subNavItem 	= _subNavArray[i];
+				secondLoop : for ( var j:uint=0; j<len2; j++ ) 
+				{
+					if( subNavItem.tag == $tags[j] ){
+						tagFound = true
+						break secondLoop;
+					}
+				}
+				
+				if( tagFound )
+					subNavItem.activate();
+				else
+					subNavItem.deactivate();
+			}
+		}	
 		
 		private function _setVisible(  ):void
 		{

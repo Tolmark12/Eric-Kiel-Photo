@@ -14,6 +14,10 @@ public class NavItemSubNav extends NavItem
 	public function NavItemSubNav( $navItemVo:NavItemVo ):void
 	{
 		super($navItemVo);
+		
+		// Intercept any sub nav clicks, and fire our own click if they are fired
+		_subNav.addEventListener( NavEvent.ADD_FILTER, _onAddFilter, false,0,true );
+		_subNav.addEventListener( NavEvent.REMOVE_FILTER, _onRemoveFilter, false,0,true );
 	}
 	
 	// _____________________________ API
@@ -45,6 +49,12 @@ public class NavItemSubNav extends NavItem
 	{
 		_subNav.activateSubNavItem( $id );
 	}
+	
+	override public function activateSubItems ( $tags:Array ):void
+	{
+		_subNav.activateSubItems( $tags );
+	}
+	
 	
 	// _____________________________ Events
 	
@@ -79,6 +89,15 @@ public class NavItemSubNav extends NavItem
 	}
 	
 	override protected function _onClick ( e:Event ):void {
+		super._onClick(e);
+	}
+	
+	private function _onAddFilter ( e:NavEvent ):void {
+		super._onClick(e);
+	}
+	
+	private function _onRemoveFilter ( e:NavEvent ):void {
+		super._onClick(e);
 	}
 
 }

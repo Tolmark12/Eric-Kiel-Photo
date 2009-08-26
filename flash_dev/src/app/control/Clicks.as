@@ -35,7 +35,12 @@ public class Clicks extends SimpleCommand implements ICommand
 			case AppFacade.PORTFOLIO_END :
 				portfolioProxy.last();
 			break
-			
+			case AppFacade.ADD_FILTER :
+				portfolioProxy.addFilter( note.getBody() as String );
+			break;
+			case AppFacade.REMOVE_FILTER :
+				portfolioProxy.removeFilter( note.getBody() as String );
+			break;
 		}
 	}
 }

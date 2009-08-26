@@ -2,23 +2,19 @@
 	"pages" : 
 	[                                                
 		{  	"id" : "/",     		"text" : null, 		 	"dataFeed" : "content/json/GetPortfolio.json", "isLogo" : true },
-		{  	"id" : "/portfolio", 	"text" : "Portfolio", 	"dataFeed" : "content/json/GetPortfolio.json", "pageType" : "portfolio",
+		{  	"id" : "/portfolio", 	"text" : "Portfolio", 	"pageType" : "portfolio",  "dataFeed" : "content/json/GetPortfolio.json", "default":true,
 			"sub" : {
 				"kind" : "subNav",
 				"pages" : [
-					{"id" : "/portfolio/current", "text" : "Current", "pageType" : "portfolio",	"dataFeed" : "content/json/GetPortfolio.json"}, 
-					{"id" : "/portfolio/people",  "text" : "People",  "pageType" : "portfolio", "dataFeed" : "content/json/GetPortfolio.json"}, 
-					{"id" : "/portfolio/places",  "text" : "Places",  "pageType" : "portfolio", "dataFeed" : "content/json/GetPortfolio.json"}, 
-					{"id" : "/portfolio/motion",  "text" : "Motion",  "pageType" : "portfolio", "dataFeed" : "content/json/GetPortfolio.json"}
+					{"id" : "/portfolio/current", "text" : "Current", "pageType" : "filter", "tag":"current" },
+					{"id" : "/portfolio/people",  "text" : "People",  "pageType" : "filter", "tag":"people" }, 
+					{"id" : "/portfolio/places",  "text" : "Places",  "pageType" : "filter", "tag":"places" }, 
+					{"id" : "/portfolio/motion",  "text" : "Motion",  "pageType" : "filter", "tag":"motion" }
 				]
 			}
 		},
-		{  	"id" : "/stock",    	"text" : "Stock"   ,  "pageType" : "portfolio",  "dataFeed" : "content/json/GetPortfolio.json" },
-		{  	"id" : "/sign_in",  	"text" : "Sign In" ,  "pageType" : "portfolio",  "dataFeed" : "content/json/GetPortfolio.json" },
-		{  	"id" : "/contact",  	"text" : "Contact" ,  "pageType" : "portfolio",  "dataFeed" : "content/json/GetPortfolio.json",
-			"sub" : {
-				"kind" : "contact"
-			}
-		}
+		{  	"id" : "/stock",    	"text" : "Stock"   ,  "pageType" : "none", "sub" : { "kind" : "coming_soon" }},
+		{  	"id" : "/sign_in",  	"text" : "Sign In" ,  "pageType" : "none", "sub" : { "kind" : "coming_soon" } },
+		{  	"id" : "/contact",  	"text" : "Contact" ,  "pageType" : "none", "sub" : { "kind" : "contact" }}
 	]
 }

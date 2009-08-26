@@ -7,7 +7,7 @@ package app.view.components
 	
 	public class PortfolioNav extends Sprite
 	{
-		private static const _PADDING:Number = 10;
+		private static const _PADDING:Number = 20;
 		
 		private var _controller:Sprite;
 		private var _controllerArray:Array;
@@ -61,17 +61,13 @@ package app.view.components
 		
 		private function _positionElements():void
 		{
-			_controller.x 		= 0;
-			_controller.y 		= 0;
-			                
 			_start.x 			= 0;
-			                
-			_left.x 			= (_start.x + _start.width) + _PADDING;
+			_left.x 			= _start.x + _start.width + _PADDING-5;
+			_right.x 			= _left.x + 3 + _PADDING;
 			_left.y 			= 5;
-			_right.x 			= (_left.x + _left.width*2) + _PADDING;
-			_right.y			= _right.height + 5;
-			_right.rotation 	= 180;
-			_end.x 				= (_right.x + _right.width) + _PADDING-6;			
+			_right.y			= 5;
+			_right.scaleX 		= -1;
+			_end.x 				= _right.x + _PADDING-6;			
 		}
 		
 		private function _addEvents():void

@@ -23,6 +23,8 @@ public class NavProxy extends Proxy implements IProxy
 		_navVo = new NavVo( $json );
 		sendNotification( AppFacade.NAV_DATA_PARSED, _navVo );
 		sendNotification( AppFacade.REFRESH_ALIGN );
+		changePage( _navVo.defaultNavItem.id );
+		
 	}
 	
 	public function changePage ( $newId:String ):void

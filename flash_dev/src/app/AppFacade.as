@@ -11,31 +11,37 @@ public class AppFacade extends Facade implements IFacade
 	public static const STARTUP:String = "startup";
 
 	// Data requests and completions
-	public static const CONFIG_LOADED_AND_PARSED:String 	= "config_loaded_and_parsed";
-	public static const LOAD_NAV_DATA:String 				= "load_nav_data";
-	public static const NAV_DATA_LOADED:String 				= "nav_data_loaded";
-	public static const NAV_DATA_PARSED:String 				= "nav_data_parsed";
-	public static const LOAD_PAGE_DATA:String 				= "load_page_data";
-	public static const PORTFOLIO_DATA_LOADED:String 		= "portfolio_data_loaded";
-	public static const PORTFOLIO_DATA_PARSED:String 		= "portfolio_data_parsed";
-	
-	// Browser
-	public static const UPDATE_PATH:String 					= "update_path";
-	
-	// User initiated
-	public static const STAGE_RESIZE:String 				= "stage_resize";
-	public static const NAV_BTN_CLICK:String 				= "nav_btn_click";
-	public static const PORTFOLIO_ITEM_CLICK:String 		= "portfolio_item_click";
-	public static const PORTFOLIO_NEXT:String 				= "portfolio_next";
-	public static const PORTFOLIO_PREV:String 				= "portfolio_prev";
-	public static const PORTFOLIO_START:String 				= "portfolio_start";
-	public static const PORTFOLIO_END:String 				= "portfolio_end";
-	
-	// Misc
-	public static const REFRESH_ALIGN:String 				= "refresh_align";
-
-	// State Changes
-	public static const ACTIVATE_PORTFOLIO_ITEM:String 		= "activate_portfolio_item";
+	public static const CONFIG_LOADED_AND_PARSED:String 			= "config_loaded_and_parsed";
+	public static const LOAD_NAV_DATA:String 						= "load_nav_data";
+	public static const NAV_DATA_LOADED:String 						= "nav_data_loaded";
+	public static const NAV_DATA_PARSED:String 						= "nav_data_parsed";
+	public static const LOAD_PAGE_DATA:String 						= "load_page_data";
+	public static const PORTFOLIO_DATA_LOADED:String 				= "portfolio_data_loaded";
+	public static const PORTFOLIO_DATA_PARSED:String 				= "portfolio_data_parsed";
+	                                                        		
+	// Browser                                              		
+	public static const UPDATE_PATH:String 							= "update_path";
+	                                                        		
+	// User initiated                                       		
+	public static const STAGE_RESIZE:String 						= "stage_resize";
+	public static const NAV_BTN_CLICK:String 						= "nav_btn_click";
+	public static const PORTFOLIO_ITEM_CLICK:String 				= "portfolio_item_click";
+	public static const PORTFOLIO_NEXT:String 						= "portfolio_next";
+	public static const PORTFOLIO_PREV:String 						= "portfolio_prev";
+	public static const PORTFOLIO_START:String 						= "portfolio_start";
+	public static const PORTFOLIO_END:String   						= "portfolio_end";
+	public static const ADD_FILTER:String      						= "add_filter";
+	public static const REMOVE_FILTER:String   						= "remove_filter";
+	                                                        		
+	// Misc                                                 		
+	public static const REFRESH_ALIGN:String 						= "refresh_align";
+                                                            		
+	// State Changes                                        		
+	public static const ACTIVATE_PORTFOLIO_ITEM:String 				= "activate_portfolio_item";
+	public static const APPLY_PORTFOLIO_FILTERS:String 				= "apply_portfolio_filters";
+	public static const ACTIVE_PORTFOLIO_TAGS:String 				= "active_portfolio_tags";  		// An array of the portfolio tags that are active
+	public static const DEACTIVATE_ACTIVE_PORTFOLIO_ITEM:String 	= "deactivate_active_portfolio_item";
+	public static const ACTIVE_ITEM_CLICKED_AGAIN:String 			= "active_item_clicked_again";
 	
 	// Example: var myFacade:AppFacade = AppFacade.getInstance( 'app_facade' );
 	public function AppFacade( key:String ):void
@@ -71,6 +77,8 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( PORTFOLIO_PREV, Clicks );
 		registerCommand( PORTFOLIO_START, Clicks );
 		registerCommand( PORTFOLIO_END, Clicks );
+		registerCommand( ADD_FILTER, Clicks );
+		registerCommand( REMOVE_FILTER, Clicks );
 	}
 
 }

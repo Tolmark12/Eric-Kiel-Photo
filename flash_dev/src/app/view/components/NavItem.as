@@ -77,6 +77,11 @@ public class NavItem extends Sprite
 		}
 	}
 	
+	public function activateSubItems ( $tags:Array ):void{
+		// This should be overridden in sub nav
+		// do nothing if this item has no sub nav
+	}
+	
 	// _____________________________ Events
 	
 	protected function _onMouseOver ( e:Event ):void {

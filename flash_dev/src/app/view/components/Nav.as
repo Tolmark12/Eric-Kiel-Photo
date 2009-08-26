@@ -55,6 +55,12 @@ public class Nav extends Sprite
 			( _selectedItem as NavItemSubNav ).activateSubItem( $id );
 	}
 	
+	public function changeActiveSubItems ( $tags:Array ):void
+	{
+		if( _selectedItem != null )
+			_selectedItem.activateSubItems( $tags );
+	}
+	
 	// _____________________________ Helpers
 	
 	private function _getNavItemById ( $id:String ):NavItem
@@ -72,12 +78,22 @@ public class Nav extends Sprite
 	
 	private function _getNavItem ( $navItemVo ):NavItem
 	{
-		if( $navItemVo.subNav != null )
-			return new NavItemSubNav( $navItemVo );
-		else if( $navItemVo.sub != null )
-			return new NavItemContact( $navItemVo );
-		else
-			return new NavItem( $navItemVo );
+		switch ($navItemVo.kind)
+		{
+			case "subNav" :
+				return new NavItemSubNav( $navItemVo );
+			break;
+			case "contact" :
+				return new NavItemContact( $navItemVo );
+			break;
+			case "coming_soon" :
+				// Replace this with Coming Soon Nav Item
+				return new NavItem( $navItemVo );
+			break;
+			default :
+				return new NavItem( $navItemVo );
+			break
+		}
 		
 	}
 	

@@ -3,5 +3,6 @@
 		"getNav" : "content/json/GetNav.json"
 	},
 	
+	"availableFilters" : ["people","places","current","motion"],
 	"background" : "content/images/green_sky_bg.jpg"
 }

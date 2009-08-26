@@ -11,6 +11,9 @@ public class NavItemVo
 	public var sub:*;						// The sub nav vo if there is one
 	public var parentNavItemId:String;		// If this is a sub nav item, include a ref to the parent id
 	public var pageType:String;
+	public var tag:String;
+	public var isDefault:Boolean;
+	public var kind:String;
 	
 	public function NavItemVo ( $json:Object ):void
 	{
@@ -19,6 +22,9 @@ public class NavItemVo
 		dataFeed	= $json.dataFeed;
 		isLogo		= $json.isLogo;
 		pageType	= $json.pageType;
+		tag			= $json.tag;
+		isDefault	= $json.default;
+		kind		= $json.kind;
 		
 		if( $json.sub != null ) {
 			switch ($json.sub.kind)

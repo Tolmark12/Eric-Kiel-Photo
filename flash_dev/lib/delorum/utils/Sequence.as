@@ -3,7 +3,7 @@ package delorum.utils
 
 public class Sequence
 {
-	private var _currentItemIndex:uint;
+	private var _currentItemIndex:int;
 	private var _totalItems:uint;
 	private var _items:Array;
 	
@@ -64,11 +64,16 @@ public class Sequence
 		return incramentItemIndex( -1, $loopOnOverShoot );
 	}
 	
+	public function deselect (  ):void
+	{
+		_currentItemIndex = -1;
+	}
+	
 	// _____________________________ Getters and setters
 	
-	public function get currentIndex 		(  ):uint{ return _currentItemIndex; 	};
-	public function get totalItems			(  ):uint{ return _totalItems; 		};
-	public function get currentItem 		(  ):*   { return _items[_currentItemIndex]; };
-
+	public function get currentIndex 		(  ):int	{ return _currentItemIndex; 	};
+	public function get totalItems			(  ):uint	{ return _totalItems; 		};
+	public function get currentItem 		(  ):*   	{ return _items[_currentItemIndex]; };
+	public function get items 				(  ):Array	{ return _items; };
 }
 }

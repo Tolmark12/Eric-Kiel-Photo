@@ -39,6 +39,17 @@ public class NavVo
 		}
 		return null;
 	}
+	
+	public function get defaultNavItem (  ):NavItemVo{ 
+		var len:uint = pages.length;
+		for ( var i:uint=0; i<len; i++ ) 
+		{
+			var navItem:NavItemVo = pages[i];
+			if( navItem.isDefault )
+				return navItem;
+		}
+		return null;
+	};
 }
 
 }
