@@ -91,11 +91,7 @@ public class Nav extends Sprite
 			break;
 			case "coming_soon" :
 				trace( "c" );
-				// !!
-				// Replace this with Coming Soon Nav Item
-				return new NavItem( $navItemVo );
-				// !!
-				
+				return new NavItemComingSoon( $navItemVo );
 			break;
 			default :
 			trace( "d" );
