@@ -164,13 +164,13 @@ package app.view.components
 			Tweener.addTween(e.currentTarget, {_color: color, time:0});
 		}
 		
-		private function _hideArrows():void
+		public function _hideArrows():void
 		{
 			_left.visible = false;
 			_right.visible = false;
 		}
 
-		private function _showArrows():void
+		public function _showArrows():void
 		{
 			_left.visible = true;
 			_right.visible = true;
