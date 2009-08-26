@@ -78,16 +78,19 @@ public class Nav extends Sprite
 	
 	private function _getNavItem ( $navItemVo ):NavItem
 	{
+		trace( $navItemVo.kind );
 		switch ($navItemVo.kind)
 		{
 			case "subNav" :
+			trace( "a" );
 				return new NavItemSubNav( $navItemVo );
 			break;
 			case "contact" :
+			trace( "b" );
 				return new NavItemContact( $navItemVo );
 			break;
 			case "coming_soon" :
-				
+				trace( "c" );
 				// !!
 				// Replace this with Coming Soon Nav Item
 				return new NavItem( $navItemVo );
@@ -95,6 +98,7 @@ public class Nav extends Sprite
 				
 			break;
 			default :
+			trace( "d" );
 				return new NavItem( $navItemVo );
 			break
 		}

@@ -24,9 +24,9 @@ public class NavItemVo
 		pageType	= $json.pageType;
 		tag			= $json.tag;
 		isDefault	= $json.default;
-		kind		= $json.kind;
 		
 		if( $json.sub != null ) {
+			kind	= $json.sub.kind;
 			switch ($json.sub.kind)
 			{
 				case "subNav"  :
