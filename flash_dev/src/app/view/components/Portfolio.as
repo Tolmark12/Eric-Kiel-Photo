@@ -93,6 +93,7 @@ public class Portfolio extends Page
 			_imageHolder.addChild( portfolioItem );
 		}
 		
+		_portfolioNav.hideArrows();
 		_portfolioNav.visible = true;
 	}
 	
@@ -102,6 +103,7 @@ public class Portfolio extends Page
 	*/
 	public function activateItem ( $index:uint ):void
 	{
+		_portfolioNav.showArrows();
 		if( _currentItem != null )
 			_currentItem.deactivate();
 	
@@ -115,6 +117,7 @@ public class Portfolio extends Page
 	
 	public function deactivateCurrentItem ( $index:uint ):void
 	{
+		_portfolioNav.hideArrows();
 		if( _currentItem != null )
 			_currentItem.deactivate();
 		
