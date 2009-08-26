@@ -34,11 +34,6 @@ package app.view.components
 			this.addEventListener(Event.ADDED_TO_STAGE, _onAddedToStage);
 		}
 		
-		private function _onAddedToStage(e:Event):void
-		{
-			stage.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
-		}
-		
 		public function build():void
 		{
 			_start 		= new NavText_swc();
@@ -69,6 +64,23 @@ package app.view.components
 			
 			_positionElements();
 			_addEvents();
+		}
+		
+		public function hideArrows():void
+		{
+			_left.visible = false;
+			_right.visible = false;
+		}
+
+		public function showArrows():void
+		{
+			_left.visible = true;
+			_right.visible = true;
+		}
+		
+		private function _onAddedToStage(e:Event):void
+		{
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
 		}
 		
 		private function _positionElements():void
@@ -162,18 +174,6 @@ package app.view.components
 		private function _onMouseOut ( e:Event ):void {
 			// Change text Color
 			Tweener.addTween(e.currentTarget, {_color: color, time:0});
-		}
-		
-		public function _hideArrows():void
-		{
-			_left.visible = false;
-			_right.visible = false;
-		}
-
-		public function _showArrows():void
-		{
-			_left.visible = true;
-			_right.visible = true;
 		}
 	}
 }
