@@ -20,6 +20,7 @@ public class Portfolio extends Page
 	private var _items:Array;
 	private var _scroller:Scroller;
 	private var _portfolioNav:PortfolioNav;
+	private var _copyRight:Copyright_swc;
 	
 	public function Portfolio():void
 	{
@@ -37,6 +38,9 @@ public class Portfolio extends Page
 		this.addEventListener( ImageLoadEvent.HIGH_RES_IMAGE_LOADED, _onHighResImageLoaded, false,0,true );
 		this.addEventListener( ImageLoadEvent.LOW_RES_IMAGE_LOADED, _onLowResImageLoaded, false,0,true );
 		this.addEventListener( ImageLoadEvent.RECENTER_STRIP, _onRecenterStrip, false,0,true );
+		
+		_copyRight = new Copyright_swc();
+		this.addChild(_copyRight);
 		
 		_portfolioNav = new PortfolioNav();
 		_portfolioNav.build();
@@ -162,9 +166,11 @@ public class Portfolio extends Page
 	
 	public function onStageResize ( $vo:StageResizeVo ):void
 	{
-		_scroller.changeWidth( $vo.width - _SCROLL_PADDING*2, 0 );
-		_scroller.y = $vo.height - _scroller.height - _SCROLL_PADDING;
-		_scroller.x = $vo.left + _SCROLL_PADDING;
+		_copyRight.x = $vo.right - _copyRight.width - 20;
+		_copyRight.y = $vo.height - _copyRight.height - 20
+		//_scroller.changeWidth( $vo.width - _SCROLL_PADDING*2, 0 );
+		//_scroller.y = $vo.height - _scroller.height - _SCROLL_PADDING;
+		//_scroller.x = $vo.left + _SCROLL_PADDING;
 	}
 	
 	// _____________________________ Helpers
