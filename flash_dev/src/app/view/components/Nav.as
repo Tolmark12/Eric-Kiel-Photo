@@ -87,8 +87,12 @@ public class Nav extends Sprite
 				return new NavItemContact( $navItemVo );
 			break;
 			case "coming_soon" :
+				
+				// !!
 				// Replace this with Coming Soon Nav Item
 				return new NavItem( $navItemVo );
+				// !!
+				
 			break;
 			default :
 				return new NavItem( $navItemVo );
