@@ -281,6 +281,16 @@ public class Portfolio extends Page
 		else 
 			return StageResizeVo.lastResize.width;
 	}
+	
+	private function _hideArrows():void
+	{
+		_portfolioNav.visible = false;
+	}
+	
+	private function _showArrows():void
+	{
+		_portfolioNav.visible = true;
+	}
 
 }
 

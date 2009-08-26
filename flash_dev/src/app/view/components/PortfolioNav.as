@@ -5,8 +5,13 @@ package app.view.components
 	
 	import app.view.components.events.NavEvent;
 	
+	import caurina.transitions.Tweener;
+	
 	public class PortfolioNav extends Sprite
 	{
+		public var hoverColor:uint	= 0xFFFFFF;
+		public var color:uint		= 0x000000;
+		
 		private static const _PADDING:Number = 20;
 		
 		private var _controller:Sprite;
@@ -17,7 +22,7 @@ package app.view.components
 		private var _left:PortfolioBtn_swc;
 		private var _right:PortfolioBtn_swc;
 		
-		private var _navEvent:NavEvent;		
+		private var _navEvent:NavEvent;	
 			
 		public function PortfolioNav(  ):void
 		{		
@@ -25,6 +30,13 @@ package app.view.components
 			this.addChild(_controller);
 			
 			_controllerArray = new Array();
+			
+			this.addEventListener(Event.ADDED_TO_STAGE, _onAddedToStage);
+		}
+		
+		private function _onAddedToStage(e:Event):void
+		{
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
 		}
 		
 		public function build():void
@@ -36,8 +48,8 @@ package app.view.components
 			
 			_start.titleTxt.autoSize 		= "left";
 			_end.titleTxt.autoSize 			= "left";
-			_start.titleTxt.text 	= "start";
-			_end.titleTxt.text 		= "end";
+			_start.titleTxt.text 			= "start";
+			_end.titleTxt.text 				= "end";
 			
 			_controllerArray.push(_start);
 			_controllerArray.push(_end);
@@ -52,7 +64,7 @@ package app.view.components
 			for each(var $button in _controllerArray)
 			{
 				$button.useHandCursor 	= true;
-//				$button.buttonMode 		= true;
+				//$button.buttonMode 		= true;
 			}
 			
 			_positionElements();
@@ -71,7 +83,17 @@ package app.view.components
 		}
 		
 		private function _addEvents():void
-		{
+		{			
+			_start.addEventListener(MouseEvent.MOUSE_OVER, _onMouseOver, false, 0, true);
+			_end.addEventListener(MouseEvent.MOUSE_OVER, _onMouseOver, false, 0, true);
+			_right.addEventListener(MouseEvent.MOUSE_OVER, _onMouseOver, false, 0, true);
+			_left.addEventListener(MouseEvent.MOUSE_OVER, _onMouseOver, false, 0, true);
+			
+			_start.addEventListener(MouseEvent.MOUSE_OUT, _onMouseOut, false, 0, true);
+			_end.addEventListener(MouseEvent.MOUSE_OUT, _onMouseOut, false, 0, true);
+			_right.addEventListener(MouseEvent.MOUSE_OUT, _onMouseOut, false, 0, true);
+			_left.addEventListener(MouseEvent.MOUSE_OUT, _onMouseOut, false, 0, true);
+			
 			_start.addEventListener(MouseEvent.CLICK, _onClick, false, 0, true);
 			_end.addEventListener(MouseEvent.CLICK, _onClick, false, 0, true);
 			_right.addEventListener(MouseEvent.CLICK, _onClick, false, 0, true);
@@ -103,6 +125,43 @@ package app.view.components
 					dispatchEvent(_navEvent);
 				break;
 			}
+		}
+		
+		private function _onKeyDown(e:KeyboardEvent):void
+		{	
+			switch(e.keyCode)
+			{
+				case 38:
+					//trace("start");					
+					_navEvent = new NavEvent(NavEvent.PORTFOLIO_START, true);
+					dispatchEvent(_navEvent);
+				break;       
+				case 40:
+					//trace("end");
+					_navEvent = new NavEvent(NavEvent.PORTFOLIO_END, true);
+					dispatchEvent(_navEvent);
+				break;       
+				case 37:
+					//trace("prev");
+					_navEvent = new NavEvent(NavEvent.PORTFOLIO_PREV, true);
+					dispatchEvent(_navEvent);
+				break;       
+				case 39:
+					//trace("next");
+					_navEvent = new NavEvent(NavEvent.PORTFOLIO_NEXT, true);
+					dispatchEvent(_navEvent);
+				break;
+			}
+		}
+		
+		private function _onMouseOver ( e:Event ):void {
+			// Change text color
+			Tweener.addTween(e.currentTarget, {_color: hoverColor, time:0});
+		}
+
+		private function _onMouseOut ( e:Event ):void {
+			// Change text Color
+			Tweener.addTween(e.currentTarget, {_color: color, time:0});
 		}
 	}
 }
