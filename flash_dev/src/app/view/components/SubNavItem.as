@@ -10,6 +10,7 @@ package app.view.components
 	{
 		private var _txt:NavText_swc;
 		private var _isSelected:Boolean = false;
+		private var _isDeactivated:Boolean = false;
 		
 		public var kind:String;
 		public var id:String;
@@ -48,6 +49,7 @@ package app.view.components
 
 		public function activate (  ):void
 		{
+			_isDeactivated = false;
 			_onMouseOver(null);
 			_isSelected = true;
 		}
@@ -55,6 +57,7 @@ package app.view.components
 		public function deactivate (  ):void
 		{
 			_isSelected = false;
+			_isDeactivated = true;
 			_onMouseOut(null);
 		}
 		
@@ -63,13 +66,20 @@ package app.view.components
 		private function _onMouseOver ( e:Event ):void
 		{
 			if( !_isSelected && _txt != null)
-				Tweener.addTween(_txt, {_color: 0x99E6F9, time:0});
+				if( _isDeactivated )
+					Tweener.addTween(_txt, {_color: 0x777777, time:0});
+				else
+					Tweener.addTween(_txt, {_color: 0x99E6F9, time:0});
+			
 		}
 
 		private function _onMouseOut ( e:Event ):void
 		{
 			if( !_isSelected && _txt != null )
-				Tweener.addTween(_txt, {_color: 0xFFFFFF, time:0});
+				if( _isDeactivated )
+					Tweener.addTween(_txt, {_color: 0x555555, time:0});
+				else
+					Tweener.addTween(_txt, {_color: 0xFFFFFF, time:0});
 		}
 
 		private function _onClick ( e:Event ):void

@@ -35,6 +35,9 @@ public class NavItemVo
 				case "contact" :
 					sub = new ContactVo( $json.sub );
 				break;
+				case "coming_soon" : 
+					sub = new ComingSoonVo( $json.sub );
+				break
 			}
 		}
 	}

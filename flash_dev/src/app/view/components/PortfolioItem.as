@@ -62,7 +62,7 @@ public class PortfolioItem extends Sprite
 		_removeTweens();
 		Tweener.addTween( super, { y:0, scaleX:1, scaleY:1, time:_TIME, transition:"EaseInOutQuint", onComplete:_sendActivationEvent} );
 		blur = 0;
-		Tweener.addTween( this, { blur:80, time:0.6, delay:0.3, transition:"EaseInOutQuint", onUpdate:_updateGlow} );
+		Tweener.addTween( this, { blur:30, time:0.6, delay:0.3, transition:"EaseInOutQuint", onUpdate:_updateGlow} );
 		
 		_onMouseOver(null);
 		this.isActive = true;
@@ -218,7 +218,7 @@ public class PortfolioItem extends Sprite
 	private function _getGlow (  ):GlowFilter
 	{
 		var color:Number = 0x000000;
-		var alpha:Number = 0.7;
+		var alpha:Number = 0.3;
 		var strength:Number = 2;
 		var inner:Boolean = false;
 		var knockout:Boolean = false;
