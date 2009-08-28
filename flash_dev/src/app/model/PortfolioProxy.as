@@ -36,8 +36,10 @@ public class PortfolioProxy extends Proxy implements IProxy
 	public function changeActiveItemByIndex ( $index:uint ):void{
 		if( _sequence.changeItemByIndex($index) )
 			_sendNewIndex();
-		else
-			sendNotification( AppFacade.ACTIVE_ITEM_CLICKED_AGAIN );
+		else{
+			_sequence.deselect();
+			sendNotification( AppFacade.DEACTIVATE_ACTIVE_PORTFOLIO_ITEM, $index );
+		}
 	}
 	
 	public function next (  ):void{

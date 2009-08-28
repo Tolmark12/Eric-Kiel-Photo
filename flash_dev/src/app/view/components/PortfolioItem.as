@@ -62,7 +62,7 @@ public class PortfolioItem extends Sprite
 		_removeTweens();
 		Tweener.addTween( super, { y:0, scaleX:1, scaleY:1, time:_TIME, transition:"EaseInOutQuint", onComplete:_sendActivationEvent} );
 		blur = 0;
-		Tweener.addTween( this, { blur:30, time:0.6, delay:0.3, transition:"EaseInOutQuint", onUpdate:_updateGlow} );
+		Tweener.addTween( this, { blur:80, time:0.6, delay:0.3, transition:"EaseInOutQuint", onUpdate:_updateGlow} );
 		
 		_onMouseOver(null);
 		this.isActive = true;
@@ -75,6 +75,7 @@ public class PortfolioItem extends Sprite
 	{
 		_removeTweens();
 		if( $doTween ){
+			Tweener.removeTweens( this, "blur" );
 			Tweener.addTween( this, { y:_LOWER_Y, scaleX:_portfolioImages.shrinkPercentage, scaleY:_portfolioImages.shrinkPercentage, time:_TIME, transition:"EaseInOutQuint", onComplete:_fadeBack} );
 			Tweener.addTween( this, { blur:0, time:0.3, transition:"EaseInOutQuint", onUpdate:_updateGlow} );
 		}else{
@@ -95,9 +96,8 @@ public class PortfolioItem extends Sprite
 			this.filters = [];
 			this.scaleX = this.scaleY = _portfolioImages.shrinkPercentage;
 			this.y = _LOWER_Y;
-			this.visible = false;
 		}
-		Tweener.addTween( this, { alpha:0, time:0.3, transition:"EaseInOutQuint"} );
+		Tweener.addTween( this, { alpha:0, time:0.3, transition:"EaseInOutQuint", onComplete:_makeInvisible} );
 	}
 	
 	public function show (  ):void
@@ -205,6 +205,12 @@ public class PortfolioItem extends Sprite
 		Tweener.removeTweens( this, "scaleX", "scaleY", "blur" );
 	}
 	
+	private function _makeInvisible (  ):void
+	{
+		if( isHidden )
+			this.visible = false;
+	}
+	
 	// _____________________________ Glow
 	
 	public var blur:Number = 0;
@@ -212,7 +218,7 @@ public class PortfolioItem extends Sprite
 	private function _getGlow (  ):GlowFilter
 	{
 		var color:Number = 0x000000;
-		var alpha:Number = 0.3;
+		var alpha:Number = 0.7;
 		var strength:Number = 2;
 		var inner:Boolean = false;
 		var knockout:Boolean = false;

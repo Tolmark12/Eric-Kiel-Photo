@@ -165,7 +165,7 @@ public class Portfolio extends Page
 	
 	public function activeItemClickedAgain (  ):void
 	{
-		this.stage.addEventListener( Event.ENTER_FRAME, _onEnterFrame, false,0,true );
+		deactivateCurrentItem(_currentItem.index);
 	}
 	
 	public function onStageResize ( $vo:StageResizeVo ):void
