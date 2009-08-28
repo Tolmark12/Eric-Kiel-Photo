@@ -47,8 +47,8 @@ public class PortfolioItem extends Sprite
 		index = $portfolioItemVo.index;
 		_portfolioItemVo = $portfolioItemVo;
 		_portfolioImages = new PortfolioImage(_portfolioItemVo.index);
-		_portfolioImages.addEventListener( ImageLoadEvent.HIGH_RES_IMAGE_LOADED, _onHighResImageLoaded, false,0,true );
 		_portfolioImages.addEventListener( ImageLoadEvent.LOW_RES_IMAGE_LOADED, _onLowResImageLoaded, false,0,true );
+		_portfolioImages.addEventListener( ImageLoadEvent.HIGH_RES_IMAGE_LOADED, _onHighResImageLoaded, false,0,true );
 		this.addChild(_portfolioImages);
 		_portfolioImages.loadImages( _portfolioItemVo.lowResSrc, _portfolioItemVo.src );
 	}
@@ -93,14 +93,18 @@ public class PortfolioItem extends Sprite
 			this.isActive = false;
 			_onMouseOut(null);
 			this.filters = [];
+			this.scaleX = this.scaleY = _portfolioImages.shrinkPercentage;
+			this.y = _LOWER_Y;
+			this.visible = false;
 		}
-		Tweener.addTween( this, { alpha:0, scaleX:0, scaleY:0, time:0, transition:"EaseInOutQuint"} );
+		Tweener.addTween( this, { alpha:0, time:0.3, transition:"EaseInOutQuint"} );
 	}
 	
 	public function show (  ):void
 	{
-		this.alpha = 1;
+		Tweener.addTween( this, { alpha:0.8, time:0.3, transition:"EaseInOutQuint"} );
 		isHidden = false;
+		this.visible = true;
 		deactivate();
 	}
 	
@@ -151,12 +155,14 @@ public class PortfolioItem extends Sprite
 	private function _onLowResImageLoaded ( e:ImageLoadEvent ):void
 	{
 		this.visible = true;
-		//Tweener.addTween( this, { alpha:0.8, time:1, transition:"EaseInOutQuint"} );
-		_onHighResImageLoaded(null);
+		e.imageIndex = index;
+		if( !isActive )
+			deactivate(false);
 	}
 	
 	private function _onHighResImageLoaded ( e:ImageLoadEvent ):void
 	{
+		e.imageIndex = index;
 		if( !isActive )
 			deactivate(false);
 		else

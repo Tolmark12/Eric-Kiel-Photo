@@ -95,6 +95,7 @@ public class Portfolio extends Page
 		
 		_portfolioNav.hideArrows();
 		_portfolioNav.visible = true;
+		_imageHolder.x = StageResizeVo.lastResize.left;
 	}
 	
 	/** 
@@ -212,10 +213,11 @@ public class Portfolio extends Page
 		var xPos:Number = _ITEM_PADDING;
 		var item:PortfolioItem;
 		
-		for ( var i:uint=$startingIndex; i<len; i++ ) 
+		for ( var i:uint=0; i<len; i++ ) 
 		{
 			item = _items[i] as PortfolioItem
-			item.moveTo( xPos, $doTween, $speed );
+			if( i >= $startingIndex )
+				item.moveTo( xPos, $doTween, $speed );
 			xPos += item.width;
 			if( item.width != 0 )
 				xPos += _ITEM_PADDING;
@@ -234,9 +236,8 @@ public class Portfolio extends Page
 		_distributeObjects( e.imageIndex, false );
 	}
 	
-	private function _onRecenterStrip ( e:ImageLoadEvent ):void
-	{
-		_centerStripOnImage(_currentIndex);
+	private function _onRecenterStrip ( e:ImageLoadEvent ):void {
+		_centerStripOnImage(_currentIndex, e.imageIndex, 0);
 	}
 	
 	private var _scrollWindowWidth:Number = 250

@@ -63,15 +63,18 @@ public class PortfolioImage extends Sprite
 		this.graphics.clear();
 		
 		// Find widths
-		_smallWidth 			= _lowResHolder.width;
 		_lowResHolder.height 	= 500;
 		shrinkPercentage 		= _lowResHolder.scaleY/10;
 		_lowResHolder.scaleX 	= shrinkPercentage * 10;
 		_bigWidth 				= _lowResHolder.width;
-		_lowResHolder.scaleX 	= _lowResHolder.scaleY = shrinkPercentage * 10;
-		
+		_lowResHolder.scaleX 	= _lowResHolder.scaleY = shrinkPercentage * 10;		
 		this.addChild( _lowResHolder );
 		lowResLoaded = true;
+		
+		var snap:Number			= this.scaleX;
+		this.scaleX				= shrinkPercentage;
+		_smallWidth 			= this.width;
+		this.scaleX				= snap;
 		
 		var ldr:ImageLoader = new ImageLoader( _highResImagePath, _highResHolder );
 		ldr.addEventListener( Event.COMPLETE, _onHighResLoaded );
@@ -80,6 +83,7 @@ public class PortfolioImage extends Sprite
 		_highResImagePath = null;
 		var imgEv:ImageLoadEvent = new ImageLoadEvent( ImageLoadEvent.LOW_RES_IMAGE_LOADED, true );
 		dispatchEvent( imgEv );
+		
 	}
 	
 	private function _onHighResLoaded ( e:Event ):void {
@@ -87,6 +91,7 @@ public class PortfolioImage extends Sprite
 		_smallWidth				= _bigWidth * shrinkPercentage;
 		this.removeChild(_lowResHolder);
 		this.addChild( _highResHolder );
+		
 		var imgEv:ImageLoadEvent = new ImageLoadEvent( ImageLoadEvent.HIGH_RES_IMAGE_LOADED, true );
 		dispatchEvent( imgEv );
 	}
