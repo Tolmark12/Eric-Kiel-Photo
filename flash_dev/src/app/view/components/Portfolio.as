@@ -74,7 +74,7 @@ public class Portfolio extends Page
 		// Init holder
 		_imageHolder = new Sprite();
 		_imageHolder.y = 100;
-		this.addChild( _imageHolder );
+		this.addChildAt( _imageHolder, 0 );
 		
 		// Create new portfolio Items
 		_items = new Array();
@@ -104,16 +104,21 @@ public class Portfolio extends Page
 	*/
 	public function activateItem ( $index:uint ):void
 	{
-		_portfolioNav.showArrows();
 		if( _currentItem != null )
 			_currentItem.deactivate();
-	
+		
 		_currentIndex = $index;
 		_currentItem = _items[$index] as PortfolioItem;
 		_currentItem.activate();
 		_centerStripOnImage( $index );
 		this.stage.removeEventListener( Event.ENTER_FRAME, _onEnterFrame )
 		//_distributeObjects(0);
+		
+		var ammount:Number = _currentItem.width/2 - 20;
+		
+		_portfolioNav.positionArrows( ammount )
+		_portfolioNav.showArrows();
+
 	}
 	
 	public function deactivateCurrentItem ( $index:uint ):void
@@ -156,6 +161,8 @@ public class Portfolio extends Page
 		if( _currentItem != null )
 			if( _currentItem.isHidden )
 				_currentItem = null;
+		
+		_distributeObjects(_currentIndex)
 		
 		if( _currentItem != null )
 			_centerStripOnImage( _currentItem.index, 0, 0)

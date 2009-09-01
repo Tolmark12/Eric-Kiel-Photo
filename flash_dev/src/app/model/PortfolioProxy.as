@@ -46,6 +46,9 @@ public class PortfolioProxy extends Proxy implements IProxy
 		if( _sequence.currentIndex != -1 ) {
 			if( _sequence.changeItemByIndex(_nextActiveItem.index) )
 				_sendNewIndex();
+		}else{
+			if( _sequence.changeItemByIndex(0) )
+				_sendNewIndex();
 		}
 	}
 	
@@ -53,6 +56,9 @@ public class PortfolioProxy extends Proxy implements IProxy
 		if( _sequence.currentIndex != -1 ) {
 			if( _sequence.changeItemByIndex(_prevActiveItem.index) )
 				_sendNewIndex()
+		}else{
+			if( _sequence.changeItemByIndex(0) )
+				_sendNewIndex();
 		}
 	}
 	
@@ -74,19 +80,32 @@ public class PortfolioProxy extends Proxy implements IProxy
 			}
 		}
 		
-		_filters.push($filter);
+		//_filters.push($filter);
+		// UNCOMMENT ABOVE AND DELETE BELOW
+		// FOR TAG FILTERING
+		_filters = [$filter];
+		///////////////////////////////////
+		
 		_sendFilters();
 		return false;
 	}
 	
 	public function removeFilter ( $filter:String ):void{
-		var len:uint = _filters.length;
-		for ( var i:uint=0; i<len; i++ ) {
-			if( _filters[i] == $filter ){
-				_filters.splice(i,1)
-				_sendFilters();
-			}
-		}
+		//var len:uint = _filters.length;
+		//for ( var i:uint=0; i<len; i++ ) {
+		//	if( _filters[i] == $filter ){
+		//		_filters.splice(i,1)
+		//		_sendFilters();
+		//	}
+		//}
+		
+		//_filters.push($filter);
+		
+		// UNCOMMENT ABOVE AND DELETE BELOW
+		// FOR TAG FILTERING
+		_filters = [$filter];
+		_sendFilters()
+		///////////////////////////////////
 		
 		if( _sequence.currentIndex != -1 ) {
 			if( !_sequence.currentItem.isActive )

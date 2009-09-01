@@ -69,8 +69,9 @@ package app.view.components
 				if( _isDeactivated )
 					Tweener.addTween(_txt, {_color: 0x777777, time:0});
 				else
-					Tweener.addTween(_txt, {_color: 0x99E6F9, time:0});
+					Tweener.addTween(_txt, {_color: 0xFFFFFF, time:0});
 			
+			//blue - 0x99E6F9
 		}
 
 		private function _onMouseOut ( e:Event ):void

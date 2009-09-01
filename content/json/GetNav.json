@@ -14,7 +14,7 @@
 			}
 		},
 		{  	"id" : "/stock",    	"text" : "Stock"   ,  "pageType" : "none", "sub" : { "kind" : "coming_soon", "message" : "Stock site currently under construction.<br/><br/>Available fall 2009!" }},
-		{  	"id" : "/sign_in",  	"text" : "Sign In" ,  "pageType" : "none", "sub" : { "kind" : "coming_soon", "message" : "Were sorry, but this section is still under development. We are hoping to have it available by Fall 2010. <br/><br/>Please check back soon!"} },
+		{  	"id" : "/sign_in",  	"text" : "Sign In" ,  "pageType" : "none", "sub" : { "kind" : "coming_soon", "message" : "Stock site currently under construction.<br/><br/>Available fall 2009!"} },
 		{  	"id" : "/contact",  	"text" : "Contact" ,  "pageType" : "none", "sub" : { "kind" : "contact" }}
 	]
 }
