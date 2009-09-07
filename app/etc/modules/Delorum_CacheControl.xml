@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Delorum_CacheControl>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+            	<Mage_Admin />
+            	<Mage_Adminhtml />
+            </depends>
+        </Delorum_CacheControl>
+    </modules>
+</config>
