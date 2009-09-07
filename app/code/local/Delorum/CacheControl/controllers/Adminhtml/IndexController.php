@@ -19,7 +19,7 @@
  * @version    1.0
  */
  
-class Delorum_CacheControl_Adminhtml_IndexController extends Mage_Adminhtml_Controller_action
+class Delorum_CacheControl_Adminhtml_IndexController extends Mage_Adminhtml_Controller_Action
 {
 	public function indexAction()
 	{
