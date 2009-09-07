@@ -5,17 +5,6 @@
             <version>0.1.0</version>
         </Delorum_CacheControl>
     </modules>
-    <frontend>
-    	<routers>
-            <cachecontrol>
-                <use>standard</use>
-                <args>
-                    <module>Delorum_CacheControl</module>
-                    <frontName>cachecontrol</frontName>
-                </args>
-            </cachecontrol>
-        </routers>
-    </frontend>
     <admin>
         <routers>
 			<cachecontrol>

@@ -60,17 +60,6 @@ class Delorum_CacheControl_Adminhtml_IndexController extends Mage_Adminhtml_Cont
             }
         }
 
-        $beta = $this->getRequest()->getPost('beta');
-        $betaCache = array_keys(Mage::helper('core')->getCacheBetaTypes());
-
-        foreach ($betaCache as $type) {
-            if (empty($beta[$type])) {
-                $clean[] = $type;
-            } else {
-                $enable[$type] = 1;
-            }
-        }
-
         if (!empty($clean)) {
             Mage::app()->cleanCache($clean);
         }
