@@ -1,2 +1,14 @@
 .DS_Store
 Kiel09.swf
+app/etc/local.xml
+media/*
+media_temp/*
+var/session/*
+var/report/*
+var/cache/*
+.cache/*
+.settings/*
+app/.settings/*
+app/.cache/*
+.project
+use_cache.ser
