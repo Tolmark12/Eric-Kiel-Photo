@@ -3,7 +3,7 @@ package app.view.components
 
 import flash.display.Sprite;
 import flash.events.*;
-import delorum.loading.ImageLoader;
+import delorum.loading.*;
 import app.view.components.events.ImageLoadEvent;
 
 public class PortfolioImage extends Sprite
@@ -12,6 +12,7 @@ public class PortfolioImage extends Sprite
 	public var lowResLoaded:Boolean		= false;	
 	public var shrinkPercentage:Number 	= 1;
 	public var index:Number;
+	public var isHidden:Boolean = false;
 	
 	private var _lowResHolder:Sprite 	= new Sprite();
 	private var _highResHolder:Sprite	= new Sprite();
@@ -20,24 +21,32 @@ public class PortfolioImage extends Sprite
 	private var _bigWidth:Number;
 	private var _smallWidth:Number;
 	
+	private var _budgeId:String;
+	private var _loadImmediately:Boolean = false;
+	
 	public function PortfolioImage($index:Number):void
 	{
 		index = $index;
 		_drawTempBox();
 	}
 	
-	public function loadImages ( $lowResSrc:String, $src:String  ):void
+	public function loadImages ( $lowResSrc:String, $src:String, $loadImmediately:Boolean=false  ):void
 	{
 		_highResImagePath = $src;
 		var ldr:ImageLoader = new ImageLoader( $lowResSrc, _lowResHolder );
-		ldr.addEventListener( Event.COMPLETE, _onLowResLoaded );
-		ldr.addItemToLoadQueue();
+		ldr.addEventListener( Event.INIT, _onLowResLoaded );
+		ldr.addItemToLoadQueue( "low" );
+		
+		var ldr2:ImageLoader = new ImageLoader( _highResImagePath, _highResHolder );
+		ldr2.addEventListener( Event.INIT, _onHighResLoaded );
+		_budgeId = ldr2.addItemToLoadQueue("high");
+		_loadImmediately = $loadImmediately;
 	}
 	
 	public function loadLargeImage (  ):void
 	{
-		//if( !highResLoaded )
-			
+		if( !highResLoaded )
+			BaseLoader.loadItemNow( _budgeId, "high" )
 	}
 
 	public function get activeWidth (  ):Number
@@ -45,7 +54,7 @@ public class PortfolioImage extends Sprite
 		if( highResLoaded || lowResLoaded )
 			return _bigWidth;
 		else
-			return super.width;
+			return super.width * shrinkPercentage;
 	}
 	
 	public function get inactiveWidth (  ):Number
@@ -53,7 +62,7 @@ public class PortfolioImage extends Sprite
 		if( highResLoaded || lowResLoaded )
 			return _smallWidth;
 		else
-			return super.width;
+			return 50;
 	}
 	// _____________________________ Image load Handlers
 	
@@ -76,14 +85,14 @@ public class PortfolioImage extends Sprite
 		_smallWidth 			= this.width;
 		this.scaleX				= snap;
 		
-		var ldr:ImageLoader = new ImageLoader( _highResImagePath, _highResHolder );
-		ldr.addEventListener( Event.COMPLETE, _onHighResLoaded );
-		ldr.loadItem();
-		
 		_highResImagePath = null;
 		var imgEv:ImageLoadEvent = new ImageLoadEvent( ImageLoadEvent.LOW_RES_IMAGE_LOADED, true );
-		dispatchEvent( imgEv );
 		
+		if( !isHidden )
+			dispatchEvent( imgEv );
+			
+		if( _loadImmediately )
+			loadLargeImage();
 	}
 	
 	private function _onHighResLoaded ( e:Event ):void {
@@ -93,7 +102,9 @@ public class PortfolioImage extends Sprite
 		this.addChild( _highResHolder );
 		
 		var imgEv:ImageLoadEvent = new ImageLoadEvent( ImageLoadEvent.HIGH_RES_IMAGE_LOADED, true );
-		dispatchEvent( imgEv );
+		
+		if( !isHidden )
+			dispatchEvent( imgEv );
 	}
 	
 	// _____________________________ Helpers

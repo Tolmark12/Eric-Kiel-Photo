@@ -31,13 +31,13 @@ import flash.events.*;
 
 public class BaseLoader extends EventDispatcher
 {
-	// Static vars
 	private static var _currentlyLoading:Boolean;
-	private static var _loadCount:uint = 100000;
-	private static var _loadQueue:Object = new Object();
+	
 	
 	// Local vars
-	private var _queueNumber:uint;
+	private var _myQueue:Queue;
+	public var _queueNumber:uint;
+	public var _id:String;
 	
 	public function BaseLoader():void
 	{}
@@ -51,13 +51,17 @@ public class BaseLoader extends EventDispatcher
 	// ______________________________________________________________ Loading 
 	/** 
 	*	Adds an item to the end of the load queue. 
+	*	@param		Id of the Queue o add this to
 	*	@return 	Returns an identification for use in <code>loadItemNow</code>
 	*/
-	public function addItemToLoadQueue (  ):String
+	public function addItemToLoadQueue ( $id:String="default" ):String
 	{
-		_queueNumber = _loadCount;
-		_loadQueue[ _queueNumber ] = this;
-		_loadCount++;
+		_id	= $id;
+		_myQueue = Queue.getSingleton( $id );
+		_queueNumber = _myQueue.loadCount;
+		_myQueue.loadQueue[ _queueNumber ] = this;
+//		trace( _myQueue.loadCount + $id );
+		_myQueue.loadCount++;
 		loadNextItem();
 		return String( _queueNumber );
 	}
@@ -67,28 +71,27 @@ public class BaseLoader extends EventDispatcher
 	*/
 	public function removeItemFromLoadQueue (  ):void
 	{
-		if( _loadQueue[ _queueNumber ] != null ) 
-			delete _loadQueue[ _queueNumber ];
+		if( _myQueue.loadQueue[ _queueNumber ] != null ) 
+			delete _myQueue.loadQueue[ _queueNumber ];
 	}
 	
-	/** 
-	*	no matter where this item is in the load queue, it is loaded immediately
-	*/
-	public function budgeAndLoad ( ):void
-	{
-		loadItemNow( this.toString() );
-	}
+//	/** 
+//	*	no matter where this item is in the load queue, it is loaded immediately
+//	*/
+//	public function budgeAndLoad ( ):void{
+//		loadItemNow( this.toString() );
+//	}
 	
 	/** 
 	*	no matter where this item is in the load queue, it is loaded immediately
 	*	@param		The id string returned from <code>addItemToLoadQueue()</code>
 	*/
-	public static function loadItemNow ( $id:String ):void
-	{
-		var newLoader:BaseLoader = _loadQueue[$id];
+	public static function loadItemNow ( $id:String, $queueId:String="default" ):void {
+		var queue:Queue = Queue.queueById( $queueId );
+		var newLoader:BaseLoader = queue.loadQueue[$id];
 		if(newLoader != null)
 		{
-			delete _loadQueue[$id];
+			delete queue.loadQueue[$id];
 			newLoader.loadItem();
 		}
 	}
@@ -125,19 +128,28 @@ public class BaseLoader extends EventDispatcher
  	*/
 	private function loadNextItem ():void
 	{
-		if( !_currentlyLoading && !_loadQueueIsEmpty() )
+		// If nothing is loading...
+		if( !_currentlyLoading )
 		{
-			var nextLoad:BaseLoader = _getNextLoad();
-			
-			// Double check that holder mc hasn't been removed or deleted
-			if( nextLoad.isStillActive() )
-			{
-				_currentlyLoading = true;
-				nextLoad.loadItem();
-				nextLoad.onComplete = _loadComplete;
-				nextLoad.onError	= _loadComplete;
-			}else{
-				loadNextItem();
+			// and if the load queue isn't empty...
+			if( !_loadQueueIsEmpty() ){
+				var nextLoad:BaseLoader = _getNextLoad();
+				
+				// Double check that holder mc hasn't been removed or deleted
+				if( nextLoad.isStillActive() )
+				{
+					_currentlyLoading = true;
+//					trace( nextLoad._queueNumber  + '  :  ' + nextLoad._id );
+					nextLoad.loadItem();
+					nextLoad.onComplete = _loadComplete;
+					nextLoad.onError	= _loadComplete;
+				}else{
+					loadNextItem();
+				}
+			}
+			// Load queue is empty, try to load the next queue
+			else{
+				
 			}
 		}
 	}
@@ -149,13 +161,13 @@ public class BaseLoader extends EventDispatcher
 	private function _getNextLoad (  ):BaseLoader
 	{
 		var ar:Array = new Array();
-		for( var i:String in  _loadQueue){
-			var nextLoader:BaseLoader = _loadQueue[i] as BaseLoader;
-			ar.push( _loadQueue[i] );
+		for( var i:String in  Queue.currentQueue.loadQueue){
+			var nextLoader:BaseLoader = Queue.currentQueue.loadQueue[i] as BaseLoader;
+			ar.push( Queue.currentQueue.loadQueue[i] );
 		}
 		ar.sort();
 		var ldr:BaseLoader = ar.shift() as BaseLoader;
-		delete _loadQueue[ldr];
+		delete Queue.currentQueue.loadQueue[ldr];
 		return ldr;
 	}
 	
@@ -165,7 +177,7 @@ public class BaseLoader extends EventDispatcher
 	private function _loadQueueIsEmpty (  ):Boolean
 	{
 		// If there are no more loads, return false...
-		for( var i:String in _loadQueue ){
+		for( var i:String in Queue.currentQueue.loadQueue ){
 			return false;
 		}
 		//...else return true
@@ -179,8 +191,8 @@ public class BaseLoader extends EventDispatcher
 	{
 		_currentlyLoading = false;
 		loadNextItem();
-		if( _loadQueue[ _queueNumber ] != null ) 
-			delete _loadQueue[ _queueNumber ];
+		if( Queue.currentQueue.loadQueue[ _queueNumber ] != null ) 
+			delete Queue.currentQueue.loadQueue[ _queueNumber ];
 	}
 	
 	// ______________________________________________________________ Backwards compatible event listening
@@ -203,7 +215,7 @@ public class BaseLoader extends EventDispatcher
 	
 	override public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
 	{
-		_eventListener.addEventListener( type, listener );
+		_eventListener.addEventListener( type, listener,useCapture, priority, useWeakReference );
 	}
 	
 	override public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void

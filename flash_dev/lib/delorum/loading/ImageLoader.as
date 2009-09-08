@@ -105,7 +105,6 @@ public class ImageLoader extends BaseLoader implements LoaderIF
 		// Cross domain xml:
 		var loaderContext:LoaderContext = new LoaderContext ();
 		loaderContext.checkPolicyFile = checkCrossDomainXml;
-		
         _loader.load( _itemURL, loaderContext );
 		_holderMc.addChild( _loader );
 	}

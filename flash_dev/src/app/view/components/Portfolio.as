@@ -5,6 +5,7 @@ import flash.display.*;
 import app.model.vo.PortfolioVo;
 import app.model.vo.PortfolioItemVo;
 import app.model.vo.StageResizeVo;
+import app.model.vo.DeactivateVo;
 import caurina.transitions.Tweener;
 import app.view.components.events.ImageLoadEvent;
 import flash.events.*;
@@ -21,6 +22,7 @@ public class Portfolio extends Page
 	private var _scroller:Scroller;
 	private var _portfolioNav:PortfolioNav;
 	private var _copyRight:Copyright_swc;
+	
 	
 	public function Portfolio():void
 	{
@@ -121,16 +123,22 @@ public class Portfolio extends Page
 
 	}
 	
-	public function deactivateCurrentItem ( $index:uint ):void
+	public function deactivateCurrentItem ( $deactivateVo:DeactivateVo ):void
 	{
 		_portfolioNav.hideArrows();
 		if( _currentItem != null )
 			_currentItem.deactivate();
 		
-		_currentItem = _items[$index] as PortfolioItem
+		_currentItem = _items[ $deactivateVo.index ] as PortfolioItem
 			
 		this.stage.addEventListener( Event.ENTER_FRAME, _onEnterFrame, false,0,true );
-		_centerStripOnImage( $index );
+		
+		if( $deactivateVo.direction == "left" )
+			_leftStripOnImage( $deactivateVo.index );
+		else if( $deactivateVo.direction == "right" )
+			_rightStripOnImage( $deactivateVo.index );
+		else
+			_centerStripOnImage( $deactivateVo.index )	
 		
 		if( _currentItem != null )
 			_currentItem.deactivate();
@@ -162,17 +170,13 @@ public class Portfolio extends Page
 			if( _currentItem.isHidden )
 				_currentItem = null;
 		
-		_distributeObjects(_currentIndex)
-		
-		if( _currentItem != null )
-			_centerStripOnImage( _currentItem.index, 0, 0)
-		else 
-			_centerStripOnImage( firstIndex, 0, 0 )
+		_distributeObjects(0)
+		//Tweener.addTween( _imageHolder, { x:StageResizeVo.lastResize.left + _ITEM_PADDING, time:0, transition:"EaseInOutQuint"} );
 	}
 	
 	public function activeItemClickedAgain (  ):void
 	{
-		deactivateCurrentItem(_currentItem.index);
+		deactivateCurrentItem( new DeactivateVo(_currentItem.index, "center") );
 	}
 	
 	public function onStageResize ( $vo:StageResizeVo ):void
@@ -197,12 +201,31 @@ public class Portfolio extends Page
 		var len:uint = _items.length;
 		for ( var i:uint=0; i<len; i++ ) 
 		{
-			totalWidth += _items[i].width + _ITEM_PADDING;
+			totalWidth += _items[i].width;
+			if( _items[i].width > 0 )
+				totalWidth += _ITEM_PADDING;
+				
 		}
 		return totalWidth;
 	}
 	
 	// _____________________________ Strip
+	
+	private function _leftStripOnImage ( $index:uint, $speed:Number =1.3, $speed2:Number=0.8 ):void
+	{
+		_distributeObjects(0,true,$speed2);
+		_lastXmouse = this.mouseX;
+		var xTarg:Number = StageResizeVo.lastResize.left - _items[$index].targetX + _ITEM_PADDING;
+		Tweener.addTween( _imageHolder, { x:xTarg, time:$speed, transition:"EaseInOutQuint"} );
+	}
+	
+	private function _rightStripOnImage ( $index:uint, $speed:Number =1.3, $speed2:Number=0.8 ):void
+	{
+		_distributeObjects(0,true,$speed2);
+		_lastXmouse = this.mouseX;
+		var xTarg:Number = StageResizeVo.lastResize.right - _items[$index].targetX - _items[$index].width - _ITEM_PADDING;
+		Tweener.addTween( _imageHolder, { x:xTarg, time:$speed, transition:"EaseInOutQuint"} );
+	}
 	
 	private function _centerStripOnImage ( $index:uint, $speed:Number =1.3, $speed2:Number=0.8 ):void
 	{
@@ -260,7 +283,7 @@ public class Portfolio extends Page
 				pos += (pos < 1)? _scrollWindowWidth : -_scrollWindowWidth ;
 				var xTarg:Number = Math.round( _imageHolder.x + pos * 0.07 );
 				
-				var sidePadding = (StageResizeVo.lastResize.width/2 - _currentItemWidth/2);
+				var sidePadding = _ITEM_PADDING;//(StageResizeVo.lastResize.width/2 - _currentItemWidth/2);
 				
 				if( pos > 1 ){
 					if( xTarg < StageResizeVo.lastResize.left + sidePadding )

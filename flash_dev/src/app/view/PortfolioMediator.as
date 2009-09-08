@@ -57,7 +57,7 @@ public class PortfolioMediator extends Mediator implements IMediator
 				_portfolio.filterImages( note.getBody() as Array );
 			break;
 			case AppFacade.DEACTIVATE_ACTIVE_PORTFOLIO_ITEM :
-				_portfolio.deactivateCurrentItem( note.getBody() as uint );
+				_portfolio.deactivateCurrentItem( note.getBody() as DeactivateVo );
 			break;
 			case AppFacade.ACTIVE_ITEM_CLICKED_AGAIN :
 				_portfolio.activeItemClickedAgain();

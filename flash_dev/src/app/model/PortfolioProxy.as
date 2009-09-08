@@ -12,7 +12,9 @@ public class PortfolioProxy extends Proxy implements IProxy
 	
 	private var _portfolioVo:PortfolioVo;
 	private var _sequence:Sequence;
+	private var _allFilters:Array;
 	private var _filters:Array = new Array();
+	private var _configVo:ConfigVo;
 	
 	// Constructor
 	public function PortfolioProxy( ):void { super( NAME ); };
@@ -21,7 +23,7 @@ public class PortfolioProxy extends Proxy implements IProxy
 	{
 		_portfolioVo = new PortfolioVo( $json );
 		sendNotification( AppFacade.PORTFOLIO_DATA_PARSED, _portfolioVo );
-		
+		addFilter("all");
 		_sequence = new Sequence( _portfolioVo.items );
 		_sequence.deselect();
 //		_sendNewIndex();
@@ -30,7 +32,13 @@ public class PortfolioProxy extends Proxy implements IProxy
 	// _____________________________ API
 	
 	public function config ( $configVo:ConfigVo ):void{
-		_filters = $configVo.availableFilters;
+		_allFilters 	= new Array();
+		_filters 		= $configVo.availableFilters;
+		var len:uint = _filters.length;
+		for ( var i:uint=0; i<len; i++ ) 
+		{
+			_allFilters[i] = _filters[i]
+		}
 	}
 	
 	public function changeActiveItemByIndex ( $index:uint ):void{
@@ -38,7 +46,7 @@ public class PortfolioProxy extends Proxy implements IProxy
 			_sendNewIndex();
 		else{
 			_sequence.deselect();
-			sendNotification( AppFacade.DEACTIVATE_ACTIVE_PORTFOLIO_ITEM, $index );
+			sendNotification( AppFacade.DEACTIVATE_ACTIVE_PORTFOLIO_ITEM, new DeactivateVo($index, "center") );
 		}
 	}
 	
@@ -64,33 +72,46 @@ public class PortfolioProxy extends Proxy implements IProxy
 	
 	public function first (  ):void{
 		_sequence.deselect();
-		sendNotification( AppFacade.DEACTIVATE_ACTIVE_PORTFOLIO_ITEM, 0 );
+		sendNotification( AppFacade.DEACTIVATE_ACTIVE_PORTFOLIO_ITEM, new DeactivateVo(_firstActiveItem.index, "left") );
 	}
 	
 	public function last (  ):void{
 		_sequence.deselect();
-		sendNotification( AppFacade.DEACTIVATE_ACTIVE_PORTFOLIO_ITEM, _sequence.totalItems - 1 );
+		sendNotification( AppFacade.DEACTIVATE_ACTIVE_PORTFOLIO_ITEM, new DeactivateVo(_lastActiveItem.index, "right") );
 	}
 	
 	public function addFilter ( $filter:String ):Boolean{
-		var len:uint = _filters.length;
-		for ( var i:uint=0; i<len; i++ ) {
-			if( _filters[i] == $filter ){
-				return false;
+		deactivateActiveItem();
+		if( $filter != "all" ) {
+			var len:uint = _filters.length;
+			for ( var i:uint=0; i<len; i++ ) {
+				if( _filters[i] == $filter ){
+					return false;
+				}
+			}
+			
+			//_filters.push($filter);
+			// UNCOMMENT ABOVE AND DELETE BELOW
+			// FOR TAG FILTERING
+			_filters = [$filter];
+			///////////////////////////////////
+			
+		}else{
+			_filters = new Array();
+			var len2:uint = _allFilters.length;
+			for ( var k:uint=0; k<len2; k++ ) 
+			{
+				if( _allFilters[k] != "all" )
+					_filters.push(_allFilters[k]);
 			}
 		}
-		
-		//_filters.push($filter);
-		// UNCOMMENT ABOVE AND DELETE BELOW
-		// FOR TAG FILTERING
-		_filters = [$filter];
-		///////////////////////////////////
-		
 		_sendFilters();
+		
 		return false;
 	}
 	
 	public function removeFilter ( $filter:String ):void{
+		deactivateActiveItem();
 		//var len:uint = _filters.length;
 		//for ( var i:uint=0; i<len; i++ ) {
 		//	if( _filters[i] == $filter ){
@@ -111,13 +132,16 @@ public class PortfolioProxy extends Proxy implements IProxy
 			if( !_sequence.currentItem.isActive )
 				_sequence.deselect();
 		}
-
-		
 	}
 	
 	public function deactivateActiveItem (  ):void
 	{
-		sendNotification( AppFacade.DEACTIVATE_ACTIVE_PORTFOLIO_ITEM );
+		if( _sequence != null )
+			_sequence.deselect();
+		if( _sequence != null )
+			sendNotification( AppFacade.DEACTIVATE_ACTIVE_PORTFOLIO_ITEM, new DeactivateVo(_firstActiveItem.index, "left") );
+		else
+			sendNotification( AppFacade.DEACTIVATE_ACTIVE_PORTFOLIO_ITEM, new DeactivateVo(0, "left"))
 	}
 	
 	
@@ -130,10 +154,10 @@ public class PortfolioProxy extends Proxy implements IProxy
 	
 	private function _sendFilters (  ):void
 	{
-		sendNotification( AppFacade.ACTIVE_PORTFOLIO_TAGS, _filters );
 		if( _sequence != null )
 			_sendActiveItems();
-			
+
+		sendNotification( AppFacade.ACTIVE_PORTFOLIO_TAGS, _filters );
 	}
 	
 	private function _sendActiveItems (  ):void
