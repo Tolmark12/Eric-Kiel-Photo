@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<link rel="shortcut icon" href="favicon.ico">
+		<title>Eric Kiel Photography</title>
+		<scritp type="text/css" src="style.css" />
+		<script type="text/javascript" src="js/swfobject/swfobject.js"></script>
+		<script type="text/javascript" src="js/swfaddress/swfaddress.js"></script>
+		<script type="text/javascript" src="js/swffit/swffit.js"></script>
+		<script type="text/javascript">
+			var flashvars = {};
+			var params = {bgcolor:"#222222"};
+			var attributes = {id: "kiel_swf"};
+			swfobject.embedSWF("Kiel09.swf", "my_flash", "550", "450", "9.0.0", "", flashvars, params, attributes);
+			swffit.fit("kiel_swf",550,450);
+		</script>
+	</head>
+	<body>
+		<div id="my_flash">
+			<a href="http://www.adobe.com/go/getflashplayer"><img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" title="Get Adobe Flash player" /></a><br />
+			You need <a href="http://www.adobe.com/go/getflashplayer">Flash Player 8</a> and allow javascript to see the content of this site..
+		</div>
+	</body>
+</html>
+
+
+
