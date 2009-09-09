@@ -35,13 +35,16 @@ public class AppFacade extends Facade implements IFacade
 	                                                        		
 	// Misc                                                 		
 	public static const REFRESH_ALIGN:String 						= "refresh_align";
-                                                            		
+    public static const IMAGE_LOADED:String 						= "image_loaded";
+	public static const IMAGE_LOADED_LOW:String 					= "image_loaded_low";
+	
 	// State Changes                                        		
 	public static const ACTIVATE_PORTFOLIO_ITEM:String 				= "activate_portfolio_item";
 	public static const APPLY_PORTFOLIO_FILTERS:String 				= "apply_portfolio_filters";
 	public static const ACTIVE_PORTFOLIO_TAGS:String 				= "active_portfolio_tags";  		// An array of the portfolio tags that are active
 	public static const DEACTIVATE_ACTIVE_PORTFOLIO_ITEM:String 	= "deactivate_active_portfolio_item";
 	public static const ACTIVE_ITEM_CLICKED_AGAIN:String 			= "active_item_clicked_again";
+	public static const UPDATE_TOTAL_LOADED:String 					= "update_total_loaded";
 	
 	// Example: var myFacade:AppFacade = AppFacade.getInstance( 'app_facade' );
 	public function AppFacade( key:String ):void
@@ -79,6 +82,8 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( PORTFOLIO_END, Clicks );
 		registerCommand( ADD_FILTER, Clicks );
 		registerCommand( REMOVE_FILTER, Clicks );
+		registerCommand( IMAGE_LOADED, DataRequests );
+		registerCommand( IMAGE_LOADED_LOW, DataRequests )
 	}
 
 }

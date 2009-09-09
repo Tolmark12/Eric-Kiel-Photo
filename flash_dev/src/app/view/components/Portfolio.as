@@ -10,6 +10,7 @@ import caurina.transitions.Tweener;
 import app.view.components.events.ImageLoadEvent;
 import flash.events.*;
 import delorum.scrolling.*;
+import delorum.loading.Queue;
 
 public class Portfolio extends Page
 {
@@ -19,37 +20,33 @@ public class Portfolio extends Page
 	private var _currentItem:PortfolioItem;
 	private var _currentIndex:uint;
 	private var _items:Array;
-	private var _scroller:Scroller;
 	private var _portfolioNav:PortfolioNav;
 	private var _copyRight:Copyright_swc;
-	
+	private var _loading:LoadingDisplay = new LoadingDisplay();
 	
 	public function Portfolio():void
 	{
-
+		//Queue.setQueueIndex("low", 0);
+		//Queue.setQueueIndex("high", 1);
 	}
 	
 	public function init (  ):void
 	{
-		_scroller = new Scroller(20,20);
-		_scroller.createDefaultScroller();
-		_scroller.build();
-		_scroller.visible = false;
-		this.addChild(_scroller);
-		_scroller.addEventListener( Scroller.SCROLL, _onScroll, false,0,true );
 		this.addEventListener( ImageLoadEvent.HIGH_RES_IMAGE_LOADED, _onHighResImageLoaded, false,0,true );
 		this.addEventListener( ImageLoadEvent.LOW_RES_IMAGE_LOADED, _onLowResImageLoaded, false,0,true );
 		this.addEventListener( ImageLoadEvent.RECENTER_STRIP, _onRecenterStrip, false,0,true );
 		
 		_copyRight = new Copyright_swc();
-		this.addChild(_copyRight);
 		
 		_portfolioNav = new PortfolioNav();
 		_portfolioNav.build();
 		_portfolioNav.visible = false;
 		_portfolioNav.x = StageResizeVo.CENTER - _portfolioNav.width/2;
 		_portfolioNav.y = 640;
+		
+		this.addChild(_copyRight);
 		this.addChild(_portfolioNav);
+		this.addChild(_loading)
 	}
 	
 	// _____________________________ API
@@ -60,10 +57,10 @@ public class Portfolio extends Page
 	*/
 	public function showNewPortfolio ( $portfolioVo:PortfolioVo ):void
 	{
+		_loading.reset();
 		_currentIndex 	= 0;
 		_currentItem	= null;
 		
-		//_scroller.visible = true;
 		this.stage.addEventListener( Event.ENTER_FRAME, _onEnterFrame, false,0,true );
 		
 		this.alpha = 0;
@@ -123,6 +120,9 @@ public class Portfolio extends Page
 
 	}
 	
+	/** 
+	*	Deactivates the current item
+	*/
 	public function deactivateCurrentItem ( $deactivateVo:DeactivateVo ):void
 	{
 		_portfolioNav.hideArrows();
@@ -174,18 +174,27 @@ public class Portfolio extends Page
 		//Tweener.addTween( _imageHolder, { x:StageResizeVo.lastResize.left + _ITEM_PADDING, time:0, transition:"EaseInOutQuint"} );
 	}
 	
+	/** 
+	*	Called when the active item is clicked again
+	*/
 	public function activeItemClickedAgain (  ):void
 	{
 		deactivateCurrentItem( new DeactivateVo(_currentItem.index, "center") );
 	}
 	
+	/** 
+	*	Called when the stage resizes
+	*/
 	public function onStageResize ( $vo:StageResizeVo ):void
 	{
-		_copyRight.x = $vo.right - _copyRight.width - 20;
-		_copyRight.y = $vo.height - _copyRight.height - 20
-		//_scroller.changeWidth( $vo.width - _SCROLL_PADDING*2, 0 );
-		//_scroller.y = $vo.height - _scroller.height - _SCROLL_PADDING;
-		//_scroller.x = $vo.left + _SCROLL_PADDING;
+		_loading.x 		= $vo.left//StageResizeVo.CENTER - LoadingDisplay.WIDTH/2;
+		_copyRight.x 	= $vo.right - _copyRight.width - 20;
+		_copyRight.y 	= $vo.height - _copyRight.height - 20
+	}
+	
+	public function updateTotalImagesLoaded ( $loaded:Number, $total:Number ):void
+	{
+		_loading.update($loaded, $total, StageResizeVo.lastResize.width)
 	}
 	
 	// _____________________________ Helpers
@@ -233,7 +242,6 @@ public class Portfolio extends Page
 		_lastXmouse = this.mouseX;
 		var xTarg:Number = (_currentItem != null)? StageResizeVo.CENTER - _currentItem.targetX - _currentItemWidth/2 : StageResizeVo.lastResize.left ;
 		Tweener.addTween( _imageHolder, { x:xTarg, time:$speed, transition:"EaseInOutQuint"} );
-//		_scroller.changeScrollPosition( (_currentItem.targetX) / (_totalWidth() -_currentItemWidth) );
 	}
 	
 	public var count:Number = 0;
@@ -259,7 +267,6 @@ public class Portfolio extends Page
 	
 	private function _onLowResImageLoaded ( e:ImageLoadEvent ):void {
 		_distributeObjects( e.imageIndex, false );
-//		_scroller.updateScrollWindow( StageResizeVo.lastResize.width / _imageHolder.width, 0 );
 	}
 	
 	private function _onHighResImageLoaded ( e:ImageLoadEvent ):void {

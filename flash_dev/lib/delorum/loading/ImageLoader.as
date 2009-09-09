@@ -78,13 +78,12 @@ public class ImageLoader extends BaseLoader implements LoaderIF
 	* 	@param		Path to the image
 	* 	@param		Sprite or MovieClip to load image into  */
 	public function ImageLoader( $loadPath:String, $parent:DisplayObjectContainer ):void
-	{
-		super();
-		
+	{		
 		// Create loader Object and the Url Request Object
 		_loader 	= new Loader();
 		_itemURL  	= new URLRequest( $loadPath );
 		_holderMc 	= $parent;
+		super();
 	}
 	
 	// ______________________________________________________________ Event dispatcher

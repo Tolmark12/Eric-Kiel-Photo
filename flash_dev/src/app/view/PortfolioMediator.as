@@ -20,6 +20,8 @@ public class PortfolioMediator extends Mediator implements IMediator
 		super( NAME );
 		_portfolio.init();
 		_portfolio.addEventListener( NavEvent.PORTFOLIO_ITEM_CLICK, _onPortfolioItemClick, false,0,true );
+		_portfolio.addEventListener( ImageLoadEvent.HIGH_RES_IMAGE_LOADED, _onHighResImageLoaded, false,0,true );
+		_portfolio.addEventListener( ImageLoadEvent.LOW_RES_IMAGE_LOADED, _onLowResImageLoaded, false,0,true );
 		_portfolio.addEventListener( NavEvent.PORTFOLIO_NEXT, _onPortfolioNext, false,0,true );
 		_portfolio.addEventListener( NavEvent.PORTFOLIO_PREV, _onPortfolioPrev, false,0,true );
 		_portfolio.addEventListener( NavEvent.PORTFOLIO_START, _onPortfolioStart, false,0,true );
@@ -36,7 +38,8 @@ public class PortfolioMediator extends Mediator implements IMediator
 		 		 AppFacade.STAGE_RESIZE,
 				 AppFacade.APPLY_PORTFOLIO_FILTERS,
 				 AppFacade.DEACTIVATE_ACTIVE_PORTFOLIO_ITEM,
-				 AppFacade.ACTIVE_ITEM_CLICKED_AGAIN ];
+				 AppFacade.ACTIVE_ITEM_CLICKED_AGAIN,
+				 AppFacade.UPDATE_TOTAL_LOADED, ];
 	}
 	
 	// PureMVC: Handle notifications
@@ -62,6 +65,10 @@ public class PortfolioMediator extends Mediator implements IMediator
 			case AppFacade.ACTIVE_ITEM_CLICKED_AGAIN :
 				_portfolio.activeItemClickedAgain();
 			break;
+			case AppFacade.UPDATE_TOTAL_LOADED :
+				var tempObj:Object = note.getBody() as Object;
+				_portfolio.updateTotalImagesLoaded( tempObj.loaded, tempObj.total)
+			break;
 		}
 	}
 	
@@ -85,6 +92,14 @@ public class PortfolioMediator extends Mediator implements IMediator
 	
 	private function _onPortfolioEnd ( e:Event ):void {
 		sendNotification( AppFacade.PORTFOLIO_END );
+	}
+	
+	private function _onHighResImageLoaded ( e:ImageLoadEvent ):void {
+		sendNotification( AppFacade.IMAGE_LOADED_LOW, e.imageIndex );
+	}
+	
+	private function _onLowResImageLoaded ( e:ImageLoadEvent ):void {
+		sendNotification( AppFacade.IMAGE_LOADED, e.imageIndex );
 	}
 }
 }

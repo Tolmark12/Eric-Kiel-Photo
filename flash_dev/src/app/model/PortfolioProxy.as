@@ -15,12 +15,14 @@ public class PortfolioProxy extends Proxy implements IProxy
 	private var _allFilters:Array;
 	private var _filters:Array = new Array();
 	private var _configVo:ConfigVo;
+	private var _totalLoaded:Number;
 	
 	// Constructor
 	public function PortfolioProxy( ):void { super( NAME ); };
 	
 	public function parseNewPortfolio ( $json:Object ):void
 	{
+		_totalLoaded = 0;
 		_portfolioVo = new PortfolioVo( $json );
 		sendNotification( AppFacade.PORTFOLIO_DATA_PARSED, _portfolioVo );
 		addFilter("all");
@@ -142,6 +144,11 @@ public class PortfolioProxy extends Proxy implements IProxy
 			sendNotification( AppFacade.DEACTIVATE_ACTIVE_PORTFOLIO_ITEM, new DeactivateVo(_firstActiveItem.index, "left") );
 		else
 			sendNotification( AppFacade.DEACTIVATE_ACTIVE_PORTFOLIO_ITEM, new DeactivateVo(0, "left"))
+	}
+	
+	public function imageLoaded ( $index:uint ):void
+	{
+		sendNotification( AppFacade.UPDATE_TOTAL_LOADED, {loaded:++_totalLoaded, total:_sequence.totalItems*2} );
 	}
 	
 	

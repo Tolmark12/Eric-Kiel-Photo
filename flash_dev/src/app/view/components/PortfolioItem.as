@@ -50,7 +50,7 @@ public class PortfolioItem extends Sprite
 		_portfolioImages.addEventListener( ImageLoadEvent.LOW_RES_IMAGE_LOADED, _onLowResImageLoaded, false,0,true );
 		_portfolioImages.addEventListener( ImageLoadEvent.HIGH_RES_IMAGE_LOADED, _onHighResImageLoaded, false,0,true );
 		this.addChild(_portfolioImages);
-		_portfolioImages.loadImages( _portfolioItemVo.lowResSrc, _portfolioItemVo.src, index < 6 );
+		_portfolioImages.loadImages( _portfolioItemVo.lowResSrc, _portfolioItemVo.src, index < 9 );
 	}
 	
 	/** 

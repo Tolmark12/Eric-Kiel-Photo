@@ -3,6 +3,7 @@ package delorum.loading
 
 public class Queue
 {
+	private static var _queueOrdering:Object = {};
 	private static var _queues:Object = [];
 	public var loadCount:uint = 100000;
 	public var loadQueue :Object = new Object();
@@ -22,14 +23,20 @@ public class Queue
 		var len:uint = _queues.length;
 		for ( var i:uint=0; i<len; i++ ) 
 		{
-			queue = _queues[i];
-			if( queue.id == $id )
-				return queue;
+			if(_queues[i] != null){
+				queue = _queues[i];
+				if( queue.id == $id )
+					return queue;
+			}
 		}
 		
 		// If the code doesn't find a queu bu this id, create one
 		queue = new Queue($id);
-		_queues.push( queue );
+		trace( _queueOrdering[$id] );
+		if( _queueOrdering[$id] == null )
+			_queues[_queues.length] = queue;
+		else
+			_queues[ _queueOrdering[$id] ] = queue;
 		return queue;
 	}
 	
@@ -41,10 +48,12 @@ public class Queue
 			// Loop through each of the queues
 			for ( var i:uint=0; i<len; i++ ) 
 			{
-				for( var j:String in _queues[i].loadQueue )
-				{
-					// If any alements in the queue remain, return that queue
-					return _queues[i] as Queue;
+				if( _queues[i] != null ){
+					for( var j:String in _queues[i].loadQueue )
+					{
+						// If any alements in the queue remain, return that queue
+						return _queues[i] as Queue;
+					}
 				}
 			}
 			
@@ -70,6 +79,11 @@ public class Queue
 		}
 			
 		return null;
+	}
+	
+	public static function setQueueIndex ( $queueId:String, $index:Number=0 ):void
+	{
+		_queueOrdering[$queueId] = $index
 	}
 
 }

@@ -8,6 +8,7 @@ import app.view.components.events.ImageLoadEvent;
 
 public class PortfolioImage extends Sprite
 {
+	private static const _LOAD_IN_SEQUENCE:Boolean = false;
 	public var highResLoaded:Boolean	= false;
 	public var lowResLoaded:Boolean		= false;	
 	public var shrinkPercentage:Number 	= 1;
@@ -35,11 +36,16 @@ public class PortfolioImage extends Sprite
 		_highResImagePath = $src;
 		var ldr:ImageLoader = new ImageLoader( $lowResSrc, _lowResHolder );
 		ldr.addEventListener( Event.INIT, _onLowResLoaded );
-		ldr.addItemToLoadQueue( "low" );
+		//if( !$loadImmediately )
+			ldr.addItemToLoadQueue( "low" );
+		//else
+		//	ldr.loadItem();
 		
-		var ldr2:ImageLoader = new ImageLoader( _highResImagePath, _highResHolder );
-		ldr2.addEventListener( Event.INIT, _onHighResLoaded );
-		_budgeId = ldr2.addItemToLoadQueue("high");
+		//if( _LOAD_IN_SEQUENCE ) {
+			var ldr2:ImageLoader = new ImageLoader( _highResImagePath, _highResHolder );
+			ldr2.addEventListener( Event.INIT, _onHighResLoaded );
+			_budgeId = ldr2.addItemToLoadQueue("high");
+		//}
 		_loadImmediately = $loadImmediately;
 	}
 	
@@ -79,11 +85,16 @@ public class PortfolioImage extends Sprite
 		_lowResHolder.scaleX 	= _lowResHolder.scaleY = shrinkPercentage * 10;		
 		this.addChild( _lowResHolder );
 		lowResLoaded = true;
-		
 		var snap:Number			= this.scaleX;
 		this.scaleX				= shrinkPercentage;
 		_smallWidth 			= this.width;
 		this.scaleX				= snap;
+		
+		//if( !_LOAD_IN_SEQUENCE ) {
+		//	var ldr2:ImageLoader = new ImageLoader( _highResImagePath, _highResHolder );
+		//	ldr2.addEventListener( Event.INIT, _onHighResLoaded );
+		//	_budgeId = ldr2.addItemToLoadQueue("high");
+		//}
 		
 		_highResImagePath = null;
 		var imgEv:ImageLoadEvent = new ImageLoadEvent( ImageLoadEvent.LOW_RES_IMAGE_LOADED, true );
@@ -93,12 +104,22 @@ public class PortfolioImage extends Sprite
 			
 		if( _loadImmediately )
 			loadLargeImage();
+			
+		var loader = new LoadingSymbol_swc();
+		loader.cacheAsBitmap = true;
+		loader.x = 20;
+		loader.y = 20;
+		_lowResHolder.addChild(loader);
+		
+
 	}
 	
 	private function _onHighResLoaded ( e:Event ):void {
 		_bigWidth 				= _highResHolder.width;
 		_smallWidth				= _bigWidth * shrinkPercentage;
-		this.removeChild(_lowResHolder);
+		
+		if( _lowResHolder != null )
+			this.removeChild(_lowResHolder);
 		this.addChild( _highResHolder );
 		
 		var imgEv:ImageLoadEvent = new ImageLoadEvent( ImageLoadEvent.HIGH_RES_IMAGE_LOADED, true );

@@ -40,7 +40,8 @@ public class BaseLoader extends EventDispatcher
 	public var _id:String;
 	
 	public function BaseLoader():void
-	{}
+	{
+	}
 	
 	protected function get _eventListener (  ):EventDispatcher
 	{
@@ -227,7 +228,7 @@ public class BaseLoader extends EventDispatcher
 	{
 		return String( _queueNumber );
 	}
-
+	
 }
 
 }
