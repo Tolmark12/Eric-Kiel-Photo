@@ -166,8 +166,8 @@ class Delorum_Vladmin_Adminhtml_SetController extends Mage_Adminhtml_Controller_
             Mage::getModel('vladmin/template')->getResource()->getTypeId());
     }
 
-    protected function _isAllowed()
-    {
-        return Mage::getSingleton('admin/session')->isAllowed('catalog/attributes/sets');
-    }
+//    protected function _isAllowed()
+//    {
+//        return Mage::getSingleton('admin/session')->isAllowed('catalog/attributes/sets');
+//    }
 }

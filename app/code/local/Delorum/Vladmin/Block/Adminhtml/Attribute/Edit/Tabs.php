@@ -39,14 +39,14 @@ class Delorum_Vladmin_Block_Adminhtml_Attribute_Edit_Tabs extends Mage_Adminhtml
         parent::__construct();
         $this->setId('product_attribute_tabs');
         $this->setDestElementId('edit_form');
-        $this->setTitle(Mage::helper('catalog')->__('Attribute Information'));
+        $this->setTitle(Mage::helper('vladmin')->__('Attribute Information'));
     }
 
     protected function _beforeToHtml()
     {
         $this->addTab('main', array(
-            'label'     => Mage::helper('catalog')->__('Properties'),
-            'title'     => Mage::helper('catalog')->__('Properties'),
+            'label'     => Mage::helper('vladmin')->__('Properties'),
+            'title'     => Mage::helper('vladmin')->__('Properties'),
             'content'   => $this->getLayout()->createBlock('vladmin/adminhtml_attribute_edit_tab_main')->toHtml(),
             'active'    => true
         ));
@@ -54,18 +54,11 @@ class Delorum_Vladmin_Block_Adminhtml_Attribute_Edit_Tabs extends Mage_Adminhtml
         $model = Mage::registry('entity_attribute');
 
         $this->addTab('labels', array(
-            'label'     => Mage::helper('catalog')->__('Manage Label / Options'),
-            'title'     => Mage::helper('catalog')->__('Manage Label / Options'),
+            'label'     => Mage::helper('vladmin')->__('Manage Label / Options'),
+            'title'     => Mage::helper('vladmin')->__('Manage Label / Options'),
             'content'   => $this->getLayout()->createBlock('vladmin/adminhtml_attribute_edit_tab_options')->toHtml(),
         ));
         
-        /*if ('select' == $model->getFrontendInput()) {
-            $this->addTab('options_section', array(
-                'label'     => Mage::helper('catalog')->__('Options Control'),
-                'title'     => Mage::helper('catalog')->__('Options Control'),
-                'content'   => $this->getLayout()->createBlock('adminhtml/catalog_product_attribute_edit_tab_options')->toHtml(),
-            ));
-        }*/
 
         return parent::_beforeToHtml();
     }

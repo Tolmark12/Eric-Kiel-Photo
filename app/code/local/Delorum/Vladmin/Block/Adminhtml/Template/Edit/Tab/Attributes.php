@@ -31,7 +31,7 @@
  * @package    Mage_Adminhtml
  * @author      Magento Core Team <core@magentocommerce.com>
  */
-class Delorum_Vladmin_Block_Adminhtml_Template_Edit_Tab_Attributes extends Mage_Adminhtml_Block_Catalog_Form
+class Delorum_Vladmin_Block_Adminhtml_Template_Edit_Tab_Attributes extends Mage_Adminhtml_Block_Widget_Form
 {
     protected function _prepareForm()
     {

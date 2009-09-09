@@ -89,26 +89,26 @@ class Delorum_Vladmin_Block_Adminhtml_Attribute_Grid extends Mage_Adminhtml_Bloc
 //        ));
 
         $this->addColumn('is_required', array(
-            'header'=>Mage::helper('catalog')->__('Required'),
+            'header'=>Mage::helper('vladmin')->__('Required'),
             'sortable'=>true,
             'index'=>'is_required',
             'type' => 'options',
             'options' => array(
-                '1' => Mage::helper('catalog')->__('Yes'),
-                '0' => Mage::helper('catalog')->__('No'),
+                '1' => Mage::helper('vladmin')->__('Yes'),
+                '0' => Mage::helper('vladmin')->__('No'),
             ),
             'align' => 'center',
         ));
 
         $this->addColumn('is_user_defined', array(
-            'header'=>Mage::helper('catalog')->__('System'),
+            'header'=>Mage::helper('vladmin')->__('System'),
             'sortable'=>true,
             'index'=>'is_user_defined',
             'type' => 'options',
             'align' => 'center',
             'options' => array(
-                '0' => Mage::helper('catalog')->__('Yes'),   // intended reverted use
-                '1' => Mage::helper('catalog')->__('No'),    // intended reverted use
+                '0' => Mage::helper('vladmin')->__('Yes'),   // intended reverted use
+                '1' => Mage::helper('vladmin')->__('No'),    // intended reverted use
             ),
         ));
 

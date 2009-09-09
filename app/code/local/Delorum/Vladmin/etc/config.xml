@@ -30,29 +30,56 @@
 	<adminhtml>
 		<menu>
 			<vladmin module="vladmin">
-				<title>Interface Management</title>
+				<title>Site Manager</title>
 				<sort_order>71</sort_order>
 				<children>
 					<attributes>
-						<title>Attribute Manager</title>
+						<title>Template Definition</title>
 						<children>
-							<manage>
-								<title>Attribute List</title>
-								<action>vladmin/adminhtml_attribute/</action>
-							</manage>
 							<set>
-								<title>Template Types</title>
+								<title>Templates</title>
 								<action>vladmin/adminhtml_set/</action>
 							</set>
+							<attribute_list>
+								<title>Attributes</title>
+								<action>vladmin/adminhtml_attribute/</action>
+							</attribute_list>
 						</children>
 					</attributes>
 					<templates>
-						<title>Manage Templates</title>
+						<title>Manage Content</title>
 						<action>vladmin/adminhtml_template/</action>
 					</templates>
 				</children>      
 			</vladmin>
 		</menu>
+		<acl>
+			<resources>
+				<admin>
+                    <children>
+						<vladmin>
+							<title>Site Manager</title>
+							<children>
+								<attributes>
+									<title>Template Definition</title>
+									<children>
+										<set>
+											<title>Templates</title>
+										</set>
+										<attribute_list>
+											<title>Attributes</title>
+										</attribute_list>
+									</children>
+								</attributes>
+								<templates>
+									<title>Manage Content</title>
+								</templates>
+							</children>
+						</vladmin>
+					</children>
+				</admin>
+			</resources>
+		</acl>
 	</adminhtml>
 	<global>
 		<blocks>

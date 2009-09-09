@@ -24,13 +24,6 @@
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-/**
- * Adminhtml catalog product sets main page toolbar
- *
- * @category   Mage
- * @package    Mage_Adminhtml
- * @author      Magento Core Team <core@magentocommerce.com>
- */
 
 class Delorum_Vladmin_Block_Adminhtml_Attribute_Set_Toolbar_Main extends Mage_Adminhtml_Block_Template
 {
@@ -65,7 +58,6 @@ class Delorum_Vladmin_Block_Adminhtml_Attribute_Set_Toolbar_Main extends Mage_Ad
 
     protected function _toHtml()
     {
-//        Mage::dispatchEvent('adminhtml_catalog_product_attribute_set_toolbar_main_html_before', array('block' => $this));
         return parent::_toHtml();
     }
 }

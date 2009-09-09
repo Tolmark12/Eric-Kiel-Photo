@@ -103,7 +103,7 @@ class Delorum_Vladmin_Adminhtml_AttributeController extends Mage_Adminhtml_Contr
 
         $attributeCode  = $this->getRequest()->getParam('attribute_code');
         $attributeId    = $this->getRequest()->getParam('attribute_id');
-        $attribute = Mage::getModel('catalog/entity_attribute')
+        $attribute = Mage::getModel('vladmin/entity_attribute')
             ->loadByCode($this->_entityTypeId, $attributeCode);
 
         if ($attribute->getId() && !$attributeId) {
@@ -239,8 +239,8 @@ class Delorum_Vladmin_Adminhtml_AttributeController extends Mage_Adminhtml_Contr
         $this->_redirect('*/*/');
     }
 
-    protected function _isAllowed()
-    {
-	    return Mage::getSingleton('admin/session')->isAllowed('catalog/attributes/attributes');
-    }
+//    protected function _isAllowed()
+//    {
+//	    return Mage::getSingleton('admin/session')->isAllowed('catalog/attributes/attributes');
+//    }
 }

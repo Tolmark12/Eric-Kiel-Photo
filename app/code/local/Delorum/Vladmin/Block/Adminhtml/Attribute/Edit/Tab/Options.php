@@ -37,7 +37,7 @@ class Delorum_Vladmin_Block_Adminhtml_Attribute_Edit_Tab_Options extends Mage_Ad
     public function __construct()
     {
         parent::__construct();
-        $this->setTemplate('catalog/product/attribute/options.phtml');
+        $this->setTemplate('vladmin/attribute/options.phtml');
     }
 
     protected function _prepareLayout()

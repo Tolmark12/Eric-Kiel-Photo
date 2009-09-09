@@ -38,7 +38,7 @@ class Delorum_Vladmin_Block_Adminhtml_Template_Edit_Tabs extends Mage_Adminhtml_
                 }
 
                 $this->addTab('group_'.$group->getId(), array(
-                    'label'     => Mage::helper('catalog')->__($group->getAttributeGroupName()),
+                    'label'     => Mage::helper('vladmin')->__($group->getAttributeGroupName()),
                     'content'   => $this->getLayout()->createBlock('vladmin/adminhtml_template_edit_tab_attributes')
                         ->setGroup($group)
                         ->setGroupAttributes($attributes)

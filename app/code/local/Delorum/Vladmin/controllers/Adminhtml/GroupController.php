@@ -52,8 +52,8 @@ class Delorum_Vladmin_Adminhtml_GroupController extends Mage_Adminhtml_Controlle
         }
     }
     
-    protected function _isAllowed()
-    {
-        return Mage::getSingleton('admin/session')->isAllowed('catalog/products');
-    }
+//    protected function _isAllowed()
+//    {
+//        return Mage::getSingleton('admin/session')->isAllowed('catalog/products');
+//    }
 }

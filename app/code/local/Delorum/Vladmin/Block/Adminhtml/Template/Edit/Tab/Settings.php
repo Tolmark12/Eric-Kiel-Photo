@@ -38,7 +38,7 @@ class Delorum_Vladmin_Block_Adminhtml_Template_Edit_Tab_Settings extends Mage_Ad
         $this->setChild('continue_button',
             $this->getLayout()->createBlock('adminhtml/widget_button')
                 ->setData(array(
-                    'label'     => Mage::helper('catalog')->__('Continue'),
+                    'label'     => Mage::helper('vladmin')->__('Continue'),
                     'onclick'   => "saveAndContinueEdit()",
                     'class'     => 'save'
                     ))
