@@ -9,7 +9,8 @@
 					{"id" : "/portfolio/current", "text" : "Current", "pageType" : "filter", "tag":"current" },
 					{"id" : "/portfolio/people",  "text" : "People",  "pageType" : "filter", "tag":"people" }, 
 					{"id" : "/portfolio/places",  "text" : "Places",  "pageType" : "filter", "tag":"places" }, 
-					{"id" : "/portfolio/motion",  "text" : "Motion",  "pageType" : "filter", "tag":"motion" }
+					{"id" : "/portfolio/motion",  "text" : "Motion",  "pageType" : "filter", "tag":"motion" },
+					{"id" : "/portfolio/motion",  "text" : "View All",  "pageType" : "filter", "tag":"all" }
 				]
 			}
 		},

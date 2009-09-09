@@ -50,7 +50,7 @@ public class PortfolioItem extends Sprite
 		_portfolioImages.addEventListener( ImageLoadEvent.LOW_RES_IMAGE_LOADED, _onLowResImageLoaded, false,0,true );
 		_portfolioImages.addEventListener( ImageLoadEvent.HIGH_RES_IMAGE_LOADED, _onHighResImageLoaded, false,0,true );
 		this.addChild(_portfolioImages);
-		_portfolioImages.loadImages( _portfolioItemVo.lowResSrc, _portfolioItemVo.src );
+		_portfolioImages.loadImages( _portfolioItemVo.lowResSrc, _portfolioItemVo.src, index < 9 );
 	}
 	
 	/** 
@@ -58,6 +58,7 @@ public class PortfolioItem extends Sprite
 	*/
 	public function activate (  ):void
 	{
+		_portfolioImages.isHidden = false;
 		_portfolioImages.loadLargeImage()
 		_removeTweens();
 		Tweener.addTween( super, { y:0, scaleX:1, scaleY:1, time:_TIME, transition:"EaseInOutQuint", onComplete:_sendActivationEvent} );
@@ -89,6 +90,7 @@ public class PortfolioItem extends Sprite
 	
 	public function hide (  ):void
 	{
+		_portfolioImages.isHidden = false;
 		isHidden = true;
 		if( isActive ){
 			this.isActive = false;
@@ -102,6 +104,7 @@ public class PortfolioItem extends Sprite
 	
 	public function show (  ):void
 	{
+		_portfolioImages.isHidden = false;
 		Tweener.addTween( this, { alpha:0.8, time:0.3, transition:"EaseInOutQuint"} );
 		isHidden = false;
 		this.visible = true;

@@ -5,10 +5,12 @@ import flash.display.*;
 import app.model.vo.PortfolioVo;
 import app.model.vo.PortfolioItemVo;
 import app.model.vo.StageResizeVo;
+import app.model.vo.DeactivateVo;
 import caurina.transitions.Tweener;
 import app.view.components.events.ImageLoadEvent;
 import flash.events.*;
 import delorum.scrolling.*;
+import delorum.loading.Queue;
 
 public class Portfolio extends Page
 {
@@ -18,36 +20,33 @@ public class Portfolio extends Page
 	private var _currentItem:PortfolioItem;
 	private var _currentIndex:uint;
 	private var _items:Array;
-	private var _scroller:Scroller;
 	private var _portfolioNav:PortfolioNav;
 	private var _copyRight:Copyright_swc;
+	private var _loading:LoadingDisplay = new LoadingDisplay();
 	
 	public function Portfolio():void
 	{
-
+		//Queue.setQueueIndex("low", 0);
+		//Queue.setQueueIndex("high", 1);
 	}
 	
 	public function init (  ):void
 	{
-		_scroller = new Scroller(20,20);
-		_scroller.createDefaultScroller();
-		_scroller.build();
-		_scroller.visible = false;
-		this.addChild(_scroller);
-		_scroller.addEventListener( Scroller.SCROLL, _onScroll, false,0,true );
 		this.addEventListener( ImageLoadEvent.HIGH_RES_IMAGE_LOADED, _onHighResImageLoaded, false,0,true );
 		this.addEventListener( ImageLoadEvent.LOW_RES_IMAGE_LOADED, _onLowResImageLoaded, false,0,true );
 		this.addEventListener( ImageLoadEvent.RECENTER_STRIP, _onRecenterStrip, false,0,true );
 		
 		_copyRight = new Copyright_swc();
-		this.addChild(_copyRight);
 		
 		_portfolioNav = new PortfolioNav();
 		_portfolioNav.build();
 		_portfolioNav.visible = false;
 		_portfolioNav.x = StageResizeVo.CENTER - _portfolioNav.width/2;
 		_portfolioNav.y = 640;
+		
+		this.addChild(_copyRight);
 		this.addChild(_portfolioNav);
+		this.addChild(_loading)
 	}
 	
 	// _____________________________ API
@@ -58,10 +57,10 @@ public class Portfolio extends Page
 	*/
 	public function showNewPortfolio ( $portfolioVo:PortfolioVo ):void
 	{
+		_loading.reset();
 		_currentIndex 	= 0;
 		_currentItem	= null;
 		
-		//_scroller.visible = true;
 		this.stage.addEventListener( Event.ENTER_FRAME, _onEnterFrame, false,0,true );
 		
 		this.alpha = 0;
@@ -121,16 +120,25 @@ public class Portfolio extends Page
 
 	}
 	
-	public function deactivateCurrentItem ( $index:uint ):void
+	/** 
+	*	Deactivates the current item
+	*/
+	public function deactivateCurrentItem ( $deactivateVo:DeactivateVo ):void
 	{
 		_portfolioNav.hideArrows();
 		if( _currentItem != null )
 			_currentItem.deactivate();
 		
-		_currentItem = _items[$index] as PortfolioItem
+		_currentItem = _items[ $deactivateVo.index ] as PortfolioItem
 			
 		this.stage.addEventListener( Event.ENTER_FRAME, _onEnterFrame, false,0,true );
-		_centerStripOnImage( $index );
+		
+		if( $deactivateVo.direction == "left" )
+			_leftStripOnImage( $deactivateVo.index );
+		else if( $deactivateVo.direction == "right" )
+			_rightStripOnImage( $deactivateVo.index );
+		else
+			_centerStripOnImage( $deactivateVo.index )	
 		
 		if( _currentItem != null )
 			_currentItem.deactivate();
@@ -162,26 +170,31 @@ public class Portfolio extends Page
 			if( _currentItem.isHidden )
 				_currentItem = null;
 		
-		_distributeObjects(_currentIndex)
-		
-		if( _currentItem != null )
-			_centerStripOnImage( _currentItem.index, 0, 0)
-		else 
-			_centerStripOnImage( firstIndex, 0, 0 )
+		_distributeObjects(0)
+		//Tweener.addTween( _imageHolder, { x:StageResizeVo.lastResize.left + _ITEM_PADDING, time:0, transition:"EaseInOutQuint"} );
 	}
 	
+	/** 
+	*	Called when the active item is clicked again
+	*/
 	public function activeItemClickedAgain (  ):void
 	{
-		deactivateCurrentItem(_currentItem.index);
+		deactivateCurrentItem( new DeactivateVo(_currentItem.index, "center") );
 	}
 	
+	/** 
+	*	Called when the stage resizes
+	*/
 	public function onStageResize ( $vo:StageResizeVo ):void
 	{
-		_copyRight.x = $vo.right - _copyRight.width - 20;
-		_copyRight.y = $vo.height - _copyRight.height - 20
-		//_scroller.changeWidth( $vo.width - _SCROLL_PADDING*2, 0 );
-		//_scroller.y = $vo.height - _scroller.height - _SCROLL_PADDING;
-		//_scroller.x = $vo.left + _SCROLL_PADDING;
+		_loading.x 		= $vo.left//StageResizeVo.CENTER - LoadingDisplay.WIDTH/2;
+		_copyRight.x 	= $vo.right - _copyRight.width - 20;
+		_copyRight.y 	= $vo.height - _copyRight.height - 20
+	}
+	
+	public function updateTotalImagesLoaded ( $loaded:Number, $total:Number ):void
+	{
+		_loading.update($loaded, $total, StageResizeVo.lastResize.width)
 	}
 	
 	// _____________________________ Helpers
@@ -197,12 +210,31 @@ public class Portfolio extends Page
 		var len:uint = _items.length;
 		for ( var i:uint=0; i<len; i++ ) 
 		{
-			totalWidth += _items[i].width + _ITEM_PADDING;
+			totalWidth += _items[i].width;
+			if( _items[i].width > 0 )
+				totalWidth += _ITEM_PADDING;
+				
 		}
 		return totalWidth;
 	}
 	
 	// _____________________________ Strip
+	
+	private function _leftStripOnImage ( $index:uint, $speed:Number =1.3, $speed2:Number=0.8 ):void
+	{
+		_distributeObjects(0,true,$speed2);
+		_lastXmouse = this.mouseX;
+		var xTarg:Number = StageResizeVo.lastResize.left - _items[$index].targetX + _ITEM_PADDING;
+		Tweener.addTween( _imageHolder, { x:xTarg, time:$speed, transition:"EaseInOutQuint"} );
+	}
+	
+	private function _rightStripOnImage ( $index:uint, $speed:Number =1.3, $speed2:Number=0.8 ):void
+	{
+		_distributeObjects(0,true,$speed2);
+		_lastXmouse = this.mouseX;
+		var xTarg:Number = StageResizeVo.lastResize.right - _items[$index].targetX - _items[$index].width - _ITEM_PADDING;
+		Tweener.addTween( _imageHolder, { x:xTarg, time:$speed, transition:"EaseInOutQuint"} );
+	}
 	
 	private function _centerStripOnImage ( $index:uint, $speed:Number =1.3, $speed2:Number=0.8 ):void
 	{
@@ -210,7 +242,6 @@ public class Portfolio extends Page
 		_lastXmouse = this.mouseX;
 		var xTarg:Number = (_currentItem != null)? StageResizeVo.CENTER - _currentItem.targetX - _currentItemWidth/2 : StageResizeVo.lastResize.left ;
 		Tweener.addTween( _imageHolder, { x:xTarg, time:$speed, transition:"EaseInOutQuint"} );
-//		_scroller.changeScrollPosition( (_currentItem.targetX) / (_totalWidth() -_currentItemWidth) );
 	}
 	
 	public var count:Number = 0;
@@ -236,7 +267,6 @@ public class Portfolio extends Page
 	
 	private function _onLowResImageLoaded ( e:ImageLoadEvent ):void {
 		_distributeObjects( e.imageIndex, false );
-//		_scroller.updateScrollWindow( StageResizeVo.lastResize.width / _imageHolder.width, 0 );
 	}
 	
 	private function _onHighResImageLoaded ( e:ImageLoadEvent ):void {
@@ -260,7 +290,7 @@ public class Portfolio extends Page
 				pos += (pos < 1)? _scrollWindowWidth : -_scrollWindowWidth ;
 				var xTarg:Number = Math.round( _imageHolder.x + pos * 0.07 );
 				
-				var sidePadding = (StageResizeVo.lastResize.width/2 - _currentItemWidth/2);
+				var sidePadding = _ITEM_PADDING;//(StageResizeVo.lastResize.width/2 - _currentItemWidth/2);
 				
 				if( pos > 1 ){
 					if( xTarg < StageResizeVo.lastResize.left + sidePadding )
