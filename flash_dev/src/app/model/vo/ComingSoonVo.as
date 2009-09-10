@@ -7,7 +7,7 @@ public class ComingSoonVo
 	
 	public function ComingSoonVo( $json:Object ):void
 	{
-		message = $json.message;
+		message = $json.text;
 	}
 
 }

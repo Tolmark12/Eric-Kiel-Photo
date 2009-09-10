@@ -12,10 +12,10 @@ public class PortfolioItemVo
 	
 	public function PortfolioItemVo( $json:Object, $index:uint ):void
 	{
-		tags		= $json.tags;
-		title 		= $json.title;
+		tags		= $json.photo_tags;
+		title 		= "";
 		src			= $json.src;
-		lowResSrc	= $json.lowResSrc;
+		lowResSrc	= $json.low_res_src;
 		index		= $index;
 		isActive	= true;
 	}

@@ -17,13 +17,13 @@ public class NavItemVo
 	
 	public function NavItemVo ( $json:Object ):void
 	{
-		id			= $json.id;
+		id			= $json.url_id;
 		text 		= $json.text;
-		dataFeed	= $json.dataFeed;
-		isLogo		= $json.isLogo;
-		pageType	= $json.pageType;
-		tag			= $json.tag;
-		isDefault	= $json.default;
+		dataFeed	= $json.data_service;
+		isLogo		= Boolean( $json.is_logo );
+		pageType	= $json.page_type;
+		tag			= $json.nav_filter_tag;
+		isDefault	= Boolean( $json.is_default );
 		
 		if( $json.sub != null ) {
 			kind	= $json.sub.kind;
