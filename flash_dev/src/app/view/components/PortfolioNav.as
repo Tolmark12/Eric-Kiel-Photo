@@ -49,10 +49,8 @@ package app.view.components
 			_bigRight.isWhite = true;
 			_bigLeft.isWhite = true;
 			
-			_start.titleTxt.autoSize 		= "left";
-			_end.titleTxt.autoSize 			= "left";
-			_start.titleTxt.text 			= "start";
-			_end.titleTxt.text 				= "end";
+			_start.text 			= "start";
+			_end.text 				= "end";
 			
 			_controllerArray.push(_start);
 			_controllerArray.push(_end);

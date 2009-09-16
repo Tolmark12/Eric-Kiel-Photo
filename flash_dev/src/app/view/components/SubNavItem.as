@@ -26,8 +26,7 @@ package app.view.components
 			_txt = new NavText_swc();
 			this.addChild( _txt );
 			
-			_txt.titleTxt.autoSize = "left";
-			_txt.titleTxt.text = $navItemVo.text;
+			_txt.text = $navItemVo.text;
 			
 			// Create hit area and add event listeners to that
 			var hit:Sprite 			= new Sprite();

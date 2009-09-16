@@ -17,7 +17,6 @@ public class LoadingDisplay extends Sprite
 	public function LoadingDisplay():void
 	{
 		this.addChild( _txt );
-		_txt.titleTxt.autoSize = "left";
 		_txt.y = 10;
 		// Changes mc's color to red.
 		var newColorTransform:ColorTransform = this.transform.colorTransform;
@@ -43,9 +42,9 @@ public class LoadingDisplay extends Sprite
 		
 		if( $loaded >= $total ){
 			hide();
-			_txt.titleTxt.text = " All images loaded";
+			_txt.htmlText = "<font size='10'>All images loaded</font>";
 		}else
-			_txt.titleTxt.text = "Pre-Loading Images: " + perc +  "%";
+			_txt.htmlText = "<font size='10'>Pre-Loading Images: " + perc +  "%</font>";
 			
 		_txt.x = $stageWidth/2 - _txt.titleTxt.textWidth/2;
 	}
@@ -56,7 +55,7 @@ public class LoadingDisplay extends Sprite
 	public function reset (  ):void
 	{
 		this.visible = true;
-		_txt.titleTxt.text = "";
+		_txt.text = "";
 		//this.alpha = 0.7;
 	}
 	

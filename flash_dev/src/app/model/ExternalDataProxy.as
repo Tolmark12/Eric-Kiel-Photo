@@ -25,7 +25,7 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	*/
 	public function getConfigData ( $stage:Stage ):void
 	{
-		var configData:String = ( $stage.loaderInfo.parameters.configData != null )? $stage.loaderInfo.parameters.configData : 'http://kiel.delorum.com/vladmin/api/' ;
+		var configData:String = ( $stage.loaderInfo.parameters.configData != null )? $stage.loaderInfo.parameters.configData : 'http://www.kielphoto.com/vladmin/api/' ;
 		var ldr:DataLoader = new DataLoader( configData );
 		ldr.addEventListener( Event.COMPLETE, _onConfigLoad, false,0,true );
 		ldr.loadItem();
