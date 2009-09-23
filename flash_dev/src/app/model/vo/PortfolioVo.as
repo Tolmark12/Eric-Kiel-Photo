@@ -7,11 +7,11 @@ public class PortfolioVo
 	
 	public function PortfolioVo( $json:Object ):void
 	{
-		var len:uint = $json.images.length;
+		var len:uint = $json.images_manual.length;
 		var portfolioItemVo:PortfolioItemVo;
 		for ( var i:uint=0; i<len; i++ ) 
 		{
-			items.push( new PortfolioItemVo( $json.images[i], i ) );
+			items.push( new PortfolioItemVo( $json.images_manual[i], i ) );
 		}
 	}
 
