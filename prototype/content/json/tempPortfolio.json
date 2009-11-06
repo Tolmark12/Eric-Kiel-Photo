@@ -16,6 +16,18 @@
 		        "people"
 		    ]
 		},
+		{
+	        "entity_id": "103",
+	        "name": "Image 79",
+	        "tags": [
+	            "default_portfolio"
+	        ],
+	        "src": "http://www.kielphoto.com/media/template/k/i/kiel_091008_1095m2.jpg",
+	        "low_res_src": "http://www.kielphoto.com/media/template/k/i/kiel_091008_1095m2_1.jpg",
+	        "photo_tags": [
+	            "current"
+	        ]
+	    },
 	    {
 	        "entity_id": "102",
 	        "name": "Image 78",
@@ -28,18 +40,6 @@
 	            "current",
 	            "motion",
 	            "places"
-	        ]
-	    },
-	    {
-	        "entity_id": "103",
-	        "name": "Image 79",
-	        "tags": [
-	            "default_portfolio"
-	        ],
-	        "src": "http://www.kielphoto.com/media/template/k/i/kiel_091008_1095m2.jpg",
-	        "low_res_src": "http://www.kielphoto.com/media/template/k/i/kiel_091008_1095m2_1.jpg",
-	        "photo_tags": [
-	            "current"
 	        ]
 	    },
 	    {
