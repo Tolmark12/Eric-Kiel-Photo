@@ -1,8 +1,7 @@
 package app.view.components
 {
 	import flash.display.Sprite;
-	import app.model.vo.ContactVo;
-	
+	import app.model.vo.ComingSoonVo;
 	import caurina.transitions.Tweener;
 
 	public class ComingSoon extends Sprite
@@ -21,13 +20,16 @@ package app.view.components
 		
 		public var isActive:Boolean;
 		
-		public function ComingSoon( $comingSoonVo:Object ):void
+		public function ComingSoon( $comingSoonVo:ComingSoonVo ):void
 		{			
 			_arrow = new SubNavArrow();
 			_arrow.x 			= 0 + _arrow.width;
 			_arrow.y 			= 0 - _arrow.height;
 			_arrow.alpha 		= 0;
 			this.addChild(_arrow);
+			
+			_comingSoon.titleTxt.autoSize = "left";
+			_comingSoon.titleTxt.htmlText = $comingSoonVo.message;
 			
 			_background = new SubNavBackground( (_comingSoon.width + _PADDING), (_comingSoon.height + _PADDING));
 			_background.x 		= 0 - (_comingSoon.width - _PADDING);

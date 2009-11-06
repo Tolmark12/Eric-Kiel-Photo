@@ -63,9 +63,9 @@ public class DataLoader extends BaseLoader implements LoaderIF
 	*/
 	public function DataLoader( $xmlPath:String )
 	{
-		super();
 		_dataRequest = new URLRequest( $xmlPath );
 		_dataLoader  = new URLLoader( );
+		super();
 	}
 	
 	override public function loadItem (  ):void

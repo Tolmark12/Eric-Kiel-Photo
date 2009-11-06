@@ -5,14 +5,14 @@
 		<link rel="shortcut icon" href="favicon.ico">
 		<title>Eric Kiel Photography</title>
 		<scritp type="text/css" src="style.css" />
-		<script type="text/javascript" src="js/swfobject/swfobject.js"></script>
-		<script type="text/javascript" src="js/swfaddress/swfaddress.js"></script>
-		<script type="text/javascript" src="js/swffit/swffit.js"></script>
+		<script type="text/javascript" src="prototype/js/swfobject/swfobject.js"></script>
+		<script type="text/javascript" src="prototype/js/swfaddress/swfaddress.js"></script>
+		<script type="text/javascript" src="prototype/js/swffit/swffit.js"></script>
 		<script type="text/javascript">
-			var flashvars = {};
+			var flashvars = {configData:"http://www.kielphoto.com/vladmin/api/"};
 			var params = {bgcolor:"#222222"};
 			var attributes = {id: "kiel_swf"};
-			swfobject.embedSWF("Kiel09.swf", "my_flash", "550", "450", "9.0.0", "", flashvars, params, attributes);
+			swfobject.embedSWF("prototype/Kiel09.swf", "my_flash", "550", "450", "9.0.0", "", flashvars, params, attributes);
 			swffit.fit("kiel_swf",550,450);
 		</script>
 	</head>

@@ -11,7 +11,7 @@ public class NavProxy extends Proxy implements IProxy
 	
 	private var _navVo:NavVo;
 	private var _currentPageId:String;
-	
+
 	// Constructor
 	public function NavProxy( ):void { super( NAME ); };
 	

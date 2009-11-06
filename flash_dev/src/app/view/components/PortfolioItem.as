@@ -47,10 +47,10 @@ public class PortfolioItem extends Sprite
 		index = $portfolioItemVo.index;
 		_portfolioItemVo = $portfolioItemVo;
 		_portfolioImages = new PortfolioImage(_portfolioItemVo.index);
-		_portfolioImages.addEventListener( ImageLoadEvent.HIGH_RES_IMAGE_LOADED, _onHighResImageLoaded, false,0,true );
 		_portfolioImages.addEventListener( ImageLoadEvent.LOW_RES_IMAGE_LOADED, _onLowResImageLoaded, false,0,true );
+		_portfolioImages.addEventListener( ImageLoadEvent.HIGH_RES_IMAGE_LOADED, _onHighResImageLoaded, false,0,true );
 		this.addChild(_portfolioImages);
-		_portfolioImages.loadImages( _portfolioItemVo.lowResSrc, _portfolioItemVo.src );
+		_portfolioImages.loadImages( _portfolioItemVo.lowResSrc, _portfolioItemVo.src, index < 9 );
 	}
 	
 	/** 
@@ -58,6 +58,7 @@ public class PortfolioItem extends Sprite
 	*/
 	public function activate (  ):void
 	{
+		_portfolioImages.isHidden = false;
 		_portfolioImages.loadLargeImage()
 		_removeTweens();
 		Tweener.addTween( super, { y:0, scaleX:1, scaleY:1, time:_TIME, transition:"EaseInOutQuint", onComplete:_sendActivationEvent} );
@@ -75,6 +76,7 @@ public class PortfolioItem extends Sprite
 	{
 		_removeTweens();
 		if( $doTween ){
+			Tweener.removeTweens( this, "blur" );
 			Tweener.addTween( this, { y:_LOWER_Y, scaleX:_portfolioImages.shrinkPercentage, scaleY:_portfolioImages.shrinkPercentage, time:_TIME, transition:"EaseInOutQuint", onComplete:_fadeBack} );
 			Tweener.addTween( this, { blur:0, time:0.3, transition:"EaseInOutQuint", onUpdate:_updateGlow} );
 		}else{
@@ -88,19 +90,24 @@ public class PortfolioItem extends Sprite
 	
 	public function hide (  ):void
 	{
+		_portfolioImages.isHidden = false;
 		isHidden = true;
 		if( isActive ){
 			this.isActive = false;
 			_onMouseOut(null);
 			this.filters = [];
+			this.scaleX = this.scaleY = _portfolioImages.shrinkPercentage;
+			this.y = _LOWER_Y;
 		}
-		Tweener.addTween( this, { alpha:0, scaleX:0, scaleY:0, time:0, transition:"EaseInOutQuint"} );
+		Tweener.addTween( this, { alpha:0, time:0.3, transition:"EaseInOutQuint", onComplete:_makeInvisible} );
 	}
 	
 	public function show (  ):void
 	{
-		this.alpha = 1;
+		_portfolioImages.isHidden = false;
+		Tweener.addTween( this, { alpha:0.8, time:0.3, transition:"EaseInOutQuint"} );
 		isHidden = false;
+		this.visible = true;
 		deactivate();
 	}
 	
@@ -151,12 +158,14 @@ public class PortfolioItem extends Sprite
 	private function _onLowResImageLoaded ( e:ImageLoadEvent ):void
 	{
 		this.visible = true;
-		//Tweener.addTween( this, { alpha:0.8, time:1, transition:"EaseInOutQuint"} );
-		_onHighResImageLoaded(null);
+		e.imageIndex = index;
+		if( !isActive )
+			deactivate(false);
 	}
 	
 	private function _onHighResImageLoaded ( e:ImageLoadEvent ):void
 	{
+		e.imageIndex = index;
 		if( !isActive )
 			deactivate(false);
 		else
@@ -197,6 +206,12 @@ public class PortfolioItem extends Sprite
 	private function _removeTweens (  ):void
 	{
 		Tweener.removeTweens( this, "scaleX", "scaleY", "blur" );
+	}
+	
+	private function _makeInvisible (  ):void
+	{
+		if( isHidden )
+			this.visible = false;
 	}
 	
 	// _____________________________ Glow

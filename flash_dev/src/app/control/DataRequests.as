@@ -37,6 +37,12 @@ public class DataRequests extends SimpleCommand implements ICommand
 			case AppFacade.PORTFOLIO_DATA_LOADED :
 				portfolioProxy.parseNewPortfolio( note.getBody() as Object );
 			break;
+			case AppFacade.IMAGE_LOADED :
+				portfolioProxy.imageLoaded( note.getBody() as uint )
+			break;
+			case AppFacade.IMAGE_LOADED_LOW :
+				portfolioProxy.imageLoaded( note.getBody() as uint )
+			break;
 		}
 	}
 }

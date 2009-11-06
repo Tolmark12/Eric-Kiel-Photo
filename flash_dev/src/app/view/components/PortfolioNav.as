@@ -2,9 +2,8 @@ package app.view.components
 {
 	import flash.display.*;
 	import flash.events.*;
-	
 	import app.view.components.events.NavEvent;
-	
+	import flash.geom.ColorTransform;
 	import caurina.transitions.Tweener;
 	
 	public class PortfolioNav extends Sprite
@@ -19,8 +18,10 @@ package app.view.components
 		
 		private var _start:NavText_swc;
 		private var _end:NavText_swc;
-		private var _left:PortfolioBtn_swc;
-		private var _right:PortfolioBtn_swc;
+		private var _left:ArrowButton;
+		private var _right:ArrowButton;
+		private var _bigLeft:ArrowButton;
+		private var _bigRight:ArrowButton;
 		
 		private var _navEvent:NavEvent;	
 			
@@ -34,27 +35,36 @@ package app.view.components
 			this.addEventListener(Event.ADDED_TO_STAGE, _onAddedToStage);
 		}
 		
+		// _____________________________ API
+		
 		public function build():void
 		{
 			_start 		= new NavText_swc();
 			_end 		= new NavText_swc();
-			_left 		= new PortfolioBtn_swc();
-			_right 		= new PortfolioBtn_swc();
+			_left 		= new ArrowButton();
+			_right 		= new ArrowButton();
+			_bigLeft	= new ArrowButton();
+			_bigRight	= new ArrowButton();
 			
-			_start.titleTxt.autoSize 		= "left";
-			_end.titleTxt.autoSize 			= "left";
-			_start.titleTxt.text 			= "start";
-			_end.titleTxt.text 				= "end";
+			_bigRight.isWhite = true;
+			_bigLeft.isWhite = true;
+			
+			_start.text 			= "start";
+			_end.text 				= "end";
 			
 			_controllerArray.push(_start);
 			_controllerArray.push(_end);
 			_controllerArray.push(_left);
 			_controllerArray.push(_right);
-			
+			_controllerArray.push(_bigLeft)
+			_controllerArray.push(_bigRight);
+						
 			_controller.addChild(_start);
 			_controller.addChild(_end);
 			_controller.addChild(_left);
 			_controller.addChild(_right);
+			//_controller.addChild(_bigLeft)
+			//_controller.addChild(_bigRight);
 			
 			for each(var $button in _controllerArray)
 			{
@@ -68,15 +78,27 @@ package app.view.components
 		
 		public function hideArrows():void
 		{
-			_left.visible = false;
-			_right.visible = false;
+//			_left.visible = false;
+//			_right.visible = false;
+//			_bigRight.visible = false;
+//			_bigLeft.visible = false;
 		}
 
 		public function showArrows():void
 		{
 			_left.visible = true;
 			_right.visible = true;
+			_bigRight.visible = true;
+			_bigLeft.visible = true;
 		}
+		
+		public function positionArrows ( $ammount:Number ):void
+		{
+			_bigRight.moveTo( 75 +  $ammount );
+			_bigLeft.moveTo(  75 + -$ammount );
+		}
+		
+		// _____________________________  Helpers
 		
 		private function _onAddedToStage(e:Event):void
 		{
@@ -85,31 +107,33 @@ package app.view.components
 		
 		private function _positionElements():void
 		{
+			_right.alpha 		= 1;
+			_left.alpha 		= 1;
 			_start.x 			= 0;
 			_left.x 			= _start.x + _start.width + _PADDING-5;
 			_right.x 			= _left.x + 3 + _PADDING;
 			_left.y 			= 5;
 			_right.y			= 5;
 			_right.scaleX 		= -1;
-			_end.x 				= _right.x + _PADDING-6;			
+			_bigRight.scaleX	= -4;
+			_bigLeft.scaleX		= _bigLeft.scaleY = _bigRight.scaleY = 4;
+			_bigLeft.y			= _bigRight.y = -370
+			_end.x 				= _right.x + _PADDING-6;
 		}
 		
 		private function _addEvents():void
 		{			
 			_start.addEventListener(MouseEvent.MOUSE_OVER, _onMouseOver, false, 0, true);
 			_end.addEventListener(MouseEvent.MOUSE_OVER, _onMouseOver, false, 0, true);
-			_right.addEventListener(MouseEvent.MOUSE_OVER, _onMouseOver, false, 0, true);
-			_left.addEventListener(MouseEvent.MOUSE_OVER, _onMouseOver, false, 0, true);
-			
 			_start.addEventListener(MouseEvent.MOUSE_OUT, _onMouseOut, false, 0, true);
 			_end.addEventListener(MouseEvent.MOUSE_OUT, _onMouseOut, false, 0, true);
-			_right.addEventListener(MouseEvent.MOUSE_OUT, _onMouseOut, false, 0, true);
-			_left.addEventListener(MouseEvent.MOUSE_OUT, _onMouseOut, false, 0, true);
 			
 			_start.addEventListener(MouseEvent.CLICK, _onClick, false, 0, true);
 			_end.addEventListener(MouseEvent.CLICK, _onClick, false, 0, true);
 			_right.addEventListener(MouseEvent.CLICK, _onClick, false, 0, true);
 			_left.addEventListener(MouseEvent.CLICK, _onClick, false, 0, true);
+			_bigRight.addEventListener(MouseEvent.CLICK, _onClick, false, 0, true);
+			_bigLeft.addEventListener(MouseEvent.CLICK, _onClick, false, 0, true);
 		}
 		
 		private function _onClick(e:MouseEvent):void
@@ -127,11 +151,13 @@ package app.view.components
 					dispatchEvent(_navEvent);
 				break;       
 				case _controllerArray[2]:
+				case _controllerArray[4]:
 					//trace("prev");
 					_navEvent = new NavEvent(NavEvent.PORTFOLIO_PREV, true);
 					dispatchEvent(_navEvent);
 				break;       
 				case _controllerArray[3]:
+				case _controllerArray[5]:
 					//trace("next");
 					_navEvent = new NavEvent(NavEvent.PORTFOLIO_NEXT, true);
 					dispatchEvent(_navEvent);

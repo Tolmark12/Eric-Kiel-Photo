@@ -25,7 +25,7 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	*/
 	public function getConfigData ( $stage:Stage ):void
 	{
-		var configData:String = ( $stage.loaderInfo.parameters.configData != null )? $stage.loaderInfo.parameters.configData : 'content/json/Config.json' ;
+		var configData:String = ( $stage.loaderInfo.parameters.configData != null )? $stage.loaderInfo.parameters.configData : 'http://www.kielphoto.com/vladmin/api/' ;
 		var ldr:DataLoader = new DataLoader( configData );
 		ldr.addEventListener( Event.COMPLETE, _onConfigLoad, false,0,true );
 		ldr.loadItem();
@@ -36,14 +36,18 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	*/
 	public function loadNavData (  ):void
 	{
-		var ldr:DataLoader = new DataLoader( _configVo.services.getNav );
+		var ldr:DataLoader = new DataLoader( _configVo.getNav );
 		ldr.addEventListener( Event.COMPLETE, _onNavLoad, false,0,true );
 		ldr.loadItem();
 	}
 	
 	public function loadPortfolioData ( $feed:String ):void
 	{
-		var ldr:DataLoader = new DataLoader( $feed );
+		// TEMP !!
+		// var ldr:DataLoader = new DataLoader( $feed );
+		var ldr:DataLoader = new DataLoader( "http://www.kielphoto.com/prototype/content/json/tempPortfolio.json" );
+		// TEMP !!
+		
 		ldr.addEventListener( Event.COMPLETE, _onPortfolioDataLoad, false,0,true );
 		ldr.loadItem();
 	}

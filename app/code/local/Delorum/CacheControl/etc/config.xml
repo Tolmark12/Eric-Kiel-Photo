@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<modules>
+        <Delorum_CacheControl>
+            <version>0.1.0</version>
+        </Delorum_CacheControl>
+    </modules>
+    <admin>
+        <routers>
+			<cachecontrol>
+				<use>admin</use>
+				<args>
+					<module>Delorum_CacheControl</module>
+					<frontName>cachecontrol</frontName>
+				</args>
+			</cachecontrol>
+        </routers>
+    </admin>
+    <adminhtml>
+		<menu>
+			<system>
+				<children>
+					<tools>
+						<children>
+							<cachecontrol module="cachecontrol" translate="title">
+								<title>Cache Control</title>
+								<sort_order>20</sort_order>
+								<action>cachecontrol/adminhtml_index/index/</action>
+							</cachecontrol>
+						</children>
+					</tools>
+				</children>
+			</system>
+		</menu>
+		<acl>
+			<resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                            	<tools>
+                            		<children>
+                            			<cachecontrol module="cachecontrol" translate="title">
+                            				<title>Cache Control (minimal)</title>
+                            			</cachecontrol>
+                            		</children>
+                            	</tools>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+           </resources>
+		</acl>
+	</adminhtml>
+    <global>
+    	<blocks>
+    		<cachecontrol>
+    			<class>Delorum_CacheControl_Block</class>
+    		</cachecontrol>
+    	</blocks>
+    	<helpers>
+    		<cachecontrol>
+    			<class>Delorum_CacheControl_Helper</class>
+    		</cachecontrol>
+    	</helpers>
+    </global>
+</config>
