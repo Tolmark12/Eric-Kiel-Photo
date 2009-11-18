@@ -4,6 +4,7 @@ import org.puremvc.as3.multicore.interfaces.IProxy;
 import org.puremvc.as3.multicore.patterns.proxy.Proxy;
 import app.model.vo.*;
 import app.AppFacade;
+import flash.external.ExternalInterface;
 
 public class NavProxy extends Proxy implements IProxy
 {
@@ -36,6 +37,7 @@ public class NavProxy extends Proxy implements IProxy
 			sendNotification( AppFacade.LOAD_PAGE_DATA, _navVo.getNavItemById( $newId ) );
 			var pathVo = new PathVo( _currentPageId, $newId );
 			_currentPageId = $newId;
+			_sendToAnalytics(_currentPageId);
 			
 			//// Show / Hid the sub nav
 			//if( currentNavItem.subNav != null && _currentSubNavId != _currentPageId ) {
@@ -54,7 +56,20 @@ public class NavProxy extends Proxy implements IProxy
 			sendNotification( AppFacade.UPDATE_PATH, pathVo );			
 			sendNotification( AppFacade.REFRESH_ALIGN );
 		}
-		
+	}
+	
+	/** 
+	*	Allow navigation on an existing page (used for analytics)
+	*/
+	public function navigationOnCurrentPage ( $nav:String ):void
+	{
+		_sendToAnalytics(_currentPageId + "/" + $nav )
+	}
+	
+	private function _sendToAnalytics ( $url:String ):void
+	{
+		//trace( "to analytics" + '  :  ' + $url );
+		ExternalInterface.call( "pageTracker._trackPageview", $url);
 	}
 	
 }

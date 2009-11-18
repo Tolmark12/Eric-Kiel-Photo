@@ -10,6 +10,7 @@ public class PortfolioProxy extends Proxy implements IProxy
 {
 	public static const NAME:String = "portfolio_proxy";
 	
+	private var _navProxy:NavProxy;
 	private var _portfolioVo:PortfolioVo;
 	private var _sequence:Sequence;
 	private var _allFilters:Array;
@@ -17,11 +18,15 @@ public class PortfolioProxy extends Proxy implements IProxy
 	private var _configVo:ConfigVo;
 	private var _totalLoaded:Number;
 	
+	
 	// Constructor
-	public function PortfolioProxy( ):void { super( NAME ); };
+	public function PortfolioProxy( ):void { 
+		super( NAME );
+	 }
 	
 	public function parseNewPortfolio ( $json:Object ):void
 	{
+		_navProxy = facade.retrieveProxy( NavProxy.NAME ) as NavProxy;
 		_totalLoaded = 0;
 		_portfolioVo = new PortfolioVo( $json );
 		sendNotification( AppFacade.PORTFOLIO_DATA_PARSED, _portfolioVo );
@@ -156,14 +161,23 @@ public class PortfolioProxy extends Proxy implements IProxy
 	
 	private function _sendNewIndex (  ):void
 	{
+		_navProxy.navigationOnCurrentPage("photo"+_sequence.currentItem.index);
 		sendNotification( AppFacade.ACTIVATE_PORTFOLIO_ITEM, _sequence.currentIndex );
 	}
 	
+	
+	private var _firstFilterApplied:Boolean = false;
 	private function _sendFilters (  ):void
 	{
 		if( _sequence != null )
 			_sendActiveItems();
-
+		
+		
+		if( _firstFilterApplied )
+			_navProxy.navigationOnCurrentPage("activate_filters:"+_filters.join(","));
+			
+		_firstFilterApplied = true;
+		
 		sendNotification( AppFacade.ACTIVE_PORTFOLIO_TAGS, _filters );
 	}
 	
