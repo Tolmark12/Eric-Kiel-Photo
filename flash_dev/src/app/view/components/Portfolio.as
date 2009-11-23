@@ -148,7 +148,7 @@ public class Portfolio extends Page
 	*	Turns images on (or off) based on a list of active / inactive items
 	*	@param		list of items
 	*/
-	public function filterImages ( $images:Array ):void
+	public function filterImages ( $images:Array=null ):void
 	{
 		var portfolioItem:PortfolioItem;
 		var len:uint = $images.length;
