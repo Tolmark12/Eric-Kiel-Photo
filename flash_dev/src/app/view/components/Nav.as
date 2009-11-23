@@ -37,9 +37,13 @@ public class Nav extends Sprite
 			}
 		}
 		this.y = 40
-		this.x = Math.round( StageResizeVo.CENTER - this.width/2 );
+		onStageResize();
 	}
 	
+	/** 
+	*	Make the nav item active
+	*	@param		Id of item
+	*/
 	public function activateNavItem ( $id:String ):void
 	{
 		if( _selectedItem != null )
@@ -49,16 +53,32 @@ public class Nav extends Sprite
 		_selectedItem.activate();
 	}
 	
+	/** 
+	*	Make sub nav item active
+	*	@param		Id of sub nav item
+	*/
 	public function activateSubNavItem ( $id:String ):void
 	{
 		if( _selectedItem != null )
 			( _selectedItem as NavItemSubNav ).activateSubItem( $id );
 	}
 	
+	/** 
+	*	Change which sub nav items are active
+	*	@param		A list of sub nav item ids
+	*/
 	public function changeActiveSubItems ( $tags:Array ):void
 	{
 		if( _selectedItem != null )
 			_selectedItem.activateSubItems( $tags );
+	}
+	
+	/** 
+	*	@private
+	*/
+	public function onStageResize (  ):void
+	{
+		this.x = Math.round( StageResizeVo.CENTER - this.width/2 );
 	}
 	
 	// _____________________________ Helpers

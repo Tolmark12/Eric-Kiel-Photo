@@ -44,8 +44,11 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	public function loadPortfolioData ( $feed:String ):void
 	{
 		// TEMP !!
-		// var ldr:DataLoader = new DataLoader( $feed );
-		var ldr:DataLoader = new DataLoader( "http://www.kielphoto.com/prototype/content/json/tempPortfolio.json" );
+		var ldr:DataLoader
+		if( $feed != "http://www.kielphoto.com/vladmin/api/index/template/3" )
+			ldr = new DataLoader( $feed );
+		else
+			ldr = new DataLoader( "http://www.kielphoto.com/prototype/content/json/tempPortfolio.json" );
 		// TEMP !!
 		
 		ldr.addEventListener( Event.COMPLETE, _onPortfolioDataLoad, false,0,true );

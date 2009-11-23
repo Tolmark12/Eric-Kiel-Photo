@@ -29,7 +29,8 @@ public class NavMediator extends Mediator implements IMediator
 	{
 		return [ AppFacade.NAV_DATA_PARSED, 
 		 		 AppFacade.UPDATE_PATH,
-				 AppFacade.ACTIVE_PORTFOLIO_TAGS ];
+				 AppFacade.ACTIVE_PORTFOLIO_TAGS,
+				 AppFacade.STAGE_RESIZE ];
 	}
 	
 	// PureMVC: Handle notifications
@@ -55,6 +56,9 @@ public class NavMediator extends Mediator implements IMediator
 			break;
 			case AppFacade.ACTIVE_PORTFOLIO_TAGS :
 				_nav.changeActiveSubItems(note.getBody() as Array)
+			break;
+			case AppFacade.STAGE_RESIZE :
+				_nav.onStageResize();
 			break;
 		}
 	}
