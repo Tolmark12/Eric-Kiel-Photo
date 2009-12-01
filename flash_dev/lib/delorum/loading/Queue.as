@@ -32,7 +32,7 @@ public class Queue
 		
 		// If the code doesn't find a queu bu this id, create one
 		queue = new Queue($id);
-		trace( _queueOrdering[$id] );
+		//trace( _queueOrdering[$id] );
 		if( _queueOrdering[$id] == null )
 			_queues[_queues.length] = queue;
 		else
@@ -83,6 +83,7 @@ public class Queue
 	
 	public static function setQueueIndex ( $queueId:String, $index:Number=0 ):void
 	{
+		getSingleton($queueId);
 		_queueOrdering[$queueId] = $index
 	}
 

@@ -8,6 +8,10 @@ import app.view.components.events.ImageLoadEvent;
 
 public class PortfolioImage extends Sprite
 {
+	public var loadQueueNumber:Number;
+	private var _lowResLoaded:ImageLoader;
+	private var _highResLoader:ImageLoader;
+	
 	private static const _LOAD_IN_SEQUENCE:Boolean = false;
 	public var highResLoaded:Boolean	= false;
 	public var lowResLoaded:Boolean		= false;	
@@ -25,6 +29,9 @@ public class PortfolioImage extends Sprite
 	private var _budgeId:String;
 	private var _loadImmediately:Boolean = false;
 	
+	
+	// _____________________________ API
+	
 	public function PortfolioImage($index:Number):void
 	{
 		index = $index;
@@ -34,17 +41,17 @@ public class PortfolioImage extends Sprite
 	public function loadImages ( $lowResSrc:String, $src:String, $loadImmediately:Boolean=false  ):void
 	{
 		_highResImagePath = $src;
-		var ldr:ImageLoader = new ImageLoader( $lowResSrc, _lowResHolder );
-		ldr.addEventListener( Event.INIT, _onLowResLoaded );
+		_lowResLoaded = new ImageLoader( $lowResSrc, _lowResHolder );
+		_lowResLoaded.addEventListener( Event.INIT, _onLowResLoaded, false, 0, true );
 		//if( !$loadImmediately )
-			ldr.addItemToLoadQueue( "low" );
+			_lowResLoaded.addItemToLoadQueue( "low" + loadQueueNumber );
 		//else
-		//	ldr.loadItem();
+		//	_lowResLoaded.loadItem();
 		
 		//if( _LOAD_IN_SEQUENCE ) {
-			var ldr2:ImageLoader = new ImageLoader( _highResImagePath, _highResHolder );
-			ldr2.addEventListener( Event.INIT, _onHighResLoaded );
-			_budgeId = ldr2.addItemToLoadQueue("high");
+			_highResLoader = new ImageLoader( _highResImagePath, _highResHolder );
+			_highResLoader.addEventListener( Event.INIT, _onHighResLoaded, false, 0, true );
+			_budgeId = _highResLoader.addItemToLoadQueue( "high" + loadQueueNumber);
 		//}
 		_loadImmediately = $loadImmediately;
 	}
@@ -52,7 +59,7 @@ public class PortfolioImage extends Sprite
 	public function loadLargeImage (  ):void
 	{
 		if( !highResLoaded )
-			BaseLoader.loadItemNow( _budgeId, "high" )
+			BaseLoader.loadItemNow( _budgeId, "high" + loadQueueNumber )
 	}
 
 	public function get activeWidth (  ):Number
@@ -70,6 +77,27 @@ public class PortfolioImage extends Sprite
 		else
 			return 50;
 	}
+	
+	public function clear (  ):void
+	{
+		if( _lowResLoaded != null ) {
+			_lowResLoaded.cancelLoad();
+			_lowResLoaded.removeEventListener( Event.INIT, _onLowResLoaded)
+			_highResLoader.cancelLoad();
+			_highResLoader.removeEventListener( Event.INIT, _onHighResLoaded)
+			
+			if( _lowResHolder != null)
+				if( _lowResHolder.parent != null )
+					this.removeChild(_lowResHolder);
+				
+			if( _highResHolder.parent != null )
+				this.removeChild(_highResHolder);
+
+			_lowResHolder  = null;
+			_highResHolder = null;	
+		}
+	}
+	
 	// _____________________________ Image load Handlers
 	
 	private function _onLowResLoaded ( e:Event ):void
@@ -91,9 +119,9 @@ public class PortfolioImage extends Sprite
 		this.scaleX				= snap;
 		
 		//if( !_LOAD_IN_SEQUENCE ) {
-		//	var ldr2:ImageLoader = new ImageLoader( _highResImagePath, _highResHolder );
-		//	ldr2.addEventListener( Event.INIT, _onHighResLoaded );
-		//	_budgeId = ldr2.addItemToLoadQueue("high");
+		//	var _highResLoader:ImageLoader = new ImageLoader( _highResImagePath, _highResHolder );
+		//	_highResLoader.addEventListener( Event.INIT, _onHighResLoaded );
+		//	_budgeId = _highResLoader.addItemToLoadQueue("high");
 		//}
 		
 		_highResImagePath = null;
@@ -120,6 +148,8 @@ public class PortfolioImage extends Sprite
 		
 		if( _lowResHolder != null )
 			this.removeChild(_lowResHolder);
+			
+		_lowResHolder = null;
 		this.addChild( _highResHolder );
 		
 		var imgEv:ImageLoadEvent = new ImageLoadEvent( ImageLoadEvent.HIGH_RES_IMAGE_LOADED, true );

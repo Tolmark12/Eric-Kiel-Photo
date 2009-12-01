@@ -39,7 +39,8 @@ public class PortfolioMediator extends Mediator implements IMediator
 				 AppFacade.APPLY_PORTFOLIO_FILTERS,
 				 AppFacade.DEACTIVATE_ACTIVE_PORTFOLIO_ITEM,
 				 AppFacade.ACTIVE_ITEM_CLICKED_AGAIN,
-				 AppFacade.UPDATE_TOTAL_LOADED, ];
+				 AppFacade.UPDATE_TOTAL_LOADED,
+				 AppFacade.REMOVE_CURRENT_PAGE ];
 	}
 	
 	// PureMVC: Handle notifications
@@ -68,6 +69,13 @@ public class PortfolioMediator extends Mediator implements IMediator
 			case AppFacade.UPDATE_TOTAL_LOADED :
 				var tempObj:Object = note.getBody() as Object;
 				_portfolio.updateTotalImagesLoaded( tempObj.loaded, tempObj.total)
+				//if( tempObj.loaded  == tempObj.total ){
+				//	_portfolio.clear()
+				//	_portfolio = null;
+				//}
+			break;
+			case AppFacade.REMOVE_CURRENT_PAGE :
+				//_portfolio.reset();
 			break;
 		}
 	}
@@ -101,5 +109,6 @@ public class PortfolioMediator extends Mediator implements IMediator
 	private function _onLowResImageLoaded ( e:ImageLoadEvent ):void {
 		sendNotification( AppFacade.IMAGE_LOADED, e.imageIndex );
 	}
+	
 }
 }

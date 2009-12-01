@@ -70,5 +70,32 @@ public class ExternalDataProxy extends Proxy implements IProxy
 		sendNotification( AppFacade.PORTFOLIO_DATA_LOADED, JSON.decode( e.target.data ) );
 	}
 	
+	
+	// _____________________________ TEMP!!!!!!!!!!!!!!!!!!!
+	public function addKeyHandler ( $stage ):void
+	{
+		//TEMP!!!!!
+		$stage.addEventListener (KeyboardEvent.KEY_DOWN, _keyDownHandler);
+		//TEMP!!!!!
+	}
+	
+	//TEMP!!!!!
+	private function _keyDownHandler ( e:KeyboardEvent ):void
+	{
+		if(e.keyCode==48 && e.shiftKey)
+			loadPortfolioData("http://www.kielphoto.com//vladmin/api/index/template/106");
+		else if(e.keyCode==48 )
+			loadPortfolioData("http://www.kielphoto.com/vladmin/api/index/template/3");
+		
+		// Run the garbage collection
+		//this.parent.removeChild( this );
+		//try {
+		//new LocalConnection().connect('foo');
+		//new LocalConnection().connect('foo');
+		//} catch (e:*) {}
+	}
+	//TEMP!!!!!
+	
+	
 }
 }

@@ -114,7 +114,7 @@ public class ImageLoader extends BaseLoader implements LoaderIF
 		try {
 			_loader.close();
 		} catch (e:Error) {
-			
+			//trace( e );
 		}
 			
 	}

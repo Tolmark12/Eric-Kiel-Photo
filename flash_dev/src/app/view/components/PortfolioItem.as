@@ -42,14 +42,17 @@ public class PortfolioItem extends Sprite
 	*	Initialize - also load images
 	*	@param		Data for portfolio (image paths, index)
 	*/
-	public function buildAndLoad ( $portfolioItemVo:PortfolioItemVo ):void
+	public function buildAndLoad ( $portfolioItemVo:PortfolioItemVo, $loadQueueNumber:Number ):void
 	{
 		index = $portfolioItemVo.index;
+		
 		_portfolioItemVo = $portfolioItemVo;
 		_portfolioImages = new PortfolioImage(_portfolioItemVo.index);
 		_portfolioImages.addEventListener( ImageLoadEvent.LOW_RES_IMAGE_LOADED, _onLowResImageLoaded, false,0,true );
 		_portfolioImages.addEventListener( ImageLoadEvent.HIGH_RES_IMAGE_LOADED, _onHighResImageLoaded, false,0,true );
 		this.addChild(_portfolioImages);
+
+		_portfolioImages.loadQueueNumber = $loadQueueNumber;
 		_portfolioImages.loadImages( _portfolioItemVo.lowResSrc, _portfolioItemVo.src, index < 9 );
 	}
 	
@@ -80,10 +83,10 @@ public class PortfolioItem extends Sprite
 			Tweener.addTween( this, { y:_LOWER_Y, scaleX:_portfolioImages.shrinkPercentage, scaleY:_portfolioImages.shrinkPercentage, time:_TIME, transition:"EaseInOutQuint", onComplete:_fadeBack} );
 			Tweener.addTween( this, { blur:0, time:0.3, transition:"EaseInOutQuint", onUpdate:_updateGlow} );
 		}else{
-			this.scaleX = this.scaleY = _portfolioImages.shrinkPercentage;
+			if( _portfolioImages != null )
+				this.scaleX = this.scaleY = _portfolioImages.shrinkPercentage;
 			filters = [];
 		}
-		
 		this.isActive = false;
 		this.filters = [];
 	}
@@ -134,6 +137,17 @@ public class PortfolioItem extends Sprite
 				this.x = $x;
 			}
 			targetX = $x;
+	}
+	
+	public function clear (  ):void
+	{
+		this.removeEventListener( MouseEvent.CLICK, _onClick );
+		this.removeEventListener( MouseEvent.MOUSE_OVER, _onMouseOver );
+		this.removeEventListener( MouseEvent.MOUSE_OUT, _onMouseOut );
+		
+		_portfolioImages.clear();
+		this.removeChild(_portfolioImages);
+		_portfolioImages = null;
 	}
 	
 	// _____________________________ Event Handlers

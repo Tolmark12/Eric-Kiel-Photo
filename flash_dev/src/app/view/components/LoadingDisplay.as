@@ -56,7 +56,8 @@ public class LoadingDisplay extends Sprite
 	{
 		this.visible = true;
 		_txt.text = "";
-		//this.alpha = 0.7;
+		this.alpha = 1;
+		Tweener.removeTweens( this, "alpha" );
 	}
 	
 	// _____________________________ Helpers

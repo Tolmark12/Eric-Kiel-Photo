@@ -11,6 +11,10 @@ import app.view.components.events.ImageLoadEvent;
 import flash.events.*;
 import delorum.scrolling.*;
 import delorum.loading.Queue;
+// TEMP
+import flash.net.LocalConnection;
+import delorum.loading.*;
+
 
 public class Portfolio extends Page
 {
@@ -23,7 +27,7 @@ public class Portfolio extends Page
 	private var _portfolioNav:PortfolioNav;
 	private var _copyRight:Copyright_swc;
 	private var _loading:LoadingDisplay = new LoadingDisplay();
-	
+	private var _portfolioNumber:Number = 0;
 	public function Portfolio():void
 	{
 		//Queue.setQueueIndex("low", 0);
@@ -47,33 +51,59 @@ public class Portfolio extends Page
 		this.addChild(_copyRight);
 		this.addChild(_portfolioNav);
 		this.addChild(_loading)
+		
+
 	}
 	
+	
 	// _____________________________ API
+	
+	/** 
+	*	Reset and prepare for new data
+	*/
+	public function clear (  ):void
+	{
+		// Reset vars
+		_currentIndex 	= 0;
+		_currentItem	= null;
+		
+		// Remove any current images
+		if( _imageHolder != null ) {
+			this.removeChild(_imageHolder);
+			var len:uint = _imageHolder.numChildren;
+			for ( var i:uint=0; i<len; i++ ) 
+			{
+				var portfolioItem:PortfolioItem = _imageHolder.getChildAt(0) as PortfolioItem;
+				portfolioItem.clear();
+				_imageHolder.removeChild( portfolioItem );
+			}
+		}
+
+		// Reset the loading display
+		_loading.reset();
+		
+		// Create image holder
+		_imageHolder = new Sprite();
+		_imageHolder.y = 100;
+		this.addChildAt( _imageHolder, 0 );
+	}
 	
 	/** 
 	*	Create and show a new portfolio of images
 	*	@param		The data used to build the portfolio
 	*/
 	public function showNewPortfolio ( $portfolioVo:PortfolioVo ):void
-	{
-		_loading.reset();
-		_currentIndex 	= 0;
-		_currentItem	= null;
-		
+	{ 
+		_portfolioNumber++;
+		trace( "NEW PORTFOLIO" );
+		// Reset
+		clear();
+		BaseLoader._currentlyLoading = false;
+		//Queue.setQueueIndex("low"+_portfolioNumber, 0);
+		//Queue.setQueueIndex("high"+_portfolioNumber, 1)
 		this.stage.addEventListener( Event.ENTER_FRAME, _onEnterFrame, false,0,true );
-		
 		this.alpha = 0;
 		Tweener.addTween( this, { alpha:1, time:1, transition:"EaseInOutQuint"} );
-		
-		// Clean up an existing portfolio
-		if( _imageHolder != null )
-			_removeExistingPortfolio();
-			
-		// Init holder
-		_imageHolder = new Sprite();
-		_imageHolder.y = 100;
-		this.addChildAt( _imageHolder, 0 );
 		
 		// Create new portfolio Items
 		_items = new Array();
@@ -84,7 +114,7 @@ public class Portfolio extends Page
 		{
 			portfolioItemVo = $portfolioVo.items[i];
 			portfolioItem	= new PortfolioItem();
-			portfolioItem.buildAndLoad( portfolioItemVo );
+			portfolioItem.buildAndLoad( portfolioItemVo, _portfolioNumber );
 			portfolioItem.x = i * 200;
 			portfolioItem.deactivate();
 			portfolioItem.addEventListener( "madeBig", _onItemActivationComplete, false,0,true );
@@ -157,13 +187,14 @@ public class Portfolio extends Page
 		for ( var i:uint=0; i<len; i++ ) 
 		{
 			portfolioItem = _items[i] as PortfolioItem;
-			if( $images[i] && portfolioItem.isHidden )
-				portfolioItem.show()
-			else if( !$images[i] && !portfolioItem.isHidden )
+			if( $images[i] && portfolioItem.isHidden ){
+				portfolioItem.show();
+			}else if( !$images[i] && !portfolioItem.isHidden ){
 				portfolioItem.hide();
-				
-			if( $images[i] && firstIndex < 0 )
+			}			
+			if( $images[i] && firstIndex < 0 ){
 				firstIndex = i;
+			}
 		}
 		
 		if( _currentItem != null )
@@ -195,13 +226,6 @@ public class Portfolio extends Page
 	public function updateTotalImagesLoaded ( $loaded:Number, $total:Number ):void
 	{
 		_loading.update($loaded, $total, StageResizeVo.lastResize.width)
-	}
-	
-	// _____________________________ Helpers
-	
-	private function _removeExistingPortfolio (  ):void
-	{
-		this.removeChild( _imageHolder );
 	}
 	
 	private function _totalWidth (  ):Number

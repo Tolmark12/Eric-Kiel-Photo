@@ -31,7 +31,7 @@ import flash.events.*;
 
 public class BaseLoader extends EventDispatcher
 {
-	private static var _currentlyLoading:Boolean;
+	public static var _currentlyLoading:Boolean;
 	
 	
 	// Local vars
