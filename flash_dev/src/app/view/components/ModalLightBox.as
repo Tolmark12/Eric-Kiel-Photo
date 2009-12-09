@@ -10,7 +10,7 @@ package app.view.components
 			
 			_loadImages($lightBoxVO.images);
 			
-			super(this.width, this.height);
+			super(600, 600);
 		}
 		
 		private function ($images:Array):void

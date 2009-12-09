@@ -10,7 +10,7 @@ package app.view.components
 		private static const _DELAY:Number 			= 0;
 		private static const _TRANSITION:String 	= 'easeOutExpo';
 		
-		public const PADDING:Number					= 25;
+		public const PADDING:Number					= 15;
 		
 		private var _background:Sprite				= new Sprite();
 		
@@ -19,8 +19,6 @@ package app.view.components
 		/*------------------------- CONSTRUCTOR */
 		public function Modal($width:Number, $height:Number):void
 		{
-			trace('new ' + $width + ' x ' + $height + ' modal');
-			
 			_drawModal($width, $height);
 		}
 		

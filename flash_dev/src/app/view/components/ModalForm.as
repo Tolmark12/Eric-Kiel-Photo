@@ -1,11 +1,12 @@
 package app.view.components
 {
 	import flash.display.Sprite;
-	import flash.events.MouseEvent;
 	import flash.net.URLVariables;
 	
 	public class ModalForm extends Modal
 	{
+		private static const _WIDTH:Number 		= 330;
+		
 		private var _id:String;
 		private var _vars:URLVariables;
 		
@@ -16,28 +17,21 @@ package app.view.components
 		
 		public function ModalForm()
 		{
-			trace('new modalform');
+			// 330 is a pre-determined fixed width for this (ModalForm) modal. The height is arbitrarily set to 330.
+			super(_WIDTH, 330);
 			
 			this.addChild(_contentHolder);
 			_contentHolder.addChild(_icon);
 			_contentHolder.addChild(_title);
 			_contentHolder.addChild(_description);
-			
-			// testing
-			this.addEventListener(MouseEvent.CLICK, _onClick);
-			
-			super(100, 100);
 		}
 		
 		//$formVO:FormVO
 		public function build():void
 		{
-			_contentHolder.x = this.PADDING;
-			_contentHolder.y = this.PADDING;
-			
-			_icon.gotoAndStop('question');
-			_title.htmlText 		= "Title";
-			_description.htmlText 	= "Description";
+			_icon.gotoAndStop('$door');
+			_title.htmlText	 		= "Door Form";
+			_description.htmlText 	= "This is the door form...";
 			
 			_icon.x = 0;
 			_icon.y = 0;
@@ -52,12 +46,10 @@ package app.view.components
 			//trace($formVO.description);
 			//trace($formVO.icon);
 			//trace($formVO.fields);
-		}
-		
-		private function _onClick(e:MouseEvent)
-		{
-			this.updateWidth(200);
-			this.updateHeight(200);
+			
+			_contentHolder.x = this.PADDING;
+			_contentHolder.y = this.PADDING;
+			updateHeight(_contentHolder.height + this.PADDING*2);
 		}
 	}
 }
