@@ -9,7 +9,8 @@ package app.view.components
 		/*------------------------- CONSTRUCTOR */
 		public function Modal($width:Number, $height:Number):void
 		{
-			trace('new modal');			
+			trace('new modal');
+						
 			_drawModal($width, $height);
 		}
 		

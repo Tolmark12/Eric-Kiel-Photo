@@ -7,17 +7,38 @@ package app.view.components
 		private var _formVO:FormVO 	= new FormVO();
 		
 		private var _id:String;
-		private var _postURL:String;
 		private var _vars:URLVariables;
-		private var _title:String;
-		private var _description:String;
-		private var _icon:String;
-		private var _fields:Array 	= new Array();
 		
 		public function ModalForm($formVO:FormVO)
 		{
 			trace('new modalform');
+			
+			_setTitle($formVO.title);
+			_setDescription($formVO.description);
+			_setIcon($formVO.icon);
+			_createFormFields($formVO.fields);
+			
 			super(this.width, this.height);
+		}
+		
+		private function _setTitle($title:String):void
+		{
+			trace($title);	
+		}
+		
+		private function _setDescription($description:String):void
+		{
+			trace($description);	
+		}
+		
+		private function _setIcon($icon:String):void
+		{
+			trace($icon);
+		}
+		
+		private function _createFormFields($fields:Array):void
+		{
+			trace($fields);
 		}
 	}
 }
