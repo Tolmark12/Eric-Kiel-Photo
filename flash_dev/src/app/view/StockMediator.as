@@ -32,6 +32,7 @@ public class StockMediator extends Mediator implements IMediator
 	private function _onBPress (  ):void
 	{
 		var temp:ModalForm = new ModalForm();
+		temp.build();
 		_stockPhotoStrip.addChild(temp);
 	}
 	/* TEMP !!!!!!!!! */

@@ -2,13 +2,17 @@ package app.view.components
 {
 	import flash.display.Sprite;
 	
-	import caurina.transitions.Tweener;
+	import caurina.transitions.Tweener; 
 
 	public class Modal extends Sprite
 	{
-		private static const TIME:Number 		= 1;
-		private static const DELAY:Number 		= 0;
-		private static const TRANSITION:String 	= 'easeOutExpo';
+		private static const _TIME:Number 			= 1;
+		private static const _DELAY:Number 			= 0;
+		private static const _TRANSITION:String 	= 'easeOutExpo';
+		
+		public const PADDING:Number					= 25;
+		
+		private var _background:Sprite				= new Sprite();
 		
 		//private var closeButton:ModalClose_swc = new ModalClose_swc();
 		
@@ -16,27 +20,29 @@ package app.view.components
 		public function Modal($width:Number, $height:Number):void
 		{
 			trace('new ' + $width + ' x ' + $height + ' modal');
-						
+			
 			_drawModal($width, $height);
 		}
 		
 		/*------------------------- API */
 		public function updateWidth($width:Number):void
 		{
-			Tweener.addTween(this, {width:$width, time:TIME, delay:DELAY, transition:TRANSITION});
+			Tweener.addTween(_background, {width:$width, time:_TIME, delay:_DELAY, transition:_TRANSITION});
 		}
 		
 		public function updateHeight($height:Number):void
 		{
-			Tweener.addTween(this, {height:$height, time:TIME, delay:DELAY, transition:TRANSITION});
+			Tweener.addTween(_background, {height:$height, time:_TIME, delay:_DELAY, transition:_TRANSITION});
 		}
 		
 		/*------------------------- INTERNAL */
 		private function _drawModal($width:Number, $height:Number):void
 		{
-			this.graphics.beginFill(0x000000, .75);
-			this.graphics.drawRoundRect(0, 0, $width, $height, 5, 5);
-			this.graphics.endFill();
+			_background.graphics.beginFill(0x000000, .75);
+			_background.graphics.drawRoundRect(0, 0, $width, $height, 5, 5);
+			_background.graphics.endFill();
+			
+			this.addChildAt(_background, 0);
 		}
 	}
 }
