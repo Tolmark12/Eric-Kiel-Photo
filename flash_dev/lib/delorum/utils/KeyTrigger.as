@@ -36,7 +36,6 @@ public class KeyTrigger
 	
 	private static function _onKeyDown ( e:KeyboardEvent ):void
 	{
-		trace( "pressedKeyCode" + '  :  ' +  e.keyCode );
 		var len:uint = keyListeners.length;
 		for ( var i:uint=0; i<len; i++ ) 
 		{

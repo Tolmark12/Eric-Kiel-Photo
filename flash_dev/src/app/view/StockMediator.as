@@ -8,6 +8,8 @@ import app.view.components.*;
 import flash.events.*;
 import app.view.components.events.*;
 import flash.display.Sprite;
+import delorum.utils.KeyTrigger;
+
 
 public class StockMediator extends Mediator implements IMediator
 {	
@@ -27,7 +29,8 @@ public class StockMediator extends Mediator implements IMediator
 
 	private function _onBPress (  ):void
 	{
-		// Add the modal here
+		var temp:ModalForm = new ModalForm();
+		_stockPhotoStrip.addChild(temp);
 	}
 	
 	// PureMVC: List notifications

@@ -2,9 +2,9 @@ package app.view.components
 {
 	public class ModalForm extends Modal
 	{
-		public function ModalForm()
+		public function ModalForm($width:Number = 100, $height:Number = 100)
 		{
-			super(100, 100);
+			super($width, $height);
 		}
 	}
 }
