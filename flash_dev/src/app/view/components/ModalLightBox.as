@@ -2,9 +2,14 @@ package app.view.components
 {
 	public class ModalLightBox extends Modal
 	{
-		public function ModalLightBox()
+		private var _lightBoxVO:LightBoxVO 	= new LightBoxVO();
+		
+		private var _images:Array 			= new Array();
+		
+		public function ModalLightBox($lightBoxVO:LightBoxVO)
 		{
-			super(100, 100);
+			trace('new modallightbox');
+			super(this.width, this.height);
 		}
 	}
 }
