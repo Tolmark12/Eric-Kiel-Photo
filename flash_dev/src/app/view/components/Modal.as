@@ -6,6 +6,7 @@ package app.view.components
 	{
 		//private var closeButton:ModalClose_swc = new ModalClose_swc();
 		
+		/*------------------------ CONSTRUCTOR */
 		public function Modal($width:Number = 100, $height:Number = 100):void
 		{
 			this.width 	= $width;
@@ -14,6 +15,7 @@ package app.view.components
 			_drawModal($width, $height);
 		}
 		
+		/*------------------------- API */
 		public function updateHeight($height):void
 		{
 			this.height = $height;
