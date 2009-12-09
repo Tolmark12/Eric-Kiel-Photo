@@ -7,6 +7,7 @@ import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import delorum.utils.EchoMachine;
 import app.AppFacade;
+import delorum.utils.KeyTrigger;
 
 public class Kiel09 extends Sprite
 {
@@ -14,6 +15,7 @@ public class Kiel09 extends Sprite
 	{
 		// Init echo
 		EchoMachine.register( this.stage );
+		KeyTrigger.stage = this.stage;
 		
 		// Init display mode
 		this.stage.scaleMode 	= StageScaleMode.NO_SCALE;

@@ -14,7 +14,7 @@ import delorum.loading.Queue;
 // TEMP
 import flash.net.LocalConnection;
 import delorum.loading.*;
-
+import delorum.utils.KeyTrigger;
 
 public class Portfolio extends Page
 {
@@ -51,8 +51,11 @@ public class Portfolio extends Page
 		this.addChild(_copyRight);
 		this.addChild(_portfolioNav);
 		this.addChild(_loading)
-		
-
+	}
+	
+	private function _onBPress (  ):void
+	{
+		trace( "asdfsadfadsf" );
 	}
 	
 	
@@ -95,7 +98,6 @@ public class Portfolio extends Page
 	public function showNewPortfolio ( $portfolioVo:PortfolioVo ):void
 	{ 
 		_portfolioNumber++;
-		trace( "NEW PORTFOLIO" );
 		// Reset
 		clear();
 		BaseLoader._currentlyLoading = false;

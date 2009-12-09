@@ -45,6 +45,7 @@
 */
 
 - FormVo
+	public var id:String;			// The id of the form we're submitting
 	public var postURL:String;		// The url to post the data to
 	public var vars:URLVariables;	// The url vars to post to the postURL
 	public var title:String;		// The title of the form
@@ -53,9 +54,10 @@
 	public var fields:Array;		// A list of fields to create (FieldVo)
 	
 - FieldVo
-	public var id:String;			// The id of this var 	- ex: first_name
-	public var title:String;		// The title			- ex: First Name
-	public var height:Number;		// The height of the field 
+	public var id:String;				// The id of this var 	- ex: first_name
+	public var title:String;			// The title			- ex: First Name
+	public var height:Number;			// The height of the field 
+	public var regexValidation:String;	// Possible validation
 	
 	
 // _____________________________ Components
@@ -65,12 +67,12 @@
 *	This will be the parent class for all the modal type windows
 */
 
-- PopUpBox ($width:Number)
+- Modal ($width:Number)
 	* Close button
 	* Set width based on value passed on
 	* updateHeight( $newHeight )
 	
-	- LightBox
+	- ModalLightBox
 		* Cookie /  Integration via LightBoxVo.as
 		* Display the contents of the LightBox 
 		-> Click on an image 
@@ -82,7 +84,7 @@
 		* Title | ex - Download Comp
 		* Description | ex - Fill out the form below...
 		* Submit Button
-		-> Submit click
+		-> Submit click - FormEvent (URLVariables)
 	
 /** 
 *	This is the proxy strip that relates to the larger set shown above.
@@ -113,3 +115,13 @@
 	
 	- Add photo images to
 	-> Broadcast click event
+	
+	
+// _____________________________ Event Object
+
+- FormEvent
+	SUBMIT_FORM
+	
+	* vars:URLVariables
+	
+	

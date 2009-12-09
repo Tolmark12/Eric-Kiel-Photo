@@ -20,8 +20,8 @@ public class PortfolioVo
 			items.sortOn( $json.sort_on );
 		}
 			
-		var len:uint = items.length;
-		for ( var j:uint=0; j<len; j++ ) 
+		var len2:uint = items.length;
+		for ( var j:uint=0; j<len2; j++ ) 
 		{
 			items[j].index = j;
 		}
