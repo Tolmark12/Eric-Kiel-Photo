@@ -10,7 +10,7 @@ package app.model.vo
 		public var title:String;
 		public var description:String;
 		public var icon:String;
-		public var field:Array;
+		public var fields:Array;
 		
 		public function FormVO($json:Object):void
 		{
@@ -20,7 +20,7 @@ package app.model.vo
 			title 			= $json.title;
 			description 	= $json.description;
 			icon 			= $json.icon;
-			field 			= $json.field;
+			fields 			= $json.field;
 		}
 	}
 }
