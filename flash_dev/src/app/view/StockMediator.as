@@ -22,16 +22,21 @@ public class StockMediator extends Mediator implements IMediator
 		super( NAME );
 		
 		$stage.addChild( _stockPhotoStrip );
-		/* TEMP */
+		
+		/* TEMP !!!!!!!!! */
 		KeyTrigger.addKeyListener( _onBPress, "b", true )
-		/* TEMP */
+		/* TEMP !!!!!!!!! */
    	}
 
+	/* TEMP !!!!!!!!! */
 	private function _onBPress (  ):void
 	{
 		var temp:ModalForm = new ModalForm();
 		_stockPhotoStrip.addChild(temp);
 	}
+	/* TEMP !!!!!!!!! */
+	
+	
 	
 	// PureMVC: List notifications
 	override public function listNotificationInterests():Array
