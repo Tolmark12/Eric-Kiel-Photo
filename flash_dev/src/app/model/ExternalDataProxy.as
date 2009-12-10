@@ -13,7 +13,7 @@ import com.adobe.serialization.json.JSON;
 public class ExternalDataProxy extends Proxy implements IProxy
 {
 	public static const NAME:String = "external_data_proxy";
-	
+	private var _server:String;
 	private var _configVo:ConfigVo;
 	
 	// Constructor
@@ -25,8 +25,10 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	*/
 	public function getConfigData ( $stage:Stage ):void
 	{
-		var configData:String = ( $stage.loaderInfo.parameters.configData != null )? $stage.loaderInfo.parameters.configData : 'http://www.kielphoto.com/vladmin/api/' ;
-		var ldr:DataLoader = new DataLoader( configData );
+		_server = ( $stage.loaderInfo.parameters.server != null )? $stage.loaderInfo.parameters.server : 'http://staging.kielphoto.com/' ;
+		//var configData:String = ( $stage.loaderInfo.parameters.configData != null )? $stage.loaderInfo.parameters.configData : 'http://www.kielphoto.com/vladmin/api/' ;
+		
+		var ldr:DataLoader = new DataLoader( _server + "vladmin/api/" );
 		ldr.addEventListener( Event.COMPLETE, _onConfigLoad, false,0,true );
 		ldr.loadItem();
 	}
@@ -45,10 +47,10 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	{
 		// TEMP !!
 		var ldr:DataLoader
-		if( $feed != "http://www.kielphoto.com/vladmin/api/index/template/3" )
+		if( $feed != _server + "vladmin/api/index/template/3" )
 			ldr = new DataLoader( $feed );
 		else
-			ldr = new DataLoader( "http://www.kielphoto.com/prototype/content/json/tempPortfolio.json" );
+			ldr = new DataLoader( _server + "prototype/content/json/tempPortfolio.json" );
 		// TEMP !!
 		
 		ldr.addEventListener( Event.COMPLETE, _onPortfolioDataLoad, false,0,true );
@@ -83,9 +85,9 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	private function _keyDownHandler ( e:KeyboardEvent ):void
 	{
 		if(e.keyCode==48 && e.shiftKey)
-			loadPortfolioData("http://www.kielphoto.com//vladmin/api/index/template/106");
+			loadPortfolioData( _server + "/vladmin/api/index/template/106");
 		else if(e.keyCode==48 )
-			loadPortfolioData("http://www.kielphoto.com/vladmin/api/index/template/3");
+			loadPortfolioData( _server + "vladmin/api/index/template/3");
 		
 		// Run the garbage collection
 		//this.parent.removeChild( this );
