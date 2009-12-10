@@ -8,21 +8,15 @@ import app.view.components.*;
 import flash.events.*;
 import app.view.components.events.*;
 import flash.display.Sprite;
-import delorum.utils.KeyTrigger;
 
-
-public class StockMediator extends Mediator implements IMediator
+public class LightBoxMediator extends Mediator implements IMediator
 {	
-	public static const NAME:String = "stock_mediator";
+	public static const NAME:String = "light_box_mediator";
 
-	private var _stockPhotoStrip:StockPhotoStrip = new StockPhotoStrip();
-	
-	public function StockMediator($stage:Sprite):void
+	public function LightBoxMediator($stage:Sprite):void
 	{
 		super( NAME );
-		$stage.addChild( _stockPhotoStrip );
    	}
-	
 	
 	// PureMVC: List notifications
 	override public function listNotificationInterests():Array
@@ -40,8 +34,6 @@ public class StockMediator extends Mediator implements IMediator
 				break;*/
 		}
 	}
-	
-	
 	
 }
 }

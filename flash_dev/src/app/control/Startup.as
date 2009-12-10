@@ -22,6 +22,8 @@ public class Startup extends SimpleCommand implements ICommand
 		var portfolioMediator:PortfolioMediator 	= new PortfolioMediator(kielRoot);
 		var navMediator:NavMediator 				= new NavMediator(kielRoot);
 		var stockMediator:StockMediator 			= new StockMediator(kielRoot);
+		var formsMediator:FormsMediator		 		= new FormsMediator(kielRoot);
+		var lightBoxMediator:LightBoxMediator 		= new LightBoxMediator(kielRoot);
 		
 		// Proxies
 		var externalDataProxy:ExternalDataProxy 	= new ExternalDataProxy();
@@ -34,6 +36,8 @@ public class Startup extends SimpleCommand implements ICommand
 		facade.registerMediator( portfolioMediator );
 		facade.registerMediator( navMediator );
 		facade.registerMediator( stockMediator );
+		facade.registerMediator( lightBoxMediator );
+		facade.registerMediator( formsMediator );
 		
 		facade.registerProxy( externalDataProxy );
 		facade.registerProxy( navProxy );

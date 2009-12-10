@@ -15,8 +15,8 @@ package app.model.vo
 		public function FormVO($json:Object):void
 		{
 			id 				= $json.id;
-			postURL 		= $json.postURL;
-			URLVars 		= $json.URLVars;
+			postURL 		= $json.post_url;
+			URLVars 		= $json.url_vars;
 			title 			= $json.title;
 			description 	= $json.description;
 			icon 			= $json.icon;

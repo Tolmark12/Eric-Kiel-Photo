@@ -47,6 +47,12 @@ public class AppFacade extends Facade implements IFacade
 	public static const ACTIVE_ITEM_CLICKED_AGAIN:String 			= "active_item_clicked_again";
 	public static const UPDATE_TOTAL_LOADED:String 					= "update_total_loaded";
 	
+	// Forms
+	
+	// Stock Photos
+	
+	// Lightbox
+	
 	// Example: var myFacade:AppFacade = AppFacade.getInstance( 'app_facade' );
 	public function AppFacade( key:String ):void
 	{

@@ -19,7 +19,6 @@ public class PortfolioItemVo
 		src			= $json.src;
 		lowResSrc	= $json.low_res_src;
 		isActive	= true;
-		trace( lowResSrc );
 	}
 	
 	public function toString (  ):String
