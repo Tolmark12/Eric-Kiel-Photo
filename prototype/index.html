@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 	<head>
@@ -10,7 +9,10 @@
 		<script type="text/javascript" src="js/swfaddress/swfaddress.js"></script>
 		<script type="text/javascript" src="js/swffit/swffit.js"></script>
 		<script type="text/javascript">
-			var flashvars = {configData:"http://www.kielphoto.com/vladmin/api/"};
+			var flashvars = {
+								configData	: "http://www.kielphoto.com/vladmin/api/",
+								server		: "http://staging.kielphoto.com/"
+							};
 			var params = {bgcolor:"#222222"};
 			var attributes = {id: "kiel_swf"};
 			swfobject.embedSWF("Kiel09.swf", "my_flash", "550", "450", "9.0.0", "", flashvars, params, attributes);

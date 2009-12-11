@@ -33,10 +33,10 @@ public class DataRequests extends SimpleCommand implements ICommand
 				var navItemVo:NavItemVo = note.getBody() as NavItemVo;
 				if( navItemVo.pageType == "portfolio" )
 					externalDataProxy.loadPortfolioData( navItemVo.dataFeed );
-				else if( navItemVo.pageType == "stock" )
-					externalDataProxy.loadStockPhotoData( navItemVo.dataFeed );
-				else
-					trace( "Add the handler to DataRequests.as" );
+				//else if( navItemVo.pageType == "stock" )
+				//	externalDataProxy.loadStockPhotoData( navItemVo.dataFeed );
+				//else
+				//	trace( "Add the handler to DataRequests.as" );
 			break;
 			case AppFacade.PORTFOLIO_DATA_LOADED :
 				portfolioProxy.parseNewPortfolio( note.getBody() as Object );

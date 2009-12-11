@@ -29,6 +29,8 @@ public class Startup extends SimpleCommand implements ICommand
 		var externalDataProxy:ExternalDataProxy 	= new ExternalDataProxy();
 		var navProxy:NavProxy 						= new NavProxy();
 		var portfolioProxy:PortfolioProxy 			= new PortfolioProxy();
+		var stockProxy:StockProxy 					= new StockProxy();
+		var lightBoxProxy:LightBoxProxy 			= new LightBoxProxy();
 		
 		// Register Mediators + Proxies
 		facade.registerMediator( contentMediator );
@@ -42,7 +44,11 @@ public class Startup extends SimpleCommand implements ICommand
 		facade.registerProxy( externalDataProxy );
 		facade.registerProxy( navProxy );
 		facade.registerProxy( portfolioProxy );
+		facade.registerProxy( stockProxy );
+		facade.registerProxy( lightBoxProxy );
 		
+		// Initialize Stock photo
+		lightBoxProxy.initLightBox();
 		// Start Data load
 		externalDataProxy.getConfigData(kielRoot.stage);
 		// Fire first stage resize event

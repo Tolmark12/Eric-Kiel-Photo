@@ -8,6 +8,7 @@ import app.view.components.*;
 import flash.events.*;
 import app.view.components.events.*;
 import flash.display.Sprite;
+import delorum.utils.KeyTrigger;
 
 public class FormsMediator extends Mediator implements IMediator
 {	
