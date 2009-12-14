@@ -52,6 +52,7 @@ public class AppFacade extends Facade implements IFacade
 	// Stock Photos
 	
 	// Lightbox
+	public static const SHOW_LIGHT_BOX:String 						= "show_light_box";		// An array of images, or stock photo items?
 	
 	// Example: var myFacade:AppFacade = AppFacade.getInstance( 'app_facade' );
 	public function AppFacade( key:String ):void

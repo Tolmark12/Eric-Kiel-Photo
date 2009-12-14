@@ -72,6 +72,8 @@ public class ExternalDataProxy extends Proxy implements IProxy
 		sendNotification( AppFacade.PORTFOLIO_DATA_LOADED, JSON.decode( e.target.data ) );
 	}
 	
+	// _____________________________ Getters / Setters
+	public function get server (  ):String{ return _server; };
 	
 	// _____________________________ TEMP!!!!!!!!!!!!!!!!!!!
 	public function addKeyHandler ( $stage ):void
