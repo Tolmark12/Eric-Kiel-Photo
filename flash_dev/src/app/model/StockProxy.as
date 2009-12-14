@@ -9,8 +9,16 @@ public class StockProxy extends Proxy implements IProxy
 {
 	public static const NAME:String = "stock_proxy";
 	
+	private var _configVo:StockConfigVo;
+	
 	// Constructor
 	public function StockProxy( ):void { super( NAME ); };
+	
+	public function parseConfigData ( $json:Object ):void
+	{
+		_configVo = new StockConfigVo( $json );
+		sendNotification( AppFacade.STOCK_INIT, _configVo );
+	}
 
 }
 }

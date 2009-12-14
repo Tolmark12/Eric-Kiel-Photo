@@ -9,6 +9,21 @@ public class StockPhotoStrip extends Sprite
 	{
 		
 	}
+	
+	// _____________________________ API
+	
+	public function build (  ):void
+	{
+		
+	}
+	
+	/** 
+	*	Clean up / delete all images and shut it down
+	*/
+	public function clear (  ):void
+	{
+		
+	}
 
 }
 

@@ -11,23 +11,25 @@ import flash.display.Sprite;
 import delorum.utils.KeyTrigger;
 
 
-public class StockMediator extends Mediator implements IMediator
+public class StockMediator extends PageMediator implements IMediator
 {	
 	public static const NAME:String = "stock_mediator";
 
+	private var _stockPhotoLanding:StockPhotoLanding = new StockPhotoLanding();
 	private var _stockPhotoStrip:StockPhotoStrip = new StockPhotoStrip();
 	
 	public function StockMediator($stage:Sprite):void
 	{
 		super( NAME );
 		$stage.addChild( _stockPhotoStrip );
+		$stage.addChild( _stockPhotoLanding );
    	}
 	
 	
 	// PureMVC: List notifications
 	override public function listNotificationInterests():Array
 	{
-		return []; //[ AppFacade.NOTIFICATION ];
+		return [ AppFacade.STOCK_INIT ];
 	}
 	
 	// PureMVC: Handle notifications
@@ -35,10 +37,18 @@ public class StockMediator extends Mediator implements IMediator
 	{
 		switch ( note.getName() )
 		{
-			/*case AppFacade.NOTIFICATION:
-				// CODE
-				break;*/
+			case AppFacade.STOCK_INIT :
+				sendNotification( AppFacade.MEDIATOR_ACTIVATED, this );
+				_stockPhotoLanding.build(note.getBody() as StockConfigVo );
+			break;
 		}
+	}
+	
+	// _____________________________ Clear
+	
+	override public function clear (  ):void
+	{
+		_stockPhotoLanding.clear();
 	}
 	
 	

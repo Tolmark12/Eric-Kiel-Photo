@@ -24,14 +24,21 @@ public class NavProxy extends Proxy implements IProxy
 		_navVo = new NavVo( $json );
 		sendNotification( AppFacade.NAV_DATA_PARSED, _navVo );
 		sendNotification( AppFacade.REFRESH_ALIGN );
+		sendNotification( AppFacade.NAV_INITIALIZED );
+	}
+	
+	public function showDefaultPage (  ):void
+	{
 		changePage( _navVo.defaultNavItem.id );
-		
 	}
 	
 	public function changePage ( $newId:String ):void
 	{
 		// Make sure this page isn't already active
 		if( _currentPageId != $newId ){
+			
+			// Unload the current view
+			sendNotification( AppFacade.REMOVE_CURRENT_PAGE );
 			
 			// Change the page content
 			sendNotification( AppFacade.LOAD_PAGE_DATA, _navVo.getNavItemById( $newId ) );

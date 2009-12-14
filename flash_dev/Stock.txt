@@ -1,3 +1,10 @@
+/** 
+*	TODO:
+*	I need to set up my content manager better, so that when we load new content, it removes the old content. Ex Portfolio loaded -> On Stock click
+*	unload Portfolio, and load in the Stock site. 
+*/
+
+
 // _____________________________ Model
 
 - StockPhotos
@@ -9,6 +16,14 @@
 
 
 // _____________________________  VOs
+
+- StockConfigVo
+	public var mainCategories:Array;	// List of photos and the tag(s?) to trigger
+	
+- StockDefaultCategoryVo
+	public var name:String;
+	public var src:String;
+	public var tag:String;
 
 - TagsVo
 	public var popularTags:Vector;	// Maybe a list of tags

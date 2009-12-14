@@ -10,14 +10,17 @@ public class AppFacade extends Facade implements IFacade
 {
 	public static const STARTUP:String = "startup";
 
+	
 	// Data requests and completions
 	public static const CONFIG_LOADED_AND_PARSED:String 			= "config_loaded_and_parsed";
 	public static const LOAD_NAV_DATA:String 						= "load_nav_data";
 	public static const NAV_DATA_LOADED:String 						= "nav_data_loaded";
 	public static const NAV_DATA_PARSED:String 						= "nav_data_parsed";
+	public static const NAV_INITIALIZED:String 						= "nav_initialized";
 	public static const LOAD_PAGE_DATA:String 						= "load_page_data";
 	public static const PORTFOLIO_DATA_LOADED:String 				= "portfolio_data_loaded";
 	public static const PORTFOLIO_DATA_PARSED:String 				= "portfolio_data_parsed";
+	public static const STOCK_CONFIG_LOADED:String 					= "stock_config_loaded";
 	                                                        		
 	// Browser                                              		
 	public static const UPDATE_PATH:String 							= "update_path";
@@ -46,10 +49,12 @@ public class AppFacade extends Facade implements IFacade
 	public static const DEACTIVATE_ACTIVE_PORTFOLIO_ITEM:String 	= "deactivate_active_portfolio_item";
 	public static const ACTIVE_ITEM_CLICKED_AGAIN:String 			= "active_item_clicked_again";
 	public static const UPDATE_TOTAL_LOADED:String 					= "update_total_loaded";
+	public static const MEDIATOR_ACTIVATED:String 					= "mediator_activated";
 	
 	// Forms
 	
 	// Stock Photos
+	public static const STOCK_INIT:String 							= "stock_init";
 	
 	// Lightbox
 	public static const SHOW_LIGHT_BOX:String 						= "show_light_box";		// An array of images, or stock photo items?
@@ -82,6 +87,7 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( LOAD_NAV_DATA, DataRequests );
 		registerCommand( LOAD_PAGE_DATA, DataRequests );
 		registerCommand( PORTFOLIO_DATA_LOADED, DataRequests );
+		registerCommand( STOCK_CONFIG_LOADED, DataRequests );
 		registerCommand( NAV_BTN_CLICK, Clicks );
 		registerCommand( PORTFOLIO_ITEM_CLICK, Clicks );
 		registerCommand( PORTFOLIO_NEXT, Clicks );
@@ -91,7 +97,8 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( ADD_FILTER, Clicks );
 		registerCommand( REMOVE_FILTER, Clicks );
 		registerCommand( IMAGE_LOADED, DataRequests );
-		registerCommand( IMAGE_LOADED_LOW, DataRequests )
+		registerCommand( IMAGE_LOADED_LOW, DataRequests );
+		registerCommand( NAV_INITIALIZED, DataRequests );
 	}
 
 }

@@ -53,11 +53,6 @@ public class Portfolio extends Page
 		this.addChild(_loading)
 	}
 	
-	private function _onBPress (  ):void
-	{
-		trace( "asdfsadfadsf" );
-	}
-	
 	
 	// _____________________________ API
 	
@@ -66,6 +61,9 @@ public class Portfolio extends Page
 	*/
 	public function clear (  ):void
 	{
+		_portfolioNav.visible = false;
+		this.stage.removeEventListener( Event.ENTER_FRAME, _onEnterFrame );
+		
 		// Reset vars
 		_currentIndex 	= 0;
 		_currentItem	= null;

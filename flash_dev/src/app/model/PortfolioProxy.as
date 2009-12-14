@@ -26,7 +26,6 @@ public class PortfolioProxy extends Proxy implements IProxy
 	public function parseNewPortfolio ( $json:Object ):void
 	{
 		_sequence = null;
-		sendNotification( AppFacade.REMOVE_CURRENT_PAGE );
 		_navProxy = facade.retrieveProxy( NavProxy.NAME ) as NavProxy;
 		_totalLoaded = 0;
 		_portfolioVo = new PortfolioVo( $json );

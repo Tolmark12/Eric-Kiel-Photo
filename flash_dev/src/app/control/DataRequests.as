@@ -6,15 +6,18 @@ import app.view.*;
 import app.model.*;
 import app.model.vo.*;
 import app.AppFacade;
+import delorum.utils.echo;
 
 public class DataRequests extends SimpleCommand implements ICommand
 {
 	
 	override public function execute( note:INotification ):void
 	{
-		var navProxy:NavProxy = facade.retrieveProxy( NavProxy.NAME ) as NavProxy;
+		var navProxy:NavProxy                   = facade.retrieveProxy( NavProxy.NAME ) as NavProxy;
 		var externalDataProxy:ExternalDataProxy = facade.retrieveProxy( ExternalDataProxy.NAME ) as ExternalDataProxy;
-		var portfolioProxy:PortfolioProxy = facade.retrieveProxy( PortfolioProxy.NAME ) as PortfolioProxy;
+		var portfolioProxy:PortfolioProxy       = facade.retrieveProxy( PortfolioProxy.NAME ) as PortfolioProxy;
+		var lightBoxProxy:LightBoxProxy         = facade.retrieveProxy( LightBoxProxy.NAME ) as LightBoxProxy;
+		var stockProxy:StockProxy 				= facade.retrieveProxy( StockProxy.NAME ) as StockProxy;
 		
 		switch ( note.getName() )
 		{
@@ -33,8 +36,9 @@ public class DataRequests extends SimpleCommand implements ICommand
 				var navItemVo:NavItemVo = note.getBody() as NavItemVo;
 				if( navItemVo.pageType == "portfolio" )
 					externalDataProxy.loadPortfolioData( navItemVo.dataFeed );
-				//else if( navItemVo.pageType == "stock" )
-				//	externalDataProxy.loadStockPhotoData( navItemVo.dataFeed );
+				else if( navItemVo.pageType == "stock" )
+					externalDataProxy.loadStockPhotoData( navItemVo.dataFeed );
+					//externalDataProxy.loadStockPhotoData( navItemVo.dataFeed );
 				//else
 				//	trace( "Add the handler to DataRequests.as" );
 			break;
@@ -46,6 +50,17 @@ public class DataRequests extends SimpleCommand implements ICommand
 			break;
 			case AppFacade.IMAGE_LOADED_LOW :
 				portfolioProxy.imageLoaded( note.getBody() as uint )
+			break;
+			case AppFacade.NAV_INITIALIZED :
+				// If the url indicates there is a lightbox to show, show that
+				if( lightBoxProxy.doShowLightBox )
+					lightBoxProxy.showLightBox();
+				// Else, show the default nav item
+				else
+					navProxy.showDefaultPage();
+			break;
+			case AppFacade.STOCK_CONFIG_LOADED :
+				stockProxy.parseConfigData( note.getBody() as Object );
 			break;
 		}
 	}

@@ -9,10 +9,11 @@ import delorum.utils.echo;
 import flash.net.SharedObject;
 public class LightBoxProxy extends Proxy implements IProxy
 {
-	public static const NAME:String = "stock_proxy";
+	public static const NAME:String = "light_box_proxy";
 	
 	private var _sharedObject:SharedObject;
 	private var _lightBoxStack:Array = new Array();
+	public var doShowLightBox:Boolean = false;			// Set this true if the lightbox was passed in via URL
 	
 	// Constructor
 	public function LightBoxProxy( ):void { 
@@ -42,7 +43,7 @@ public class LightBoxProxy extends Proxy implements IProxy
 				echo( tempAr[0] + '  :  ' + tempAr[1] );
 				_lightBoxStack = tempAr[1].split("/");
 				_saveToLocalObject();
-				sendNotification( AppFacade.SHOW_LIGHT_BOX );
+				doShowLightBox = true;
 			}
 		}	
 			
@@ -69,6 +70,11 @@ public class LightBoxProxy extends Proxy implements IProxy
 	{
 		var externalDataProxy:ExternalDataProxy = facade.retrieveProxy( ExternalDataProxy.NAME ) as ExternalDataProxy;
 		return externalDataProxy.server + "?" + _lightBoxStack.join( "/" );
+	}
+	
+	public function showLightBox (  ):void
+	{
+		
 	}
 	
 	// _____________________________ Helpers	

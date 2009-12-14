@@ -43,6 +43,9 @@ public class ExternalDataProxy extends Proxy implements IProxy
 		ldr.loadItem();
 	}
 	
+	/** 
+	*	Load Portfolio data
+	*/
 	public function loadPortfolioData ( $feed:String ):void
 	{
 		// TEMP !!
@@ -54,6 +57,13 @@ public class ExternalDataProxy extends Proxy implements IProxy
 		// TEMP !!
 		
 		ldr.addEventListener( Event.COMPLETE, _onPortfolioDataLoad, false,0,true );
+		ldr.loadItem();
+	}
+	
+	public function loadStockPhotoData ( $feed ):void
+	{
+		var ldr:DataLoader = new DataLoader( $feed );
+		ldr.addEventListener( Event.COMPLETE, _onStockConfigDataLoad, false,0,true );
 		ldr.loadItem();
 	}
 	
@@ -70,6 +80,10 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	
 	private function _onPortfolioDataLoad ( e:Event ):void{
 		sendNotification( AppFacade.PORTFOLIO_DATA_LOADED, JSON.decode( e.target.data ) );
+	}
+	
+	private function _onStockConfigDataLoad ( e:Event ):void {
+		sendNotification( AppFacade.STOCK_CONFIG_LOADED, JSON.decode( e.target.data ) );
 	}
 	
 	// _____________________________ Getters / Setters

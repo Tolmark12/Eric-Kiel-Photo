@@ -56,7 +56,6 @@ public class Startup extends SimpleCommand implements ICommand
 		
 		// TEMP !!!!!!!!
 		externalDataProxy.addKeyHandler(kielRoot.stage);
-		
 	}
 }
 }

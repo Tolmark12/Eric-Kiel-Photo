@@ -14,6 +14,7 @@ public class ContentMediator extends Mediator implements IMediator
 	public static const NAME:String = "content_mediator";
 	
 	private var _background:Background 	= new Background();
+	private var _currentMediator:PageMediator;
 	
 	public function ContentMediator( $root:Sprite ):void
 	{
@@ -26,7 +27,9 @@ public class ContentMediator extends Mediator implements IMediator
 	override public function listNotificationInterests():Array
 	{
 		return [ AppFacade.STAGE_RESIZE,
-		 		 AppFacade.CONFIG_LOADED_AND_PARSED];
+		 		 AppFacade.CONFIG_LOADED_AND_PARSED,
+				 AppFacade.REMOVE_CURRENT_PAGE, 
+				 AppFacade.MEDIATOR_ACTIVATED ];
 	}
 	
 	// PureMVC: Handle notifications
@@ -45,6 +48,18 @@ public class ContentMediator extends Mediator implements IMediator
 			case AppFacade.CONFIG_LOADED_AND_PARSED :
 				var configVo:ConfigVo = note.getBody() as ConfigVo;
 				_background.loadSet( configVo.background, configVo.background );
+			break;
+			case AppFacade.REMOVE_CURRENT_PAGE :
+				if( _currentMediator != null ){
+					_currentMediator.clear();
+				}
+			break;
+			case AppFacade.MEDIATOR_ACTIVATED :
+				if( _currentMediator != null )
+					if( !_currentMediator.isClear )
+						_currentMediator.clear();
+				
+				_currentMediator = note.getBody() as PageMediator;
 			break;
 
 		}
