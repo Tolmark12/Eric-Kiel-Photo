@@ -15,7 +15,9 @@ public class StockPhotoVo
 		id 			= $json.id;
 		name		= $json.name;
 		lowResSrc	= $json.low_res_src;
-		highResSrc	= $json.high_res
+		highResSrc	= $json.high_res;
+		tags		= $json.tags;
+		width		= $json.width;
 	}
 }
 

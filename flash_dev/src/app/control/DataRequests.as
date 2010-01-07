@@ -37,8 +37,8 @@ public class DataRequests extends SimpleCommand implements ICommand
 				if( navItemVo.pageType == "portfolio" )
 					externalDataProxy.loadPortfolioData( navItemVo.dataFeed );
 				else if( navItemVo.pageType == "stock" )
-					externalDataProxy.loadStockPhotoData( navItemVo.dataFeed );
-					//externalDataProxy.loadStockPhotoData( navItemVo.dataFeed );
+					externalDataProxy.loadStockConfigData( navItemVo.dataFeed );
+					//externalDataProxy.loadStockConfigData( navItemVo.dataFeed );
 				//else
 				//	trace( "Add the handler to DataRequests.as" );
 			break;
@@ -59,8 +59,16 @@ public class DataRequests extends SimpleCommand implements ICommand
 				else
 					navProxy.showDefaultPage();
 			break;
+			
+			// _____________________________ Stock
 			case AppFacade.STOCK_CONFIG_LOADED :
 				stockProxy.parseConfigData( note.getBody() as Object );
+			break;
+			case AppFacade.LOAD_STOCK_DATA_SET :
+				externalDataProxy.loadStockDataSet( note.getBody() as String );
+			break;
+			case AppFacade.STOCK_DATA_SET_LOADED :
+				stockProxy.parseNewStockDataSet( note.getBody() as Object );
 			break;
 		}
 	}

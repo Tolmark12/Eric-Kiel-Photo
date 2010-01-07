@@ -10,19 +10,27 @@ import flash.events.*;
 public class StockLandingMainCat extends Sprite
 {
 	private var _imageHolder:Sprite;
+	public var tags:Array;
 	
 	public function StockLandingMainCat( $vo:StockDefaultCategoryVo ):void
 	{
-		this.alpha = 0;
-		this.buttonMode = true;
+		// Build / set vars
 		_loadImage( $vo.src )
 		_addText( $vo.text );
+		tags = $vo.tags;
+
+		// init
+		this.alpha = 0;
+		this.buttonMode = true;
+		
+		// RollOver Events
 		this.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOver, false,0,true );
 		this.addEventListener( MouseEvent.MOUSE_OUT, _onMouseOut, false,0,true );
 	}
 	
 	// _____________________________ Helpers
 	
+	// Load the main image
 	private function _loadImage ( $image:String ):void
 	{
 		_imageHolder = new Sprite();
@@ -32,6 +40,7 @@ public class StockLandingMainCat extends Sprite
 		this.addChild(_imageHolder);
 	}
 	
+	// Add the title
 	private function _addText ( $title:String ):void
 	{
 		var txt:FuturaBoldItalic_swc = new FuturaBoldItalic_swc();

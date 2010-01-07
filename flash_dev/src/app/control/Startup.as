@@ -53,9 +53,6 @@ public class Startup extends SimpleCommand implements ICommand
 		externalDataProxy.getConfigData(kielRoot.stage);
 		// Fire first stage resize event
 		kielRoot.stage.dispatchEvent( new Event(Event.RESIZE, true) );
-		
-		// TEMP !!!!!!!!
-		externalDataProxy.addKeyHandler(kielRoot.stage);
 	}
 }
 }

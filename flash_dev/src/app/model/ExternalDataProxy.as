@@ -19,10 +19,9 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	// Constructor
 	public function ExternalDataProxy( ):void { super( NAME ); };
 
-	/** 
-	*	Get Config Data
-	*	@param		Reference to the stage
-	*/
+	/************ CONFIG / NAV **********/
+
+	// Get Config Data
 	public function getConfigData ( $stage:Stage ):void
 	{
 		_server = ( $stage.loaderInfo.parameters.server != null )? $stage.loaderInfo.parameters.server : 'http://staging.kielphoto.com/' ;
@@ -33,9 +32,7 @@ public class ExternalDataProxy extends Proxy implements IProxy
 		ldr.loadItem();
 	}
 	
-	/** 
-	*	Load Navigation data
-	*/
+	// Load Navigation data
 	public function loadNavData (  ):void
 	{
 		var ldr:DataLoader = new DataLoader( _configVo.getNav );
@@ -43,9 +40,9 @@ public class ExternalDataProxy extends Proxy implements IProxy
 		ldr.loadItem();
 	}
 	
-	/** 
-	*	Load Portfolio data
-	*/
+	/************ PORTFOLIO **********/
+	
+	// Load Portfolio data
 	public function loadPortfolioData ( $feed:String ):void
 	{
 		// TEMP !!
@@ -60,11 +57,26 @@ public class ExternalDataProxy extends Proxy implements IProxy
 		ldr.loadItem();
 	}
 	
-	public function loadStockPhotoData ( $feed ):void
+	/************ STOCK **********/
+	
+	// Load Stock Config Data
+	public function loadStockConfigData ( $feed:String ):void
 	{
 		var ldr:DataLoader = new DataLoader( $feed );
 		ldr.addEventListener( Event.COMPLETE, _onStockConfigDataLoad, false,0,true );
 		ldr.loadItem();
+	}
+	
+	/** 
+	*	@param		A comma delimited list of tags
+	*/
+	public function loadStockDataSet ( $feed:String ):void
+	{
+		// Send the $feed to vladmin here...
+		
+		// !! TEMP !!
+		sendNotification( AppFacade.STOCK_DATA_SET_LOADED, {/* TEMP Empty object */} );
+		// !! TEMP !!
 	}
 	
 	// _____________________________ Data Load Handlers
@@ -86,33 +98,11 @@ public class ExternalDataProxy extends Proxy implements IProxy
 		sendNotification( AppFacade.STOCK_CONFIG_LOADED, JSON.decode( e.target.data ) );
 	}
 	
+	
 	// _____________________________ Getters / Setters
+	
 	public function get server (  ):String{ return _server; };
 	
-	// _____________________________ TEMP!!!!!!!!!!!!!!!!!!!
-	public function addKeyHandler ( $stage ):void
-	{
-		//TEMP!!!!!
-		$stage.addEventListener (KeyboardEvent.KEY_DOWN, _keyDownHandler);
-		//TEMP!!!!!
-	}
-	
-	//TEMP!!!!!
-	private function _keyDownHandler ( e:KeyboardEvent ):void
-	{
-		if(e.keyCode==48 && e.shiftKey)
-			loadPortfolioData( _server + "/vladmin/api/index/template/106");
-		else if(e.keyCode==48 )
-			loadPortfolioData( _server + "vladmin/api/index/template/3");
-		
-		// Run the garbage collection
-		//this.parent.removeChild( this );
-		//try {
-		//new LocalConnection().connect('foo');
-		//new LocalConnection().connect('foo');
-		//} catch (e:*) {}
-	}
-	//TEMP!!!!!
 	
 	
 }

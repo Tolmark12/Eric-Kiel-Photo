@@ -11,21 +11,26 @@ public class AppFacade extends Facade implements IFacade
 	public static const STARTUP:String = "startup";
 
 	
-	// Data requests and completions
+	// DATA REQUESTS AND COMPLETIONS::
+		// ...General / Nav
 	public static const CONFIG_LOADED_AND_PARSED:String 			= "config_loaded_and_parsed";
 	public static const LOAD_NAV_DATA:String 						= "load_nav_data";
 	public static const NAV_DATA_LOADED:String 						= "nav_data_loaded";
 	public static const NAV_DATA_PARSED:String 						= "nav_data_parsed";
 	public static const NAV_INITIALIZED:String 						= "nav_initialized";
 	public static const LOAD_PAGE_DATA:String 						= "load_page_data";
+		// ...Portfolio
 	public static const PORTFOLIO_DATA_LOADED:String 				= "portfolio_data_loaded";
 	public static const PORTFOLIO_DATA_PARSED:String 				= "portfolio_data_parsed";
+		// ...Stock...
 	public static const STOCK_CONFIG_LOADED:String 					= "stock_config_loaded";
-	                                                        		
-	// Browser                                              		
+	public static const LOAD_STOCK_DATA_SET:String 					= "load_stock_data_set";
+	public static const STOCK_DATA_SET_LOADED:String 				= "stock_data_set_loaded";
+	
+	// BROWSER                                              		
 	public static const UPDATE_PATH:String 							= "update_path";
 	                                                        		
-	// User initiated                                       		
+	// USER INITIATED                                       		
 	public static const STAGE_RESIZE:String 						= "stage_resize";
 	public static const NAV_BTN_CLICK:String 						= "nav_btn_click";
 	public static const PORTFOLIO_ITEM_CLICK:String 				= "portfolio_item_click";
@@ -36,12 +41,12 @@ public class AppFacade extends Facade implements IFacade
 	public static const ADD_FILTER:String      						= "add_filter";
 	public static const REMOVE_FILTER:String   						= "remove_filter";
 	                                                        		
-	// Misc                                                 		
+	// MISC                                                 		
 	public static const REFRESH_ALIGN:String 						= "refresh_align";
     public static const IMAGE_LOADED:String 						= "image_loaded";
 	public static const IMAGE_LOADED_LOW:String 					= "image_loaded_low";
 	
-	// State Changes        
+	// STATE CHANGES        
 	public static const REMOVE_CURRENT_PAGE:String 					= "remove_current_page";                                		
 	public static const ACTIVATE_PORTFOLIO_ITEM:String 				= "activate_portfolio_item";
 	public static const APPLY_PORTFOLIO_FILTERS:String 				= "apply_portfolio_filters";
@@ -51,12 +56,15 @@ public class AppFacade extends Facade implements IFacade
 	public static const UPDATE_TOTAL_LOADED:String 					= "update_total_loaded";
 	public static const MEDIATOR_ACTIVATED:String 					= "mediator_activated";
 	
-	// Forms
+	// FORMS
 	
-	// Stock Photos
+	// STOCK PHOTOS
 	public static const STOCK_INIT:String 							= "stock_init";
+	public static const NEW_FILTER_CLK:String 						= "new_filter_clk";
+	public static const ADD_TAG_TO_FILTER_CLK:String 				= "add_tag_to_filter_clk";
+	public static const BUILD_STOCK_RESULTS:String 					= "build_stock_results";
 	
-	// Lightbox
+	// LIGHTBOX
 	public static const SHOW_LIGHT_BOX:String 						= "show_light_box";		// An array of images, or stock photo items?
 	
 	// Example: var myFacade:AppFacade = AppFacade.getInstance( 'app_facade' );
@@ -99,6 +107,10 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( IMAGE_LOADED, DataRequests );
 		registerCommand( IMAGE_LOADED_LOW, DataRequests );
 		registerCommand( NAV_INITIALIZED, DataRequests );
+		registerCommand( NEW_FILTER_CLK, Clicks );
+		registerCommand( ADD_TAG_TO_FILTER_CLK, Clicks );
+		registerCommand( LOAD_STOCK_DATA_SET, DataRequests );
+		registerCommand( STOCK_DATA_SET_LOADED, DataRequests );
 	}
 
 }

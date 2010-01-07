@@ -40,9 +40,9 @@
 /** 
 *	This is broadcasted out by the Model
 */
-- StockPhotoCollectionVo
-	public var activeTags:Array; 	// Should this be a list of image, or of tags
-	public var matches:Array;		// A list of StockPhoto ids that match all the tags
+- StockPhotoSetVo
+	public var tags:Array; 						// Should this be a list of image, or of tags
+	public var photos:Vector.<StockPhotoVo>;	// A list of StockPhoto ids that match all the tags
 
 /** 
 *	The info associated with a single stock photo
@@ -139,4 +139,45 @@
 	
 	* vars:URLVariables
 	
+	
+// Sample Json
+
+StockPhotoSetVo
+
+/** 
+*	These results would be returned by a call that looked something like:
+*	
+*	postVars.tags = "men,hats,winter";
+*	 
+*	These are then POSTed to some data service like:
+*	http://kielphoto.com/vladmin/api/getphotos
+*	
+*	The results would be something like:
+*/
+
+
+{
+	// These are the photos that match all of the tags
+	"overlappingMatches" : {
+		"tags" 		: ["men","hats","winter"],
+		"matches" 	: [ StockPhotoVo, StockPhotoVo, StockPhotoVo, etc.. ]
+	},
+	
+	// These are the photos that match one of the tags, but not all three
+	"secondaryMatches" : [
+		{
+			"tag" : "men",
+			"matches" : [ StockPhotoVo, StockPhotoVo, StockPhotoVo, etc.. ]
+		},
+		{
+			"tag" : "hats",
+			"matches" : [ StockPhotoVo, StockPhotoVo, StockPhotoVo, etc.. ]
+		},
+		{
+			"tag" : "winter",
+			"matches" : [ StockPhotoVo, StockPhotoVo, StockPhotoVo, etc.. ]
+		}
+	]
+	
+}
 	
