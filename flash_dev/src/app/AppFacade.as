@@ -60,9 +60,12 @@ public class AppFacade extends Facade implements IFacade
 	
 	// STOCK PHOTOS
 	public static const STOCK_INIT:String 							= "stock_init";
+	public static const STOCK_RESET:String 							= "stock_reset";
 	public static const NEW_FILTER_CLK:String 						= "new_filter_clk";
 	public static const ADD_TAG_TO_FILTER_CLK:String 				= "add_tag_to_filter_clk";
 	public static const BUILD_STOCK_RESULTS:String 					= "build_stock_results";
+	public static const STOCK_PHOTO_CLICKED:String 					= "stock_photo_clicked";
+	public static const DISPLAY_STOCK_PHOTO:String 					= "display_stock_photo";
 	
 	// LIGHTBOX
 	public static const SHOW_LIGHT_BOX:String 						= "show_light_box";		// An array of images, or stock photo items?
@@ -111,6 +114,8 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( ADD_TAG_TO_FILTER_CLK, Clicks );
 		registerCommand( LOAD_STOCK_DATA_SET, DataRequests );
 		registerCommand( STOCK_DATA_SET_LOADED, DataRequests );
+		registerCommand( STOCK_PHOTO_CLICKED, Clicks );
+		registerCommand( STOCK_RESET, Clicks );
 	}
 
 }

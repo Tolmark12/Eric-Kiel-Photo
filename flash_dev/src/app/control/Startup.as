@@ -20,8 +20,8 @@ public class Startup extends SimpleCommand implements ICommand
 		var browserMediator:BrowserMediator 		= new BrowserMediator(kielRoot.stage);
 		var contentMediator:ContentMediator 		= new ContentMediator(kielRoot);
 		var portfolioMediator:PortfolioMediator 	= new PortfolioMediator(kielRoot);
-		var navMediator:NavMediator 				= new NavMediator(kielRoot);
 		var stockMediator:StockMediator 			= new StockMediator(kielRoot);
+		var navMediator:NavMediator 				= new NavMediator(kielRoot);
 		var formsMediator:FormsMediator		 		= new FormsMediator(kielRoot);
 		var lightBoxMediator:LightBoxMediator 		= new LightBoxMediator(kielRoot);
 		

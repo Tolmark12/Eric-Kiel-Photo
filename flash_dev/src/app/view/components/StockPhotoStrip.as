@@ -7,9 +7,11 @@ import app.model.vo.StockPhotoVo;
 
 public class StockPhotoStrip extends Sprite
 {
-	private var _dictionary:Object	= {};
+	private var _dictionary:Object	= {};			// An object with reference to the photos by id
 	private var _photoHolder:Sprite	= new Sprite();
 	private var _photoMap:StockMap;
+	
+	private var _activePhoto:StockPhoto;
 	
 	public function StockPhotoStrip():void
 	{
@@ -21,6 +23,13 @@ public class StockPhotoStrip extends Sprite
 	
 	public function buildNewSet ( $setVo:StockPhotoSetVo ):void
 	{
+		
+		// TEMP !!!!!
+		/** 
+		*	In reality, this will not happen like this, 
+		*	right now, we're showing the entire set. instead, what will
+		*	happen is that we display a "page" of select photos.
+		*/
 		_dictionary = _buildNewDictionary($setVo.stack);
 		
 		var row1:Number = 0
@@ -46,6 +55,8 @@ public class StockPhotoStrip extends Sprite
 				row2 += pad + photo.width;
 			}
 		}
+		// TEMP !!!!!
+		
 	}
 	
 	/** 
@@ -55,6 +66,18 @@ public class StockPhotoStrip extends Sprite
 	{
 		_clearDictionaryPhotos();
 		//_photoMap.clear();
+	}
+	
+	/** 
+	*	Activate a certain Stock Photo
+	*/
+	public function displayPhoto ( $stockPhotoVo:StockPhotoVo ):void
+	{
+		if( _activePhoto != null )
+			_activePhoto.unHighlight();
+		
+		_activePhoto = _dictionary[$stockPhotoVo.id];
+		_activePhoto.highlight();
 	}
 	
 	// _____________________________ Helpers

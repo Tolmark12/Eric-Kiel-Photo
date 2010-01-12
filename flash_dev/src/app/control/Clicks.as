@@ -6,7 +6,7 @@ import app.view.*;
 import app.model.*;
 import app.model.vo.*;
 import app.AppFacade;
-import app.view.components.events.FilterEvent;
+import app.view.components.events.*;
 
 public class Clicks extends SimpleCommand implements ICommand
 {
@@ -50,6 +50,13 @@ public class Clicks extends SimpleCommand implements ICommand
 			case AppFacade.NEW_FILTER_CLK :
 				var fe:FilterEvent = note.getBody() as FilterEvent;
 				stockProxy.loadNewPhotoSet( fe.tags )
+			break;
+			case AppFacade.STOCK_PHOTO_CLICKED :
+				var stockEvent:StockEvent = note.getBody() as StockEvent;
+				stockProxy.activateStockPhotoById(stockEvent.id)
+			break;
+			case AppFacade.STOCK_RESET :
+				stockProxy.reset();
 			break;
 		}
 	}

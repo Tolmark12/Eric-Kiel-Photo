@@ -24,6 +24,7 @@ public class StockPhotoLanding extends Sprite
 	*/
 	public function build ( $stockConfigVo:StockConfigVo ):void
 	{
+		this.visible = true;
 		this.alpha = 1;
 		_categoryBtnHolder = new Sprite();
 		var len:uint = $stockConfigVo.defaultStockCategories.length;
@@ -67,7 +68,7 @@ public class StockPhotoLanding extends Sprite
 	
 	public function hide (  ):void
 	{
-		Tweener.addTween( this, { alpha:0, time:1, transition:"EaseInOutQuint"} );
+		Tweener.addTween( this, { alpha:0, time:1, transition:"EaseInOutQuint", onComplete:_hideFadeComplete} );
 	}
 	
 	// _____________________________ Event Handlers
@@ -77,6 +78,11 @@ public class StockPhotoLanding extends Sprite
 		var ev:FilterEvent = new FilterEvent( FilterEvent.NEW_FILTER, true );
 		ev.tags = categoryBtn.tags;
 		dispatchEvent( ev );
+	}
+	
+	private function _hideFadeComplete (  ):void
+	{
+		this.visible = false;
 	}
 
 }

@@ -4,6 +4,7 @@ import org.puremvc.as3.multicore.interfaces.IProxy;
 import org.puremvc.as3.multicore.patterns.proxy.Proxy;
 import app.model.vo.*;
 import app.AppFacade;
+import delorum.utils.echo;
 
 public class StockProxy extends Proxy implements IProxy
 {
@@ -15,6 +16,7 @@ public class StockProxy extends Proxy implements IProxy
 	private var _tags:Array; /// Maybe move this into StockPhotoSetVo
 	// Current Stack
 	private var _set:StockPhotoSetVo;
+	private var _currentPhotoId:String;
 	
 	// Constructor
 	public function StockProxy( ):void { super( NAME ); };
@@ -36,8 +38,8 @@ public class StockProxy extends Proxy implements IProxy
 	*/
 	public function loadNewPhotoSet ( $set:Array ):void
 	{
-		// If this new set of tags don't match the current set
-		// (this will fail, even with the same tags in different order)
+		// If this new set of tags match the current set (this will fail, 
+		// even if the same tags are different order)
 		if( !_isEqual($set, _tags) ){
 			_copyTags( $set );
 			sendNotification( AppFacade.LOAD_STOCK_DATA_SET, _tags.join(",") );
@@ -54,7 +56,7 @@ public class StockProxy extends Proxy implements IProxy
 		_set = new StockPhotoSetVo({});
 		
 		// generating the set manually...
-		for ( var i:uint=0; i<40; i++ ) 
+		for ( var i:uint=0; i<400; i++ ) 
 		{
 			var wid:Number = (Math.random() >0.5)? 200 : 75 ;
 			var tempObj:Object = {
@@ -73,6 +75,34 @@ public class StockProxy extends Proxy implements IProxy
 		sendNotification( AppFacade.BUILD_STOCK_RESULTS, _set );
 	}
 	
+	/** 
+	*	Activate the specified stock photo
+	*/
+	public function activateStockPhotoById ( $id:String ):void
+	{
+		// Make sure the id isn't alread active and make sure
+		// that the _set isn't undefined
+		if( $id != _currentPhotoId && _set != null){
+			
+			// Make sure this new photo does exist in this set
+			var stockPhotoVo:StockPhotoVo = _set.getStockPhotoById($id);
+			if( stockPhotoVo != null ) {
+				_currentPhotoId = $id;
+				sendNotification( AppFacade.DISPLAY_STOCK_PHOTO, stockPhotoVo );
+			}else{
+				_throwError( "This Stock photo id does not match any in the list" );
+			}
+		}
+			
+	}
+	
+	public function reset (  ):void
+	{
+		_configVo 			= null;
+		_tags				= null;
+		_set 				= null;
+		_currentPhotoId		= null;
+	}
 	
 	// _____________________________ Helpers
 	
@@ -95,6 +125,11 @@ public class StockProxy extends Proxy implements IProxy
 		}
 	}
 	
+	private function _throwError ( $error:String ):void
+	{
+		trace( $error );
+		echo( $error );
+	}
 
 }
 }

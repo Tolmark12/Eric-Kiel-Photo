@@ -51,6 +51,7 @@ public class Portfolio extends Page
 		this.addChild(_copyRight);
 		this.addChild(_portfolioNav);
 		this.addChild(_loading)
+		_loading.hide();
 	}
 	
 	
@@ -82,6 +83,7 @@ public class Portfolio extends Page
 
 		// Reset the loading display
 		_loading.reset();
+		_loading.hide(true);
 		
 		// Create image holder
 		_imageHolder = new Sprite();
@@ -125,6 +127,7 @@ public class Portfolio extends Page
 		_portfolioNav.hideArrows();
 		_portfolioNav.visible = true;
 		_imageHolder.x = StageResizeVo.lastResize.left;
+		_loading.show();
 	}
 	
 	/** 
