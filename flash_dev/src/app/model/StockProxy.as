@@ -56,7 +56,7 @@ public class StockProxy extends Proxy implements IProxy
 		_set = new StockPhotoSetVo({});
 		
 		// generating the set manually...
-		for ( var i:uint=0; i<400; i++ ) 
+		for ( var i:uint=0; i<60; i++ ) 
 		{
 			var wid:Number = (Math.random() >0.5)? 200 : 75 ;
 			var tempObj:Object = {

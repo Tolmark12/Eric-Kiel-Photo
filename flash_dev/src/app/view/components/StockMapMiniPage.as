@@ -17,12 +17,12 @@ public class StockMapMiniPage extends MovieClip
 		_pageNumber.autoSize = "left";
 		
 		this.addChild( _hitArea );
-		_hitArea.buttonMode 	= true;
+		//  _hitArea.buttonMode 	= true;
 		_hitArea.alpha			= 0.3;
 		
-		_hitArea.addEventListener( MouseEvent.CLICK, _onClick, false,0,true );
-		_hitArea.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOver, false,0,true );
-		_hitArea.addEventListener( MouseEvent.MOUSE_OUT, _onMouseOut, false,0,true );
+		//  _hitArea.addEventListener( MouseEvent.CLICK, _onClick, false,0,true );
+		//  _hitArea.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOver, false,0,true );
+		//  _hitArea.addEventListener( MouseEvent.MOUSE_OUT, _onMouseOut, false,0,true );
 		
 		_onMouseOut(null);
 	}

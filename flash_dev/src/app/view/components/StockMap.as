@@ -4,18 +4,20 @@ package app.view.components
 import flash.display.Sprite;
 import app.model.vo.StockPhotoSetVo;
 import app.model.vo.StageResizeVo;
+import caurina.transitions.Tweener;
+
 public class StockMap extends Sprite
 {
 	public static const SHRINK_PERCENTAGE:Number = 0.06;
 	
+	private var _mapItemsHolder:Sprite = new Sprite();					// Map pucks
+	private var _miniPageHolder:Sprite  = new Sprite();					// Divider
+	private var _mapDragger:StockMapDragger = new StockMapDragger();	// Used to drag the position
 	
-	private var _mapItemsHolder:Sprite = new Sprite();
-	private var _miniPageHolder:Sprite  = new Sprite();
-	
-	public function StockMap():void
-	{
+	public function StockMap():void {
 		this.addChild( _mapItemsHolder );
 		this.addChild( _miniPageHolder  );
+		this.addChild( _mapDragger );
 	}
 	
 	public function clear (  ):void
@@ -42,7 +44,7 @@ public class StockMap extends Sprite
 	public function buildNewSet ( $setVo:StockPhotoSetVo ):void
 	{
 		this.visible = true;
-		var rows:Array = [0,0,0,0,0];
+		var rows:Array = [0,0];
 		var pad:Number	= 2;
 		
 		_mapItemsHolder.x = -pad;
@@ -59,6 +61,8 @@ public class StockMap extends Sprite
 			mapItem.y = 10 * smallestRowIndex;						// Set the y position based on the position in the array
 			mapItem.x = rows[smallestRowIndex] + pad;				// Set the x position based on value of item
 			rows[smallestRowIndex] += pad + mapItem.width;			// update row width
+			mapItem.scaleX = 0;
+			Tweener.addTween( mapItem, { scaleX:1, time:0.3, delay:i*0.008, transition:"EaseInOutQuint"} );
 		}
 		
 		this.x = StageResizeVo.CENTER - this.width/2;
@@ -78,6 +82,11 @@ public class StockMap extends Sprite
 			page.build( pageNumber, browserWidth, 10 * rows.length + _miniPageHolder.y );
 			page.x = distance * j;
 		}
+		
+		//// Dragger
+		_mapDragger.y = 0;
+		_mapDragger.build( distance, _mapItemsHolder.height, 10 );
+		_mapDragger.setHorizontalBounds( _mapItemsHolder.x, _mapItemsHolder.width, distance )
 	}
 	
 	// _____________________________ Helpers

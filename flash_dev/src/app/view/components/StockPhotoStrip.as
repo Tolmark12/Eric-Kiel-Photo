@@ -4,6 +4,8 @@ package app.view.components
 import flash.display.Sprite;
 import app.model.vo.StockPhotoSetVo;
 import app.model.vo.StockPhotoVo;
+import delorum.utils.KeyTrigger;
+import caurina.transitions.Tweener;
 
 public class StockPhotoStrip extends Sprite
 {
@@ -17,6 +19,12 @@ public class StockPhotoStrip extends Sprite
 	{
 		//this.addChild(_photoMap);
 		this.addChild(_photoHolder);
+		KeyTrigger.addKeyListener( _tempTween, "w", true );
+	}
+	
+	private function _tempTween (  ):void
+	{
+		Tweener.addTween( _photoHolder, { x:Math.round(Math.random()*-_photoHolder.width), time:1.4, transition:"EaseInOutQuint"} );
 	}
 	
 	// _____________________________ API
