@@ -155,7 +155,6 @@ public class PortfolioProxy extends Proxy implements IProxy
 	public function imageLoaded ( $index:uint ):void
 	{
 		sendNotification( AppFacade.UPDATE_TOTAL_LOADED, {loaded:++_totalLoaded, total:_sequence.totalItems*2} );
-//		trace( _totalLoaded + '  :  ' + _sequence.totalItems*2 );
 	}
 	
 	

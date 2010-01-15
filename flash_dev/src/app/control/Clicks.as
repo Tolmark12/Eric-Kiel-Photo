@@ -16,9 +16,17 @@ public class Clicks extends SimpleCommand implements ICommand
 		var navProxy:NavProxy 				= facade.retrieveProxy( NavProxy.NAME ) as NavProxy;
 		var portfolioProxy:PortfolioProxy 	= facade.retrieveProxy( PortfolioProxy.NAME ) as PortfolioProxy;
 		var stockProxy:StockProxy 			= facade.retrieveProxy( StockProxy.NAME ) as StockProxy;
+		var tagsProxy:TagsProxy 			= facade.retrieveProxy( TagsProxy.NAME ) as TagsProxy;
 		
 		switch (note.getName())
 		{
+			case AppFacade.SEARCH_TERM_CHANGE :
+				tagsProxy.onSearchTermChange( note.getBody() as String );
+			break;
+			case AppFacade.ADD_LETTER_TO_SEARCH :
+				//trace( note.getBody() as String );
+				tagsProxy.addLetterToSearch( note.getBody() as String );
+			break;
 			case AppFacade.NAV_BTN_CLICK :
 				navProxy.changePage( note.getBody() as String );
 			break;
@@ -57,6 +65,9 @@ public class Clicks extends SimpleCommand implements ICommand
 			break;
 			case AppFacade.STOCK_RESET :
 				stockProxy.reset();
+			break;
+			case AppFacade.NEW_TAG_SEARCH :
+				tagsProxy.newSearch();
 			break;
 		}
 	}

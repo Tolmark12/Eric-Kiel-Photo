@@ -62,6 +62,7 @@ public class Portfolio extends Page
 	*/
 	public function clear (  ):void
 	{
+		_portfolioNav.clear()
 		_portfolioNav.visible = false;
 		this.stage.removeEventListener( Event.ENTER_FRAME, _onEnterFrame );
 		
@@ -100,6 +101,7 @@ public class Portfolio extends Page
 		_portfolioNumber++;
 		// Reset
 		clear();
+		_portfolioNav.activate()
 		BaseLoader._currentlyLoading = false;
 		//Queue.setQueueIndex("low"+_portfolioNumber, 0);
 		//Queue.setQueueIndex("high"+_portfolioNumber, 1)

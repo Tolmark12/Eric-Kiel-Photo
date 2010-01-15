@@ -67,6 +67,12 @@ public class AppFacade extends Facade implements IFacade
 	public static const STOCK_PHOTO_CLICKED:String 					= "stock_photo_clicked";
 	public static const DISPLAY_STOCK_PHOTO:String 					= "display_stock_photo";
 	
+	// Tags
+	public static const NEW_TAG_SEARCH:String					 	= "new_tag_search";
+	public static const ADD_LETTER_TO_SEARCH:String 				= "add_letter_to_search";
+	public static const DISPLAY_TAG_HINTS:String 					= "display_tag_hints";
+	public static const SEARCH_TERM_CHANGE:String 					= "search_term_change";
+	
 	// LIGHTBOX
 	public static const SHOW_LIGHT_BOX:String 						= "show_light_box";		// An array of images, or stock photo items?
 	
@@ -116,6 +122,9 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( STOCK_DATA_SET_LOADED, DataRequests );
 		registerCommand( STOCK_PHOTO_CLICKED, Clicks );
 		registerCommand( STOCK_RESET, Clicks );
+		registerCommand( NEW_TAG_SEARCH, Clicks );
+		registerCommand( ADD_LETTER_TO_SEARCH, Clicks );
+		registerCommand( SEARCH_TERM_CHANGE, Clicks );
 	}
 
 }

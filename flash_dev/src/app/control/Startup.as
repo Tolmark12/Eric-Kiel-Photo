@@ -31,6 +31,7 @@ public class Startup extends SimpleCommand implements ICommand
 		var portfolioProxy:PortfolioProxy 			= new PortfolioProxy();
 		var stockProxy:StockProxy 					= new StockProxy();
 		var lightBoxProxy:LightBoxProxy 			= new LightBoxProxy();
+		var tagsProxy:TagsProxy 					= new TagsProxy();
 		
 		// Register Mediators + Proxies
 		facade.registerMediator( contentMediator );
@@ -46,6 +47,7 @@ public class Startup extends SimpleCommand implements ICommand
 		facade.registerProxy( portfolioProxy );
 		facade.registerProxy( stockProxy );
 		facade.registerProxy( lightBoxProxy );
+		facade.registerProxy( tagsProxy );
 		
 		// Initialize Stock photo
 		lightBoxProxy.initLightBox();

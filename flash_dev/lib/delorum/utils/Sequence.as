@@ -50,6 +50,19 @@ public class Sequence
 	}
 	
 	/** 
+	*	Change which item to display by passing the new item
+	*	@param		the item
+	*/
+	public function changeItemByItem ( $newItem:* ):void
+	{
+		for ( var i:uint=0; i<totalItems; i++ ) 
+		{
+			if( $newItem == _items[i] )
+				changeItemByIndex(i);
+		}
+	}
+	
+	/** 
 	*	Go to the next item
 	*/
 	public function next ( $loopOnOverShoot:Boolean=false ):Boolean{
