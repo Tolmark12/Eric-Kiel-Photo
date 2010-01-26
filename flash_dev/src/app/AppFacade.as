@@ -66,6 +66,7 @@ public class AppFacade extends Facade implements IFacade
 	public static const BUILD_STOCK_RESULTS:String 					= "build_stock_results";
 	public static const STOCK_PHOTO_CLICKED:String 					= "stock_photo_clicked";
 	public static const DISPLAY_STOCK_PHOTO:String 					= "display_stock_photo";
+	public static const STOCK_SCROLL:String 						= "stock_scroll";
 	
 	// Tags
 	public static const NEW_TAG_SEARCH:String					 	= "new_tag_search";

@@ -6,12 +6,15 @@ import app.model.vo.StockPhotoSetVo;
 import app.model.vo.StockPhotoVo;
 import delorum.utils.KeyTrigger;
 import caurina.transitions.Tweener;
-
+import app.model.vo.StageResizeVo;
+import flash.geom.Rectangle;
 public class StockPhotoStrip extends Sprite
 {
 	private var _dictionary:Object	= {};			// An object with reference to the photos by id
 	private var _photoHolder:Sprite	= new Sprite();
 	private var _photoMap:StockMap;
+	private var _windowWidth:Number;
+	private var _scrollWindow:Rectangle;
 	
 	private var _activePhoto:StockPhoto;
 	
@@ -31,7 +34,6 @@ public class StockPhotoStrip extends Sprite
 	
 	public function buildNewSet ( $setVo:StockPhotoSetVo ):void
 	{
-		
 		// TEMP !!!!!
 		/** 
 		*	In reality, this will not happen like this, 
@@ -65,6 +67,8 @@ public class StockPhotoStrip extends Sprite
 		}
 		// TEMP !!!!!
 		
+		setScrollWindow(StageResizeVo.lastResize);
+		
 	}
 	
 	/** 
@@ -86,6 +90,17 @@ public class StockPhotoStrip extends Sprite
 		
 		_activePhoto = _dictionary[$stockPhotoVo.id];
 		_activePhoto.highlight();
+	}
+	
+	public function scroll ( $perc:Number ):void
+	{
+		_photoHolder.x = 0 - ( _scrollWindow.width * $perc );
+	}
+	
+	public function setScrollWindow ( $resize:StageResizeVo ):void
+	{
+		//_scrollWindow = new Rectangle( 0,0, _photoHolder.width - StageResizeVo.lastResize.width ,0 );
+		_scrollWindow = new Rectangle( 0,0, _photoHolder.width - StageResizeVo.MIN_WIDTH ,0 );
 	}
 	
 	// _____________________________ Helpers

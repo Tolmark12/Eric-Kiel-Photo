@@ -22,6 +22,7 @@ public class StockMap extends Sprite
 	
 	public function clear (  ):void
 	{
+		_mapDragger.clear();
 		this.visible = false;
 		
 		// Remvoe all the squares
@@ -47,7 +48,7 @@ public class StockMap extends Sprite
 		var rows:Array = [0,0];
 		var pad:Number	= 2;
 		
-		_mapItemsHolder.x = -pad;
+		_mapItemsHolder.x = pad;
 		
 		////  Create the small bricks
 		var len:uint = $setVo.stack.length;
@@ -61,8 +62,8 @@ public class StockMap extends Sprite
 			mapItem.y = 10 * smallestRowIndex;						// Set the y position based on the position in the array
 			mapItem.x = rows[smallestRowIndex] + pad;				// Set the x position based on value of item
 			rows[smallestRowIndex] += pad + mapItem.width;			// update row width
-			mapItem.scaleX = 0;
-			Tweener.addTween( mapItem, { scaleX:1, time:0.3, delay:i*0.008, transition:"EaseInOutQuint"} );
+			//mapItem.scaleX = 0;
+			//Tweener.addTween( mapItem, { scaleX:1, time:0.3, delay:i*0.008, transition:"EaseInOutQuint"} );
 		}
 		
 		this.x = StageResizeVo.CENTER - this.width/2;
@@ -85,8 +86,8 @@ public class StockMap extends Sprite
 		
 		//// Dragger
 		_mapDragger.y = 0;
-		_mapDragger.build( distance, _mapItemsHolder.height, 10 );
-		_mapDragger.setHorizontalBounds( _mapItemsHolder.x, _mapItemsHolder.width, distance )
+		_mapDragger.build( browserWidth, _mapItemsHolder.height, 6 );
+		_mapDragger.setHorizontalBounds( _mapItemsHolder.x, _mapItemsHolder.x + _mapItemsHolder.width, browserWidth )
 	}
 	
 	// _____________________________ Helpers

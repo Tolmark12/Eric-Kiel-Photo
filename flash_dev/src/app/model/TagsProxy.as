@@ -33,6 +33,7 @@ public class TagsProxy extends Proxy implements IProxy
 	*/
 	public function onSearchTermChange ( $newTerm:String ):void
 	{
+		$newTerm = $newTerm.toLowerCase();
 		var newWordLength:uint = $newTerm.length;
 		
 		// If string is empty:
@@ -64,11 +65,14 @@ public class TagsProxy extends Proxy implements IProxy
 						_search.clearFromIndex(i);
 						//...add new letter
 						addLetterToSearch( $newTerm.charAt(i) );
-					}else{
+					}
+					///...if letters are the same, send the existing array:
+					else{
 						_sendAr();
 					}
 				}
-				// Else if there is no existing letter at this index
+				// Else if there is no existing letter at this index, we simply
+				// add the new letter to the existing word.
 				else{
 					addLetterToSearch( $newTerm.charAt(i) );
 				}

@@ -47,6 +47,8 @@ public class StockMediator extends PageMediator implements IMediator
 		_stockTags.addEventListener( 			StockTagEvent.ADD_LETTER_TO_SEARCH, _onAddLetterToSearch, false,0,true );
 		_stockTags.addEventListener( 			StockTagEvent.NEW_TAG_SEARCH, _onNewTagSearch, false,0,true );
 		_stockTags.addEventListener( 			StockTagEvent.SEARCH_TERM_CHANGE, _onSearchTermChange, false,0,true );
+		
+		_stockMap.addEventListener( StockScrollEvent.SCROLL, _onScroll, false,0,true );
    	}
 	
 	
@@ -57,6 +59,8 @@ public class StockMediator extends PageMediator implements IMediator
 					AppFacade.BUILD_STOCK_RESULTS,
 		 			AppFacade.DISPLAY_STOCK_PHOTO,
 					AppFacade.DISPLAY_TAG_HINTS,
+					AppFacade.STOCK_SCROLL,
+					AppFacade.STAGE_RESIZE,
 			  	];
 	}
 	
@@ -65,6 +69,9 @@ public class StockMediator extends PageMediator implements IMediator
 	{
 		switch ( note.getName() )
 		{
+			case AppFacade.STOCK_SCROLL :
+				_stockPhotoStrip.scroll( note.getBody() as Number );
+			break;
 			case AppFacade.STOCK_INIT :
 				sendNotification( AppFacade.MEDIATOR_ACTIVATED, this );
 				_stockPhotoLanding.build(note.getBody() as StockConfigVo );
@@ -81,6 +88,9 @@ public class StockMediator extends PageMediator implements IMediator
 			break;
 			case AppFacade.DISPLAY_TAG_HINTS :
 				_stockTags.displaySearchTagHints( note.getBody() as Array );
+			break;
+			case AppFacade.STAGE_RESIZE :
+				_stockPhotoStrip.setScrollWindow( note.getBody() as StageResizeVo );
 			break;
 		}
 	}
@@ -132,6 +142,11 @@ public class StockMediator extends PageMediator implements IMediator
 	private function _onSearchTermChange ( e:StockTagEvent ):void {
 		sendNotification( AppFacade.SEARCH_TERM_CHANGE, e.searchTerm );
 	}
+	
+	private function _onScroll ( e:StockScrollEvent ):void {
+		sendNotification( AppFacade.STOCK_SCROLL, e.pos );
+	}
+	
 	
 	
 }

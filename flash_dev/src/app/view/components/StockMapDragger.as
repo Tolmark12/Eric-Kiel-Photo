@@ -22,7 +22,8 @@ public class StockMapDragger extends Sprite
 	*	@param		overshoot
 	*/
 	public function setHorizontalBounds ( $left:Number, $right:Number, $width:Number ):void{
-		_bounds = new Rectangle($left, this.y, $right - $width, 0);
+		_bounds = new Rectangle($left+2, this.y, $right - $width, 0);
+		this.x = _bounds.x;
 		_pageWidth = $width;
 	}
 	
@@ -31,12 +32,21 @@ public class StockMapDragger extends Sprite
 	*/
 	public function build ( $width:Number, $height:Number, $overshoot:Number=0 ):void
 	{
+		this.x = 0
+		//$overshoot = 0;
 		this.buttonMode = true;
 		this.addEventListener( MouseEvent.MOUSE_DOWN, _onMouseDown, false,0,true );
 		this.stage.addEventListener( MouseEvent.MOUSE_UP, _onMouseUp, false,0,true );
 		
-		this.graphics.beginFill( 0x000000, 0.23 );
+		this.graphics.beginFill( 0x000000, 0.6 );
 		this.graphics.drawRect( -$overshoot, -$overshoot, $width+$overshoot*2, $height+$overshoot*2 );
+	}
+	
+	public function clear (  ):void
+	{
+		this.graphics.clear();
+		this.removeEventListener( MouseEvent.MOUSE_DOWN, _onMouseDown );
+		this.stage.removeEventListener( MouseEvent.MOUSE_UP, _onMouseUp );
 	}
 	
 	// _____________________________ Event Handlers
@@ -52,14 +62,13 @@ public class StockMapDragger extends Sprite
 			this.removeEventListener( Event.ENTER_FRAME, _onEnterFrame );
 			this.stopDrag();
 			_isDragging = false;
-			Tweener.addTween( this, { x:Math.round(this.x/_pageWidth)*_pageWidth, time:0.2, transition:"EaseOutQuint"} );
+			//Tweener.addTween( this, { x:Math.round(this.x/_pageWidth)*_pageWidth, time:0.2, transition:"EaseOutQuint"} );
 		}
 	}
 	
 	private function _onEnterFrame ( e:Event ):void {
 		var ev:StockScrollEvent = new StockScrollEvent(StockScrollEvent.SCROLL, true);
-		ev.pos = ( this.x - _bounds.left  ) / _bounds.width;
-		trace( int((ev.pos)*100)/100 );
+		ev.pos = int((( this.x - _bounds.left  ) / _bounds.width)*100)/100 ;
 		dispatchEvent( ev );
 	}
 
