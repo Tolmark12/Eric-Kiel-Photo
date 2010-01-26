@@ -1,0 +1,27 @@
+<?php
+/**
+ * Delorum Framework
+ *
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://framework.delorum.com/license/new-bsd
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@delorum.com so we can send you a copy immediately.
+ *
+ * @category   Delorum
+ * @package    Delorum
+ * @copyright  Copyright (c) 2009 Delorum Inc. (http://www.delorum.com)
+ * @license    http://framework.delorum.com/license/new-bsd     New BSD License
+ * @version    1.0
+ */
+ 
+?>
+<img id="<?php echo $this->getName() ?>_preview" style="width: 100px; height: 100px;" <?php if($this->getValue()): ?>src="<?php echo Mage::getBaseUrl('media') . 'template' . $this->getValue() ?>" <?php endif; ?> />
+<input type="hidden" id="<?php echo $this->getHtmlId() ?>" name="<?php echo $this->getName() ?>" value="<?php echo $this->getValue() ?>" />
+<div>
+	<iframe id="test" src="<?php echo Mage::getModel('adminhtml/url')->getUrl('vladmin/adminhtml_template_media/uploader', array('name'=>$this->getName(), 'id'=>$this->getHtmlId())) ?>" frameborder="0" height="50" width="200"></iframe>
+</div>
