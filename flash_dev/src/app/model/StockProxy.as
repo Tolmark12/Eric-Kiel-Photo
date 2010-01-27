@@ -15,11 +15,22 @@ public class StockProxy extends Proxy implements IProxy
 	// Current tags
 	private var _tags:Array; /// Maybe move this into StockPhotoSetVo
 	// Current Stack
-	private var _set:StockPhotoSetVo;
+	private var _sets:Vector.<StockPhotoSetVo>;
+	//private var _set:StockPhotoSetVo;
 	private var _currentPhotoId:String;
 	
 	// Constructor
 	public function StockProxy( ):void { super( NAME ); };
+	
+	/** 
+	*	TODO:
+	*	
+	*	This will need to be set up with the following APIs
+	*	
+	*	deleteSetById( $setId );													// Remove the subset from the matches
+	*	addSet( $set );					(currently parseNewStockDataSet() )			// Add the set to the matches
+	*	extractMatchesInAllSets();													// Find all the photoVo items that match all the tags
+	*/
 	
 	// _____________________________ API
 	
@@ -53,26 +64,35 @@ public class StockProxy extends Proxy implements IProxy
 	public function parseNewStockDataSet ( $json:Object ):void
 	{
 		// !! TEMP !!!!!!!!!!!! - Until we have a working db model, we will be 
-		_set = new StockPhotoSetVo({});
-		
-		// generating the set manually...
-		for ( var i:uint=0; i<60; i++ ) 
+		_sets = new Vector.<StockPhotoSetVo>();
+		var count = 0;
+		while (count++ < 6)
 		{
-			var wid:Number = (Math.random() >0.5)? 200 : 75 ;
-			var tempObj:Object = {
-				id			: "id_" + i,
-				name		: "name" + i,
-				low_res_src	: "",
-				high_res	: "",
-				tags		: ["man","hat","landscape"],
-				width		: wid
+			var newSet:StockPhotoSetVo 	= new StockPhotoSetVo({});
+			newSet.setName				= "Children";
+			
+			// generating the set manually...
+			for ( var i:uint=0; i<20; i++ ) 
+			{
+				var wid:Number = (Math.random() >0.5)? 200 : 75 ;
+				var tempObj:Object = {
+					id			: "id_" + i + "_"+count,
+					name		: "name" + i,
+					low_res_src	: "",
+					high_res	: "",
+					tags		: ["man","hat","landscape"],
+					width		: wid
+				}
+				var stockPhotoVo:StockPhotoVo = new StockPhotoVo( tempObj );
+				newSet.stack.push( stockPhotoVo );
 			}
-			var stockPhotoVo:StockPhotoVo = new StockPhotoVo( tempObj );
-			_set.stack.push( stockPhotoVo );
+			
+			_sets.push( newSet );
 		}
+		
 		// !! TEMP !!!!!!!!!!!!
 		
-		sendNotification( AppFacade.BUILD_STOCK_RESULTS, _set );
+		sendNotification( AppFacade.BUILD_STOCK_RESULTS, _sets );
 	}
 	
 	/** 
@@ -82,10 +102,10 @@ public class StockProxy extends Proxy implements IProxy
 	{
 		// Make sure the id isn't alread active and make sure
 		// that the _set isn't undefined
-		if( $id != _currentPhotoId && _set != null){
+		if( $id != _currentPhotoId && _sets != null){
 			
 			// Make sure this new photo does exist in this set
-			var stockPhotoVo:StockPhotoVo = _set.getStockPhotoById($id);
+			var stockPhotoVo:StockPhotoVo = _getStockPhotoById( $id );
 			if( stockPhotoVo != null ) {
 				_currentPhotoId = $id;
 				sendNotification( AppFacade.DISPLAY_STOCK_PHOTO, stockPhotoVo );
@@ -100,7 +120,8 @@ public class StockProxy extends Proxy implements IProxy
 	{
 		_configVo 			= null;
 		_tags				= null;
-		_set 				= null;
+		/*_set 				= null;*/
+		_sets 				= null;
 		_currentPhotoId		= null;
 	}
 	
@@ -129,6 +150,20 @@ public class StockProxy extends Proxy implements IProxy
 	{
 		trace( $error );
 		echo( $error );
+	}
+	
+	// Loop through each set and find/return the StockPhotoVo with the matching id
+	private function _getStockPhotoById ( $id:String ):StockPhotoVo {
+		var len:uint = _sets.length;
+		var set:StockPhotoSetVo;
+		for ( var i:uint=0; i<len; i++ ) 
+		{
+			set = _sets[i];
+			var returnPhoto:StockPhotoVo = set.getStockPhotoById($id);
+			if( returnPhoto != null )
+				return returnPhoto;
+		}
+		return null;
 	}
 
 }

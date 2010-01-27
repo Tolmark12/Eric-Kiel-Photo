@@ -55,7 +55,7 @@ public class StockPhoto extends Sprite
 	
 	override public function toString (  ):String
 	{
-		return this.width + '  :  ' + this.x + '  :  ' + this.y + '  :  ' + this.visible + '  :  ' + this.parent + '  :  ' + this.alpha + '  :  ' + this.parent.x + '  :  ' + this.parent.y + '  :  ' + this.parent.parent.x;
+		return id + '  :  ' + this.width + '  :  ' + this.x + '  :  ' + this.y + '  :  ' + this.visible + '  :  ' + this.parent + '  :  ' + this.alpha; // + '  :  ' + this.parent.x + '  :  ' + this.parent.y + '  :  ' + this.parent.parent.x;
 	}
 	
 	

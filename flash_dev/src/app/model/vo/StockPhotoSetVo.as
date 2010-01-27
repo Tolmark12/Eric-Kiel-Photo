@@ -3,7 +3,9 @@ package app.model.vo
 
 public class StockPhotoSetVo
 {
-	public var stack:Vector.<StockPhotoVo>;
+	public var stack:Vector.<StockPhotoVo>;			// The stack of photos
+	public var setName:String;						// Usually the tag these photos share in common
+	
 	public function StockPhotoSetVo( $json:Object ):void
 	{
 		stack = new Vector.<StockPhotoVo>();

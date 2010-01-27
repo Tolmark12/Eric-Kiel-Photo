@@ -8,8 +8,17 @@ import caurina.transitions.Tweener;
 
 public class StockMap extends Sprite
 {
+	private static const _SET_COLORS:Array = [
+		0xFFFFFF,
+		0xF38400,
+		0x316B8D,
+		0x516C6B,
+		0x29505F,
+		0xF5E9CB,
+		0xA8A793
+	];
+
 	public static const SHRINK_PERCENTAGE:Number = 0.06;
-	
 	private var _mapItemsHolder:Sprite = new Sprite();					// Map pucks
 	private var _miniPageHolder:Sprite  = new Sprite();					// Divider
 	private var _mapDragger:StockMapDragger = new StockMapDragger();	// Used to drag the position
@@ -42,28 +51,34 @@ public class StockMap extends Sprite
 		}
 	}
 	
-	public function buildNewSet ( $setVo:StockPhotoSetVo ):void
+	public function buildNewSet ( $stack:Vector.<StockPhotoSetVo> ):void
 	{
 		this.visible = true;
 		var rows:Array = [0,0];
 		var pad:Number	= 2;
 		
 		_mapItemsHolder.x = pad;
+		var count:Number = 0;
 		
-		////  Create the small bricks
-		var len:uint = $setVo.stack.length;
-		for ( var i:uint=0; i<len; i++ ) 
+		for each( var photoSet:StockPhotoSetVo in $stack)
 		{
-			var mapItem:StockMapItem = new StockMapItem();			// Get map item
-			_mapItemsHolder.addChild( mapItem );					// Add Child
-			mapItem.build( $setVo.stack[i].width );					// Build
+			////  Create the small bricks
+			var len:uint = photoSet.stack.length;
+			for ( var i:uint=0; i<len; i++ ) 
+			{
+				var mapItem:StockMapItem = new StockMapItem();			// Get map item
+				_mapItemsHolder.addChild( mapItem );					// Add Child
+				mapItem.build( photoSet.stack[i].width, _SET_COLORS[count] );					// Build
 			
-			var smallestRowIndex = _getShortestRowIndex(rows);		// Find the shortest row
-			mapItem.y = 10 * smallestRowIndex;						// Set the y position based on the position in the array
-			mapItem.x = rows[smallestRowIndex] + pad;				// Set the x position based on value of item
-			rows[smallestRowIndex] += pad + mapItem.width;			// update row width
-			//mapItem.scaleX = 0;
-			//Tweener.addTween( mapItem, { scaleX:1, time:0.3, delay:i*0.008, transition:"EaseInOutQuint"} );
+				var smallestRowIndex = _getShortestRowIndex(rows);		// Find the shortest row
+				mapItem.y = 10 * smallestRowIndex;						// Set the y position based on the position in the array
+				mapItem.x = rows[smallestRowIndex] + pad;				// Set the x position based on value of item
+				rows[smallestRowIndex] += pad + mapItem.width;			// update row width
+				//mapItem.scaleX = 0;
+				//Tweener.addTween( mapItem, { scaleX:1, time:0.3, delay:i*0.008, transition:"EaseInOutQuint"} );
+			}
+			
+			count++;
 		}
 		
 		this.x = StageResizeVo.CENTER - this.width/2;

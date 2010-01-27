@@ -18,10 +18,17 @@ public class StockPhotoStrip extends Sprite
 	
 	private var _activePhoto:StockPhoto;
 	
+	// Map
+	private var _stockMap:StockMap = new StockMap();
+	
+	
 	public function StockPhotoStrip():void
 	{
-		//this.addChild(_photoMap);
 		this.addChild(_photoHolder);
+		this.addChild( _stockMap );
+
+		_stockMap.y  = 550;
+		_photoHolder.y = 110;
 		KeyTrigger.addKeyListener( _tempTween, "w", true );
 	}
 	
@@ -32,43 +39,42 @@ public class StockPhotoStrip extends Sprite
 	
 	// _____________________________ API
 	
-	public function buildNewSet ( $setVo:StockPhotoSetVo ):void
+	/** 
+	*	Builds out a display of all the photo items. If a photo item in the new set
+	*	is identical to an existing item, the existing item is retained so we don't 
+	*	have to load in the images again. 
+	*	
+	*	What I need to figure out:
+	*	1 - I should probably output an object that the stock map can use to create a representation of the 
+	*		images shown here
+	*/
+	public function buildNewSet ( $sets:Vector.<StockPhotoSetVo> ):void
 	{
-		// TEMP !!!!!
-		/** 
-		*	In reality, this will not happen like this, 
-		*	right now, we're showing the entire set. instead, what will
-		*	happen is that we display a "page" of select photos.
-		*/
-		_dictionary = _buildNewDictionary($setVo.stack);
-		
-		var row1:Number = 0
-		var row2:Number = 0;
-		var yPos:Number	= 0
+		_dictionary = _buildNewDictionary($sets);
+		var rows:Array = [0,0];
 		var pad:Number	= 20;
 		
-		var len:uint = $setVo.stack.length;
-		for ( var i:uint=0; i<len; i++ ) 
-		{
-			var photo:StockPhoto = _dictionary[ $setVo.stack[i].id ];
-			_photoHolder.addChild( photo );
-			photo.build( $setVo.stack[i].width );
-			
-			// Place the photo in the shortest row
-			if( row2 > row1 ){
-				photo.y = 100;
-				photo.x = row1 + pad;
-				row1 += pad + photo.width;
-			}else{
-				photo.y = 320;
-				photo.x = row2 + pad;
-				row2 += pad + photo.width;
+		// Loop through each set of photos
+		for each( var photoSet:StockPhotoSetVo in $sets)
+		{	
+			////  Create the small bricks
+			var len:uint = photoSet.stack.length;
+			for ( var i:uint=0; i<len; i++ ) 
+			{
+				var photo:StockPhoto = _dictionary[ photoSet.stack[i].id ];
+				_photoHolder.addChild( photo );
+				photo.build( photoSet.stack[i].width );
+				
+				var smallestRowIndex = _getShortestRowIndex(rows);		// Find the shortest row
+				photo.y = 220 * smallestRowIndex;						// Set the y position based on the position in the array
+				photo.x = rows[smallestRowIndex] + pad;					// Set the x position based on value of item
+								
+				rows[smallestRowIndex] += pad + photo.width;			// update row width
 			}
 		}
-		// TEMP !!!!!
 		
 		setScrollWindow(StageResizeVo.lastResize);
-		
+		_stockMap.buildNewSet($sets);
 	}
 	
 	/** 
@@ -77,6 +83,7 @@ public class StockPhotoStrip extends Sprite
 	public function clear (  ):void
 	{
 		_clearDictionaryPhotos();
+		_stockMap.clear();
 		//_photoMap.clear();
 	}
 	
@@ -108,28 +115,35 @@ public class StockPhotoStrip extends Sprite
 	
 	// Delete all the photos that are no longer found in the new stack
 	// Keep the ones that are in the new stack
-	private function _buildNewDictionary ( $stack:Vector.<StockPhotoVo> ):Object
+	private function _buildNewDictionary ( $stack:Vector.<StockPhotoSetVo> ):Object
 	{
 		// Create new Dictionary
-		var newDictionary:Object = new Object;
-		var len:uint = $stack.length;	
-		for ( var i:uint=0; i<len; i++ ) 
+		var newDictionary:Object = new Object();
+
+		for each( var photoSet:StockPhotoSetVo in $stack)
 		{
-			var photo:StockPhoto;
-			var photoVo:StockPhotoVo = $stack[i];
+			var len:uint = photoSet.stack.length;
+			for ( var i:uint=0; i<len; i++ ) 
+			{
+				var photoVo:StockPhotoVo = photoSet.stack[i];
+				var photo:StockPhoto;
+				
+				// If this alread exists, delete it from the current
+				// dictionary and save reference in the new dictionary
+				// everything in old dictionary will be deleted via _clearDictionaryPhotos()
+				if( _dictionary[ photoVo.id ] != null ){
+					photo = _dictionary[ photoVo.id ];
+					delete  _dictionary[ photoVo.id ]; 
+				// else, doesn't exist, create it
+				} else {
+					photo = new StockPhoto( photoVo );
+				}
 			
-			// If this alread exists, reference it (saves reloading photos)
-			if( _dictionary[ photoVo.id ] != null ){
-				photo = _dictionary[ photoVo.id ];
-				delete  _dictionary[ photoVo.id ]; 
-			// else, doesn't exist, create it
-			} else {
-				photo = new StockPhoto( photoVo );
+				// Add photo to the new dictionary
+				newDictionary[ photo.id ] = photo;
 			}
-			
-			// Add photo to the new dictionary
-			newDictionary[ photo.id ] = photo;
 		}
+		
 		// Clear loaded jpgs and other data
 		_clearDictionaryPhotos();
 		return newDictionary;
@@ -146,6 +160,22 @@ public class StockPhotoStrip extends Sprite
 			delete _dictionary[i];
 		}
 	}
+	
+	private function _getShortestRowIndex ( $ar:Array ):Number
+	{
+		var lowestNumIndex:int 	= $ar.length-1;			// Index of number
+		var lowestNum:int 		= $ar[$ar.length-1];	// Lowest number so far
+		var counter:int 		= lowestNumIndex;		// simple counter
+		while (counter-- >= 0)
+		{
+			if( $ar[counter] < lowestNum ){				// Is this new # lower than previously lowest number...
+				lowestNumIndex 	= counter;
+				lowestNum		= $ar[counter]
+			}
+		}
+		return lowestNumIndex;
+	}
+	
 }
 
 }
