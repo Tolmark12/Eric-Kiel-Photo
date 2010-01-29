@@ -14,10 +14,10 @@
   <active>no</active>
  </lead>
  <date>2010-01-29</date>
- <time>06:45:15</time>
+ <time>18:38:47</time>
  <version>
-  <release>0.1.0</release>
-  <api>0.1.0</api>
+  <release>0.1.2</release>
+  <api>0.1.1</api>
  </version>
  <stability>
   <release>devel</release>
@@ -72,7 +72,7 @@
        <file md5sum="6b1af2a8ac363ec198988ecc4e1549db" name="PhotoController.php" role="magelocal" />
        <file md5sum="39eb8045532b6ad8983b58593da7355b" name="TagController.php" role="magelocal" />
       </dir> <!-- /Delorum/Stock/controllers/Adminhtml -->
-      <file md5sum="4b3302b5541dddfaabf37fd1f54488b3" name="ApiController.php" role="magelocal" />
+      <file md5sum="e73a1baa3cd8cbbf8286046ad2cbb6af" name="ApiController.php" role="magelocal" />
      </dir> <!-- /Delorum/Stock/controllers -->
      <dir name="etc">
       <file md5sum="552ee5f21eaed24ac8491b0af035e534" name="config.xml" role="magelocal" />
@@ -101,7 +101,7 @@
        </dir> <!-- /Delorum/Stock/Model/Photo/Tag -->
        <file md5sum="8680bb210f0e97ecb311fbf280a5bfd0" name="Tag.php" role="magelocal" />
       </dir> <!-- /Delorum/Stock/Model/Photo -->
-      <file md5sum="f6659f4eaad6ace2a3b07fb309bba60c" name="Photo.php" role="magelocal" />
+      <file md5sum="7053f5f1ae79d49ccf4ac7a88444ed0a" name="Photo.php" role="magelocal" />
       <file md5sum="01fd783d8cdc7f2efd476326d599ef27" name="Status.php" role="magelocal" />
      </dir> <!-- /Delorum/Stock/Model -->
      <dir name="sql">

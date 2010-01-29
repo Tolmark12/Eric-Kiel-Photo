@@ -7,7 +7,7 @@ class Delorum_Stock_ApiController extends Mage_Core_Controller_Front_Action
 		$tagCollection = Mage::getResourceModel('stock/photo_tag_collection')->addOrder('name', 'asc');
 		if(count($tagCollection)){
 			foreach($tagCollection as $tag){
-				$tags[] = array('id'=>(int) $tag->getId(), 'name'=>$tag->getName(), 'rank'=> (int) $tag->getRank());
+				$tags[] = array('id'=> $tag->getId(), 'name'=>$tag->getName(), 'rank'=>$tag->getRank());
 			}
 		}
 //		print_r($tags);
