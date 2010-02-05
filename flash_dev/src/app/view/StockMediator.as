@@ -29,6 +29,9 @@ public class StockMediator extends PageMediator implements IMediator
 		$stage.addChild( _stockDetailView );
 		
 		_stockPhotoStrip.addEventListener( 		FilterEvent.ADD_TAG_TO_CURRENT_FILTER, _onAddTagToCurrentFilter, false,0,true );
+		_stockPhotoStrip.addEventListener( 		StockScrollEvent.SCROLL, _onScroll, false,0,true );
+		_stockPhotoStrip.addEventListener( 		StockEvent.REMOVE_CATEGORY, _onRemoveCatetory, false,0,true );
+
 		_stockFilter.addEventListener( 			FilterEvent.ADD_TAG_TO_CURRENT_FILTER, _onAddTagToCurrentFilter, false,0,true );
 		_stockFilter.addEventListener( 			FilterEvent.NEW_FILTER, _onNewFilter, false,0,true );
 		_stockPhotoLanding.addEventListener( 	FilterEvent.NEW_FILTER, _onNewFilter, false,0,true );
@@ -36,7 +39,6 @@ public class StockMediator extends PageMediator implements IMediator
 		_stockDetailView.addEventListener( 		StockEvent.ASK_A_QUESTION, _onAskAQuestion, false,0,true );
 		_stockDetailView.addEventListener( 		StockEvent.DOWNLOAD_COMP, _onDownloadComp, false,0,true );
 		
-		_stockPhotoStrip.addEventListener( StockScrollEvent.SCROLL, _onScroll, false,0,true );
    	}
 	
 	
@@ -48,6 +50,7 @@ public class StockMediator extends PageMediator implements IMediator
 		 			AppFacade.DISPLAY_STOCK_PHOTO,
 					AppFacade.STOCK_SCROLL,
 					AppFacade.STAGE_RESIZE,
+					AppFacade.STOCK_CATEGORY_REMOVED,
 			  	];
 	}
 	
@@ -73,6 +76,9 @@ public class StockMediator extends PageMediator implements IMediator
 			break;
 			case AppFacade.STAGE_RESIZE :
 				_stockPhotoStrip.setScrollWindow( note.getBody() as StageResizeVo );
+			break;
+			case AppFacade.STOCK_CATEGORY_REMOVED :
+				_stockPhotoStrip.deleteStockTagById( note.getBody() as uint );
 			break;
 		}
 	}
@@ -115,7 +121,9 @@ public class StockMediator extends PageMediator implements IMediator
 		sendNotification( AppFacade.STOCK_SCROLL, e.pos );
 	}
 	
-	
+	private function _onRemoveCatetory ( e:StockEvent ):void {
+		sendNotification( AppFacade.STOCK_REMOVE_CATEGORY, e.id );
+	}
 	
 }
 }

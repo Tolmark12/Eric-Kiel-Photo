@@ -65,16 +65,17 @@ public class StockProxy extends Proxy implements IProxy
 	{
 		// !! TEMP !!!!!!!!!!!! - Until we have a working db model, we will be 
 		_sets = new Vector.<StockPhotoSetVo>();
+		var dummyCats:Array = ["","Landscape + Girl + Hat", "Girl", "Landscape", "Hats", "Color", "Cars"];
 		var count = 0;
 		while (count++ < 6)
 		{
 			var newSet:StockPhotoSetVo 	= new StockPhotoSetVo({});
-			newSet.setName				= "Children";
+			newSet.setName				= dummyCats[count];
 			
 			// generating the set manually...
 			for ( var i:uint=0; i<20; i++ ) 
 			{
-				var wid:Number = (Math.random() >0.5)? 200 : 75 ;
+				var wid:Number = (Math.random() >0.5)? 222 : 99 ;
 				var tempObj:Object = {
 					id			: "id_" + i + "_"+count,
 					name		: "name" + i,
@@ -114,6 +115,12 @@ public class StockProxy extends Proxy implements IProxy
 			}
 		}
 			
+	}
+	
+	public function removeStockCategory ( $category:String ):void
+	{
+		sendNotification( AppFacade.STOCK_CATEGORY_REMOVED, _removeSetById($category) );
+		sendNotification( AppFacade.BUILD_STOCK_RESULTS, _sets );
 	}
 	
 	public function reset (  ):void
@@ -165,6 +172,20 @@ public class StockProxy extends Proxy implements IProxy
 		}
 		return null;
 	}
-
+	
+	// Loop throught he sets and delete the one that matches the id
+	private function _removeSetById ( $tagName ):uint {
+		var len:uint = _sets.length;
+		var set:StockPhotoSetVo;
+		for ( var i:uint=0; i<len; i++ ) 
+		{
+			set = _sets[i];
+			if( set.setName == $tagName ){
+				_sets.splice(i,1);
+				return i;
+			}
+		}
+		return null;
+	}
 }
 }

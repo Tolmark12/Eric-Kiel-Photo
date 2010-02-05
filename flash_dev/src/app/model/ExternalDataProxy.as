@@ -64,6 +64,8 @@ public class ExternalDataProxy extends Proxy implements IProxy
 		var ldr:DataLoader = new DataLoader( $feed );
 		ldr.addEventListener( Event.COMPLETE, _onStockConfigDataLoad, false,0,true );
 		ldr.loadItem();
+		
+		loadAllStockTags();
 	}
 	
 	/** 
@@ -71,11 +73,19 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	*/
 	public function loadStockDataSet ( $feed:String ):void
 	{
+
 		// Send the $feed to vladmin here...
 		
 		// !! TEMP !!
 		sendNotification( AppFacade.STOCK_DATA_SET_LOADED, {/* TEMP Empty object */} );
 		// !! TEMP !!
+	}
+	
+	public function loadAllStockTags (  ):void
+	{
+		var ldr:DataLoader = new DataLoader( _server + "stock/api/getAllStockTags" );
+		ldr.addEventListener( Event.COMPLETE, _onStockDataSetLoaded, false,0,true );
+		ldr.loadItem();
 	}
 	
 	// _____________________________ Data Load Handlers
@@ -95,6 +105,10 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	
 	private function _onStockConfigDataLoad ( e:Event ):void {
 		sendNotification( AppFacade.STOCK_CONFIG_LOADED, JSON.decode( e.target.data ) );
+	}
+	
+	private function _onStockDataSetLoaded ( e:Event ):void {
+		sendNotification( AppFacade.STOCK_TAGS_LOADED, JSON.decode( '{ "tags" : ' +  e.target.data + '}' ) );
 	}
 	
 	

@@ -67,8 +67,11 @@ public class AppFacade extends Facade implements IFacade
 	public static const STOCK_PHOTO_CLICKED:String 					= "stock_photo_clicked";
 	public static const DISPLAY_STOCK_PHOTO:String 					= "display_stock_photo";
 	public static const STOCK_SCROLL:String 						= "stock_scroll";
+	public static const STOCK_REMOVE_CATEGORY:String 				= "stock_remove_category";
+	public static const STOCK_CATEGORY_REMOVED:String 				= "stock_category_removed";
 	
 	// Tags
+	public static const STOCK_TAGS_LOADED:String = "stock_tags_loaded";
 	public static const NEW_TAG_SEARCH:String					 	= "new_tag_search";
 	public static const ADD_LETTER_TO_SEARCH:String 				= "add_letter_to_search";
 	public static const DISPLAY_TAG_HINTS:String 					= "display_tag_hints";
@@ -126,6 +129,8 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( NEW_TAG_SEARCH, Clicks );
 		registerCommand( ADD_LETTER_TO_SEARCH, Clicks );
 		registerCommand( SEARCH_TERM_CHANGE, Clicks );
+		registerCommand( STOCK_REMOVE_CATEGORY, Clicks );
+		registerCommand( STOCK_TAGS_LOADED, DataRequests );
 	}
 
 }

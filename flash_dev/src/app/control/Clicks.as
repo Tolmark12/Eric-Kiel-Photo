@@ -69,6 +69,9 @@ public class Clicks extends SimpleCommand implements ICommand
 			case AppFacade.NEW_TAG_SEARCH :
 				tagsProxy.newSearch();
 			break;
+			case AppFacade.STOCK_REMOVE_CATEGORY :
+				stockProxy.removeStockCategory( note.getBody()as String );
+			break;
 		}
 	}
 }

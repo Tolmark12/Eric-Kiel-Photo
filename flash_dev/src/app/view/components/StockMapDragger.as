@@ -6,6 +6,7 @@ import flash.events.*;
 import flash.geom.Rectangle;
 import caurina.transitions.Tweener;
 import app.view.components.events.StockScrollEvent;
+import caurina.transitions.Tweener;
 
 public class StockMapDragger extends Sprite
 {
@@ -49,10 +50,18 @@ public class StockMapDragger extends Sprite
 		this.stage.removeEventListener( MouseEvent.MOUSE_UP, _onMouseUp );
 	}
 	
+	public function scrollTo ( $x:Number ):void
+	{
+		_onMouseDown(null);
+		$x = ($x > _bounds.width)? _bounds.width: $x ;
+ 		Tweener.addTween( this, { x:$x, time:1, transition:"EaseInOutQuint", onComplete:_onMouseUp, onCompleteParams:[null]} );
+	}
+	
 	// _____________________________ Event Handlers
 	
 	private function _onMouseDown ( e:Event ):void {
-		this.startDrag( false, _bounds );
+		if( e != null )
+			this.startDrag( false, _bounds );
 		_isDragging = true;
 		this.addEventListener( Event.ENTER_FRAME, _onEnterFrame, false,0,true );
 	}

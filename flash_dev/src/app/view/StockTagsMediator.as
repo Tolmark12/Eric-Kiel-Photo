@@ -33,7 +33,9 @@ public class StockTagsMediator extends Mediator implements IMediator
 	override public function listNotificationInterests():Array
 	{
 		return	[	AppFacade.DISPLAY_TAG_HINTS,
-		  			AppFacade.STOCK_RESET ];
+		  			AppFacade.STOCK_RESET,
+		 			AppFacade.STOCK_INIT,
+		 			AppFacade.STOCK_TAGS_LOADED, ];
 	}
 	
 	// PureMVC: Handle notifications
@@ -46,6 +48,12 @@ public class StockTagsMediator extends Mediator implements IMediator
 			break;
 			case AppFacade.STOCK_RESET :
 				_stockTags.clear();
+			break;
+			case AppFacade.STOCK_INIT :
+				//_stockTags.show();
+			break;
+			case AppFacade.STOCK_TAGS_LOADED :
+				_stockTags.show();
 			break;
 		}
 	}
