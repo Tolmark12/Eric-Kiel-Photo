@@ -23,7 +23,7 @@ public class StockMapItem extends Sprite
 		this.graphics.clear();
 		this.graphics.beginFill($color, 1);
 		this.graphics.drawRect(0,0, $width , $height);
-		deactivate();
+		unHighlight();
 	}
 	
 	public function clear (  ):void
@@ -31,7 +31,7 @@ public class StockMapItem extends Sprite
 		this.removeEventListener( MouseEvent.CLICK, _onClick );
 	}
 	
-	public function activate (  ):void
+	public function highlight (  ):void
 	{
 		this.alpha = 1;
 		_hasBeenViewed = true;
@@ -40,14 +40,14 @@ public class StockMapItem extends Sprite
 		this.transform.colorTransform = newColorTransform;
 	}
 	
-	public function deactivate (  ):void
+	public function unHighlight (  ):void
 	{
-		if( _hasBeenViewed ){
-			this.alpha = 1;
-			this.transform.colorTransform = new ColorTransform();
-		}
-		else
+		//if( _hasBeenViewed ){
 			this.alpha = 0.66;
+			this.transform.colorTransform = new ColorTransform();
+		//}
+		//else
+		//	this.alpha = 0.66;
 	}
 	
 	// _____________________________ Event Handlers

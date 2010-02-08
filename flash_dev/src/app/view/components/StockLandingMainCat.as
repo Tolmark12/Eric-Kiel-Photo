@@ -10,14 +10,14 @@ import flash.events.*;
 public class StockLandingMainCat extends Sprite
 {
 	private var _imageHolder:Sprite;
-	public var tags:Array;
+	public var searchTerm:String;
 	
 	public function StockLandingMainCat( $vo:StockDefaultCategoryVo ):void
 	{
 		// Build / set vars
 		_loadImage( $vo.src )
 		_addText( $vo.text );
-		tags = $vo.tags;
+		searchTerm = $vo.searchTerm;
 
 		// init
 		this.alpha = 0;

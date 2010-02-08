@@ -55,10 +55,6 @@ public class Clicks extends SimpleCommand implements ICommand
 				note.getBody() as FilterEvent;
 				trace( "ADD_TAG_TO_FILTER_CLK" );
 			break;
-			case AppFacade.NEW_FILTER_CLK :
-				var fe:FilterEvent = note.getBody() as FilterEvent;
-				stockProxy.loadNewPhotoSet( fe.tags )
-			break;
 			case AppFacade.STOCK_PHOTO_CLICKED :
 				var stockEvent:StockEvent = note.getBody() as StockEvent;
 				stockProxy.activateStockPhotoById(stockEvent.id)
@@ -71,6 +67,9 @@ public class Clicks extends SimpleCommand implements ICommand
 			break;
 			case AppFacade.STOCK_REMOVE_CATEGORY :
 				stockProxy.removeStockCategory( note.getBody()as String );
+			break;
+			case AppFacade.SUBMIT_SEARCH_TERM :
+				stockProxy.loadNewPhotoSet( note.getBody() as String )
 			break;
 		}
 	}

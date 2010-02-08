@@ -103,7 +103,7 @@ public class StockMap extends Sprite
 		_mapItemsHolder.x = pad;
 		var count:Number = 0;
 		
-		this.x = StageResizeVo.CENTER - this.width/2;
+		this.x = StageResizeVo.CENTER - _mapItemsHolder.width/2;
 		_miniPageHolder.y = _mapItemsHolder.y + _mapItemsHolder.height + 20;
 		
 		//// TEMP - dividers...
@@ -129,11 +129,21 @@ public class StockMap extends Sprite
 	
 	public function activateItem ( $id:String ):void
 	{
-		if( _currentItem != null )
-			_currentItem.deactivate();
+		
+	}
+	
+	public function highlightItem (  $id:String ):void
+	{
+		//if( _currentItem != null )
+		//	_currentItem.deactivate();
 			
-		_currentItem = _getItemById($id);
-		_currentItem.activate();
+		//_currentItem = _getItemById($id);
+		_getItemById($id).highlight();
+	}
+	
+	public function unHighlightItem ( $id:String ):void
+	{
+		_getItemById($id).unHighlight();
 	}
 	
 	public function bumpColorToEndOfList ( $index:uint ):void

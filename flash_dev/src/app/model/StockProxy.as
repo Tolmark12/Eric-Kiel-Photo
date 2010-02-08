@@ -16,11 +16,16 @@ public class StockProxy extends Proxy implements IProxy
 	private var _tags:Array; /// Maybe move this into StockPhotoSetVo
 	// Current Stack
 	private var _sets:Vector.<StockPhotoSetVo>;
+	// Set of photos that match all given tags
+	private var _matches:StockPhotoSetVo;
 	//private var _set:StockPhotoSetVo;
 	private var _currentPhotoId:String;
 	
 	// Constructor
-	public function StockProxy( ):void { super( NAME ); };
+	public function StockProxy( ):void { 
+		super( NAME );
+		reset();
+	};
 	
 	/** 
 	*	TODO:
@@ -47,53 +52,47 @@ public class StockProxy extends Proxy implements IProxy
 	*	Request the data for the photos matching a set of tags
 	*	@param		List of tags
 	*/
-	public function loadNewPhotoSet ( $set:Array ):void
+	public function loadNewPhotoSet ( $newTerm:String ):void
 	{
-		// If this new set of tags match the current set (this will fail, 
-		// even if the same tags are different order)
-		if( !_isEqual($set, _tags) ){
-			_copyTags( $set );
-			sendNotification( AppFacade.LOAD_STOCK_DATA_SET, _tags.join(",") );
-		}else
-			trace( "StockProxy.loadNewPhotoSet() - Arrays are equal" );
+		// Flix, we may need to do some validation here to make sure we're not searching for a tag that already has been searched for.
+		sendNotification( AppFacade.LOAD_STOCK_DATA_SET, $newTerm );
 	}
 	
 	/** 
 	*	Parse a new stock photo data set
 	*/
 	public function parseNewStockDataSet ( $json:Object ):void
-	{
-		// !! TEMP !!!!!!!!!!!! - Until we have a working db model, we will be 
-		_sets = new Vector.<StockPhotoSetVo>();
-		var dummyCats:Array = ["","Landscape + Girl + Hat", "Girl", "Landscape", "Hats", "Color", "Cars"];
-		var count = 0;
-		while (count++ < 6)
+	{   		
+		var newSet:StockPhotoSetVo 	= new StockPhotoSetVo({});
+		newSet.setName				= $json.term;
+		
+		// generating the set manually...
+		for ( var i:uint=0; i<20; i++ ) 
 		{
-			var newSet:StockPhotoSetVo 	= new StockPhotoSetVo({});
-			newSet.setName				= dummyCats[count];
-			
-			// generating the set manually...
-			for ( var i:uint=0; i<20; i++ ) 
-			{
-				var wid:Number = (Math.random() >0.5)? 222 : 99 ;
-				var tempObj:Object = {
-					id			: "id_" + i + "_"+count,
-					name		: "name" + i,
-					low_res_src	: "",
-					high_res	: "",
-					tags		: ["man","hat","landscape"],
-					width		: wid
-				}
-				var stockPhotoVo:StockPhotoVo = new StockPhotoVo( tempObj );
-				newSet.stack.push( stockPhotoVo );
+			var wid:Number = (Math.random() >0.5)? 222 : 99 ;
+			var tempObj:Object = {
+				id			: "id_" + i + "_"+newSet.setName,
+				name		: "name" + i,
+				low_res_src	: "",
+				high_res	: "",
+				tags		: ["man","hat","landscape"],
+				width		: wid
 			}
-			
-			_sets.push( newSet );
+			var stockPhotoVo:StockPhotoVo = new StockPhotoVo( tempObj );
+			newSet.stack.push( stockPhotoVo );
 		}
 		
-		// !! TEMP !!!!!!!!!!!!
+		_sets.push(newSet);
+		_findAndAddNewMatches( newSet );
 		
-		sendNotification( AppFacade.BUILD_STOCK_RESULTS, _sets );
+		// !! TEMP !!!!!!!!!!!!
+		_matches.setName = _sets.join(" + ");
+		
+		var stockResults = _sets.concat();
+		if( stockResults.length > 1 )
+			stockResults.unshift(_matches);
+			
+		sendNotification( AppFacade.BUILD_STOCK_RESULTS, stockResults );
 	}
 	
 	/** 
@@ -127,12 +126,27 @@ public class StockProxy extends Proxy implements IProxy
 	{
 		_configVo 			= null;
 		_tags				= null;
-		/*_set 				= null;*/
-		_sets 				= null;
+		_sets 				= new Vector.<StockPhotoSetVo>();
+		_matches			= new StockPhotoSetVo({})
 		_currentPhotoId		= null;
 	}
 	
 	// _____________________________ Helpers
+	
+	private function _findAndAddNewMatches ( $set:StockPhotoSetVo ):void {
+		var totalSets:uint = _matches.stack.length;
+		if( totalSets == 0 ) {
+			
+		}else if( totalSets == 1 ) {
+			
+		}else{
+			
+		}
+	}
+	
+	private function _removeSearchTermFromMatches ( $set:StockPhotoSetVo ):void {
+		
+	}
 	
 	// Test to see if two arrays are equivalent
 	private function _isEqual ( $ar1:Array, $ar2:Array  ):Boolean {
@@ -153,8 +167,7 @@ public class StockProxy extends Proxy implements IProxy
 		}
 	}
 	
-	private function _throwError ( $error:String ):void
-	{
+	private function _throwError ( $error:String ):void{
 		trace( $error );
 		echo( $error );
 	}

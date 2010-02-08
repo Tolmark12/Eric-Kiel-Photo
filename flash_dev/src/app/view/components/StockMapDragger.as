@@ -13,8 +13,13 @@ public class StockMapDragger extends Sprite
 	private var _bounds:Rectangle;
 	private var _isDragging:Boolean = false;
 	private var _pageWidth:Number;
+	private var _pointerHolder:Sprite = new Sprite();
+	private var _hasDraggedAlready:Boolean = false;
+	private var _isBuilt:Boolean = false;		
 	
-	public function StockMapDragger():void{}
+	public function StockMapDragger():void{
+		this.addChild( _pointerHolder );
+	}
 	
 	/** 
 	*	Set the dragging bounds
@@ -33,19 +38,46 @@ public class StockMapDragger extends Sprite
 	*/
 	public function build ( $width:Number, $height:Number, $overshoot:Number=0 ):void
 	{
-		this.x = 0
-		//$overshoot = 0;
-		this.buttonMode = true;
 		this.addEventListener( MouseEvent.MOUSE_DOWN, _onMouseDown, false,0,true );
 		this.stage.addEventListener( MouseEvent.MOUSE_UP, _onMouseUp, false,0,true );
 		
-		this.graphics.beginFill( 0x000000, 0.6 );
-		this.graphics.drawRect( -$overshoot, -$overshoot, $width+$overshoot*2, $height+$overshoot*2 );
+		if( !_isBuilt ) {
+			_isBuilt = true;
+			this.x = 0
+			//$overshoot = 0;
+			this.buttonMode = true;
+			this.graphics.beginFill( 0x000000, 0.6 );
+			this.graphics.drawRect( -$overshoot, -$overshoot, $width+$overshoot*2, $height+$overshoot*2 );
+
+			// Add the arrows
+			var arrowPadding = 5;
+			_pointerHolder.x = -$overshoot;
+			_pointerHolder.y = -$overshoot - arrowPadding;
+			var arrowTL:ArrowPointer_swc = new ArrowPointer_swc();
+			var arrowTR:ArrowPointer_swc = new ArrowPointer_swc();
+			var arrowBL:ArrowPointer_swc = new ArrowPointer_swc();
+			var arrowBR:ArrowPointer_swc = new ArrowPointer_swc();
+
+			var wid 			= arrowTL.width;
+			arrowTL.scaleX 		= -1;
+			arrowTL.x 			= -arrowPadding; 
+			arrowTR.x 			= this.width + arrowPadding;
+			arrowBL.scaleX		= -1;
+			arrowBL.x			= -arrowPadding;
+			arrowBL.y			= this.height + arrowPadding*2;
+			arrowBR.x			= this.width + arrowPadding;
+			arrowBR.y			= this.height + arrowPadding*2;
+
+			_pointerHolder.addChild(arrowTL);
+			_pointerHolder.addChild(arrowTR);
+			_pointerHolder.addChild(arrowBL);
+			_pointerHolder.addChild(arrowBR);
+		}
 	}
 	
 	public function clear (  ):void
 	{
-		this.graphics.clear();
+		//this.graphics.clear();
 		this.removeEventListener( MouseEvent.MOUSE_DOWN, _onMouseDown );
 		this.stage.removeEventListener( MouseEvent.MOUSE_UP, _onMouseUp );
 	}
@@ -60,6 +92,11 @@ public class StockMapDragger extends Sprite
 	// _____________________________ Event Handlers
 	
 	private function _onMouseDown ( e:Event ):void {
+		if( !_hasDraggedAlready ){
+			_hasDraggedAlready = true;
+			Tweener.addTween( _pointerHolder, { alpha:0, time:1, transition:"EaseInOutQuint", onComplete:removeChild, onCompleteParams:[_pointerHolder]} );
+		}
+			
 		if( e != null )
 			this.startDrag( false, _bounds );
 		_isDragging = true;

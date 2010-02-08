@@ -41,16 +41,14 @@ public class Search extends Sprite
 	
 	public function submit ( $str:String=null ):void
 	{
-		
 		if( $str != null ) 
 			_txt.text = $str;
 		
-		var ev:StockTagEvent = new StockTagEvent(StockTagEvent.ADD_NEW_TAG, true);
-		ev.newTag = _txt.text;
+		var ev:StockTagEvent = new StockTagEvent(StockTagEvent.SUBMIT_SEARCH_TERM, true);
+		ev.searchTerm = _txt.text;
 		dispatchEvent( ev );
 		
 		_tagSuggestions.hide();
-		
 	}
 	
 	// _____________________________ Event Handlers

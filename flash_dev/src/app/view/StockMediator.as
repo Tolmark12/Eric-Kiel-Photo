@@ -17,14 +17,12 @@ public class StockMediator extends PageMediator implements IMediator
 
 	private var _stockPhotoLanding:StockPhotoLanding = new StockPhotoLanding();	// Landing Page
 	private var _stockPhotoStrip:StockPhotoStrip = new StockPhotoStrip();		// The actual photos
-	private var _stockFilter:StockFilter = new StockFilter();					// The filter / browser
 	private var _stockDetailView:StockDetailView = new StockDetailView();		// Shows the large image after click
 	
 	public function StockMediator($stage:Sprite):void
 	{
 		super( NAME );
 		$stage.addChild( _stockPhotoLanding );
-		$stage.addChild( _stockFilter );
 		$stage.addChild( _stockPhotoStrip );
 		$stage.addChild( _stockDetailView );
 		
@@ -32,10 +30,10 @@ public class StockMediator extends PageMediator implements IMediator
 		_stockPhotoStrip.addEventListener( 		StockScrollEvent.SCROLL, _onScroll, false,0,true );
 		_stockPhotoStrip.addEventListener( 		StockEvent.REMOVE_CATEGORY, _onRemoveCatetory, false,0,true );
 
-		_stockFilter.addEventListener( 			FilterEvent.ADD_TAG_TO_CURRENT_FILTER, _onAddTagToCurrentFilter, false,0,true );
-		_stockFilter.addEventListener( 			FilterEvent.NEW_FILTER, _onNewFilter, false,0,true );
-		_stockPhotoLanding.addEventListener( 	FilterEvent.NEW_FILTER, _onNewFilter, false,0,true );
+		_stockPhotoLanding.addEventListener( 	StockTagEvent.SUBMIT_SEARCH_TERM, _onSubmitTerm, false,0,true );
 		_stockPhotoStrip.addEventListener( 		StockEvent.STOCK_PHOTO_CLICK, _onStockPhotoClick, false,0,true );
+		_stockPhotoStrip.addEventListener( 		StockEvent.STOCK_PHOTO_OVER, _onStockPhotoOver, false,0,true );
+		_stockPhotoStrip.addEventListener( 		StockEvent.STOCK_PHOTO_OUT, _onStockPhotoOut, false,0,true );
 		_stockDetailView.addEventListener( 		StockEvent.ASK_A_QUESTION, _onAskAQuestion, false,0,true );
 		_stockDetailView.addEventListener( 		StockEvent.DOWNLOAD_COMP, _onDownloadComp, false,0,true );
 		
@@ -90,7 +88,6 @@ public class StockMediator extends PageMediator implements IMediator
 		_stockDetailView.clear();
 		_stockPhotoLanding.clear();
 		_stockPhotoStrip.clear();
-		_stockFilter.clear();
 		sendNotification( AppFacade.STOCK_RESET );
 	}
 	
@@ -100,14 +97,21 @@ public class StockMediator extends PageMediator implements IMediator
 		sendNotification( AppFacade.ADD_TAG_TO_FILTER_CLK, e );
 	}
 	
-	private function _onNewFilter ( e:Event ):void {
-		sendNotification( AppFacade.NEW_FILTER_CLK, e );
+	private function _onSubmitTerm ( e:StockTagEvent ):void {
+		sendNotification( AppFacade.SUBMIT_SEARCH_TERM, e.searchTerm );
 	}
 	
 	private function _onStockPhotoClick ( e:StockEvent ):void {
 		sendNotification( AppFacade.STOCK_PHOTO_CLICKED, e );
 	}
 	
+	private function _onStockPhotoOver ( e:StockEvent ):void {
+		_stockPhotoStrip.highlightImage( e.id );
+	}
+	
+	private function _onStockPhotoOut ( e:StockEvent ):void {
+		_stockPhotoStrip.unHighlightImage( e.id );
+	}
 	
 	private function _onAskAQuestion ( e:Event ):void {
 		trace( "StockMediator: ask question" );

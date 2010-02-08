@@ -103,12 +103,23 @@ public class StockPhotoStrip extends Sprite
 	*/
 	public function displayPhoto ( $stockPhotoVo:StockPhotoVo ):void
 	{
-		if( _activePhoto != null )
-			_activePhoto.unHighlight();
+		trace( "Activate item...." );
+	}
+	
+	public function highlightImage ( $id:String ):void
+	{
+		//if( _activePhoto != null )
+		//	_activePhoto.unHighlight();
 		
-		_activePhoto = _dictionary[$stockPhotoVo.id];
-		_activePhoto.highlight();
-		_stockMap.activateItem($stockPhotoVo.id);
+		//_activePhoto = _dictionary[ $id ];
+		_dictionary[ $id ].highlight();
+		_stockMap.highlightItem( $id );
+	}
+	
+	public function unHighlightImage ( $id:String ):void
+	{
+		_dictionary[ $id ].unHighlight();
+		_stockMap.unHighlightItem( $id );
 	}
 	
 	public function scroll ( $perc:Number ):void

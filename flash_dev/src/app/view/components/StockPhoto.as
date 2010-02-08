@@ -15,6 +15,8 @@ public class StockPhoto extends Sprite
 		id 	= $vo.id;
 		this.buttonMode = true;
 		this.addEventListener( MouseEvent.CLICK, _onClick, false,0,true );
+		this.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOver, false,0,true );
+		this.addEventListener( MouseEvent.MOUSE_OUT, _onMouseOut, false,0,true );
 	}
 	
 	// _____________________________ API
@@ -47,6 +49,18 @@ public class StockPhoto extends Sprite
 	
 	private function _onClick ( e:Event ):void {
 		var stockEvent:StockEvent = new StockEvent( StockEvent.STOCK_PHOTO_CLICK, true );
+		stockEvent.id = this.id;
+		dispatchEvent( stockEvent );
+	}
+	
+	private function _onMouseOver ( e:Event ):void {
+		var stockEvent:StockEvent = new StockEvent( StockEvent.STOCK_PHOTO_OVER, true );
+		stockEvent.id = this.id;
+		dispatchEvent( stockEvent );
+	}
+	
+	private function _onMouseOut ( e:Event ):void {
+		var stockEvent:StockEvent = new StockEvent( StockEvent.STOCK_PHOTO_OUT, true );
 		stockEvent.id = this.id;
 		dispatchEvent( stockEvent );
 	}

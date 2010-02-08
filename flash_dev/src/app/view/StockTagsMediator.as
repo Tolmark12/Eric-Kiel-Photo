@@ -26,7 +26,7 @@ public class StockTagsMediator extends Mediator implements IMediator
 		_stockTags.addEventListener( 			StockTagEvent.ADD_LETTER_TO_SEARCH, _onAddLetterToSearch, false,0,true );
 		_stockTags.addEventListener( 			StockTagEvent.NEW_TAG_SEARCH, _onNewTagSearch, false,0,true );
 		_stockTags.addEventListener( 			StockTagEvent.SEARCH_TERM_CHANGE, _onSearchTermChange, false,0,true );
-		
+		_stockTags.addEventListener(			StockTagEvent.SUBMIT_SEARCH_TERM, _onSubmitSearchTerm, false,0,true );
    	}
 	
 	// PureMVC: List notifications
@@ -70,6 +70,10 @@ public class StockTagsMediator extends Mediator implements IMediator
 	
 	private function _onSearchTermChange ( e:StockTagEvent ):void {
 		sendNotification( AppFacade.SEARCH_TERM_CHANGE, e.searchTerm );
+	}
+	
+	private function _onSubmitSearchTerm ( e:StockTagEvent ):void {
+		sendNotification( AppFacade.SUBMIT_SEARCH_TERM, e.searchTerm );
 	}
 	
 }

@@ -71,13 +71,13 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	/** 
 	*	@param		A comma delimited list of tags
 	*/
-	public function loadStockDataSet ( $feed:String ):void
+	public function loadStockDataSet ( $searchTerm:String ):void
 	{
 
 		// Send the $feed to vladmin here...
 		
 		// !! TEMP !!
-		sendNotification( AppFacade.STOCK_DATA_SET_LOADED, {/* TEMP Empty object */} );
+		sendNotification( AppFacade.STOCK_DATA_SET_LOADED, {/* TEMP Empty object */ term:$searchTerm } );
 		// !! TEMP !!
 	}
 	
