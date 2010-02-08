@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.7.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+    http://pear.php.net/dtd/tasks-1.0.xsd
+    http://pear.php.net/dtd/package-2.0
+    http://pear.php.net/dtd/package-2.0.xsd">
+ <name>stockphoto</name>
+ <channel>__uri</channel>
+ <summary>Stock Photo</summary>
+ <description>Stock Photo</description>
+ <lead>
+  <name>Tyler Flint</name>
+  <user>tylerflint</user>
+  <email>tflint@delorum.com</email>
+  <active>no</active>
+ </lead>
+ <date>2010-01-29</date>
+ <time>18:38:47</time>
+ <version>
+  <release>0.1.2</release>
+  <api>0.1.1</api>
+ </version>
+ <stability>
+  <release>devel</release>
+  <api>devel</api>
+ </stability>
+ <license>commercial</license>
+ <notes>none</notes>
+ <contents>
+  <dir name="/">
+   <dir name="adminhtml">
+    <dir name="default">
+     <dir name="default">
+      <dir name="layout">
+       <file md5sum="48c6a1ff49c8a397c749dc6fd1a33190" name="stock.xml" role="magedesign" />
+      </dir> <!-- /adminhtml/default/default/layout -->
+      <dir name="template">
+       <dir name="stock">
+        <dir name="tag">
+         <dir name="import">
+          <file md5sum="65c1890351d33a6982f731d3dbf13807" name="results.phtml" role="magedesign" />
+         </dir> <!-- /adminhtml/default/default/template/stock/tag/import -->
+         <file md5sum="06476adfabf6093e8400bc667336077f" name="import.phtml" role="magedesign" />
+        </dir> <!-- /adminhtml/default/default/template/stock/tag -->
+       </dir> <!-- /adminhtml/default/default/template/stock -->
+      </dir> <!-- /adminhtml/default/default/template -->
+     </dir> <!-- /adminhtml/default/default -->
+    </dir> <!-- /adminhtml/default -->
+   </dir> <!-- /adminhtml -->
+   <dir name="Delorum">
+    <dir name="Image">
+     <file md5sum="5dab23b137904c40e8cbe2a88b69706d" name="Resize.php" role="magelib" />
+    </dir> <!-- /Delorum/Image -->
+    <dir name="Stock">
+     <dir name="Block">
+      <dir name="Adminhtml">
+       <dir name="Photo">
+        <dir name="Edit">
+         <dir name="Tab">
+          <file md5sum="88f600a617e6a0b97d4745fab933d18b" name="Form.php" role="magelocal" />
+         </dir> <!-- /Delorum/Stock/Block/Adminhtml/Photo/Edit/Tab -->
+         <file md5sum="be07d9556fbda49d6416aa535f9c33b0" name="Form.php" role="magelocal" />
+         <file md5sum="6f0b317cbc9bada803f56df1d9b78581" name="Tabs.php" role="magelocal" />
+        </dir> <!-- /Delorum/Stock/Block/Adminhtml/Photo/Edit -->
+        <file md5sum="3698a9d19aad5b5ec22c9d55e7eed504" name="Edit.php" role="magelocal" />
+        <file md5sum="b184e54cf9bceb7ddc5fbb720fb3522a" name="Grid.php" role="magelocal" />
+       </dir> <!-- /Delorum/Stock/Block/Adminhtml/Photo -->
+       <file md5sum="5ae136be7a5d7484c957e8299a5211ac" name="Photo.php" role="magelocal" />
+      </dir> <!-- /Delorum/Stock/Block/Adminhtml -->
+     </dir> <!-- /Delorum/Stock/Block -->
+     <dir name="controllers">
+      <dir name="Adminhtml">
+       <file md5sum="6b1af2a8ac363ec198988ecc4e1549db" name="PhotoController.php" role="magelocal" />
+       <file md5sum="39eb8045532b6ad8983b58593da7355b" name="TagController.php" role="magelocal" />
+      </dir> <!-- /Delorum/Stock/controllers/Adminhtml -->
+      <file md5sum="e73a1baa3cd8cbbf8286046ad2cbb6af" name="ApiController.php" role="magelocal" />
+     </dir> <!-- /Delorum/Stock/controllers -->
+     <dir name="etc">
+      <file md5sum="552ee5f21eaed24ac8491b0af035e534" name="config.xml" role="magelocal" />
+     </dir> <!-- /Delorum/Stock/etc -->
+     <dir name="Helper">
+      <file md5sum="6673c077994ede2c086edf5949bef12c" name="Data.php" role="magelocal" />
+     </dir> <!-- /Delorum/Stock/Helper -->
+     <dir name="Model">
+      <dir name="Mysql4">
+       <dir name="Photo">
+        <dir name="Tag">
+         <dir name="Link">
+          <file md5sum="f1c3a11a6b499b36d7c9672c2f8fc878" name="Collection.php" role="magelocal" />
+         </dir> <!-- /Delorum/Stock/Model/Mysql4/Photo/Tag/Link -->
+         <file md5sum="e51f066333ab4bd43863718837dea89b" name="Collection.php" role="magelocal" />
+         <file md5sum="58adfc09b3e4451a09502dcceb0f14d0" name="Link.php" role="magelocal" />
+        </dir> <!-- /Delorum/Stock/Model/Mysql4/Photo/Tag -->
+        <file md5sum="f5368d7e1cee57919919a1a8369776ad" name="Collection.php" role="magelocal" />
+        <file md5sum="5c2c5b8aa04897ad85f77fc3125e929b" name="Tag.php" role="magelocal" />
+       </dir> <!-- /Delorum/Stock/Model/Mysql4/Photo -->
+       <file md5sum="e3e98f8da7836400d6c775dd8d10dc37" name="Photo.php" role="magelocal" />
+      </dir> <!-- /Delorum/Stock/Model/Mysql4 -->
+      <dir name="Photo">
+       <dir name="Tag">
+        <file md5sum="16d1e004d516598e5389b34fda078900" name="Link.php" role="magelocal" />
+       </dir> <!-- /Delorum/Stock/Model/Photo/Tag -->
+       <file md5sum="8680bb210f0e97ecb311fbf280a5bfd0" name="Tag.php" role="magelocal" />
+      </dir> <!-- /Delorum/Stock/Model/Photo -->
+      <file md5sum="7053f5f1ae79d49ccf4ac7a88444ed0a" name="Photo.php" role="magelocal" />
+      <file md5sum="01fd783d8cdc7f2efd476326d599ef27" name="Status.php" role="magelocal" />
+     </dir> <!-- /Delorum/Stock/Model -->
+     <dir name="sql">
+      <dir name="stock_setup">
+       <file md5sum="7cdc4d4db257bb148bb1f7036b44862e" name="mysql4-install-0.1.0.php" role="magelocal" />
+      </dir> <!-- /Delorum/Stock/sql/stock_setup -->
+     </dir> <!-- /Delorum/Stock/sql -->
+    </dir> <!-- /Delorum/Stock -->
+   </dir> <!-- /Delorum -->
+   <dir name="modules">
+    <file md5sum="0e0f3c8514469fd64f72a741ec03f521" name="Delorum_Stock.xml" role="mageetc" />
+   </dir> <!-- /modules -->
+  </dir> <!-- / -->
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.2.0</min>
+    <max>5.3.0</max>
+   </php>
+   <pearinstaller>
+    <min>1.6.2</min>
+   </pearinstaller>
+  </required>
+ </dependencies>
+ <phprelease />
+</package>
