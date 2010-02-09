@@ -26,17 +26,19 @@ public class StockMediator extends PageMediator implements IMediator
 		$stage.addChild( _stockPhotoStrip );
 		$stage.addChild( _stockDetailView );
 		
+		_stockPhotoLanding.addEventListener( 	StockTagEvent.SUBMIT_SEARCH_TERM, _onSubmitTerm, false,0,true );
+
 		_stockPhotoStrip.addEventListener( 		FilterEvent.ADD_TAG_TO_CURRENT_FILTER, _onAddTagToCurrentFilter, false,0,true );
 		_stockPhotoStrip.addEventListener( 		StockScrollEvent.SCROLL, _onScroll, false,0,true );
 		_stockPhotoStrip.addEventListener( 		StockEvent.REMOVE_CATEGORY, _onRemoveCatetory, false,0,true );
-
-		_stockPhotoLanding.addEventListener( 	StockTagEvent.SUBMIT_SEARCH_TERM, _onSubmitTerm, false,0,true );
 		_stockPhotoStrip.addEventListener( 		StockEvent.STOCK_PHOTO_CLICK, _onStockPhotoClick, false,0,true );
 		_stockPhotoStrip.addEventListener( 		StockEvent.STOCK_PHOTO_OVER, _onStockPhotoOver, false,0,true );
 		_stockPhotoStrip.addEventListener( 		StockEvent.STOCK_PHOTO_OUT, _onStockPhotoOut, false,0,true );
-		_stockDetailView.addEventListener( 		StockEvent.ASK_A_QUESTION, _onAskAQuestion, false,0,true );
-		_stockDetailView.addEventListener( 		StockEvent.DOWNLOAD_COMP, _onDownloadComp, false,0,true );
 		
+		_stockDetailView.addEventListener( 		ModalEvent.ASK_A_QUESTION, _onAskAQuestion, false,0,true );
+		_stockDetailView.addEventListener( 		ModalEvent.DOWNLOAD_COMP, _onDownloadComp, false,0,true );
+		_stockDetailView.addEventListener( 		ModalEvent.CLOSE_MODAL, _onCloseModal, false,0,true );
+		_stockDetailView.addEventListener( 		StockEvent.STOCK_PHOTO_CLOSE, _onStockPhotoClose, false,0,true );
    	}
 	
 	
@@ -81,6 +83,11 @@ public class StockMediator extends PageMediator implements IMediator
 		}
 	}
 	
+	public function addDetailViewToStage ( $stage:Sprite ):void
+	{
+		$stage.addChild( _stockDetailView );
+	}
+	
 	// _____________________________ Clear
 	
 	override public function clear (  ):void
@@ -113,12 +120,12 @@ public class StockMediator extends PageMediator implements IMediator
 		_stockPhotoStrip.unHighlightImage( e.id );
 	}
 	
-	private function _onAskAQuestion ( e:Event ):void {
-		trace( "StockMediator: ask question" );
+	private function _onAskAQuestion ( e:ModalEvent ):void {
+		sendNotification( AppFacade.SHOW_MODAL_CLICK, e );
 	}
 	
-	private function _onDownloadComp ( e:Event ):void {
-		trace( "StockMediator: download comp" );
+	private function _onDownloadComp ( e:ModalEvent ):void {
+		sendNotification( AppFacade.SHOW_MODAL_CLICK, e )
 	}
 	
 	private function _onScroll ( e:StockScrollEvent ):void {
@@ -127,6 +134,14 @@ public class StockMediator extends PageMediator implements IMediator
 	
 	private function _onRemoveCatetory ( e:StockEvent ):void {
 		sendNotification( AppFacade.STOCK_REMOVE_CATEGORY, e.id );
+	}
+	
+	private function _onCloseModal ( e:Event ):void {
+		sendNotification( AppFacade.CLOSE_MODAL );
+	}
+	
+	private function _onStockPhotoClose ( e:Event ):void {
+		sendNotification( AppFacade.STOCK_PHOTO_CLOSE );
 	}
 	
 }

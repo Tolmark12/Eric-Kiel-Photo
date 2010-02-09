@@ -66,15 +66,21 @@ public class StockProxy extends Proxy implements IProxy
 		var newSet:StockPhotoSetVo 	= new StockPhotoSetVo({});
 		newSet.setName				= $json.term;
 		
+		// TEMP DATA (FLIX)
+		var images:Array = ["kiel_090610_090610.jpg","kiel_091008_51.jpg","kiel_080628_080628.jpg"]
+		// TEMP 
+		
 		// generating the set manually...
 		for ( var i:uint=0; i<20; i++ ) 
 		{
-			var wid:Number = (Math.random() >0.5)? 222 : 99 ;
+			var randomIndex = Math.round( (images.length-1) * Math.random() )
+			var wid:Number = (randomIndex != 2)? 300 : 133 ;
 			var tempObj:Object = {
 				id			: "id_" + i + "_"+newSet.setName,
 				name		: "name" + i,
-				low_res_src	: "",
-				high_res	: "",
+				low_res_src	: "http://staging.kielphoto.com/prototype/content/stock-images/thumb/" + images[randomIndex],
+				high_res	: "http://staging.kielphoto.com/prototype/content/stock-images/large/" + images[randomIndex],
+				comp		: "http://staging.kielphoto.com/prototype/content/stock-images/comp/" + images[randomIndex],
 				tags		: ["man","hat","landscape"],
 				width		: wid
 			}
@@ -114,6 +120,15 @@ public class StockProxy extends Proxy implements IProxy
 			}
 		}
 			
+	}
+	
+	/** 
+	*	Deactivate any photo
+	*/
+	public function deactivateCurrentPhoto (  ):void
+	{
+		trace( "deactivate " );
+		_currentPhotoId = null;
 	}
 	
 	public function removeStockCategory ( $category:String ):void

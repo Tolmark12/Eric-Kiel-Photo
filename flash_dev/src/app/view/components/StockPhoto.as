@@ -5,13 +5,17 @@ import flash.display.Sprite;
 import app.model.vo.StockPhotoVo;
 import flash.events.*;
 import app.view.components.events.StockEvent;
+import delorum.loading.ImageLoader;
 
 public class StockPhoto extends Sprite
 {
 	public var id:String;
+	private var _sPhotoVo:StockPhotoVo;
+	private var _imageHolder:Sprite = new Sprite();
 	
 	public function StockPhoto( $vo:StockPhotoVo ):void
 	{
+		_sPhotoVo = $vo;
 		id 	= $vo.id;
 		this.buttonMode = true;
 		this.addEventListener( MouseEvent.CLICK, _onClick, false,0,true );
@@ -26,6 +30,9 @@ public class StockPhoto extends Sprite
 		
 	}
 	
+	/** 
+	*	Build
+	*/
 	public function build ( $width:Number ):void
 	{
 		// TEMP
@@ -35,14 +42,26 @@ public class StockPhoto extends Sprite
 		unHighlight();
 	}
 	
+	/** 
+	*	load Thumbnail
+	*/
+	public function loadThumbnail (  ):void
+	{
+		this.addChild(_imageHolder);
+		var ldr:ImageLoader = new ImageLoader( _sPhotoVo.lowResSrc, _imageHolder );
+		ldr.addEventListener( Event.COMPLETE, _onImageLoaded );
+		ldr.loadItem();
+	}
+	
+	
 	public function highlight (  ):void
 	{
-		this.alpha = 0.7;
+		//this.alpha = 0.7;
 	}
 	
 	public function unHighlight (  ):void
 	{
-		this.alpha = 0.3;
+		//this.alpha = 0.3;
 	}
 	
 	// _____________________________ Event Handlers
@@ -63,6 +82,10 @@ public class StockPhoto extends Sprite
 		var stockEvent:StockEvent = new StockEvent( StockEvent.STOCK_PHOTO_OUT, true );
 		stockEvent.id = this.id;
 		dispatchEvent( stockEvent );
+	}
+	
+	private function _onImageLoaded ( e:Event ):void {
+		this.graphics.clear();
 	}
 	
 	// _____________________________ Helpers

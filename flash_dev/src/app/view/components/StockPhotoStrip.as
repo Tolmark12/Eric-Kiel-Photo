@@ -71,6 +71,7 @@ public class StockPhotoStrip extends Sprite
 				var photo:StockPhoto = _dictionary[ photoSet.stack[i].id ];
 				_photoHolder.addChild( photo );
 				photo.build( photoSet.stack[i].width );
+				photo.loadThumbnail();
 				
 				var smallestRowIndex = _getShortestRowIndex(rows);		// Find the shortest row
 				photo.y = 220 * smallestRowIndex;						// Set the y position based on the position in the array
@@ -103,7 +104,6 @@ public class StockPhotoStrip extends Sprite
 	*/
 	public function displayPhoto ( $stockPhotoVo:StockPhotoVo ):void
 	{
-		trace( "Activate item...." );
 	}
 	
 	public function highlightImage ( $id:String ):void

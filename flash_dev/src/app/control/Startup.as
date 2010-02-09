@@ -22,10 +22,13 @@ public class Startup extends SimpleCommand implements ICommand
 		var portfolioMediator:PortfolioMediator 	= new PortfolioMediator(kielRoot);
 		var stockMediator:StockMediator 			= new StockMediator(kielRoot);
 		var navMediator:NavMediator 				= new NavMediator(kielRoot);
-		var formsMediator:FormsMediator		 		= new FormsMediator(kielRoot);
-		var lightBoxMediator:LightBoxMediator 		= new LightBoxMediator(kielRoot);
 		var stockTagsMediator:StockTagsMediator 	= new StockTagsMediator(kielRoot);
 		
+		// Call this funtion so the detail view is above the nav...
+		stockMediator.addDetailViewToStage(kielRoot)
+		var formsMediator:FormsMediator		 		= new FormsMediator(kielRoot);
+		var lightBoxMediator:LightBoxMediator 		= new LightBoxMediator(kielRoot);
+					
 		// Proxies
 		var externalDataProxy:ExternalDataProxy 	= new ExternalDataProxy();
 		var navProxy:NavProxy 						= new NavProxy();
@@ -33,6 +36,8 @@ public class Startup extends SimpleCommand implements ICommand
 		var stockProxy:StockProxy 					= new StockProxy();
 		var lightBoxProxy:LightBoxProxy 			= new LightBoxProxy();
 		var tagsProxy:TagsProxy 					= new TagsProxy();
+		var formProxy:FormProxy 					= new FormProxy();
+		
 		
 		// Register Mediators + Proxies
 		facade.registerMediator( contentMediator );
@@ -50,6 +55,7 @@ public class Startup extends SimpleCommand implements ICommand
 		facade.registerProxy( stockProxy );
 		facade.registerProxy( lightBoxProxy );
 		facade.registerProxy( tagsProxy );
+		facade.registerProxy( formProxy );
 		
 		// Initialize Stock photo
 		lightBoxProxy.initLightBox();

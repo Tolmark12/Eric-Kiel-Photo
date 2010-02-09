@@ -10,7 +10,9 @@ package app.view.components.swc
 		public function ModalText():void
 		{
 			textField 			= this.getChildByName('$text') as TextField;
-			textField.autoSize 	= 'left';
+			textField.multiline = true;
+			textField.wordWrap 	= true;
+			textField.autoSize 	= TextFieldAutoSize.LEFT;
 		}
 		
 		public function set text ($text:String):void
@@ -21,6 +23,11 @@ package app.view.components.swc
 		public function set htmlText($htmlText:String):void
 		{
 			textField.htmlText = $htmlText;
+		}
+		
+		public function set textWidth ( $width:Number ):void
+		{
+			textField.width = $width;
 		}
 	
 	}

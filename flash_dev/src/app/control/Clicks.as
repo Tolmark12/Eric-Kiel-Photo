@@ -17,7 +17,7 @@ public class Clicks extends SimpleCommand implements ICommand
 		var portfolioProxy:PortfolioProxy 	= facade.retrieveProxy( PortfolioProxy.NAME ) as PortfolioProxy;
 		var stockProxy:StockProxy 			= facade.retrieveProxy( StockProxy.NAME ) as StockProxy;
 		var tagsProxy:TagsProxy 			= facade.retrieveProxy( TagsProxy.NAME ) as TagsProxy;
-		
+		var formProxy:FormProxy 			= facade.retrieveProxy( FormProxy.NAME ) as FormProxy;
 		switch (note.getName())
 		{
 			case AppFacade.SEARCH_TERM_CHANGE :
@@ -70,6 +70,12 @@ public class Clicks extends SimpleCommand implements ICommand
 			break;
 			case AppFacade.SUBMIT_SEARCH_TERM :
 				stockProxy.loadNewPhotoSet( note.getBody() as String )
+			break;
+			case AppFacade.SHOW_MODAL_CLICK :
+				formProxy.createNewModal( note.getBody() as ModalEvent );
+			break;
+			case AppFacade.STOCK_PHOTO_CLOSE :
+				stockProxy.deactivateCurrentPhoto();
 			break;
 		}
 	}

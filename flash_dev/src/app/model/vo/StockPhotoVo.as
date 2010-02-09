@@ -7,6 +7,7 @@ public class StockPhotoVo
 	public var name:String 					// Used for display purposes
 	public var lowResSrc:String				// Url to find the thumbnail
 	public var highResSrc:String			// Url to the full size image
+	public var compImgSrc:String;			// Url to the comp
 	public var tags:Array					// The tags associated with this image
 	public var width:Number;				// The width of the photo
 	public var matchSet:StockPhotoSetVo;		// The set this VO belongs to
@@ -19,6 +20,7 @@ public class StockPhotoVo
 		highResSrc	= $json.high_res;
 		tags		= $json.tags;
 		width		= $json.width;
+		compImgSrc	= $json.compImgSrc;
 	}
 }
 

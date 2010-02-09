@@ -57,6 +57,9 @@ public class AppFacade extends Facade implements IFacade
 	public static const MEDIATOR_ACTIVATED:String 					= "mediator_activated";
 	
 	// FORMS
+	public static const SHOW_MODAL_CLICK:String 					= "show_modal_click";
+	public static const CREATE_NEW_MODAL:String 					= "create_new_modal";
+	public static const CLOSE_MODAL:String 							= "close_modal";
 	
 	// STOCK PHOTOS
 	public static const STOCK_INIT:String 							= "stock_init";
@@ -65,9 +68,11 @@ public class AppFacade extends Facade implements IFacade
 	public static const BUILD_STOCK_RESULTS:String 					= "build_stock_results";
 	public static const STOCK_PHOTO_CLICKED:String 					= "stock_photo_clicked";
 	public static const DISPLAY_STOCK_PHOTO:String 					= "display_stock_photo";
+	public static const STOCK_PHOTO_CLOSE:String 					= "stock_photo_close";
 	public static const STOCK_SCROLL:String 						= "stock_scroll";
 	public static const STOCK_REMOVE_CATEGORY:String 				= "stock_remove_category";
 	public static const STOCK_CATEGORY_REMOVED:String 				= "stock_category_removed";
+	public static const ACTIVATE_MODAL:String 						= "activate_modal";
 	
 	// Tags
 	public static const STOCK_TAGS_LOADED:String 					= "stock_tags_loaded";
@@ -131,6 +136,8 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( STOCK_REMOVE_CATEGORY, Clicks );
 		registerCommand( STOCK_TAGS_LOADED, DataRequests );
 		registerCommand( SUBMIT_SEARCH_TERM, Clicks );
+		registerCommand( SHOW_MODAL_CLICK, Clicks );
+		registerCommand( STOCK_PHOTO_CLOSE, Clicks );
 	}
 
 }
