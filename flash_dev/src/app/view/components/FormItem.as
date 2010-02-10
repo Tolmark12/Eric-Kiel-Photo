@@ -13,6 +13,7 @@ public class FormItem extends Sprite
 	public static const INVALID:Number = 0x999999;
 	public static const VALID:Number = 0x97D557;
 
+	private var _urlVarName:String;
 	private var _inputTxt:TextField;
 	private var _labelTxt:TextField;
 	private var _txtBg:Sprite;
@@ -24,6 +25,7 @@ public class FormItem extends Sprite
 		_inputTxt = this.getChildByName( "inputTxt" ) as TextField;
 		_labelTxt = this.getChildByName( "labelTxt" ) as TextField;
 		_txtBg = this.getChildByName( "txtBg" ) as MovieClip;
+		_inputTxt.addEventListener( FocusEvent.FOCUS_IN, _onInputTxtFocusIn, false,0,true );
 	}
 	
 	public function build ( $fieldVo:FieldVO ):void
@@ -34,6 +36,7 @@ public class FormItem extends Sprite
 		_inputTxt.height		= 18 * $fieldVo.lines;
 		_inputTxt.multiline 	= true;
 		_txtBg.height			= _inputTxt.height + 10;
+		_urlVarName				= $fieldVo.urlVarName;
 		
 		if( _regex != null ){
 			_inputTxt.addEventListener( Event.CHANGE, _onChange, false,0,true );
@@ -66,8 +69,15 @@ public class FormItem extends Sprite
 		dispatchEvent( new ModalEvent(ModalEvent.INPUT_CHANGE, true) );
 	}
 	
+	private function _onInputTxtFocusIn ( e:Event ):void {
+		_inputTxt.stage.focus = _inputTxt;
+		_inputTxt.setSelection(0,0);
+	}
+	
 	
 	public function get inputField (  ):TextField{ return _inputTxt; };
+	public function get varName (  ):String{ return _urlVarName; };
+	public function get userInput (  ):Object{ return _inputTxt; };
 
 }
 

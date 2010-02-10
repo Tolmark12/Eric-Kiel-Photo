@@ -24,14 +24,12 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	// Get Config Data
 	public function getConfigData ( $stage:Stage ):void
 	{
-		echo( "get config data" );
 		_server = ( $stage.loaderInfo.parameters.server != null )? $stage.loaderInfo.parameters.server : 'http://staging.kielphoto.com/' ;
 		//var configData:String = ( $stage.loaderInfo.parameters.configData != null )? $stage.loaderInfo.parameters.configData : 'http://www.kielphoto.com/vladmin/api/' ;
 		var ldr:DataLoader = new DataLoader( _server + "vladmin/api/" );
 		ldr.addEventListener( Event.COMPLETE, _onConfigLoad, false,0,true );
 		ldr.addEventListener( IOErrorEvent.IO_ERROR, _onError)
 		ldr.loadItem();
-		echo( "get config data..." + '  :  ' + _server + "vladmin/api/" );
 	}
 	
 	private function _onError ( e:IOErrorEvent ):void {

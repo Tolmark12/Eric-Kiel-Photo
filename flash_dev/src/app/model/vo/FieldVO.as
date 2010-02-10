@@ -3,6 +3,7 @@ package app.model.vo
 	public class FieldVO
 	{
 		public var id:String;
+		public var urlVarName:String;
 		public var title:String;
 		public var lines:Number;
 		public var defaultText:String;

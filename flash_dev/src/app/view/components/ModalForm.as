@@ -61,6 +61,18 @@ package app.view.components
 			_onInputChange(null);
 		}
 		
+		public function extractVars (  ):URLVariables
+		{
+			_vars = new URLVariables();
+			var len:uint = _formHolder.numChildren;
+			for ( var i:uint=0; i<len; i++ ) 
+			{
+				var formItem:FormItem = _formHolder.getChildAt(i) as FormItem;
+				_vars[formItem.varName] = _vars.varName;
+			}
+			return _vars;
+		}
+		
 		// _____________________________ Helpers
 		
 		private function _buildForm ( $formItems:Array ):void {

@@ -28,6 +28,7 @@ public class FormProxy extends Proxy implements IProxy
 		
 		var fieldVo:FieldVO		= new FieldVO(null);
 		fieldVo.id				= "email";
+		fieldVo.urlVarName		= "email";
 		fieldVo.title			= "Email"
 		fieldVo.lines			= 1;
 		fieldVo.defaultText		= "Jon Doe"

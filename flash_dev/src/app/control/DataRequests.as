@@ -13,7 +13,6 @@ public class DataRequests extends SimpleCommand implements ICommand
 	
 	override public function execute( note:INotification ):void
 	{
-		echo( note.getName() );
 		var navProxy:NavProxy                   = facade.retrieveProxy( NavProxy.NAME ) as NavProxy;
 		var externalDataProxy:ExternalDataProxy = facade.retrieveProxy( ExternalDataProxy.NAME ) as ExternalDataProxy;
 		var portfolioProxy:PortfolioProxy       = facade.retrieveProxy( PortfolioProxy.NAME ) as PortfolioProxy;
