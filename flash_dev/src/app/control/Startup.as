@@ -8,12 +8,15 @@ import app.model.vo.*;
 import app.AppFacade;
 import flash.display.Sprite;
 import flash.events.Event;
+import delorum.utils.echo;
 
 public class Startup extends SimpleCommand implements ICommand
 {
 
 	override public function execute( note:INotification ):void
 	{
+		
+		echo( "Startup" );
 		var kielRoot = note.getBody() as Sprite;
 		
 		// Mediators

@@ -8,7 +8,7 @@ import flash.display.Stage;
 import delorum.loading.DataLoader;
 import flash.events.*;
 import com.adobe.serialization.json.JSON;
-
+import delorum.utils.echo;
 
 public class ExternalDataProxy extends Proxy implements IProxy
 {
@@ -24,11 +24,18 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	// Get Config Data
 	public function getConfigData ( $stage:Stage ):void
 	{
+		echo( "get config data" );
 		_server = ( $stage.loaderInfo.parameters.server != null )? $stage.loaderInfo.parameters.server : 'http://staging.kielphoto.com/' ;
 		//var configData:String = ( $stage.loaderInfo.parameters.configData != null )? $stage.loaderInfo.parameters.configData : 'http://www.kielphoto.com/vladmin/api/' ;
 		var ldr:DataLoader = new DataLoader( _server + "vladmin/api/" );
 		ldr.addEventListener( Event.COMPLETE, _onConfigLoad, false,0,true );
+		ldr.addEventListener( IOErrorEvent.IO_ERROR, _onError)
 		ldr.loadItem();
+		echo( "get config data..." + '  :  ' + _server + "vladmin/api/" );
+	}
+	
+	private function _onError ( e:IOErrorEvent ):void {
+		echo( "Error" + '  :  ' + e );
 	}
 	
 	// Load Navigation data
@@ -91,8 +98,10 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	// _____________________________ Data Load Handlers
 	
 	private function _onConfigLoad ( e:Event ):void {
+		echo( "on config load" );
 		_configVo = new ConfigVo( JSON.decode( e.target.data ) );
 		sendNotification( AppFacade.CONFIG_LOADED_AND_PARSED, _configVo );
+		echo( "on config load...")
 	}
 	
 	private function _onNavLoad ( e:Event ):void{
