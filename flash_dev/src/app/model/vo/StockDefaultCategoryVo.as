@@ -12,7 +12,6 @@ public class StockDefaultCategoryVo
 		text 		= $json.text;
 		src			= $json.src;
 		searchTerm	= $json.search_term;
-		trace( searchTerm );
 	}
 	
 	public function toString (  ):String

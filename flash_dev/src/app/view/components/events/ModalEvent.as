@@ -1,6 +1,7 @@
 package app.view.components.events
 {
 import flash.events.Event;
+import flash.net.URLVariables;
 
 public class ModalEvent extends Event
 {
@@ -10,6 +11,9 @@ public class ModalEvent extends Event
 	
 	// EVENTS
 	public static const CLOSE_MODAL:String = "close_modal";
+	public static const SUBMIT_FORM:String = "submit_form";
+	
+	public var urlVars:URLVariables;
 
 	public function ModalEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
 	{

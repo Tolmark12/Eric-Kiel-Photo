@@ -70,14 +70,14 @@ public class FormItem extends Sprite
 	}
 	
 	private function _onInputTxtFocusIn ( e:Event ):void {
-		_inputTxt.stage.focus = _inputTxt;
-		_inputTxt.setSelection(0,0);
+		//_inputTxt.stage.focus = _inputTxt;
+		//_inputTxt.setSelection(0,0);
 	}
 	
 	
 	public function get inputField (  ):TextField{ return _inputTxt; };
 	public function get varName (  ):String{ return _urlVarName; };
-	public function get userInput (  ):Object{ return _inputTxt; };
+	public function get userInput (  ):Object{ return _inputTxt.text; trace( _inputTxt.text ); };
 
 }
 

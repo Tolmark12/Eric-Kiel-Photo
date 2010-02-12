@@ -7,6 +7,7 @@ import app.model.*;
 import app.model.vo.*;
 import app.AppFacade;
 import app.view.components.events.*;
+import flash.net.URLVariables;
 
 public class Clicks extends SimpleCommand implements ICommand
 {
@@ -18,6 +19,7 @@ public class Clicks extends SimpleCommand implements ICommand
 		var stockProxy:StockProxy 			= facade.retrieveProxy( StockProxy.NAME ) as StockProxy;
 		var tagsProxy:TagsProxy 			= facade.retrieveProxy( TagsProxy.NAME ) as TagsProxy;
 		var formProxy:FormProxy 			= facade.retrieveProxy( FormProxy.NAME ) as FormProxy;
+		var lightBoxProxy:LightBoxProxy 	= facade.retrieveProxy( LightBoxProxy.NAME ) as LightBoxProxy;
 		switch (note.getName())
 		{
 			case AppFacade.SEARCH_TERM_CHANGE :
@@ -76,6 +78,12 @@ public class Clicks extends SimpleCommand implements ICommand
 			break;
 			case AppFacade.STOCK_PHOTO_CLOSE :
 				stockProxy.deactivateCurrentPhoto();
+			break;
+			case AppFacade.SUBMIT_FORM :
+				formProxy.submitForm( note.getBody() as URLVariables);
+			break;
+			case AppFacade.ADD_TO_LIGHTBOX :
+				lightBoxProxy.addItemToLightBox( note.getBody() as String );
 			break;
 		}
 	}

@@ -34,6 +34,8 @@ package app.view.components
 			_contentHolder.addChild(_formHolder);
 			_contentHolder.addChild(_submitBtn);
 			_createGlowFilter();
+			
+			_submitBtn.addEventListener( MouseEvent.CLICK, _onSubmitClick, false,0,true );
 		}
 		
 		public function build( $formVo:FormVO ):void
@@ -68,7 +70,7 @@ package app.view.components
 			for ( var i:uint=0; i<len; i++ ) 
 			{
 				var formItem:FormItem = _formHolder.getChildAt(i) as FormItem;
-				_vars[formItem.varName] = _vars.varName;
+				_vars[formItem.varName] = formItem.userInput;
 			}
 			return _vars;
 		}
@@ -125,7 +127,13 @@ package app.view.components
 				_submitBtn.alpha = 0.3
 				_submitBtn.mouseEnabled = false;
 			}
-				
 		}
+		
+		private function _onSubmitClick ( e:Event ):void {
+			var ev:ModalEvent = new ModalEvent(ModalEvent.SUBMIT_FORM, true);
+			ev.urlVars = extractVars();
+			dispatchEvent( ev );
+		}
+		
 	}
 }

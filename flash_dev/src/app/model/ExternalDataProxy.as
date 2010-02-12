@@ -25,7 +25,6 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	public function getConfigData ( $stage:Stage ):void
 	{
 		_server = ( $stage.loaderInfo.parameters.server != null )? $stage.loaderInfo.parameters.server : 'http://staging.kielphoto.com/' ;
-		//var configData:String = ( $stage.loaderInfo.parameters.configData != null )? $stage.loaderInfo.parameters.configData : 'http://www.kielphoto.com/vladmin/api/' ;
 		var ldr:DataLoader = new DataLoader( _server + "vladmin/api/" );
 		ldr.addEventListener( Event.COMPLETE, _onConfigLoad, false,0,true );
 		ldr.addEventListener( IOErrorEvent.IO_ERROR, _onError)
@@ -96,10 +95,8 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	// _____________________________ Data Load Handlers
 	
 	private function _onConfigLoad ( e:Event ):void {
-		echo( "on config load" );
 		_configVo = new ConfigVo( JSON.decode( e.target.data ) );
 		sendNotification( AppFacade.CONFIG_LOADED_AND_PARSED, _configVo );
-		echo( "on config load...")
 	}
 	
 	private function _onNavLoad ( e:Event ):void{

@@ -34,11 +34,14 @@ public class StockMediator extends PageMediator implements IMediator
 		_stockPhotoStrip.addEventListener( 		StockEvent.STOCK_PHOTO_CLICK, _onStockPhotoClick, false,0,true );
 		_stockPhotoStrip.addEventListener( 		StockEvent.STOCK_PHOTO_OVER, _onStockPhotoOver, false,0,true );
 		_stockPhotoStrip.addEventListener( 		StockEvent.STOCK_PHOTO_OUT, _onStockPhotoOut, false,0,true );
+		_stockPhotoStrip.addEventListener( 		StockEvent.ADD_TO_LIGHTBOX, _onAddToLightbox, false,0,true );
 		
 		_stockDetailView.addEventListener( 		ModalEvent.ASK_A_QUESTION, _onAskAQuestion, false,0,true );
 		_stockDetailView.addEventListener( 		ModalEvent.DOWNLOAD_COMP, _onDownloadComp, false,0,true );
 		_stockDetailView.addEventListener( 		ModalEvent.CLOSE_MODAL, _onCloseModal, false,0,true );
 		_stockDetailView.addEventListener( 		StockEvent.STOCK_PHOTO_CLOSE, _onStockPhotoClose, false,0,true );
+		_stockDetailView.addEventListener( 		StockEvent.ADD_TO_LIGHTBOX, _onAddToLightbox, false,0,true );
+		
    	}
 	
 	
@@ -142,6 +145,10 @@ public class StockMediator extends PageMediator implements IMediator
 	
 	private function _onStockPhotoClose ( e:Event ):void {
 		sendNotification( AppFacade.STOCK_PHOTO_CLOSE );
+	}
+	
+	private function _onAddToLightbox ( e:StockEvent ):void {
+		sendNotification( AppFacade.ADD_TO_LIGHTBOX, e.id );
 	}
 	
 }

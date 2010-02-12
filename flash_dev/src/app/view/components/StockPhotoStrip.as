@@ -124,7 +124,8 @@ public class StockPhotoStrip extends Sprite
 	
 	public function scroll ( $perc:Number ):void
 	{
-		_photoHolder.x = 0 - ( _scrollWindow.width * $perc );
+		var xtarg:Number = 0 - ( _scrollWindow.width * $perc );
+		Tweener.addTween( _photoHolder, { x:xtarg, time:0.6, transition:"EaseOutQuint"} );
 	}
 	
 	public function setScrollWindow ( $resize:StageResizeVo ):void

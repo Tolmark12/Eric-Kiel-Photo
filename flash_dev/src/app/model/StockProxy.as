@@ -16,7 +16,8 @@ public class StockProxy extends Proxy implements IProxy
 	private var _tags:Array; /// Maybe move this into StockPhotoSetVo
 	// Current Stack
 	private var _sets:Vector.<StockPhotoSetVo>;
-	// Set of photos that match all given tags
+	// A special VO only containing photos that are matched match all given tags
+	// this is compiled here, not parsed from json
 	private var _matches:StockPhotoSetVo;
 	//private var _set:StockPhotoSetVo;
 	private var _currentPhotoId:String;
@@ -85,6 +86,7 @@ public class StockProxy extends Proxy implements IProxy
 				width		: wid
 			}
 			var stockPhotoVo:StockPhotoVo = new StockPhotoVo( tempObj );
+			stockPhotoVo.parentSet = newSet;
 			newSet.stack.push( stockPhotoVo );
 		}
 		
@@ -125,9 +127,7 @@ public class StockProxy extends Proxy implements IProxy
 	/** 
 	*	Deactivate any photo
 	*/
-	public function deactivateCurrentPhoto (  ):void
-	{
-		trace( "deactivate " );
+	public function deactivateCurrentPhoto (  ):void {
 		_currentPhotoId = null;
 	}
 	
@@ -146,17 +146,50 @@ public class StockProxy extends Proxy implements IProxy
 		_currentPhotoId		= null;
 	}
 	
+	public function getPhotoVo ( $id:String ) : StockPhotoVo {
+		return _getStockPhotoById( $id );
+	}
+	
 	// _____________________________ Helpers
 	
 	private function _findAndAddNewMatches ( $set:StockPhotoSetVo ):void {
-		var totalSets:uint = _matches.stack.length;
-		if( totalSets == 0 ) {
-			
-		}else if( totalSets == 1 ) {
-			
-		}else{
-			
+		var totalSets:uint = _sets.length;
+		
+		// If there aren't any other sets currently stored, 
+		// then the lone set is considered the match
+		if( totalSets == 0 ) {	
+			// Don't show a white matches set
 		}
+		
+		// else If there is only one set currently in the matches stack, 
+		// we only have to test the tags against one set
+		else if( totalSets == 1 ) {
+			// Do show a white matches set
+			// Loop through the new set
+				// Test each photo to see if it contains the existing set tag name
+				// Pull all the matching photos into the white matches set, and out of it's parent StockPhotoSetVo
+					// I can either slice them out of the array and add to the match
+					// - or - 
+					// I could leave it alone and some sort of "active" / "inactive"
+					// flag, and clone it into the matches set. The former will bring 
+					// it to the front of the array when it is replace. 
+					// The latter keeps the original sorting.
+				// Place the extracted photos into the _matches set
+			// Loop throught the existing set, doing the same
+		}
+		
+		// Else, there are multiple matches to test against
+		else{
+			// Do show a white matches set
+			// Loop through the new set
+				// Test each photo to see if it contains the existing set tag name
+				// Pull all the matching photos into the white matches set, and out of it's parent StockPhotoSetVo
+				// Place the extracted photos into the _matches set
+			// Loop through the matches set doing the same
+				// If match, leave it
+				// if not match, return it to the head of its parent stack
+		}
+		
 	}
 	
 	private function _removeSearchTermFromMatches ( $set:StockPhotoSetVo ):void {
@@ -183,7 +216,7 @@ public class StockProxy extends Proxy implements IProxy
 	}
 	
 	private function _throwError ( $error:String ):void{
-		trace( $error );
+		//trace( $error );
 		echo( $error );
 	}
 	
@@ -215,5 +248,16 @@ public class StockProxy extends Proxy implements IProxy
 		}
 		return null;
 	}
+
+//	public static function toTitleCase( original:String ):String {
+//	      var words:Array = original.split( " " );
+//	      for (var i:int = 0; i < words.length; i++) {
+//	        words[i] = toInitialCap( words[i] );
+//	      }
+//	      return ( words.join( " " ) );
+//	    }
+//	    public static function toInitialCap( original:String ):String {
+//	      return original.charAt( 0 ).toUpperCase(  ) + original.substr( 1 ).toLowerCase(  );
+//	    }
 }
 }

@@ -10,7 +10,9 @@ public class StockPhotoVo
 	public var compImgSrc:String;			// Url to the comp
 	public var tags:Array					// The tags associated with this image
 	public var width:Number;				// The width of the photo
-	public var matchSet:StockPhotoSetVo;		// The set this VO belongs to
+	public var parentSet:StockPhotoSetVo;	// The set this VO belongs to. This is stored so it
+											// can be returned to its parent after having been
+											// in the "match" PhotoSetVo
 	
 	public function StockPhotoVo( $json:Object ):void
 	{

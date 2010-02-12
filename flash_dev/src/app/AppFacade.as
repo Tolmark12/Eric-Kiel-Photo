@@ -60,6 +60,7 @@ public class AppFacade extends Facade implements IFacade
 	public static const SHOW_MODAL_CLICK:String 					= "show_modal_click";
 	public static const CREATE_NEW_MODAL:String 					= "create_new_modal";
 	public static const CLOSE_MODAL:String 							= "close_modal";
+	public static const SUBMIT_FORM:String 							= "submit_form";
 	
 	// STOCK PHOTOS
 	public static const STOCK_INIT:String 							= "stock_init";
@@ -73,6 +74,7 @@ public class AppFacade extends Facade implements IFacade
 	public static const STOCK_REMOVE_CATEGORY:String 				= "stock_remove_category";
 	public static const STOCK_CATEGORY_REMOVED:String 				= "stock_category_removed";
 	public static const ACTIVATE_MODAL:String 						= "activate_modal";
+	public static const ADD_TO_LIGHTBOX:String 						= "add_to_lightbox";
 	
 	// Tags
 	public static const STOCK_TAGS_LOADED:String 					= "stock_tags_loaded";
@@ -83,7 +85,9 @@ public class AppFacade extends Facade implements IFacade
 	public static const SUBMIT_SEARCH_TERM:String 					= "submit_search_term";
 	
 	// LIGHTBOX
-	public static const SHOW_LIGHT_BOX:String 						= "show_light_box";		// An array of images, or stock photo items?
+	public static const SHOW_LIGHTBOX:String 						= "show_lightbox";
+	public static const SHOW_LIGHTBOX_CLICK:String 					= "show_lightbox_click";
+	public static const UPDATE_LIGHTBOX_TOTAL:String 				= "update_lightbox_total";
 	
 	// Example: var myFacade:AppFacade = AppFacade.getInstance( 'app_facade' );
 	public function AppFacade( key:String ):void
@@ -138,6 +142,8 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( SUBMIT_SEARCH_TERM, Clicks );
 		registerCommand( SHOW_MODAL_CLICK, Clicks );
 		registerCommand( STOCK_PHOTO_CLOSE, Clicks );
+		registerCommand( SUBMIT_FORM, Clicks );
+		registerCommand( ADD_TO_LIGHTBOX, Clicks );
 	}
 
 }

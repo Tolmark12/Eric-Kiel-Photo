@@ -25,6 +25,8 @@ public class FormsMediator extends Mediator implements IMediator
 		/* TEMP !!!!!!!!! */
 		KeyTrigger.addKeyListener( _onBPress, "b", true )
 		/* TEMP !!!!!!!!! */
+		
+		_modalMachine.addEventListener( ModalEvent.SUBMIT_FORM, _onSubmitForm, false,0,true );
    	}
 
 	/* TEMP !!!!!!!!! */
@@ -58,6 +60,12 @@ public class FormsMediator extends Mediator implements IMediator
 				_modalMachine.closeModal()
 			break;
 		}
+	}
+	
+	// _____________________________ Event Handlers
+	
+	private function _onSubmitForm ( e:ModalEvent ):void {
+		sendNotification( AppFacade.SUBMIT_FORM, e.urlVars );
 	}
 	
 }

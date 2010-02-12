@@ -20,7 +20,7 @@ public class StockTagsMediator extends Mediator implements IMediator
 	{
 		super( NAME );
 		$stage.addChild( _stockTags );
-		_stockTags.y = 50;
+		_stockTags.y = 60;
 		_stockTags.x = 400;
 		
 		_stockTags.addEventListener( 			StockTagEvent.ADD_LETTER_TO_SEARCH, _onAddLetterToSearch, false,0,true );

@@ -18,9 +18,11 @@ public class StockDetailView extends Sprite
 	// Background
 	private var _darkBackground:Sprite = new Sprite();	
 	// Ask A question
-	private var _askQuestionBtn:TextIconBtn_swc = new TextIconBtn_swc();
+	private var _askQuestionBtn:TextIconBtn = new TextIconBtn_swc();
 	// Download Comp
-	private var _downloadCompBtn:TextIconBtn_swc = new TextIconBtn_swc();
+	private var _downloadCompBtn:TextIconBtn = new TextIconBtn_swc();
+	// Add to Lightbox
+	private var _addToLightBoxBtn:TextIconBtn = new TextIconBtn_swc();;
 	// Close Btn
 	private var _closeBtn:CloseBtn_swc = new CloseBtn_swc();
 	
@@ -30,7 +32,7 @@ public class StockDetailView extends Sprite
 	
 	// State
 	private var _isHidden:Boolean;
-	
+	private var _id:String;
 	
 	public function StockDetailView():void
 	{
@@ -44,10 +46,12 @@ public class StockDetailView extends Sprite
 		// Create the buttons
 		_askQuestionBtn.build(  "Ask A Question", "_ask");
 		_downloadCompBtn.build( "Downlad Comp", "_download");
+		_addToLightBoxBtn.build( "Add To Lightbox", "_lightbox")
 		_downloadCompBtn.y = _askQuestionBtn.y = _imageHolder.y - 20;
 		
 		this.addChild( _askQuestionBtn );
 		this.addChild( _downloadCompBtn );
+		this.addChild( _addToLightBoxBtn );
 		this.addChild( _closeBtn );
 		
 		_closeBtn.buttonMode = true;
@@ -56,6 +60,7 @@ public class StockDetailView extends Sprite
 		// Events
 		_askQuestionBtn.addEventListener( MouseEvent.CLICK, _onAskQuestionClick, false,0,true );
 		_downloadCompBtn.addEventListener( MouseEvent.CLICK, _onDownloadClick, false,0,true );
+		_addToLightBoxBtn.addEventListener( MouseEvent.CLICK, _onAddToLightBoxClick, false,0,true );
 		_closeBtn.addEventListener( MouseEvent.CLICK, _onCloseClick, false,0,true );
 		// Set initial state to hidden
 		hide();		
@@ -66,6 +71,7 @@ public class StockDetailView extends Sprite
 	*/
 	public function displayImage ( $stockPhotoVo:StockPhotoVo ):void
 	{
+		_id = $stockPhotoVo.id;
 		show();
 		if( _isHidden ) // if hidden, show..
 			show();
@@ -149,6 +155,12 @@ public class StockDetailView extends Sprite
 		close();
 	}
 	
+	private function _onAddToLightBoxClick ( e:Event ):void {
+		var ev:StockEvent = new StockEvent(StockEvent.ADD_TO_LIGHTBOX, true);
+		ev.id = _id;
+		dispatchEvent( ev );
+	}
+	
 	private function _onImageLoaded ( e:Event ):void {
 		_imageHolder.x 		= StageResizeVo.CENTER - _imageHolder.width / 2;
 		var right:Number 	= _imageHolder.x + _imageHolder.width;
@@ -157,6 +169,8 @@ public class StockDetailView extends Sprite
 		_closeBtn.y			= Math.round( _imageHolder.y - 10 );
 		_downloadCompBtn.x 	= right - _downloadCompBtn.width + 30;
 		_askQuestionBtn.x  	= _downloadCompBtn.x - _askQuestionBtn.width;
+		_addToLightBoxBtn.x = _imageHolder.x;
+		_addToLightBoxBtn.y = _imageHolder.y + _imageHolder.height + 7;
 	}
 	
 	private function _onDarkClick ( e:Event ):void {
