@@ -106,7 +106,7 @@ public class TagsProxy extends Proxy implements IProxy
 			// matched to define the starting / ending points of the set
 			while(count < _search.endIndex){
 				var testLetter:String 	= _tags[count].tag.charAt(letterIndex);
-				var isMatch:Boolean		= testLetter == $letter
+				var isMatch:Boolean		= testLetter.toLowerCase() == $letter.toLowerCase();
 				// If the first match has been found in previous itteration...
 				if( firstInstanceFound ) {
 					//...and the letters DON'T match... 

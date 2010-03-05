@@ -64,20 +64,23 @@ public class StockPhotoStrip extends Sprite
 		{	
 			_stockMap.addCategory( photoSet.setName, setIndex )
 			
+			// Grab the list of items to display
+			var stack:Vector.<StockPhotoVo> = photoSet.displayStack;
+			
 			////  Create the small bricks
-			var len:uint = photoSet.stack.length;
+			var len:uint = stack.length;
 			for ( var i:uint=0; i<len; i++ ) 
 			{
-				var photo:StockPhoto = _dictionary[ photoSet.stack[i].id ];
+				var photo:StockPhoto = _dictionary[ stack[i].id ];
 				_photoHolder.addChild( photo );
-				photo.build( photoSet.stack[i].width );
+				photo.build( stack[i].width );
 				photo.loadThumbnail();
 				
 				var smallestRowIndex = _getShortestRowIndex(rows);		// Find the shortest row
 				photo.y = 220 * smallestRowIndex;						// Set the y position based on the position in the array
 				photo.x = rows[smallestRowIndex] + pad;					// Set the x position based on value of item
 				
-				_stockMap.addItem( photoSet.stack[i].id, smallestRowIndex, setIndex, photoSet.stack[i].width );
+				_stockMap.addItem( stack[i].id, smallestRowIndex, setIndex, stack[i].width );
 				
 				rows[smallestRowIndex] += pad + photo.width;			// update row width
 			}
@@ -147,13 +150,16 @@ public class StockPhotoStrip extends Sprite
 	{
 		// Create new Dictionary
 		var newDictionary:Object = new Object();
-
+		
 		for each( var photoSet:StockPhotoSetVo in $stack)
 		{
-			var len:uint = photoSet.stack.length;
+			// Grab the list of items to display
+			var stack:Vector.<StockPhotoVo> = photoSet.displayStack;
+			
+			var len:uint = stack.length;
 			for ( var i:uint=0; i<len; i++ ) 
 			{
-				var photoVo:StockPhotoVo = photoSet.stack[i];
+				var photoVo:StockPhotoVo = stack[i];
 				var photo:StockPhoto;
 				
 				// If this alread exists, delete it from the current

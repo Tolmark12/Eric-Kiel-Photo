@@ -4,7 +4,8 @@ package app.model.vo
 public class StockPhotoSetVo
 {
 	public var stack:Vector.<StockPhotoVo>;			// The stack of photos
-	public var setName:String;						// Usually the tag these photos share in common
+	public var setName:String;						// Usually the tag these photos share in common	
+	public var dictionary:Object = {};				// Holds a reference to all the photovo's by id
 	
 	public function StockPhotoSetVo( $json:Object ):void
 	{
@@ -34,12 +35,30 @@ public class StockPhotoSetVo
 	}
 	
 	public function addStockPhotoToSet ( $stockPhoto:StockPhotoVo ):void{
+		dictionary[$stockPhoto.id] = $stockPhoto;
 		stack.unshift($stockPhoto);
 	}
 	
 	public function toString (  ):String
 	{
 		return setName;
+	}
+	
+	/** 
+	*	Gets a list of StockPhotoVos that have the "doShowInParentSet" var set to true
+	*/
+	public function get displayStack (  ):Vector.<StockPhotoVo>
+	{
+		var returnStack:Vector.<StockPhotoVo> = new Vector.<StockPhotoVo>();
+		var len:uint = stack.length;
+		for ( var i:uint=0; i<len; i++ ) 
+		{
+			// Only add to the display stack if this is active 
+			if( stack[i].doShowInParentSet )
+				returnStack.push( stack[i] );
+		}
+		
+		return returnStack;
 	}
 }
 

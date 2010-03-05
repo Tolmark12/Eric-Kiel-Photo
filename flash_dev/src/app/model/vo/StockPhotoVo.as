@@ -13,16 +13,18 @@ public class StockPhotoVo
 	public var parentSet:StockPhotoSetVo;	// The set this VO belongs to. This is stored so it
 											// can be returned to its parent after having been
 											// in the "match" PhotoSetVo
+	public var doShowInParentSet:Boolean;	// Set to true if this is not in the matches set
 	
 	public function StockPhotoVo( $json:Object ):void
 	{
-		id 			= $json.id;
-		name		= $json.name;
-		lowResSrc	= $json.low_res_src;
-		highResSrc	= $json.high_res;
-		tags		= $json.tags;
-		width		= $json.width;
-		compImgSrc	= $json.compImgSrc;
+		doShowInParentSet 	= true;
+		id 					= $json.id;
+		name				= $json.name;
+		lowResSrc			= $json.low_res_src;
+		highResSrc			= $json.high_res;
+		tags				= $json.tags;
+		width				= $json.width;
+		compImgSrc			= $json.compImgSrc;
 	}
 }
 

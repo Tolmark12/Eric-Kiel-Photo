@@ -87,16 +87,17 @@ public class StockProxy extends Proxy implements IProxy
 			}
 			var stockPhotoVo:StockPhotoVo = new StockPhotoVo( tempObj );
 			stockPhotoVo.parentSet = newSet;
-			newSet.stack.push( stockPhotoVo );
+			newSet.addStockPhotoToSet( stockPhotoVo );
 		}
 		
-		_sets.push(newSet);
 		_findAndAddNewMatches( newSet );
+		_sets.push(newSet);
 		
 		// !! TEMP !!!!!!!!!!!!
 		_matches.setName = _sets.join(" + ");
 		
 		var stockResults = _sets.concat();
+		trace( _matches.stack.length )
 		if( stockResults.length > 1 )
 			stockResults.unshift(_matches);
 			
@@ -142,7 +143,7 @@ public class StockProxy extends Proxy implements IProxy
 		_configVo 			= null;
 		_tags				= null;
 		_sets 				= new Vector.<StockPhotoSetVo>();
-		_matches			= new StockPhotoSetVo({})
+		_matches			= new StockPhotoSetMatchesVo({})
 		_currentPhotoId		= null;
 	}
 	
@@ -154,6 +155,9 @@ public class StockProxy extends Proxy implements IProxy
 	
 	private function _findAndAddNewMatches ( $set:StockPhotoSetVo ):void {
 		var totalSets:uint = _sets.length;
+		var oldSet:StockPhotoSetVo;
+		var i:uint;
+		var len:uint;
 		
 		// If there aren't any other sets currently stored, 
 		// then the lone set is considered the match
@@ -166,28 +170,39 @@ public class StockProxy extends Proxy implements IProxy
 		else if( totalSets == 1 ) {
 			// Do show a white matches set
 			// Loop through the new set
-				// Test each photo to see if it contains the existing set tag name
-				// Pull all the matching photos into the white matches set, and out of it's parent StockPhotoSetVo
-					// I can either slice them out of the array and add to the match
-					// - or - 
-					// I could leave it alone and some sort of "active" / "inactive"
-					// flag, and clone it into the matches set. The former will bring 
-					// it to the front of the array when it is replace. 
-					// The latter keeps the original sorting.
-				// Place the extracted photos into the _matches set
-			// Loop throught the existing set, doing the same
+			oldSet = _sets[0];
+			len = $set.stack.length;
+			for ( i=0; i<len; i++ ) 
+			{
+				// If this photo exists in both sets...
+				if( oldSet.dictionary[ $set.stack[i].id ] != null ){
+					//...hide it from both sets, and add to matches
+					oldSet.dictionary[ $set.stack[i].id ].doShowInParentSet = false;
+					$set.stack[i].doShowInParentSet = false;
+					_matches.addStockPhotoToSet($set.stack[i])
+				}
+			}
 		}
 		
 		// Else, there are multiple matches to test against
 		else{
-			// Do show a white matches set
-			// Loop through the new set
-				// Test each photo to see if it contains the existing set tag name
-				// Pull all the matching photos into the white matches set, and out of it's parent StockPhotoSetVo
-				// Place the extracted photos into the _matches set
-			// Loop through the matches set doing the same
-				// If match, leave it
-				// if not match, return it to the head of its parent stack
+			len = _matches.stack.length;
+			for ( i=0; i<len; i++ ) 
+			{
+				// If this exists in the match set, set the display flag false. 
+				if( $set.dictionary[ _matches.stack[i].id ] != null ){
+					$set.stack[i].doShowInParentSet = false;
+				} 
+				// else it doesn't exist it no longer matches all the tags and...
+				else {
+					// ...activate this in each parent set since we're 
+					// removing it from the match set
+					for each( var stockSet:StockPhotoSetVo in _sets){
+						stockSet.dictionary[_matches.stack[i].id].doShowInParentSet = true;
+					}
+					// _matches.removeItemByIndex(i) Figure out how to remove it from the matches...
+				}
+			}
 		}
 		
 	}
