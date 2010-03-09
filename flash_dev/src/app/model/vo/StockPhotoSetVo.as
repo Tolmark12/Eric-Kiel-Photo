@@ -13,15 +13,33 @@ public class StockPhotoSetVo
 	
 	// _____________________________ API
 	
-	public function getStockPhotoById ( $id:String ):StockPhotoVo
+	/** 
+	*	Returns a StockPhotoVo with the supplied id
+	*	@param		The id
+	*	@param		If true, deletes this vo from the set
+	*/
+	public function getStockPhotoById ( $id:String, $doRemoveFromSet:Boolean=false ):StockPhotoVo
 	{
 		var len:uint = stack.length;
 		for ( var i:uint=0; i<len; i++ ) 
 		{
-			if( stack[i].id == $id )
-				return stack[i];
+			if( stack[i].id == $id ){
+				if( $doRemoveFromSet )
+					return stack.slice(i,1)[0];
+				else
+					return stack[i];
+			}
 		}
 		return null;
+	}
+	
+	public function addStockPhotoToSet ( $stockPhoto:StockPhotoVo ):void{
+		stack.unshift($stockPhoto);
+	}
+	
+	public function toString (  ):String
+	{
+		return setName;
 	}
 }
 

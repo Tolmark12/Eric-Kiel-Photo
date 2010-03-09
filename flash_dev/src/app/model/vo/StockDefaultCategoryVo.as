@@ -5,18 +5,18 @@ public class StockDefaultCategoryVo
 {
 	public var text:String;
 	public var src:String;
-	public var tags:Array;
+	public var searchTerm:String;
 	
 	public function StockDefaultCategoryVo( $json:Object ):void
 	{
-		text 	= $json.text;
-		src		= $json.src;
-		tags	= $json.tag.split( "," );
+		text 		= $json.text;
+		src			= $json.src;
+		searchTerm	= $json.search_term;
 	}
 	
 	public function toString (  ):String
 	{
-		return text + '  :  ' + tags + '  :  ' + src;
+		return text + '  :  ' + searchTerm + '  :  ' + src;
 	}
 }
 

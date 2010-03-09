@@ -5,28 +5,36 @@ import flash.display.Sprite;
 import app.model.vo.StockPhotoSetVo;
 import app.model.vo.StageResizeVo;
 import caurina.transitions.Tweener;
+import flash.events.*;
+import app.view.components.events.StockEvent;
 
 public class StockMap extends Sprite
 {
-	private static const _SET_COLORS:Array = [
+	private static var _SET_COLORS:Array = [
 		0xFFFFFF,
-		0xF38400,
-		0x316B8D,
-		0x516C6B,
-		0x29505F,
-		0xF5E9CB,
+		0xE89264,
+		0xC9BC90,
+		0xA18793,
+		0xC4A26C,
+		0x9C9463,
 		0xA8A793
 	];
 
 	public static const SHRINK_PERCENTAGE:Number = 0.06;
-	private var _mapItemsHolder:Sprite = new Sprite();					// Map pucks
+	private var _mapItemsHolder:Sprite 	= new Sprite();					// Map pucks
 	private var _miniPageHolder:Sprite  = new Sprite();					// Divider
+	private var _closeBtnHolder:Sprite	= new Sprite();	
 	private var _mapDragger:StockMapDragger = new StockMapDragger();	// Used to drag the position
+	private var _currentItem:StockMapItem;
 	
 	public function StockMap():void {
+		this.addChild( _miniPageHolder );
 		this.addChild( _mapItemsHolder );
-		this.addChild( _miniPageHolder  );
+		this.addChild( _closeBtnHolder );
 		this.addChild( _mapDragger );
+		_closeBtnHolder.y = 80;
+		
+		_mapItemsHolder.addEventListener( StockEvent.STOCK_PHOTO_CLICK, _onStockPhotoClick, false,0,true );
 	}
 	
 	public function clear (  ):void
@@ -36,8 +44,7 @@ public class StockMap extends Sprite
 		
 		// Remvoe all the squares
 		var len:Number = _mapItemsHolder.numChildren;
-		for ( var i:uint=0; i<len; i++ ) 
-		{
+		for ( var i:uint=0; i<len; i++ ) {
 			var mapItem:StockMapItem = _mapItemsHolder.getChildAt(0) as StockMapItem;
 			mapItem.clear();
 			_mapItemsHolder.removeChild(mapItem);
@@ -45,10 +52,46 @@ public class StockMap extends Sprite
 		
 		// Remove all the page markers
 		var len2:uint = _miniPageHolder.numChildren;
-		for ( var j:uint=0; j<len2; j++ ) 
-		{
+		for ( var j:uint=0; j<len2; j++ ) {
 			var divider = _miniPageHolder.removeChildAt(0);
 		}
+		
+		//
+		var len3:uint = _closeBtnHolder.numChildren;
+		for ( var k:uint=0; k<len3; k++ ) {
+			var closeBtn:StockCategoryBtn_swc = _closeBtnHolder.removeChildAt(0) as StockCategoryBtn_swc;
+			closeBtn.clear();
+		}
+		
+		rows = [0,0];
+	}
+	
+	
+	public var rows:Array = [0,0];
+	public var pad:Number = 2;
+	public function addItem ( $id:String, $rowIndex:uint, $setIndex:Number, $width:Number ):void
+	{
+		var mapItem:StockMapItem = new StockMapItem( $id );			// Get map item
+		_mapItemsHolder.addChild( mapItem );					// Add Child
+		mapItem.build( Math.ceil( $width * SHRINK_PERCENTAGE ), Math.ceil( 141 * SHRINK_PERCENTAGE), _SET_COLORS[$setIndex]  /*, _SET_COLORS[count]*/ );					// Build
+		mapItem.x = rows[$rowIndex];
+		mapItem.y = (190 * SHRINK_PERCENTAGE) * $rowIndex;
+		rows[$rowIndex] += mapItem.width + pad
+	}
+	
+	/** 
+	*	Add a Category button that allows the user to remove a search tag
+	*	@param		The id of the button (Also used for the search text)
+	*	@param		The index of this set
+	*/
+	public function addCategory ( $id:String, $setIndex:Number ):void
+	{
+		var btn:StockCategoryBtn_swc = new StockCategoryBtn_swc();
+		btn.build( $id, _SET_COLORS[$setIndex], $setIndex==0 );
+		//btn.x = ( _mapItemsHolder.width > _closeBtnHolder.width + 20) ? _mapItemsHolder.width : _closeBtnHolder.width + 20 ;
+		btn.x = (_closeBtnHolder.width==0)? 0 : _closeBtnHolder.width + 25;
+		btn.x = Math.round(btn.x) + 5;
+		_closeBtnHolder.addChild(btn);
 	}
 	
 	public function buildNewSet ( $stack:Vector.<StockPhotoSetVo> ):void
@@ -56,32 +99,11 @@ public class StockMap extends Sprite
 		this.visible = true;
 		var rows:Array = [0,0];
 		var pad:Number	= 2;
-		
+		_closeBtnHolder.x = 14;
 		_mapItemsHolder.x = pad;
 		var count:Number = 0;
 		
-		for each( var photoSet:StockPhotoSetVo in $stack)
-		{
-			////  Create the small bricks
-			var len:uint = photoSet.stack.length;
-			for ( var i:uint=0; i<len; i++ ) 
-			{
-				var mapItem:StockMapItem = new StockMapItem();			// Get map item
-				_mapItemsHolder.addChild( mapItem );					// Add Child
-				mapItem.build( photoSet.stack[i].width, _SET_COLORS[count] );					// Build
-			
-				var smallestRowIndex = _getShortestRowIndex(rows);		// Find the shortest row
-				mapItem.y = 10 * smallestRowIndex;						// Set the y position based on the position in the array
-				mapItem.x = rows[smallestRowIndex] + pad;				// Set the x position based on value of item
-				rows[smallestRowIndex] += pad + mapItem.width;			// update row width
-				//mapItem.scaleX = 0;
-				//Tweener.addTween( mapItem, { scaleX:1, time:0.3, delay:i*0.008, transition:"EaseInOutQuint"} );
-			}
-			
-			count++;
-		}
-		
-		this.x = StageResizeVo.CENTER - this.width/2;
+		this.x = StageResizeVo.CENTER - _mapItemsHolder.width/2;
 		_miniPageHolder.y = _mapItemsHolder.y + _mapItemsHolder.height + 20;
 		
 		//// TEMP - dividers...
@@ -105,39 +127,49 @@ public class StockMap extends Sprite
 		_mapDragger.setHorizontalBounds( _mapItemsHolder.x, _mapItemsHolder.x + _mapItemsHolder.width, browserWidth )
 	}
 	
+	public function activateItem ( $id:String ):void
+	{
+		
+	}
+	
+	public function highlightItem (  $id:String ):void
+	{
+		//if( _currentItem != null )
+		//	_currentItem.deactivate();
+			
+		//_currentItem = _getItemById($id);
+		_getItemById($id).highlight();
+	}
+	
+	public function unHighlightItem ( $id:String ):void
+	{
+		_getItemById($id).unHighlight();
+	}
+	
+	public function bumpColorToEndOfList ( $index:uint ):void
+	{
+		var clr:Number = _SET_COLORS.splice($index,1);
+		_SET_COLORS.push(clr);
+	}
+	
 	// _____________________________ Helpers
 	
-//	private function _getShortestSprite ( $ar:array ):Sprite
-//	{
-//		var shortestRow:int = 1000;		// Stores the value of the shortest row
-//		var returnSprite:Sprite;		// Sprite to be returned
-//		var testSprite:Sprite;			// Holder var
-//		
-//		var counter:int = $ar.length;
-//		while (counter--)
-//		{
-//			testSprite = numbersArr[counter];
-//			if( testSprite.width < shortestRow ){
-//				returnSprite 	= sprite;
-//				shortestRow		= testSprite.width;
-//			}
-//		}
-//		return returnSprite;
-//	}
-	
-	private function _getShortestRowIndex ( $ar:Array ):Number
-	{
-		var lowestNumIndex:int 	= $ar.length-1;			// Index of number
-		var lowestNum:int 		= $ar[$ar.length-1];	// Lowest number so far
-		var counter:int 		= lowestNumIndex;		// simple counter
-		while (counter-- >= 0)
+	private function _getItemById ( $id:String ):StockMapItem {
+		var len:uint = _mapItemsHolder.numChildren;
+		for ( var i:uint=0; i<len; i++ ) 
 		{
-			if( $ar[counter] < lowestNum ){				// Is this new # lower than previously lowest number...
-				lowestNumIndex 	= counter;
-				lowestNum		= $ar[counter]
-			}
+			var stockMapItem:StockMapItem = _mapItemsHolder.getChildAt(i) as StockMapItem;
+			if( stockMapItem.id == $id )
+				return stockMapItem;
 		}
-		return lowestNumIndex;
+		return null;
+	}
+	
+	// _____________________________ Event Handlers
+	
+	
+	private function _onStockPhotoClick ( e:StockEvent ):void {
+		_mapDragger.scrollTo( e.target.x );
 	}
 
 }

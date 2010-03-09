@@ -57,25 +57,37 @@ public class AppFacade extends Facade implements IFacade
 	public static const MEDIATOR_ACTIVATED:String 					= "mediator_activated";
 	
 	// FORMS
+	public static const SHOW_MODAL_CLICK:String 					= "show_modal_click";
+	public static const CREATE_NEW_MODAL:String 					= "create_new_modal";
+	public static const CLOSE_MODAL:String 							= "close_modal";
+	public static const SUBMIT_FORM:String 							= "submit_form";
 	
 	// STOCK PHOTOS
 	public static const STOCK_INIT:String 							= "stock_init";
 	public static const STOCK_RESET:String 							= "stock_reset";
-	public static const NEW_FILTER_CLK:String 						= "new_filter_clk";
 	public static const ADD_TAG_TO_FILTER_CLK:String 				= "add_tag_to_filter_clk";
 	public static const BUILD_STOCK_RESULTS:String 					= "build_stock_results";
 	public static const STOCK_PHOTO_CLICKED:String 					= "stock_photo_clicked";
 	public static const DISPLAY_STOCK_PHOTO:String 					= "display_stock_photo";
+	public static const STOCK_PHOTO_CLOSE:String 					= "stock_photo_close";
 	public static const STOCK_SCROLL:String 						= "stock_scroll";
+	public static const STOCK_REMOVE_CATEGORY:String 				= "stock_remove_category";
+	public static const STOCK_CATEGORY_REMOVED:String 				= "stock_category_removed";
+	public static const ACTIVATE_MODAL:String 						= "activate_modal";
+	public static const ADD_TO_LIGHTBOX:String 						= "add_to_lightbox";
 	
 	// Tags
+	public static const STOCK_TAGS_LOADED:String 					= "stock_tags_loaded";
 	public static const NEW_TAG_SEARCH:String					 	= "new_tag_search";
 	public static const ADD_LETTER_TO_SEARCH:String 				= "add_letter_to_search";
 	public static const DISPLAY_TAG_HINTS:String 					= "display_tag_hints";
 	public static const SEARCH_TERM_CHANGE:String 					= "search_term_change";
+	public static const SUBMIT_SEARCH_TERM:String 					= "submit_search_term";
 	
 	// LIGHTBOX
-	public static const SHOW_LIGHT_BOX:String 						= "show_light_box";		// An array of images, or stock photo items?
+	public static const SHOW_LIGHTBOX:String 						= "show_lightbox";
+	public static const SHOW_LIGHTBOX_CLICK:String 					= "show_lightbox_click";
+	public static const UPDATE_LIGHTBOX_TOTAL:String 				= "update_lightbox_total";
 	
 	// Example: var myFacade:AppFacade = AppFacade.getInstance( 'app_facade' );
 	public function AppFacade( key:String ):void
@@ -117,7 +129,6 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( IMAGE_LOADED, DataRequests );
 		registerCommand( IMAGE_LOADED_LOW, DataRequests );
 		registerCommand( NAV_INITIALIZED, DataRequests );
-		registerCommand( NEW_FILTER_CLK, Clicks );
 		registerCommand( ADD_TAG_TO_FILTER_CLK, Clicks );
 		registerCommand( LOAD_STOCK_DATA_SET, DataRequests );
 		registerCommand( STOCK_DATA_SET_LOADED, DataRequests );
@@ -126,6 +137,13 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( NEW_TAG_SEARCH, Clicks );
 		registerCommand( ADD_LETTER_TO_SEARCH, Clicks );
 		registerCommand( SEARCH_TERM_CHANGE, Clicks );
+		registerCommand( STOCK_REMOVE_CATEGORY, Clicks );
+		registerCommand( STOCK_TAGS_LOADED, DataRequests );
+		registerCommand( SUBMIT_SEARCH_TERM, Clicks );
+		registerCommand( SHOW_MODAL_CLICK, Clicks );
+		registerCommand( STOCK_PHOTO_CLOSE, Clicks );
+		registerCommand( SUBMIT_FORM, Clicks );
+		registerCommand( ADD_TO_LIGHTBOX, Clicks );
 	}
 
 }

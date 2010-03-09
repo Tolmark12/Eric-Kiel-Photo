@@ -5,16 +5,29 @@ import flash.display.Sprite;
 import app.model.vo.StockPhotoVo;
 import flash.events.*;
 import app.view.components.events.StockEvent;
+import delorum.loading.ImageLoader;
 
 public class StockPhoto extends Sprite
 {
 	public var id:String;
-	
+	private var _sPhotoVo:StockPhotoVo;
+	private var _imageHolder:Sprite = new Sprite();
+	private var _addToLightBoxBtn:AddToLightboxBtn = new AddToLightboxBtn_swc();;
 	public function StockPhoto( $vo:StockPhotoVo ):void
 	{
+		_sPhotoVo = $vo;
+		_imageHolder.buttonMode = true;
+		_imageHolder.addEventListener( MouseEvent.CLICK, _onClick, false,0,true );
+		_imageHolder.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOver, false,0,true );
+		_imageHolder.addEventListener( MouseEvent.MOUSE_OUT, _onMouseOut, false,0,true );
+		_addToLightBoxBtn.addEventListener( MouseEvent.MOUSE_OUT, _onMouseOut, false,0,true );
+		
+		this.addChild( _imageHolder );
+		this.addChild( _addToLightBoxBtn );
+
 		id 	= $vo.id;
-		this.buttonMode = true;
-		this.addEventListener( MouseEvent.CLICK, _onClick, false,0,true );
+		_addToLightBoxBtn.id = id;
+		unHighlight();
 	}
 	
 	// _____________________________ API
@@ -24,6 +37,9 @@ public class StockPhoto extends Sprite
 		
 	}
 	
+	/** 
+	*	Build
+	*/
 	public function build ( $width:Number ):void
 	{
 		// TEMP
@@ -33,14 +49,27 @@ public class StockPhoto extends Sprite
 		unHighlight();
 	}
 	
+	/** 
+	*	load Thumbnail
+	*/
+	public function loadThumbnail (  ):void
+	{
+		var ldr:ImageLoader = new ImageLoader( _sPhotoVo.lowResSrc, _imageHolder );
+		ldr.addEventListener( Event.COMPLETE, _onImageLoaded );
+		ldr.loadItem();
+	}
+	
+	
 	public function highlight (  ):void
 	{
-		this.alpha = 0.7;
+		_addToLightBoxBtn.visible = true;
+		//this.alpha = 0.7;
 	}
 	
 	public function unHighlight (  ):void
 	{
-		this.alpha = 0.3;
+		_addToLightBoxBtn.visible = false;
+		//this.alpha = 0.3;
 	}
 	
 	// _____________________________ Event Handlers
@@ -49,6 +78,25 @@ public class StockPhoto extends Sprite
 		var stockEvent:StockEvent = new StockEvent( StockEvent.STOCK_PHOTO_CLICK, true );
 		stockEvent.id = this.id;
 		dispatchEvent( stockEvent );
+	}
+	
+	private function _onMouseOver ( e:Event ):void {
+		var stockEvent:StockEvent = new StockEvent( StockEvent.STOCK_PHOTO_OVER, true );
+		stockEvent.id = this.id;
+		dispatchEvent( stockEvent );
+	}
+	
+	private function _onMouseOut ( e:Event ):void {
+		if( !this.hitTestPoint(this.stage.mouseX, this.stage.mouseY, true) ) {
+			var stockEvent:StockEvent = new StockEvent( StockEvent.STOCK_PHOTO_OUT, true );
+			stockEvent.id = this.id;
+			dispatchEvent( stockEvent );			
+		}
+	}
+	
+	private function _onImageLoaded ( e:Event ):void {
+		this.graphics.clear();
+		_addToLightBoxBtn.y = _imageHolder.height - _addToLightBoxBtn.height;
 	}
 	
 	// _____________________________ Helpers

@@ -8,8 +8,8 @@ public class StockTagEvent extends Event
 	public static const NEW_TAG_SEARCH:String = "new_tag_search";					// maybe not needed
 	public static const ADD_LETTER_TO_SEARCH:String = "add_letter_to_search";		// maybe not needed
 	public static const SEARCH_TERM_CHANGE:String = "search_term_change";
+	public static const SUBMIT_SEARCH_TERM:String = "submit_term";
 	
-	public var newTag:String;
 	public var newLetter:String;
 	public var searchTerm:String;
 

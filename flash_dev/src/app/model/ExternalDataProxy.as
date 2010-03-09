@@ -8,7 +8,7 @@ import flash.display.Stage;
 import delorum.loading.DataLoader;
 import flash.events.*;
 import com.adobe.serialization.json.JSON;
-
+import delorum.utils.echo;
 
 public class ExternalDataProxy extends Proxy implements IProxy
 {
@@ -25,10 +25,14 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	public function getConfigData ( $stage:Stage ):void
 	{
 		_server = ( $stage.loaderInfo.parameters.server != null )? $stage.loaderInfo.parameters.server : 'http://staging.kielphoto.com/' ;
-		//var configData:String = ( $stage.loaderInfo.parameters.configData != null )? $stage.loaderInfo.parameters.configData : 'http://www.kielphoto.com/vladmin/api/' ;
 		var ldr:DataLoader = new DataLoader( _server + "vladmin/api/" );
 		ldr.addEventListener( Event.COMPLETE, _onConfigLoad, false,0,true );
+		ldr.addEventListener( IOErrorEvent.IO_ERROR, _onError)
 		ldr.loadItem();
+	}
+	
+	private function _onError ( e:IOErrorEvent ):void {
+		echo( "Error" + '  :  ' + e );
 	}
 	
 	// Load Navigation data
@@ -64,18 +68,28 @@ public class ExternalDataProxy extends Proxy implements IProxy
 		var ldr:DataLoader = new DataLoader( $feed );
 		ldr.addEventListener( Event.COMPLETE, _onStockConfigDataLoad, false,0,true );
 		ldr.loadItem();
+		
+		loadAllStockTags();
 	}
 	
 	/** 
 	*	@param		A comma delimited list of tags
 	*/
-	public function loadStockDataSet ( $feed:String ):void
+	public function loadStockDataSet ( $searchTerm:String ):void
 	{
+
 		// Send the $feed to vladmin here...
 		
 		// !! TEMP !!
-		sendNotification( AppFacade.STOCK_DATA_SET_LOADED, {/* TEMP Empty object */} );
+		sendNotification( AppFacade.STOCK_DATA_SET_LOADED, {/* TEMP Empty object */ term:$searchTerm } );
 		// !! TEMP !!
+	}
+	
+	public function loadAllStockTags (  ):void
+	{
+		var ldr:DataLoader = new DataLoader( _server + "stock/api/getAllStockTags" );
+		ldr.addEventListener( Event.COMPLETE, _onStockDataSetLoaded, false,0,true );
+		ldr.loadItem();
 	}
 	
 	// _____________________________ Data Load Handlers
@@ -95,6 +109,10 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	
 	private function _onStockConfigDataLoad ( e:Event ):void {
 		sendNotification( AppFacade.STOCK_CONFIG_LOADED, JSON.decode( e.target.data ) );
+	}
+	
+	private function _onStockDataSetLoaded ( e:Event ):void {
+		sendNotification( AppFacade.STOCK_TAGS_LOADED, JSON.decode( '{ "tags" : ' +  e.target.data + '}' ) );
 	}
 	
 	

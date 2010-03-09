@@ -6,7 +6,7 @@ import app.model.vo.StockConfigVo;
 import app.model.vo.StageResizeVo;
 import flash.filters.*;
 import flash.events.*;
-import app.view.components.events.FilterEvent;
+import app.view.components.events.StockTagEvent;
 import caurina.transitions.Tweener;
 public class StockPhotoLanding extends Sprite
 {
@@ -75,8 +75,8 @@ public class StockPhotoLanding extends Sprite
 	
 	private function _onCategoryBtnClick ( e:Event ):void {
 		var categoryBtn:StockLandingMainCat = e.currentTarget as StockLandingMainCat;
-		var ev:FilterEvent = new FilterEvent( FilterEvent.NEW_FILTER, true );
-		ev.tags = categoryBtn.tags;
+		var ev:StockTagEvent = new StockTagEvent(StockTagEvent.SUBMIT_SEARCH_TERM, true);
+		ev.searchTerm = categoryBtn.searchTerm;
 		dispatchEvent( ev );
 	}
 	

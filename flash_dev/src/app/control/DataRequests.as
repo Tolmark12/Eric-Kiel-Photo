@@ -18,7 +18,7 @@ public class DataRequests extends SimpleCommand implements ICommand
 		var portfolioProxy:PortfolioProxy       = facade.retrieveProxy( PortfolioProxy.NAME ) as PortfolioProxy;
 		var lightBoxProxy:LightBoxProxy         = facade.retrieveProxy( LightBoxProxy.NAME ) as LightBoxProxy;
 		var stockProxy:StockProxy 				= facade.retrieveProxy( StockProxy.NAME ) as StockProxy;
-		
+		var tagProxy:TagsProxy 					= facade.retrieveProxy( TagsProxy.NAME ) as TagsProxy;
 		switch ( note.getName() )
 		{
 			case AppFacade.CONFIG_LOADED_AND_PARSED :
@@ -69,6 +69,9 @@ public class DataRequests extends SimpleCommand implements ICommand
 			break;
 			case AppFacade.STOCK_DATA_SET_LOADED :
 				stockProxy.parseNewStockDataSet( note.getBody() as Object );
+			break;
+			case AppFacade.STOCK_TAGS_LOADED :
+				tagProxy.parseStockDataTags( note.getBody() as Object );
 			break;
 		}
 	}

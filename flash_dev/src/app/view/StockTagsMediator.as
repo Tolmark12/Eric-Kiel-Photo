@@ -20,20 +20,22 @@ public class StockTagsMediator extends Mediator implements IMediator
 	{
 		super( NAME );
 		$stage.addChild( _stockTags );
-		_stockTags.y = 50;
+		_stockTags.y = 60;
 		_stockTags.x = 400;
 		
 		_stockTags.addEventListener( 			StockTagEvent.ADD_LETTER_TO_SEARCH, _onAddLetterToSearch, false,0,true );
 		_stockTags.addEventListener( 			StockTagEvent.NEW_TAG_SEARCH, _onNewTagSearch, false,0,true );
 		_stockTags.addEventListener( 			StockTagEvent.SEARCH_TERM_CHANGE, _onSearchTermChange, false,0,true );
-		
+		_stockTags.addEventListener(			StockTagEvent.SUBMIT_SEARCH_TERM, _onSubmitSearchTerm, false,0,true );
    	}
 	
 	// PureMVC: List notifications
 	override public function listNotificationInterests():Array
 	{
 		return	[	AppFacade.DISPLAY_TAG_HINTS,
-		  			AppFacade.STOCK_RESET ];
+		  			AppFacade.STOCK_RESET,
+		 			AppFacade.STOCK_INIT,
+		 			AppFacade.STOCK_TAGS_LOADED, ];
 	}
 	
 	// PureMVC: Handle notifications
@@ -46,6 +48,12 @@ public class StockTagsMediator extends Mediator implements IMediator
 			break;
 			case AppFacade.STOCK_RESET :
 				_stockTags.clear();
+			break;
+			case AppFacade.STOCK_INIT :
+				//_stockTags.show();
+			break;
+			case AppFacade.STOCK_TAGS_LOADED :
+				_stockTags.show();
 			break;
 		}
 	}
@@ -62,6 +70,10 @@ public class StockTagsMediator extends Mediator implements IMediator
 	
 	private function _onSearchTermChange ( e:StockTagEvent ):void {
 		sendNotification( AppFacade.SEARCH_TERM_CHANGE, e.searchTerm );
+	}
+	
+	private function _onSubmitSearchTerm ( e:StockTagEvent ):void {
+		sendNotification( AppFacade.SUBMIT_SEARCH_TERM, e.searchTerm );
 	}
 	
 }

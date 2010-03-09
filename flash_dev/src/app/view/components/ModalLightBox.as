@@ -16,7 +16,7 @@ package app.view.components
 		
 		public function build($lightBoxVO:LightBoxVO):void
 		{
-			trace($lightBoxVO);	
+			//trace($lightBoxVO);	
 		}
 	}
 }

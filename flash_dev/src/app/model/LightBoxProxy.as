@@ -19,6 +19,7 @@ public class LightBoxProxy extends Proxy implements IProxy
 	public function LightBoxProxy( ):void { 
 		super( NAME );
 		_sharedObject = SharedObject.getLocal("kiel-light-box");
+		emptyLightBox();
 	 };
 	
 	// _____________________________ API
@@ -45,22 +46,44 @@ public class LightBoxProxy extends Proxy implements IProxy
 				_saveToLocalObject();
 				doShowLightBox = true;
 			}
-		}	
-			
-		// else if there is a shared object with a stack, use that
-		else if( _sharedObject.data.lightBox != null ){
-			_lightBoxStack = _lightBoxStack.data.lightBox.split("/");
 		}
+			
+		// else if there is a shared object with a stack, use that !only! if there is no
+		// lightbox in the url
+		if( _sharedObject.data.lightBox != null && _lightBoxStack.length == 0 ){
+			if( _sharedObject.data.lightBox.length > 1 )
+				_lightBoxStack = _sharedObject.data.lightBox.split("/");
+		}
+		
+		
+		
+		updateTotalItemsInLightbox();
 	}
 	
 	/** 
 	*	Adds an item to the lightbox stack
 	*	@param		The id of the item to add
 	*/
-	public function addItemToLightBox ( $itemId:String ):void
+	public function addItemToLightBox ( $itemId:String ):String
 	{
+		// If it's already in the lightbox, don't add it
+		for each( var itemId:String in _lightBoxStack) {
+			if( itemId == $itemId )
+				return null;
+		}
+
 		_lightBoxStack.push($itemId);
 		_saveToLocalObject();
+		updateTotalItemsInLightbox();
+		return null;
+	}
+	
+	/** 
+	*	Show the lightbox
+	*/
+	public function showLightBox (  ):void
+	{
+		_broadcastLightbox();
 	}
 	
 	/** 
@@ -72,9 +95,18 @@ public class LightBoxProxy extends Proxy implements IProxy
 		return externalDataProxy.server + "?" + _lightBoxStack.join( "/" );
 	}
 	
-	public function showLightBox (  ):void
+	public function updateTotalItemsInLightbox (  ):void
 	{
-		
+		sendNotification( AppFacade.UPDATE_LIGHTBOX_TOTAL, _lightBoxStack.length );
+	}
+	
+	/** 
+	*	Removes all items from the lightbox
+	*/
+	public function emptyLightBox (  ):void
+	{
+		_lightBoxStack = new Array();
+		_saveToLocalObject();
 	}
 	
 	// _____________________________ Helpers	
@@ -82,8 +114,20 @@ public class LightBoxProxy extends Proxy implements IProxy
 	// Save the contents of _lightBoxStack into a delimited sting in the shared object
 	private function _saveToLocalObject (  ):void
 	{
+		echo( _sharedObject.data.lightBox );
 		_sharedObject.data.lightBox = _lightBoxStack.join("/");
 	}
+	
+	private function _broadcastLightbox (  ):void {
+		var sendAr:Array = new Array();
+		var stockProxy:StockProxy = facade.retrieveProxy( StockProxy.NAME ) as StockProxy;
+		for each( var itemId:String in _lightBoxStack) {
+			sendAr.push( stockProxy.getPhotoVo(itemId) );
+		}
+		
+		sendNotification( AppFacade.SHOW_LIGHTBOX, sendAr );
+	}
+	
 	
 	
 

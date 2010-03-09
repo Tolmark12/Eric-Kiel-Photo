@@ -11,6 +11,7 @@ public class StockTags extends Sprite
 	public function StockTags():void
 	{
 		this.addChild( _search );
+		hide();
 	}
 	
 	/** 
@@ -18,7 +19,17 @@ public class StockTags extends Sprite
 	*/
 	public function clear (  ):void
 	{
-		
+		hide();
+	}
+	
+	public function show (  ):void
+	{
+		this.visible = true;
+	}
+	
+	public function hide (  ):void
+	{
+		this.visible = false;
 	}
 	
 	public function displaySearchTagHints ( $array:Array ):void

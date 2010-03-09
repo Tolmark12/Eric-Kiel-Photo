@@ -7,6 +7,7 @@ import app.model.*;
 import app.model.vo.*;
 import app.AppFacade;
 import app.view.components.events.*;
+import flash.net.URLVariables;
 
 public class Clicks extends SimpleCommand implements ICommand
 {
@@ -17,7 +18,8 @@ public class Clicks extends SimpleCommand implements ICommand
 		var portfolioProxy:PortfolioProxy 	= facade.retrieveProxy( PortfolioProxy.NAME ) as PortfolioProxy;
 		var stockProxy:StockProxy 			= facade.retrieveProxy( StockProxy.NAME ) as StockProxy;
 		var tagsProxy:TagsProxy 			= facade.retrieveProxy( TagsProxy.NAME ) as TagsProxy;
-		
+		var formProxy:FormProxy 			= facade.retrieveProxy( FormProxy.NAME ) as FormProxy;
+		var lightBoxProxy:LightBoxProxy 	= facade.retrieveProxy( LightBoxProxy.NAME ) as LightBoxProxy;
 		switch (note.getName())
 		{
 			case AppFacade.SEARCH_TERM_CHANGE :
@@ -55,10 +57,6 @@ public class Clicks extends SimpleCommand implements ICommand
 				note.getBody() as FilterEvent;
 				trace( "ADD_TAG_TO_FILTER_CLK" );
 			break;
-			case AppFacade.NEW_FILTER_CLK :
-				var fe:FilterEvent = note.getBody() as FilterEvent;
-				stockProxy.loadNewPhotoSet( fe.tags )
-			break;
 			case AppFacade.STOCK_PHOTO_CLICKED :
 				var stockEvent:StockEvent = note.getBody() as StockEvent;
 				stockProxy.activateStockPhotoById(stockEvent.id)
@@ -68,6 +66,24 @@ public class Clicks extends SimpleCommand implements ICommand
 			break;
 			case AppFacade.NEW_TAG_SEARCH :
 				tagsProxy.newSearch();
+			break;
+			case AppFacade.STOCK_REMOVE_CATEGORY :
+				stockProxy.removeStockCategory( note.getBody()as String );
+			break;
+			case AppFacade.SUBMIT_SEARCH_TERM :
+				stockProxy.loadNewPhotoSet( note.getBody() as String )
+			break;
+			case AppFacade.SHOW_MODAL_CLICK :
+				formProxy.createNewModal( note.getBody() as ModalEvent );
+			break;
+			case AppFacade.STOCK_PHOTO_CLOSE :
+				stockProxy.deactivateCurrentPhoto();
+			break;
+			case AppFacade.SUBMIT_FORM :
+				formProxy.submitForm( note.getBody() as URLVariables);
+			break;
+			case AppFacade.ADD_TO_LIGHTBOX :
+				lightBoxProxy.addItemToLightBox( note.getBody() as String );
 			break;
 		}
 	}

@@ -4,10 +4,13 @@ package app.view.components
 import flash.display.Sprite;
 import app.model.vo.StockPhotoSetVo;
 import app.model.vo.StockPhotoVo;
+import app.model.vo.StockTagVo;
 import delorum.utils.KeyTrigger;
 import caurina.transitions.Tweener;
 import app.model.vo.StageResizeVo;
 import flash.geom.Rectangle;
+
+
 public class StockPhotoStrip extends Sprite
 {
 	private var _dictionary:Object	= {};			// An object with reference to the photos by id
@@ -51,12 +54,16 @@ public class StockPhotoStrip extends Sprite
 	public function buildNewSet ( $sets:Vector.<StockPhotoSetVo> ):void
 	{
 		_dictionary = _buildNewDictionary($sets);
+		_stockMap.clear();
 		var rows:Array = [0,0];
-		var pad:Number	= 20;
+		var pad:Number	= 25;
+		var setIndex:uint = 0;		
 		
 		// Loop through each set of photos
 		for each( var photoSet:StockPhotoSetVo in $sets)
 		{	
+			_stockMap.addCategory( photoSet.setName, setIndex )
+			
 			////  Create the small bricks
 			var len:uint = photoSet.stack.length;
 			for ( var i:uint=0; i<len; i++ ) 
@@ -64,13 +71,18 @@ public class StockPhotoStrip extends Sprite
 				var photo:StockPhoto = _dictionary[ photoSet.stack[i].id ];
 				_photoHolder.addChild( photo );
 				photo.build( photoSet.stack[i].width );
+				photo.loadThumbnail();
 				
 				var smallestRowIndex = _getShortestRowIndex(rows);		// Find the shortest row
 				photo.y = 220 * smallestRowIndex;						// Set the y position based on the position in the array
 				photo.x = rows[smallestRowIndex] + pad;					// Set the x position based on value of item
-								
+				
+				_stockMap.addItem( photoSet.stack[i].id, smallestRowIndex, setIndex, photoSet.stack[i].width );
+				
 				rows[smallestRowIndex] += pad + photo.width;			// update row width
 			}
+			
+			setIndex++;
 		}
 		
 		setScrollWindow(StageResizeVo.lastResize);
@@ -92,16 +104,28 @@ public class StockPhotoStrip extends Sprite
 	*/
 	public function displayPhoto ( $stockPhotoVo:StockPhotoVo ):void
 	{
-		if( _activePhoto != null )
-			_activePhoto.unHighlight();
+	}
+	
+	public function highlightImage ( $id:String ):void
+	{
+		//if( _activePhoto != null )
+		//	_activePhoto.unHighlight();
 		
-		_activePhoto = _dictionary[$stockPhotoVo.id];
-		_activePhoto.highlight();
+		//_activePhoto = _dictionary[ $id ];
+		_dictionary[ $id ].highlight();
+		_stockMap.highlightItem( $id );
+	}
+	
+	public function unHighlightImage ( $id:String ):void
+	{
+		_dictionary[ $id ].unHighlight();
+		_stockMap.unHighlightItem( $id );
 	}
 	
 	public function scroll ( $perc:Number ):void
 	{
-		_photoHolder.x = 0 - ( _scrollWindow.width * $perc );
+		var xtarg:Number = 0 - ( _scrollWindow.width * $perc );
+		Tweener.addTween( _photoHolder, { x:xtarg, time:0.6, transition:"EaseOutQuint"} );
 	}
 	
 	public function setScrollWindow ( $resize:StageResizeVo ):void
@@ -110,6 +134,10 @@ public class StockPhotoStrip extends Sprite
 		_scrollWindow = new Rectangle( 0,0, _photoHolder.width - StageResizeVo.MIN_WIDTH ,0 );
 	}
 	
+	public function deleteStockTagById ( $tagIndex:uint ):void
+	{
+		_stockMap.bumpColorToEndOfList($tagIndex);
+	}
 	// _____________________________ Helpers
 	
 	

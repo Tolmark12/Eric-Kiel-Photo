@@ -14,25 +14,27 @@ public class FormsMediator extends Mediator implements IMediator
 {	
 	public static const NAME:String = "forms_mediator";
 	
-	private var _forms:Sprite = new Sprite();
+	private var _modalMachine:ModalMachine = new ModalMachine();
 	
 	public function FormsMediator($stage:Sprite):void
 	{
 		super( NAME );
 		
-		$stage.addChild( _forms );
+		$stage.addChild( _modalMachine );
 		
 		/* TEMP !!!!!!!!! */
 		KeyTrigger.addKeyListener( _onBPress, "b", true )
 		/* TEMP !!!!!!!!! */
+		
+		_modalMachine.addEventListener( ModalEvent.SUBMIT_FORM, _onSubmitForm, false,0,true );
    	}
 
 	/* TEMP !!!!!!!!! */
 	private function _onBPress (  ):void
 	{
-		var temp:ModalForm = new ModalForm();
-		temp.build();
-		_forms.addChild(temp);
+	   // var temp:ModalForm = new ModalForm();
+	   // temp.build();
+	   // _modalMachine.addChild(temp);
 	}
 	/* TEMP !!!!!!!!! */
 	
@@ -42,7 +44,8 @@ public class FormsMediator extends Mediator implements IMediator
 	// PureMVC: List notifications
 	override public function listNotificationInterests():Array
 	{
-		return []; //[ AppFacade.NOTIFICATION ];
+		return [	AppFacade.CREATE_NEW_MODAL,
+		 			AppFacade.CLOSE_MODAL ];
 	}
 	
 	// PureMVC: Handle notifications
@@ -50,10 +53,19 @@ public class FormsMediator extends Mediator implements IMediator
 	{
 		switch ( note.getName() )
 		{
-			/*case AppFacade.NOTIFICATION:
-				// CODE
-				break;*/
+			case AppFacade.CREATE_NEW_MODAL :
+				_modalMachine.createNewModal( note.getBody() as FormVO );
+			break;
+			case AppFacade.CLOSE_MODAL :
+				_modalMachine.closeModal()
+			break;
 		}
+	}
+	
+	// _____________________________ Event Handlers
+	
+	private function _onSubmitForm ( e:ModalEvent ):void {
+		sendNotification( AppFacade.SUBMIT_FORM, e.urlVars );
 	}
 	
 }
