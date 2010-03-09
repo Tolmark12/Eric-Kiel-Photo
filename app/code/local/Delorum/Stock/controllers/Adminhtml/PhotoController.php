@@ -77,7 +77,7 @@ class Delorum_Stock_Adminhtml_PhotoController extends Mage_Adminhtml_Controller_
 					$path = Mage::getBaseDir('media') . DS . 'stock' . DS . 'comp' . DS;
 //					$uploader->save($path, $image);
 					
-					$comp = new Delorum_Image_Resize($_FILES['tmp_name']);
+					$comp = new Delorum_Image_Resize($_FILES['image']['tmp_name']);
 					$comp->save($path.$image);
 					
 					// comp(osition)
