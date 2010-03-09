@@ -57,15 +57,13 @@ class Delorum_Stock_Adminhtml_PhotoController extends Mage_Adminhtml_Controller_
 //			exit;
 			
 			if(isset($_FILES['image']['name']) && $_FILES['image']['name'] != '') {
-				print_r($_FILES);
-				exit;
 				try {
 					/* Starting upload */	
-//					$uploader = new Varien_File_Uploader('image');
+					$uploader = new Varien_File_Uploader('image');
 					
 					// Any extention would work
-//	           		$uploader->setAllowedExtensions(array('jpg','jpeg','gif','png'));
-//					$uploader->setAllowRenameFiles(false);
+	           		$uploader->setAllowedExtensions(array('jpg','jpeg','gif','png'));
+					$uploader->setAllowRenameFiles(false);
 					
 					// Set the file upload mode 
 					// false -> get the file directly in the specified folder
@@ -77,10 +75,10 @@ class Delorum_Stock_Adminhtml_PhotoController extends Mage_Adminhtml_Controller_
 					
 					// We set media as the upload dir
 					$path = Mage::getBaseDir('media') . DS . 'stock' . DS . 'comp' . DS;
-//					$uploader->save($path, $image);
+					$uploader->save($path, $image);
 					
-					$comp = new Delorum_Image_Resize($_FILES['image']['tmp_name']);
-					$comp->save($path.$image);
+//					$comp = new Delorum_Image_Resize($_FILES['image']['tmp_name']);
+//					$comp->save($path.$image);
 					
 					// comp(osition)
 					list($width, $height, $type, $attr) = getimagesize($path.$image);
@@ -97,7 +95,7 @@ class Delorum_Stock_Adminhtml_PhotoController extends Mage_Adminhtml_Controller_
 					$mid->save($path . 'mid' . DS . $image);
 					
 					// now resize to make a small
-					// height will be 141
+					// height will be 200
 					// width will be %
 					$smallWidth = ceil($width * (200 / $height));
 					$small = new Delorum_Image_Resize($path.$image);
