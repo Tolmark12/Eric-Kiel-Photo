@@ -14,9 +14,9 @@
   <active>no</active>
  </lead>
  <date>2010-03-09</date>
- <time>19:32:51</time>
+ <time>20:14:06</time>
  <version>
-  <release>0.2.2</release>
+  <release>0.2.3</release>
   <api>0.2.1</api>
  </version>
  <stability>
@@ -72,7 +72,7 @@
        <file md5sum="6b1af2a8ac363ec198988ecc4e1549db" name="PhotoController.php" role="magelocal" />
        <file md5sum="39eb8045532b6ad8983b58593da7355b" name="TagController.php" role="magelocal" />
       </dir> <!-- /Delorum/Stock/controllers/Adminhtml -->
-      <file md5sum="3a563098233233ba179f53041381d13b" name="ApiController.php" role="magelocal" />
+      <file md5sum="3faa8776a1e292f7c51e86314a939c4b" name="ApiController.php" role="magelocal" />
      </dir> <!-- /Delorum/Stock/controllers -->
      <dir name="etc">
       <file md5sum="552ee5f21eaed24ac8491b0af035e534" name="config.xml" role="magelocal" />
