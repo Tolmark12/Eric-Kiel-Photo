@@ -188,10 +188,10 @@ class Delorum_Image_Resize {
         $this->calcImageSize($this->currentDimensions['width'],$this->currentDimensions['height']);
 
 //		if(function_exists("ImageCreateTrueColor")) {
-//			$this->workingImage = ImageCreateTrueColor($this->newDimensions['newWidth'],$this->newDimensions['newHeight']);
+			$this->workingImage = ImageCreateTrueColor($this->newDimensions['newWidth'],$this->newDimensions['newHeight']);
 //		}
 //		else {
-			$this->workingImage = ImageCreate($this->newDimensions['newWidth'],$this->newDimensions['newHeight']);
+//			$this->workingImage = ImageCreate($this->newDimensions['newWidth'],$this->newDimensions['newHeight']);
 //		}
 
 		ImageCopyResampled(
