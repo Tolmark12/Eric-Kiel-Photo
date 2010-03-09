@@ -57,6 +57,8 @@ class Delorum_Stock_Adminhtml_PhotoController extends Mage_Adminhtml_Controller_
 //			exit;
 			
 			if(isset($_FILES['image']['name']) && $_FILES['image']['name'] != '') {
+				print_r($_FILES);
+				exit;
 				try {
 					/* Starting upload */	
 //					$uploader = new Varien_File_Uploader('image');
