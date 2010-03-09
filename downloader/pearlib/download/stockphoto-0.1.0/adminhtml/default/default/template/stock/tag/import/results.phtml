@@ -1,0 +1,28 @@
+<?php $successes = $this->getSuccesses() ?>
+<?php $errors = $this->getErrors() ?>
+
+<div id="messages">
+	<?php if(count($successes) > 0): ?>
+	<ul class="messages">
+		<li class="success-msg">
+			<ul>
+				<?php foreach($successes as $success): ?>
+					<li><?php echo $success ?></li>
+				<?php endforeach; ?>
+			</ul>
+		</li>
+	</ul>
+	<?php endif; ?>
+	
+	<?php if(count($errors) > 0): ?>
+	<ul class="messages">
+		<li class="error-msg">
+			<ul>
+				<?php foreach($errors as $error): ?>
+					<li><?php echo $error ?></li>
+				<?php endforeach; ?>
+			</ul>
+		</li>
+	</ul>
+	<?php endif; ?>
+</div>
