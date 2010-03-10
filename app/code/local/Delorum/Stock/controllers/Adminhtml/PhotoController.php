@@ -110,6 +110,7 @@ class Delorum_Stock_Adminhtml_PhotoController extends Mage_Adminhtml_Controller_
 		        }
 	        
 		        //this way the name is saved in DB
+		        $data['name']			= $image;
 	  			$data['image'] 			= $image;
 	  			$data['small_width']	= $smallWidth;
 	  			$data['mid_width']		= $midWidth;
