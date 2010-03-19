@@ -13,11 +13,11 @@
   <email>tflint@delorum.com</email>
   <active>no</active>
  </lead>
- <date>2010-01-29</date>
- <time>18:38:47</time>
+ <date>2010-03-09</date>
+ <time>22:01:11</time>
  <version>
-  <release>0.1.2</release>
-  <api>0.1.1</api>
+  <release>0.2.5.1</release>
+  <api>0.2.1</api>
  </version>
  <stability>
   <release>devel</release>
@@ -69,10 +69,10 @@
      </dir> <!-- /Delorum/Stock/Block -->
      <dir name="controllers">
       <dir name="Adminhtml">
-       <file md5sum="6b1af2a8ac363ec198988ecc4e1549db" name="PhotoController.php" role="magelocal" />
+       <file md5sum="f26bfa3b49b463e667fffaf390391b8a" name="PhotoController.php" role="magelocal" />
        <file md5sum="39eb8045532b6ad8983b58593da7355b" name="TagController.php" role="magelocal" />
       </dir> <!-- /Delorum/Stock/controllers/Adminhtml -->
-      <file md5sum="e73a1baa3cd8cbbf8286046ad2cbb6af" name="ApiController.php" role="magelocal" />
+      <file md5sum="132f47c59ed73b5568b2249972342f99" name="ApiController.php" role="magelocal" />
      </dir> <!-- /Delorum/Stock/controllers -->
      <dir name="etc">
       <file md5sum="552ee5f21eaed24ac8491b0af035e534" name="config.xml" role="magelocal" />

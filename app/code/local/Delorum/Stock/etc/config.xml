@@ -68,10 +68,20 @@
 				</all>
 				<admin>
 					<children>
-						<Delorum_Stock>
+						<stock>
 							<title>Stock Module</title>
 							<sort_order>10</sort_order>
-						</Delorum_Stock>
+							<children>
+								<items>
+									<title>Manage Photos</title>
+									<sort_order>10</sort_order>
+								</items>
+								<import>
+									<title>Import Tags</title>
+									<sort>20</sort>
+								</import>
+							</children>
+						</stock>
 					</children>
 				</admin>
 			</resources>

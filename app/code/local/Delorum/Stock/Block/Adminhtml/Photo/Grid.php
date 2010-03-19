@@ -27,11 +27,11 @@ class Delorum_Stock_Block_Adminhtml_Photo_Grid extends Mage_Adminhtml_Block_Widg
 //          'index'     => 'stock_id',
 //      ));
 
-      $this->addColumn('name', array(
-          'header'    => Mage::helper('stock')->__('Name'),
-          'align'     =>'left',
-          'index'     => 'name',
-      ));
+//      $this->addColumn('name', array(
+//          'header'    => Mage::helper('stock')->__('Name'),
+//          'align'     =>'left',
+//          'index'     => 'name',
+//      ));
       
       $this->addColumn('image', array(
           'header'    => Mage::helper('stock')->__('Image'),

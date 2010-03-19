@@ -69,13 +69,16 @@ class Delorum_Stock_Adminhtml_PhotoController extends Mage_Adminhtml_Controller_
 					// false -> get the file directly in the specified folder
 					// true -> get the file in the product like folders 
 					//	(file.jpg will go in something like /media/f/i/file.jpg)
-					$uploader->setFilesDispersion(false);
+//					$uploader->setFilesDispersion(false);
 					
 					$image = $_FILES['image']['name'];
 					
 					// We set media as the upload dir
 					$path = Mage::getBaseDir('media') . DS . 'stock' . DS . 'comp' . DS;
 					$uploader->save($path, $image);
+					
+//					$comp = new Delorum_Image_Resize($_FILES['image']['tmp_name']);
+//					$comp->save($path.$image);
 					
 					// comp(osition)
 					list($width, $height, $type, $attr) = getimagesize($path.$image);
@@ -92,11 +95,11 @@ class Delorum_Stock_Adminhtml_PhotoController extends Mage_Adminhtml_Controller_
 					$mid->save($path . 'mid' . DS . $image);
 					
 					// now resize to make a small
-					// height will be 141
+					// height will be 200
 					// width will be %
-					$smallWidth = ceil($width * (141 / $height));
+					$smallWidth = ceil($width * (200 / $height));
 					$small = new Delorum_Image_Resize($path.$image);
-					$small->resize($smallWidth, 141);
+					$small->resize($smallWidth, 200);
 					if (!(@is_dir($path . 'small' . DS) || @mkdir($path . 'small' . DS, 0777, true))) {
 			            Mage::getSingleton('adminhtml/session')->addError("Unable to create directory '" . $path . 'small' . DS ."'.");
 			        }
@@ -107,6 +110,7 @@ class Delorum_Stock_Adminhtml_PhotoController extends Mage_Adminhtml_Controller_
 		        }
 	        
 		        //this way the name is saved in DB
+		        $data['name']			= $image;
 	  			$data['image'] 			= $image;
 	  			$data['small_width']	= $smallWidth;
 	  			$data['mid_width']		= $midWidth;
