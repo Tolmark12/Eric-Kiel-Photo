@@ -2,11 +2,10 @@ package app.view.components
 {
 
 import flash.display.Sprite;
-import app.view.components.stock_tags.*;
-
+import app.view.components.stock_tags.Search;
 public class StockTags extends Sprite
 {
-	private var _search:Search_swc = new Search_swc();;
+	private var _search:Search = new Search_swc();;
 	
 	public function StockTags():void
 	{

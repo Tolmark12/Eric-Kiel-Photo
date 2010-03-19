@@ -9,7 +9,19 @@ public class StockPhotoSetVo
 	
 	public function StockPhotoSetVo( $json:Object ):void
 	{
-		stack = new Vector.<StockPhotoVo>();
+		stack 		= new Vector.<StockPhotoVo>();
+		
+		if( $json.items != null ) {
+			setName		= $json.term;
+
+			var len:uint = $json.items.length;
+			for ( var i:uint=0; i<len; i++ ) 
+			{
+				var stockPhotoVo:StockPhotoVo = new StockPhotoVo( $json.items[i] );
+				stockPhotoVo.parentSet = this;
+				this.addStockPhotoToSet( stockPhotoVo );
+			}
+		}
 	}
 	
 	// _____________________________ API

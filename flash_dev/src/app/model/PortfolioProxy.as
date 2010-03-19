@@ -56,7 +56,6 @@ public class PortfolioProxy extends Proxy implements IProxy
 			_sequence.deselect();
 			sendNotification( AppFacade.DEACTIVATE_ACTIVE_PORTFOLIO_ITEM, new DeactivateVo($index, "center") );
 		}
-		trace( _sequence.currentItem );
 	}
 	
 	public function next (  ):void{

@@ -14,12 +14,13 @@ public class Clicks extends SimpleCommand implements ICommand
 
 	override public function execute( note:INotification ):void
 	{
-		var navProxy:NavProxy 				= facade.retrieveProxy( NavProxy.NAME ) as NavProxy;
-		var portfolioProxy:PortfolioProxy 	= facade.retrieveProxy( PortfolioProxy.NAME ) as PortfolioProxy;
-		var stockProxy:StockProxy 			= facade.retrieveProxy( StockProxy.NAME ) as StockProxy;
-		var tagsProxy:TagsProxy 			= facade.retrieveProxy( TagsProxy.NAME ) as TagsProxy;
-		var formProxy:FormProxy 			= facade.retrieveProxy( FormProxy.NAME ) as FormProxy;
-		var lightBoxProxy:LightBoxProxy 	= facade.retrieveProxy( LightBoxProxy.NAME ) as LightBoxProxy;
+		var navProxy:NavProxy 						= facade.retrieveProxy( NavProxy.NAME ) as NavProxy;
+		var portfolioProxy:PortfolioProxy 			= facade.retrieveProxy( PortfolioProxy.NAME ) as PortfolioProxy;
+		var stockProxy:StockProxy 					= facade.retrieveProxy( StockProxy.NAME ) as StockProxy;
+		var tagsProxy:TagsProxy 					= facade.retrieveProxy( TagsProxy.NAME ) as TagsProxy;
+		var formProxy:FormProxy 					= facade.retrieveProxy( FormProxy.NAME ) as FormProxy;
+		var lightBoxProxy:LightBoxProxy 			= facade.retrieveProxy( LightBoxProxy.NAME ) as LightBoxProxy;
+		
 		switch (note.getName())
 		{
 			case AppFacade.SEARCH_TERM_CHANGE :
@@ -84,6 +85,9 @@ public class Clicks extends SimpleCommand implements ICommand
 			break;
 			case AppFacade.ADD_TO_LIGHTBOX :
 				lightBoxProxy.addItemToLightBox( note.getBody() as String );
+			break;
+			case AppFacade.SHOW_LIGHTBOX_CLICK :
+				//lightBoxProxy.send
 			break;
 		}
 	}

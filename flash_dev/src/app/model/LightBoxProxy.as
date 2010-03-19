@@ -34,15 +34,16 @@ public class LightBoxProxy extends Proxy implements IProxy
 		
 		// If there is a lightbox stack included in the url, split that
 		// and create the lightbox: EX - http://kiel.com/?/213/123/123/123/etc..
-		if( urlPath != null )
+		if( /*urlPath != null*/ 1 == 1 )
 		{
 			// Split on the "?"
-			var tempAr = urlPath.split("?");
+			/* var tempAr = urlPath.split("?"); */
+			var tempAr = ["", "1,2,3"];
 			
 			// If there are images in the second part of that string, create the array
 			if( tempAr.length > 1 ) {
 				echo( tempAr[0] + '  :  ' + tempAr[1] );
-				_lightBoxStack = tempAr[1].split("/");
+				_lightBoxStack = tempAr[1].split(",");
 				_saveToLocalObject();
 				doShowLightBox = true;
 			}
@@ -54,8 +55,6 @@ public class LightBoxProxy extends Proxy implements IProxy
 			if( _sharedObject.data.lightBox.length > 1 )
 				_lightBoxStack = _sharedObject.data.lightBox.split("/");
 		}
-		
-		
 		
 		updateTotalItemsInLightbox();
 	}

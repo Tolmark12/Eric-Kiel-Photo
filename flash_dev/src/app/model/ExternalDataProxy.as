@@ -24,7 +24,7 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	// Get Config Data
 	public function getConfigData ( $stage:Stage ):void
 	{
-		_server = ( $stage.loaderInfo.parameters.server != null )? $stage.loaderInfo.parameters.server : 'http://kielphoto.com/' ;
+		_server = ( $stage.loaderInfo.parameters.server != null )? $stage.loaderInfo.parameters.server : 'http://staging.kielphoto.com/' ;
 		var ldr:DataLoader = new DataLoader( _server + "vladmin/api/" );
 		ldr.addEventListener( Event.COMPLETE, _onConfigLoad, false,0,true );
 		ldr.addEventListener( IOErrorEvent.IO_ERROR, _onError)
@@ -72,19 +72,17 @@ public class ExternalDataProxy extends Proxy implements IProxy
 		loadAllStockTags();
 	}
 	
+	private var _lastSearchTerm:String;
 	/** 
 	*	@param		A comma delimited list of tags
 	*/
 	public function loadStockDataSet ( $searchTerm:String ):void
 	{
-		trace( _server + "stock/api/getAllStockTags" );
-		var ldr:DataLoader = new DataLoader( _server + "stock/api/getStockPhotosByTag/id/person" );
+		trace( $searchTerm );
+		_lastSearchTerm = $searchTerm;
+		var ldr:DataLoader = new DataLoader( _server + "stock/api/getStockPhotosByTag/text/" + $searchTerm );
 		ldr.addEventListener( Event.COMPLETE, _onStockDataSetLoaded, false,0,true );
 		ldr.loadItem();
-		
-		// !! TEMP !!
-		//sendNotification( AppFacade.STOCK_DATA_SET_LOADED, {/* TEMP Empty object */ term:$searchTerm } );
-		// !! TEMP !!
 	}
 	
 	public function loadAllStockTags (  ):void
@@ -119,8 +117,8 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	}
 	
 	private function _onStockDataSetLoaded ( e:Event ):void {
-		trace( "Stock Data" + '  :  ' + e.target.data );
-		//sendNotification( AppFacade.STOCK_DATA_SET_LOADED, {/* TEMP Empty object */ term:$searchTerm } );
+		var json:Object = JSON.decode( e.target.data );
+		sendNotification( AppFacade.STOCK_DATA_SET_LOADED, {term:_lastSearchTerm, items:json });
 	}
 	
 	

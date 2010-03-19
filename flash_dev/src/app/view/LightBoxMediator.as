@@ -52,6 +52,9 @@ public class LightBoxMediator extends Mediator implements IMediator
 			case AppFacade.STOCK_RESET :
 				_lightBoxBtn.clear();
 			break;
+			case AppFacade.POPULATE_LIGHBOX :
+				
+			break;
 			case AppFacade.SHOW_LIGHTBOX_CLICK :
 				_lightBox.show();
 			break;

@@ -88,6 +88,7 @@ public class AppFacade extends Facade implements IFacade
 	public static const SHOW_LIGHTBOX:String 						= "show_lightbox";
 	public static const SHOW_LIGHTBOX_CLICK:String 					= "show_lightbox_click";
 	public static const UPDATE_LIGHTBOX_TOTAL:String 				= "update_lightbox_total";
+	public static const POPULATE_LIGHBOX:String 					= "populate_lighbox";
 	
 	// Example: var myFacade:AppFacade = AppFacade.getInstance( 'app_facade' );
 	public function AppFacade( key:String ):void
@@ -144,6 +145,7 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( STOCK_PHOTO_CLOSE, Clicks );
 		registerCommand( SUBMIT_FORM, Clicks );
 		registerCommand( ADD_TO_LIGHTBOX, Clicks );
+		registerCommand( SHOW_LIGHTBOX_CLICK, Clicks );
 	}
 
 }
