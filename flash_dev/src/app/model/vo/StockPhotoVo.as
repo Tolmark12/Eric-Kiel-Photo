@@ -26,8 +26,13 @@ public class StockPhotoVo
 		lowResSrc			= $json.small_image;
 		highResSrc			= $json.mid_image;
 		compImgSrc			= $json.image;
-		tags				= $json.tags;
 		width				= $json.small_image_width;
+		tags				= new Array();
+		
+		var len:uint = $json.tags.length;
+		for ( var i:uint=0; i<len; i++ ) {
+			tags.push( new StockTagVo($json.tags[i]) );
+		}
 	}
 }
 

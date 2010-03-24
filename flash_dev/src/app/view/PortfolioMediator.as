@@ -27,6 +27,7 @@ public class PortfolioMediator extends PageMediator implements IMediator
 		_portfolio.addEventListener( NavEvent.PORTFOLIO_PREV, _onPortfolioPrev, false,0,true );
 		_portfolio.addEventListener( NavEvent.PORTFOLIO_START, _onPortfolioStart, false,0,true );
 		_portfolio.addEventListener( NavEvent.PORTFOLIO_END, _onPortfolioEnd, false,0,true );
+		_portfolio.addEventListener( NavEvent.SHOW_VIDEO, _onShowVideo, false,0,true );
 		
 		$stage.addChild( _portfolio );
    	}
@@ -113,6 +114,10 @@ public class PortfolioMediator extends PageMediator implements IMediator
 	
 	private function _onLowResImageLoaded ( e:ImageLoadEvent ):void {
 		sendNotification( AppFacade.IMAGE_LOADED, e.imageIndex );
+	}
+	
+	private function _onShowVideo ( e:NavEvent ):void {
+		sendNotification( AppFacade.PORTFOLIO_ITEM_SHOW_VIDEO );
 	}
 	
 }

@@ -89,6 +89,9 @@ public class Clicks extends SimpleCommand implements ICommand
 			case AppFacade.SHOW_LIGHTBOX_CLICK :
 				//lightBoxProxy.send
 			break;
+			case AppFacade.PORTFOLIO_ITEM_SHOW_VIDEO :
+				portfolioProxy.stockPhotoVideoClick();
+			break;
 		}
 	}
 }

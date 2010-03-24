@@ -11,6 +11,7 @@ public class TagsProxy extends Proxy implements IProxy
 	public static const NUM_OF_SUGGESTIONS:Number = 15;
 	
 	private var _search:SearchVo ;
+	private var _oldSearchTerm:String = "";
 	
 	// Constructor
 	public function TagsProxy( ):void { 
@@ -38,8 +39,12 @@ public class TagsProxy extends Proxy implements IProxy
 	*	This is called everytime the search term changes
 	*	@param		The entire new term
 	*/
-	public function onSearchTermChange ( $newTerm:String ):void
+	public function onSearchTermChange ( $newTerm:String ):String
 	{
+		if( _oldSearchTerm == $newTerm )
+			return null;
+		
+		_oldSearchTerm = $newTerm;
 		$newTerm = $newTerm.toLowerCase();
 		var newWordLength:uint = $newTerm.length;
 		
@@ -85,6 +90,7 @@ public class TagsProxy extends Proxy implements IProxy
 				}
 			}
 		}
+		return null;
 	}
 	
 	/** 

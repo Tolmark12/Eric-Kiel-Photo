@@ -34,6 +34,7 @@ public class AppFacade extends Facade implements IFacade
 	public static const STAGE_RESIZE:String 						= "stage_resize";
 	public static const NAV_BTN_CLICK:String 						= "nav_btn_click";
 	public static const PORTFOLIO_ITEM_CLICK:String 				= "portfolio_item_click";
+	public static const PORTFOLIO_ITEM_SHOW_VIDEO:String 			= "portfolio_item_show_video";
 	public static const PORTFOLIO_NEXT:String 						= "portfolio_next";
 	public static const PORTFOLIO_PREV:String 						= "portfolio_prev";
 	public static const PORTFOLIO_START:String 						= "portfolio_start";
@@ -89,6 +90,9 @@ public class AppFacade extends Facade implements IFacade
 	public static const SHOW_LIGHTBOX_CLICK:String 					= "show_lightbox_click";
 	public static const UPDATE_LIGHTBOX_TOTAL:String 				= "update_lightbox_total";
 	public static const POPULATE_LIGHBOX:String 					= "populate_lighbox";
+	
+	// VIDEO
+	public static const LOAD_VIDEO:String 							= "load_video";
 	
 	// Example: var myFacade:AppFacade = AppFacade.getInstance( 'app_facade' );
 	public function AppFacade( key:String ):void
@@ -146,6 +150,8 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( SUBMIT_FORM, Clicks );
 		registerCommand( ADD_TO_LIGHTBOX, Clicks );
 		registerCommand( SHOW_LIGHTBOX_CLICK, Clicks );
+		registerCommand( PORTFOLIO_ITEM_SHOW_VIDEO, Clicks );
+		registerCommand( LOAD_VIDEO, DataRequests );
 	}
 
 }

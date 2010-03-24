@@ -66,17 +66,9 @@ public class StockProxy extends Proxy implements IProxy
 	{   		
 		var newSet:StockPhotoSetVo 	= new StockPhotoSetVo($json);
 		_findAndAddNewMatches( newSet );
-		_sets.push(newSet);
+		_sets.unshift(newSet);
 		
-		// !! TEMP !!!!!!!!!!!!
-		_matches.setName = _sets.join(" + ");
-		
-		var stockResults = _sets.concat();
-		trace( _matches.stack.length )
-		if( stockResults.length > 1 )
-			stockResults.unshift(_matches);
-			
-		sendNotification( AppFacade.BUILD_STOCK_RESULTS, stockResults );
+		_prepareAneSentResults();
 	}
 	
 	/** 
@@ -93,6 +85,7 @@ public class StockProxy extends Proxy implements IProxy
 			if( stockPhotoVo != null ) {
 				_currentPhotoId = $id;
 				sendNotification( AppFacade.DISPLAY_STOCK_PHOTO, stockPhotoVo );
+				trace( stockPhotoVo.tags );
 			}else{
 				_throwError( "This Stock photo id does not match any in the list" );
 			}
@@ -110,7 +103,7 @@ public class StockProxy extends Proxy implements IProxy
 	public function removeStockCategory ( $category:String ):void
 	{
 		sendNotification( AppFacade.STOCK_CATEGORY_REMOVED, _removeSetById($category) );
-		sendNotification( AppFacade.BUILD_STOCK_RESULTS, _sets );
+		_prepareAneSentResults();
 	}
 	
 	public function reset (  ):void
@@ -127,6 +120,16 @@ public class StockProxy extends Proxy implements IProxy
 	}
 	
 	// _____________________________ Helpers
+	
+	private function _prepareAneSentResults (  ):void {
+		_matches.setName = _sets.join(" + ");
+		
+		var stockResults = _sets.concat();
+		if( stockResults.length > 1 )
+			stockResults.unshift(_matches);
+			
+		sendNotification( AppFacade.BUILD_STOCK_RESULTS, stockResults );
+	}
 	
 	private function _findAndAddNewMatches ( $set:StockPhotoSetVo ):void {
 		var totalSets:uint = _sets.length;
@@ -152,8 +155,8 @@ public class StockProxy extends Proxy implements IProxy
 				// If this photo exists in both sets...
 				if( oldSet.dictionary[ $set.stack[i].id ] != null ){
 					//...hide it from both sets, and add to matches
-					oldSet.dictionary[ $set.stack[i].id ].doShowInParentSet = false;
-					$set.stack[i].doShowInParentSet = false;
+					oldSet.dictionary[ $set.stack[i].id ].doShowInParentSet 	= false;
+					$set.stack[i].doShowInParentSet 							= false;
 					_matches.addStockPhotoToSet($set.stack[i])
 				}
 			}
@@ -161,22 +164,30 @@ public class StockProxy extends Proxy implements IProxy
 		
 		// Else, there are multiple matches to test against
 		else{
+			// store the items to delete, we can't delete them 
+			// right away because it throws off our "i" index
+			var idsToDelete:Array = new Array();
 			len = _matches.stack.length;
 			for ( i=0; i<len; i++ ) 
 			{
 				// If this exists in the match set, set the display flag false. 
 				if( $set.dictionary[ _matches.stack[i].id ] != null ){
-					$set.stack[i].doShowInParentSet = false;
+					$set.getStockPhotoById(_matches.stack[i].id).doShowInParentSet = false;
 				} 
-				// else it doesn't exist it no longer matches all the tags and...
+				// else it doesn't exist, it no longer matches all the tags and...
 				else {
 					// ...activate this in each parent set since we're 
 					// removing it from the match set
 					for each( var stockSet:StockPhotoSetVo in _sets){
 						stockSet.dictionary[_matches.stack[i].id].doShowInParentSet = true;
 					}
-					// _matches.removeItemByIndex(i) Figure out how to remove it from the matches...
+					idsToDelete.push(_matches.stack[i].id);
 				}
+			}
+			// Remove all items we're deleting:
+			var totalToDelete:uint = idsToDelete.length;
+			for ( var k:uint=0; k<totalToDelete; k++ ) {
+				_matches.removeStockPhotoFromSet( idsToDelete[k] );
 			}
 		}
 		

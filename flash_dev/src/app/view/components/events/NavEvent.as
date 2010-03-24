@@ -12,6 +12,8 @@ public class NavEvent extends Event
 	public static const PORTFOLIO_END:String   = "portfolio_end";
 	// Images click
 	public static const PORTFOLIO_ITEM_CLICK:String = "portfolio_item_click";
+	// Images video btn
+	public static const SHOW_VIDEO:String = "show_video";
 	// Index of the portfolio item clicked
 	public var portfolioItemIndex:uint;
 	

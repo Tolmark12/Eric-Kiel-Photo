@@ -36,9 +36,10 @@ public class LightBoxProxy extends Proxy implements IProxy
 		// and create the lightbox: EX - http://kiel.com/?/213/123/123/123/etc..
 		if( /*urlPath != null*/ 1 == 1 )
 		{
-			// Split on the "?"
-			/* var tempAr = urlPath.split("?"); */
-			var tempAr = ["", "1,2,3"];
+			// FLIX: Split on the "?"
+			//var tempAr = urlPath.split("?"); 
+			//var tempAr = ["", "1,2,3"];
+			var tempAr:Array = [];
 			
 			// If there are images in the second part of that string, create the array
 			if( tempAr.length > 1 ) {

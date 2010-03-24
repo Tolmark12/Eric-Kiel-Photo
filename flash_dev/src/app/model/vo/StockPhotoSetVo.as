@@ -51,6 +51,17 @@ public class StockPhotoSetVo
 		stack.unshift($stockPhoto);
 	}
 	
+	public function removeStockPhotoFromSet ( $id:String ):void{
+		delete dictionary[$id];
+		var len:uint = stack.length;
+		for ( var i:uint=0; i<len; i++ ) {
+			if( stack[i].id == $id ){
+				stack.splice(i, 1);
+				break;
+			}
+		}
+	}
+	
 	public function toString (  ):String
 	{
 		return setName;

@@ -49,6 +49,7 @@ public class Search extends Sprite
 		dispatchEvent( ev );
 		
 		_tagSuggestions.hide();
+		trace( "----- hidden" );
 	}
 	
 	// _____________________________ Event Handlers

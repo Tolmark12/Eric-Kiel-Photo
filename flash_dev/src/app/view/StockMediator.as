@@ -76,6 +76,7 @@ public class StockMediator extends PageMediator implements IMediator
 			case AppFacade.DISPLAY_STOCK_PHOTO :
 				_stockPhotoStrip.displayPhoto( note.getBody() as StockPhotoVo );
 				_stockDetailView.displayImage( note.getBody() as StockPhotoVo );
+				
 			break;
 			case AppFacade.STAGE_RESIZE :
 				_stockPhotoStrip.setScrollWindow( note.getBody() as StageResizeVo );

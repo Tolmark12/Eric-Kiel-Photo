@@ -73,6 +73,9 @@ public class DataRequests extends SimpleCommand implements ICommand
 			case AppFacade.STOCK_TAGS_LOADED :
 				tagProxy.parseStockDataTags( note.getBody() as Object );
 			break;
+			case AppFacade.LOAD_VIDEO :
+				externalDataProxy.loadAjaxVideo( note.getBody() as String );
+			break;
 		}
 	}
 }

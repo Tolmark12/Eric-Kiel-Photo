@@ -10,15 +10,21 @@ public class PortfolioItemVo
 	public var tags:Array;
 	public var isActive:Boolean;
 	public var name:String;
+	// Video
+	public var videoEmbedTag:String;
+	public var isOnlyVideo:Boolean;
 	
 	public function PortfolioItemVo( $json:Object ):void
 	{
-		name		= $json.name;
-		tags		= $json.photo_tags;
-		title 		= "";
-		src			= $json.src;
-		lowResSrc	= $json.low_res_src;
-		isActive	= true;
+		name				= $json.name;
+		tags				= $json.photo_tags;
+		title 				= "";
+		src					= $json.src;
+		lowResSrc			= $json.low_res_src;
+		isActive			= true;
+		
+		videoEmbedTag		= $json.video_embed_tag;
+		isOnlyVideo			= Boolean($json.is_only_video);
 	}
 	
 	public function toString (  ):String

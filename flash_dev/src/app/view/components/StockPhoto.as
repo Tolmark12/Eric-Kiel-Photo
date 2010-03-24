@@ -12,7 +12,8 @@ public class StockPhoto extends Sprite
 	public var id:String;
 	private var _sPhotoVo:StockPhotoVo;
 	private var _imageHolder:Sprite = new Sprite();
-	private var _addToLightBoxBtn:AddToLightboxBtn = new AddToLightboxBtn_swc();;
+	private var _addToLightBoxBtn:AddToLightboxBtn = new AddToLightboxBtn_swc();
+	
 	public function StockPhoto( $vo:StockPhotoVo ):void
 	{
 		_sPhotoVo = $vo;
@@ -28,6 +29,8 @@ public class StockPhoto extends Sprite
 		id 	= $vo.id;
 		_addToLightBoxBtn.id = id;
 		unHighlight();
+
+		
 	}
 	
 	// _____________________________ API

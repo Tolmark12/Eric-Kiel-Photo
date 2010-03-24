@@ -50,6 +50,10 @@ public class PortfolioProxy extends Proxy implements IProxy
 	}
 	
 	public function changeActiveItemByIndex ( $index:uint ):void{
+		// FLIX:
+		// if( this is not a video only btn )
+		// else - show this vo's video !
+		
 		if( _sequence.changeItemByIndex($index) )
 			_sendNewIndex();
 		else{
@@ -157,6 +161,13 @@ public class PortfolioProxy extends Proxy implements IProxy
 		sendNotification( AppFacade.UPDATE_TOTAL_LOADED, {loaded:++_totalLoaded, total:_sequence.totalItems*2} );
 	}
 	
+	/** 
+	*	This is called when the "video" button is clicked on a Portfolio Photo Object
+	*/
+	public function stockPhotoVideoClick (  ):void
+	{
+		sendNotification( AppFacade.LOAD_VIDEO, _sequence.currentItem.videoEmbedTag );
+	}
 	
 	// _____________________________ Helpers
 	
