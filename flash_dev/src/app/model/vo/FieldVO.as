@@ -11,10 +11,14 @@ package app.model.vo
 		
 		public function FieldVO($json:Object):void
 		{
-			//id 					= $json.id;
-			//title 				= $json.title;
-			//height: 			= $json.height;
-			//regexValitation 	= $json.regexValidation;
+			id 					= $json.field_id;
+			title 				= $json.title;
+			defaultText			= $json.default_text;
+			lines				= $json.lines;
+			urlVarName			= $json.url_var_name;
+			
+			if( $json.regex_pattern != null )
+				regexValidation = new RegExp( $json.regex_pattern );
 		}
 	}
 }

@@ -77,7 +77,7 @@ package app.view.components
 		
 		// _____________________________ Helpers
 		
-		private function _buildForm ( $formItems:Array ):void {
+		private function _buildForm ( $formItems:Vector.<FieldVO> ):void {
 			var len:uint = $formItems.length;
 			var yPos:Number = 0;
 			_formHolder.y = _description.y + _description.height + 30;

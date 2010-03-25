@@ -12,6 +12,7 @@ public class StockTagEvent extends Event
 	
 	public var newLetter:String;
 	public var searchTerm:String;
+	public var clearPreviousSearch:Boolean;
 
 	public function StockTagEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
 	{

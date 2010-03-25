@@ -10,7 +10,7 @@ import app.view.components.events.StockEvent;
 
 public class StockMap extends Sprite
 {
-	private static var _SET_COLORS:Array = [
+	public static var SET_COLORS:Array = [
 		0xFFFFFF,
 		0xE89264,
 		0xC9BC90,
@@ -32,7 +32,7 @@ public class StockMap extends Sprite
 		this.addChild( _mapItemsHolder );
 		this.addChild( _closeBtnHolder );
 		this.addChild( _mapDragger );
-		_closeBtnHolder.y = 80;
+		_closeBtnHolder.y = -30;
 		
 		_mapItemsHolder.addEventListener( StockEvent.STOCK_PHOTO_CLICK, _onStockPhotoClick, false,0,true );
 	}
@@ -73,7 +73,7 @@ public class StockMap extends Sprite
 	{
 		var mapItem:StockMapItem = new StockMapItem( $id );			// Get map item
 		_mapItemsHolder.addChild( mapItem );					// Add Child
-		mapItem.build( Math.ceil( $width * SHRINK_PERCENTAGE ), Math.ceil( 141 * SHRINK_PERCENTAGE), _SET_COLORS[$setIndex]  /*, _SET_COLORS[count]*/ );					// Build
+		mapItem.build( Math.ceil( $width * SHRINK_PERCENTAGE ), Math.ceil( 141 * SHRINK_PERCENTAGE), SET_COLORS[$setIndex]  /*, SET_COLORS[count]*/ );					// Build
 		mapItem.x = rows[$rowIndex];
 		mapItem.y = (190 * SHRINK_PERCENTAGE) * $rowIndex;
 		rows[$rowIndex] += mapItem.width + pad
@@ -87,7 +87,7 @@ public class StockMap extends Sprite
 	public function addCategory ( $id:String, $setIndex:Number ):void
 	{
 		var btn:StockCategoryBtn_swc = new StockCategoryBtn_swc();
-		btn.build( $id, _SET_COLORS[$setIndex], $setIndex==0 );
+		btn.build( $id, SET_COLORS[$setIndex], $setIndex==0 );
 		//btn.x = ( _mapItemsHolder.width > _closeBtnHolder.width + 20) ? _mapItemsHolder.width : _closeBtnHolder.width + 20 ;
 		btn.x = (_closeBtnHolder.width==0)? 0 : _closeBtnHolder.width + 25;
 		btn.x = Math.round(btn.x) + 5;
@@ -99,7 +99,7 @@ public class StockMap extends Sprite
 		this.visible = true;
 		var rows:Array = [0,0];
 		var pad:Number	= 2;
-		_closeBtnHolder.x = 14;
+		_closeBtnHolder.x = -7;
 		_mapItemsHolder.x = pad;
 		var count:Number = 0;
 		
@@ -148,8 +148,8 @@ public class StockMap extends Sprite
 	
 	public function bumpColorToEndOfList ( $index:uint ):void
 	{
-		var clr:Number = _SET_COLORS.splice($index,1);
-		_SET_COLORS.push(clr);
+		var clr:Number = SET_COLORS.splice($index,1);
+		SET_COLORS.push(clr);
 	}
 	
 	// _____________________________ Helpers

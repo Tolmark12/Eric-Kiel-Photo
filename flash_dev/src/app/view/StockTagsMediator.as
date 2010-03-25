@@ -73,7 +73,7 @@ public class StockTagsMediator extends Mediator implements IMediator
 	}
 	
 	private function _onSubmitSearchTerm ( e:StockTagEvent ):void {
-		sendNotification( AppFacade.SUBMIT_SEARCH_TERM, e.searchTerm );
+		sendNotification( AppFacade.SUBMIT_SEARCH_TERM, e );
 	}
 	
 }

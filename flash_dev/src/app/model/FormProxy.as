@@ -18,8 +18,8 @@ public class FormProxy extends Proxy implements IProxy
 	public function FormProxy( ):void { super( NAME ); };
 	
 	public function createNewModal ( $modalEvent:ModalEvent ):void
-	{
-		
+	{Event
+		/*
 		// Flix, don't populate this manually... :-)
 		var newModal:FormVO 	= new FormVO(null);
 				
@@ -35,10 +35,13 @@ public class FormProxy extends Proxy implements IProxy
 		fieldVo.title			= "Email"
 		fieldVo.lines			= 1;
 		fieldVo.defaultText		= "Jon Doe"
-		//fieldVo.regexValidation	= new RegExp( "(\\w|[_.\\-])+@((\\w|-)+\\.)+\\w{2,4}+" );
+		fieldVo.regexValidation	= new RegExp( "(\\w|[_.\\-])+@((\\w|-)+\\.)+\\w{2,4}+" );
+											   (\\w|[_.\\-])+@((\\w|-)+\\.)+\\w{2,4}+
 		
 		newModal.fields       	= [ fieldVo, fieldVo, fieldVo ];
-		sendNotification( AppFacade.CREATE_NEW_MODAL, newModal );
+		*/
+		var stockProxy:StockProxy = facade.retrieveProxy( StockProxy.NAME ) as StockProxy;
+		sendNotification( AppFacade.CREATE_NEW_MODAL, stockProxy.stockConfigVo.getFormById( $modalEvent.type ) );
 	}
 	
 	public function submitForm ( $urlVars:URLVariables ):void
@@ -53,14 +56,14 @@ public class FormProxy extends Proxy implements IProxy
 		} catch (error:Error) {
 		    trace("Unable to load requested document.");
 		}
-/*
+
 		trace( "URL VARS::" );
 		for( var i:String in $urlVars )
 		{
 			trace( "  "+ i + '  :  ' + $urlVars[i] );
 		}
 		trace( "::" );
-*/
+
 	}
 	
 	private function _onComplete ( e:Event ):void {

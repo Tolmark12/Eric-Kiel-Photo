@@ -10,17 +10,23 @@ package app.model.vo
 		public var title:String;
 		public var description:String;
 		public var icon:String;
-		public var fields:Array;
+		public var fields:Vector.<FieldVO> = new Vector.<FieldVO>();
 		
 		public function FormVO($json:Object):void
 		{
-			// id 				= $json.id;
-			// postURL 		= $json.post_url;
-			// URLVars 		= $json.url_vars;
-			// title 			= $json.title;
-			// description 	= $json.description;
-			// icon 			= $json.icon;
-			// fields 			= $json.field;
+			id 				= $json.form_id;
+			postURL 		= $json.post_url;
+			URLVars 		= new URLVariables();
+			title 			= $json.title;
+			description 	= $json.description;
+			icon 			= $json.form_icon;
+			
+			// Create Fields
+			var len:uint = $json.fields.length;
+			for ( var i:uint=0; i<len; i++ ) 
+			{
+				fields[i] = new FieldVO( $json.fields[i] );
+			}
 		}
 	}
 }

@@ -21,24 +21,8 @@ public class FormsMediator extends Mediator implements IMediator
 		super( NAME );
 		
 		$stage.addChild( _modalMachine );
-		
-		/* TEMP !!!!!!!!! */
-		KeyTrigger.addKeyListener( _onBPress, "b", true )
-		/* TEMP !!!!!!!!! */
-		
 		_modalMachine.addEventListener( ModalEvent.SUBMIT_FORM, _onSubmitForm, false,0,true );
    	}
-
-	/* TEMP !!!!!!!!! */
-	private function _onBPress (  ):void
-	{
-	   // var temp:ModalForm = new ModalForm();
-	   // temp.build();
-	   // _modalMachine.addChild(temp);
-	}
-	/* TEMP !!!!!!!!! */
-	
-	
 
 	
 	// PureMVC: List notifications

@@ -19,6 +19,7 @@ public class DataRequests extends SimpleCommand implements ICommand
 		var lightBoxProxy:LightBoxProxy         = facade.retrieveProxy( LightBoxProxy.NAME ) as LightBoxProxy;
 		var stockProxy:StockProxy 				= facade.retrieveProxy( StockProxy.NAME ) as StockProxy;
 		var tagProxy:TagsProxy 					= facade.retrieveProxy( TagsProxy.NAME ) as TagsProxy;
+		
 		switch ( note.getName() )
 		{
 			case AppFacade.CONFIG_LOADED_AND_PARSED :

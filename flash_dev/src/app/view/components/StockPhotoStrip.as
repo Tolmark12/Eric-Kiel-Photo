@@ -30,8 +30,8 @@ public class StockPhotoStrip extends Sprite
 		this.addChild(_photoHolder);
 		this.addChild( _stockMap );
 
-		_stockMap.y  = 550;
-		_photoHolder.y = 110;
+		_stockMap.y  = 605;
+		_photoHolder.y = 135;
 		KeyTrigger.addKeyListener( _tempTween, "w", true );
 	}
 	
@@ -53,11 +53,14 @@ public class StockPhotoStrip extends Sprite
 	*/
 	public function buildNewSet ( $sets:Vector.<StockPhotoSetVo> ):void
 	{
+		_photoHolder.graphics.clear();
 		_dictionary = _buildNewDictionary($sets);
 		_stockMap.clear();
 		var rows:Array = [0,0];
 		var pad:Number	= 25;
 		var setIndex:uint = 0;		
+		var xPos:Number = pad;
+		var count:Number = 0;
 		
 		// Loop through each set of photos
 		for each( var photoSet:StockPhotoSetVo in $sets)
@@ -85,8 +88,14 @@ public class StockPhotoStrip extends Sprite
 				rows[smallestRowIndex] += pad + photo.width;			// update row width
 			}
 			
+			_drawColoredBar(xPos, rows[0], StockMap.SET_COLORS[count++]);
+			xPos = rows[0] + pad;
 			setIndex++;
 		}
+		
+		// If there's just one set, don't show the colored lines
+		if( count == 1 )
+			_photoHolder.graphics.clear();
 		
 		setScrollWindow(StageResizeVo.lastResize);
 		_stockMap.buildNewSet($sets);
@@ -99,6 +108,7 @@ public class StockPhotoStrip extends Sprite
 	{
 		_clearDictionaryPhotos();
 		_stockMap.clear();
+		_photoHolder.graphics.clear();
 		//_photoMap.clear();
 	}
 	
@@ -208,6 +218,11 @@ public class StockPhotoStrip extends Sprite
 			}
 		}
 		return lowestNumIndex;
+	}
+	
+	private function _drawColoredBar ( $startX:Number, $endX:Number, $color:Number ):void {
+		_photoHolder.graphics.beginFill($color);
+		_photoHolder.graphics.drawRect($startX, -8, $endX - $startX-1, 2);
 	}
 	
 }

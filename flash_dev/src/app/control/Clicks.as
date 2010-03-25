@@ -72,7 +72,8 @@ public class Clicks extends SimpleCommand implements ICommand
 				stockProxy.removeStockCategory( note.getBody()as String );
 			break;
 			case AppFacade.SUBMIT_SEARCH_TERM :
-				stockProxy.loadNewPhotoSet( note.getBody() as String )
+				var submitEvent:StockTagEvent = note.getBody() as StockTagEvent; 
+				stockProxy.loadNewPhotoSet( submitEvent.searchTerm, submitEvent.clearPreviousSearch )
 			break;
 			case AppFacade.SHOW_MODAL_CLICK :
 				formProxy.createNewModal( note.getBody() as ModalEvent );

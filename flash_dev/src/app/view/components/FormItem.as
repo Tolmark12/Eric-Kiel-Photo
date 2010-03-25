@@ -11,13 +11,14 @@ import app.view.components.events.ModalEvent;
 public class FormItem extends Sprite
 {
 	public static const INVALID:Number = 0x999999;
-	public static const VALID:Number = 0x97D557;
+	public static const VALID:Number = 0xC7BC65;
 
 	private var _urlVarName:String;
 	private var _inputTxt:TextField;
 	private var _labelTxt:TextField;
 	private var _txtBg:Sprite;
 	private var _regex:RegExp;
+	private var _icon:Check_swc;
 	public var isValid:Boolean = true;
 	
 	public function FormItem():void
@@ -25,6 +26,7 @@ public class FormItem extends Sprite
 		_inputTxt = this.getChildByName( "inputTxt" ) as TextField;
 		_labelTxt = this.getChildByName( "labelTxt" ) as TextField;
 		_txtBg = this.getChildByName( "txtBg" ) as MovieClip;
+		_icon = this.getChildByName( "icon" ) as Check_swc;
 		_inputTxt.addEventListener( FocusEvent.FOCUS_IN, _onInputTxtFocusIn, false,0,true );
 	}
 	
@@ -33,6 +35,7 @@ public class FormItem extends Sprite
 		_regex					= $fieldVo.regexValidation;
 	//	_inputTxt.text 			= $fieldVo.defaultText;
 		_labelTxt.text 			= $fieldVo.title;
+		_labelTxt.autoSize 		= "left";
 		_inputTxt.height		= 18 * $fieldVo.lines;
 		_inputTxt.multiline 	= true;
 		_txtBg.height			= _inputTxt.height + 10;
@@ -49,11 +52,14 @@ public class FormItem extends Sprite
 	
 	private function _updateValidationDisplay (  ):void {
 		var newColorTransform:ColorTransform = _txtBg.transform.colorTransform;
-		if( isValid )
+		if( isValid ){
+			_icon.gotoAndStop("_valid");
 			newColorTransform.color = VALID;
-		else
+		}else{
+			_icon.gotoAndStop("_invalid")
 			newColorTransform.color = INVALID;
-        
+        }
+
 		_txtBg.transform.colorTransform = newColorTransform;
 	}
 	

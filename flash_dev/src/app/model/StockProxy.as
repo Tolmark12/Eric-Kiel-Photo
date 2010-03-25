@@ -53,8 +53,15 @@ public class StockProxy extends Proxy implements IProxy
 	*	Request the data for the photos matching a set of tags
 	*	@param		List of tags
 	*/
-	public function loadNewPhotoSet ( $newTerm:String ):void
+	public function loadNewPhotoSet ( $newTerm:String, $doClearExistingSearch:Boolean ):void
 	{
+		if( $doClearExistingSearch ) {
+			_tags				= null;
+			_sets 				= new Vector.<StockPhotoSetVo>();
+			_matches			= new StockPhotoSetMatchesVo({})
+			_currentPhotoId		= null;
+		}
+		
 		// Flix, we may need to do some validation here to make sure we're not searching for a tag that already has been searched for.
 		sendNotification( AppFacade.LOAD_STOCK_DATA_SET, $newTerm );
 	}
@@ -85,7 +92,6 @@ public class StockProxy extends Proxy implements IProxy
 			if( stockPhotoVo != null ) {
 				_currentPhotoId = $id;
 				sendNotification( AppFacade.DISPLAY_STOCK_PHOTO, stockPhotoVo );
-				trace( stockPhotoVo.tags );
 			}else{
 				_throwError( "This Stock photo id does not match any in the list" );
 			}
@@ -249,6 +255,8 @@ public class StockProxy extends Proxy implements IProxy
 		}
 		return null;
 	}
+	
+	public function get stockConfigVo (  ):StockConfigVo{ return _configVo; };
 
 //	public static function toTitleCase( original:String ):String {
 //	      var words:Array = original.split( " " );

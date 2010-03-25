@@ -9,6 +9,7 @@ import delorum.loading.DataLoader;
 import flash.events.*;
 import com.adobe.serialization.json.JSON;
 import delorum.utils.echo;
+import flash.external.ExternalInterface;
 
 public class ExternalDataProxy extends Proxy implements IProxy
 {
@@ -51,11 +52,12 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	{
 		// TEMP !!
 		var ldr:DataLoader
-		trace( $feed  + '  :  ' + _server + "vladmin/api/index/template/3");
 		if( $feed != _server + "vladmin/api/index/template/3" )
 			ldr = new DataLoader( $feed );
 		else
-			ldr = new DataLoader( _server + "prototype/content/json/tempPortfolio.json" );
+			ldr = new DataLoader( "http://www.kielphoto.com/vladmin/api/index/template/3" );
+			//ldr = new DataLoader( _server + "prototype/content/json/tempPortfolio.json" );
+		
 		// TEMP !!
 		
 		ldr.addEventListener( Event.COMPLETE, _onPortfolioDataLoad, false,0,true );
@@ -74,10 +76,10 @@ public class ExternalDataProxy extends Proxy implements IProxy
 		loadAllStockTags();
 	}
 	
-	private var _lastSearchTerm:String;
 	/** 
 	*	@param		A comma delimited list of tags
 	*/
+	private var _lastSearchTerm:String;
 	public function loadStockDataSet ( $searchTerm:String ):void
 	{
 		_lastSearchTerm = $searchTerm;
@@ -86,6 +88,9 @@ public class ExternalDataProxy extends Proxy implements IProxy
 		ldr.loadItem();
 	}
 	
+	/** 
+	*	Loads all of the stock tag options on the site
+	*/
 	public function loadAllStockTags (  ):void
 	{
 		var ldr:DataLoader = new DataLoader( _server + "stock/api/getAllStockTags" );
@@ -94,9 +99,15 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	}
 
 	/************ VIDEO **********/
+	/** 
+	*	Calls a javascirpt that opens a video modal window
+	*	@param		The entire embed tag for showing the video
+	*/
 	public function loadAjaxVideo ( $videoEmbedTag:String ):void{
-		// FLIX: call the javascript that shows the video here!!
 		trace( $videoEmbedTag );
+		if (ExternalInterface.available) {
+			ExternalInterface.call("playVideo", $videoEmbedTag);
+		}
 	}
 	
 	// _____________________________ Data Load Handlers

@@ -5,8 +5,9 @@ import flash.net.URLVariables;
 
 public class ModalEvent extends Event
 {
-	public static const DOWNLOAD_COMP:String = "download_comp";
-	public static const ASK_A_QUESTION:String = "ask_a_question";
+	public static const DOWNLOAD_COMP:String = "download";
+	public static const ASK_A_QUESTION:String = "ask";
+	public static const LICENCE_IMAGE:String = "licence";
 	public static const INPUT_CHANGE:String = "input_change";
 	
 	// EVENTS

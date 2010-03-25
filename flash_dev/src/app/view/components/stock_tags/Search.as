@@ -1,6 +1,7 @@
 package app.view.components.stock_tags
 {
 
+import app.view.components.swc.RadioBtn;
 import flash.display.Sprite;
 import flash.text.TextField;
 import flash.events.*;
@@ -10,7 +11,9 @@ import app.view.components.events.TagBrowserEvent;
 public class Search extends Sprite
 {
 	private var _txt:TextField;
-	private var _tagSuggestions:TagBrowser = new TagBrowser();
+	private var _tagSuggestions:TagBrowser 		= new TagBrowser();
+	private var _newSearchRadeioBtn:RadioBtn	= new RadioBtn_swc();
+	private var _filterSearchRadioBtn:RadioBtn	= new RadioBtn_swc();
 	
 	public function Search():void
 	{
@@ -23,7 +26,21 @@ public class Search extends Sprite
 		_tagSuggestions.addEventListener( TagBrowserEvent.HINT_SELECTED, _onHintSelected, false,0,true );
 		
 		_tagSuggestions.y = 28;
+		
+		// Radio Buttons
+		_newSearchRadeioBtn.build("filter", "New Search");
+		_filterSearchRadioBtn.build("filter", "Filter Results");
+		_newSearchRadeioBtn.activate();
+		
+		// Position Radio Buttons
+		_filterSearchRadioBtn.x = _newSearchRadeioBtn.x + _newSearchRadeioBtn.width + 10;
+		_filterSearchRadioBtn.y = _newSearchRadeioBtn.y = _tagSuggestions.y + _tagSuggestions.height + 10;
+		
+		// Add all Children
+		this.addChild( _newSearchRadeioBtn );
+		this.addChild( _filterSearchRadioBtn );
 		this.addChild( _tagSuggestions );
+		
 	}
 	
 	public function showHints ( $ar:Array ):void
@@ -46,10 +63,10 @@ public class Search extends Sprite
 		
 		var ev:StockTagEvent = new StockTagEvent(StockTagEvent.SUBMIT_SEARCH_TERM, true);
 		ev.searchTerm = _txt.text;
+		ev.clearPreviousSearch = _newSearchRadeioBtn.isActive;
 		dispatchEvent( ev );
 		
 		_tagSuggestions.hide();
-		trace( "----- hidden" );
 	}
 	
 	// _____________________________ Event Handlers
