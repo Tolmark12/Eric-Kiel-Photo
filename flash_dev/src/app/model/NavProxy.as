@@ -68,7 +68,6 @@ public class NavProxy extends Proxy implements IProxy
 	
 	private function _sendToAnalytics ( $url:String ):void
 	{
-		//trace( "to analytics" + '  :  ' + $url );
 		ExternalInterface.call( "pageTracker._trackPageview", $url);
 	}
 	

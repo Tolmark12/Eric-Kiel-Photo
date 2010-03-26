@@ -9,15 +9,21 @@ public class PortfolioItemVo
 	public var index:uint;
 	public var tags:Array;
 	public var isActive:Boolean;
+	public var name:String;
 	
-	public function PortfolioItemVo( $json:Object, $index:uint ):void
+	public function PortfolioItemVo( $json:Object ):void
 	{
+		name		= $json.name;
 		tags		= $json.photo_tags;
 		title 		= "";
 		src			= $json.src;
 		lowResSrc	= $json.low_res_src;
-		index		= $index;
 		isActive	= true;
+	}
+	
+	public function toString (  ):String
+	{
+		return name;
 	}
 
 }

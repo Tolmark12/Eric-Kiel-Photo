@@ -44,8 +44,11 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	public function loadPortfolioData ( $feed:String ):void
 	{
 		// TEMP !!
-		// var ldr:DataLoader = new DataLoader( $feed );
-		var ldr:DataLoader = new DataLoader( "http://www.kielphoto.com/prototype/content/json/tempPortfolio.json" );
+		var ldr:DataLoader
+		if( $feed != "http://www.kielphoto.com/vladmin/api/index/template/3" )
+			ldr = new DataLoader( $feed );
+		else
+			ldr = new DataLoader( "http://www.kielphoto.com/prototype/content/json/tempPortfolio.json" );
 		// TEMP !!
 		
 		ldr.addEventListener( Event.COMPLETE, _onPortfolioDataLoad, false,0,true );
@@ -66,6 +69,33 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	private function _onPortfolioDataLoad ( e:Event ):void{
 		sendNotification( AppFacade.PORTFOLIO_DATA_LOADED, JSON.decode( e.target.data ) );
 	}
+	
+	
+	// _____________________________ TEMP!!!!!!!!!!!!!!!!!!!
+	public function addKeyHandler ( $stage ):void
+	{
+		//TEMP!!!!!
+		$stage.addEventListener (KeyboardEvent.KEY_DOWN, _keyDownHandler);
+		//TEMP!!!!!
+	}
+	
+	//TEMP!!!!!
+	private function _keyDownHandler ( e:KeyboardEvent ):void
+	{
+		if(e.keyCode==48 && e.shiftKey)
+			loadPortfolioData("http://www.kielphoto.com//vladmin/api/index/template/106");
+		else if(e.keyCode==48 )
+			loadPortfolioData("http://www.kielphoto.com/vladmin/api/index/template/3");
+		
+		// Run the garbage collection
+		//this.parent.removeChild( this );
+		//try {
+		//new LocalConnection().connect('foo');
+		//new LocalConnection().connect('foo');
+		//} catch (e:*) {}
+	}
+	//TEMP!!!!!
+	
 	
 }
 }

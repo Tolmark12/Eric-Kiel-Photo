@@ -14,6 +14,7 @@ public class NavItemVo
 	public var tag:String;
 	public var isDefault:Boolean;
 	public var kind:String;
+	public var sortVal:String;				// Hopefully a temp var for sorting the nav items
 	
 	public function NavItemVo ( $json:Object ):void
 	{
@@ -24,6 +25,7 @@ public class NavItemVo
 		pageType	= $json.page_type;
 		tag			= $json.nav_filter_tag;
 		isDefault	= Boolean( $json.is_default );
+		sortVal		= $json.sort;
 		
 		if( $json.sub != null ) {
 			kind	= $json.sub.kind;
@@ -41,6 +43,12 @@ public class NavItemVo
 			}
 		}
 	}
+	
+	public function toString (  ):String
+	{
+		return text;
+	}
 }
 
 }
+

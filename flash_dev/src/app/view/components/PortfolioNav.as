@@ -141,24 +141,20 @@ package app.view.components
 			switch(e.currentTarget)
 			{
 				case _controllerArray[0]:
-					//trace("start");					
 					_navEvent = new NavEvent(NavEvent.PORTFOLIO_START, true);
 					dispatchEvent(_navEvent);
 				break;       
 				case _controllerArray[1]:
-					//trace("end");
 					_navEvent = new NavEvent(NavEvent.PORTFOLIO_END, true);
 					dispatchEvent(_navEvent);
 				break;       
 				case _controllerArray[2]:
 				case _controllerArray[4]:
-					//trace("prev");
 					_navEvent = new NavEvent(NavEvent.PORTFOLIO_PREV, true);
 					dispatchEvent(_navEvent);
 				break;       
 				case _controllerArray[3]:
 				case _controllerArray[5]:
-					//trace("next");
 					_navEvent = new NavEvent(NavEvent.PORTFOLIO_NEXT, true);
 					dispatchEvent(_navEvent);
 				break;
@@ -170,22 +166,18 @@ package app.view.components
 			switch(e.keyCode)
 			{
 				case 38:
-					//trace("start");					
 					_navEvent = new NavEvent(NavEvent.PORTFOLIO_START, true);
 					dispatchEvent(_navEvent);
 				break;       
 				case 40:
-					//trace("end");
 					_navEvent = new NavEvent(NavEvent.PORTFOLIO_END, true);
 					dispatchEvent(_navEvent);
 				break;       
 				case 37:
-					//trace("prev");
 					_navEvent = new NavEvent(NavEvent.PORTFOLIO_PREV, true);
 					dispatchEvent(_navEvent);
 				break;       
 				case 39:
-					//trace("next");
 					_navEvent = new NavEvent(NavEvent.PORTFOLIO_NEXT, true);
 					dispatchEvent(_navEvent);
 				break;

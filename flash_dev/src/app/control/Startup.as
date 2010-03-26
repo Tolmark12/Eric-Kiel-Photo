@@ -41,6 +41,9 @@ public class Startup extends SimpleCommand implements ICommand
 		// Fire first stage resize event
 		kielRoot.stage.dispatchEvent( new Event(Event.RESIZE, true) );
 		
+		// TEMP !!!!!!!!
+		externalDataProxy.addKeyHandler(kielRoot.stage);
+		
 	}
 }
 }

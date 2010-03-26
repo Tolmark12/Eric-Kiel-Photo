@@ -38,7 +38,8 @@ public class AppFacade extends Facade implements IFacade
     public static const IMAGE_LOADED:String 						= "image_loaded";
 	public static const IMAGE_LOADED_LOW:String 					= "image_loaded_low";
 	
-	// State Changes                                        		
+	// State Changes        
+	public static const REMOVE_CURRENT_PAGE:String 					= "remove_current_page";                                		
 	public static const ACTIVATE_PORTFOLIO_ITEM:String 				= "activate_portfolio_item";
 	public static const APPLY_PORTFOLIO_FILTERS:String 				= "apply_portfolio_filters";
 	public static const ACTIVE_PORTFOLIO_TAGS:String 				= "active_portfolio_tags";  		// An array of the portfolio tags that are active

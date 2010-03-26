@@ -18,7 +18,6 @@ public class PortfolioProxy extends Proxy implements IProxy
 	private var _configVo:ConfigVo;
 	private var _totalLoaded:Number;
 	
-	
 	// Constructor
 	public function PortfolioProxy( ):void { 
 		super( NAME );
@@ -26,6 +25,8 @@ public class PortfolioProxy extends Proxy implements IProxy
 	
 	public function parseNewPortfolio ( $json:Object ):void
 	{
+		_sequence = null;
+		sendNotification( AppFacade.REMOVE_CURRENT_PAGE );
 		_navProxy = facade.retrieveProxy( NavProxy.NAME ) as NavProxy;
 		_totalLoaded = 0;
 		_portfolioVo = new PortfolioVo( $json );
@@ -33,6 +34,7 @@ public class PortfolioProxy extends Proxy implements IProxy
 		addFilter("all");
 		_sequence = new Sequence( _portfolioVo.items );
 		_sequence.deselect();
+		first();
 //		_sendNewIndex();
 	}
 	
@@ -154,6 +156,7 @@ public class PortfolioProxy extends Proxy implements IProxy
 	public function imageLoaded ( $index:uint ):void
 	{
 		sendNotification( AppFacade.UPDATE_TOTAL_LOADED, {loaded:++_totalLoaded, total:_sequence.totalItems*2} );
+//		trace( _totalLoaded + '  :  ' + _sequence.totalItems*2 );
 	}
 	
 	
@@ -249,6 +252,5 @@ public class PortfolioProxy extends Proxy implements IProxy
 		}
 		return null;
 	}
-
 }
 }
