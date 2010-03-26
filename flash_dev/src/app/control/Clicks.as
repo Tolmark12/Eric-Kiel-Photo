@@ -73,7 +73,7 @@ public class Clicks extends SimpleCommand implements ICommand
 			break;
 			case AppFacade.SUBMIT_SEARCH_TERM :
 				var submitEvent:StockTagEvent = note.getBody() as StockTagEvent; 
-				stockProxy.loadNewPhotoSet( submitEvent.searchTerm, submitEvent.clearPreviousSearch )
+				stockProxy.loadNewPhotoSet( submitEvent.searchTerm, submitEvent.clearPreviousSearch );
 			break;
 			case AppFacade.SHOW_MODAL_CLICK :
 				formProxy.createNewModal( note.getBody() as ModalEvent );
@@ -87,11 +87,12 @@ public class Clicks extends SimpleCommand implements ICommand
 			case AppFacade.ADD_TO_LIGHTBOX :
 				lightBoxProxy.addItemToLightBox( note.getBody() as String );
 			break;
-			case AppFacade.SHOW_LIGHTBOX_CLICK :
-				//lightBoxProxy.send
-			break;
 			case AppFacade.PORTFOLIO_ITEM_SHOW_VIDEO :
 				portfolioProxy.stockPhotoVideoClick();
+			break;
+			case AppFacade.LIGHTBOX_PHOTO_CLICKED :
+				var stockEventTwo:StockEvent = note.getBody() as StockEvent;
+				stockProxy.activateLightBoxPhotoById(stockEventTwo.id)
 			break;
 		}
 	}

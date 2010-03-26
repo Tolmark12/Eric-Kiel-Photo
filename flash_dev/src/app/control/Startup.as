@@ -60,8 +60,6 @@ public class Startup extends SimpleCommand implements ICommand
 		facade.registerProxy( tagsProxy );
 		facade.registerProxy( formProxy );
 		
-		// Initialize Stock photo
-		lightBoxProxy.initLightBox();
 		// Start Data load
 		externalDataProxy.getConfigData(kielRoot.stage);
 		// Fire first stage resize event

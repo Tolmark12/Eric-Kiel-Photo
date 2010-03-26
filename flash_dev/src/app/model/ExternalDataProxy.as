@@ -11,6 +11,7 @@ import com.adobe.serialization.json.JSON;
 import delorum.utils.echo;
 import flash.external.ExternalInterface;
 
+
 public class ExternalDataProxy extends Proxy implements IProxy
 {
 	public static const NAME:String = "external_data_proxy";
@@ -97,6 +98,17 @@ public class ExternalDataProxy extends Proxy implements IProxy
 		ldr.addEventListener( Event.COMPLETE, _onStockTagsLoaded, false,0,true );
 		ldr.loadItem();
 	}
+	
+	/** 
+	*	Load the lightbox items
+	*	@param		comma delimited list of ids to load
+	*/
+	public function loadLightBoxItems ( $items:String ):void
+	{
+		var ldr:DataLoader = new DataLoader( _server + "stock/api/getStockPhotosByIds/ids/" + $items );
+		ldr.addEventListener( Event.COMPLETE, _onLightBoxItemsLoaded, false,0,true );
+		ldr.loadItem();
+	}
 
 	/************ VIDEO **********/
 	/** 
@@ -138,6 +150,10 @@ public class ExternalDataProxy extends Proxy implements IProxy
 		sendNotification( AppFacade.STOCK_DATA_SET_LOADED, {term:_lastSearchTerm, items:json });
 	}
 	
+	private function _onLightBoxItemsLoaded ( e:Event ):void {
+		var json:Object = JSON.decode( e.target.data );
+		sendNotification( AppFacade.LIGHTBOX_ITEMS_LOADED, {items:json, term:"lightbox" } );
+	}
 	
 	// _____________________________ Getters / Setters
 	

@@ -54,6 +54,17 @@ public class Search extends Sprite
 		
 	}
 	
+	public function enableFiltering (  ):void
+	{
+		_filterSearchRadioBtn.visible = true;
+	}
+	
+	public function disableFiltering (  ):void
+	{
+		_newSearchRadeioBtn.activate();
+		_filterSearchRadioBtn.visible = false;
+	}
+	
 	// _____________________________ Helpers
 	
 	public function submit ( $str:String=null ):void

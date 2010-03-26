@@ -13,6 +13,7 @@ import app.view.components.events.ModalEvent;
 
 public class StockDetailView extends Sprite
 {
+	private var _display:Sprite = new Sprite();
 	// Image
 	private var _imageHolder:Sprite = new Sprite();
 	// Background
@@ -40,7 +41,9 @@ public class StockDetailView extends Sprite
 		this.mouseChildren = true;
 		
 		_drawBackgroundBlocker();
-		this.addChild(_imageHolder);
+		this.addChild(_display);
+		_display.addChild( _imageHolder );
+		_display.alpha = 0;
 		_imageHolder.y  = 50;
 		
 		// Create the buttons
@@ -49,10 +52,10 @@ public class StockDetailView extends Sprite
 		_addToLightBoxBtn.build( "Add To Lightbox", "_lightbox")
 		_downloadCompBtn.y = _askQuestionBtn.y = _imageHolder.y - 20;
 		
-		this.addChild( _askQuestionBtn );
-		this.addChild( _downloadCompBtn );
-		this.addChild( _addToLightBoxBtn );
-		this.addChild( _closeBtn );
+		_display.addChild( _askQuestionBtn );
+		_display.addChild( _downloadCompBtn );
+		_display.addChild( _addToLightBoxBtn );
+		_display.addChild( _closeBtn );
 		
 		_closeBtn.buttonMode = true;
 		_closeBtn.mouseChildren = false;
@@ -95,8 +98,9 @@ public class StockDetailView extends Sprite
 		_darkBackground.x 		= StageResizeVo.CENTER - _darkBackground.width / 2;
 		
 		_darkBackground.mouseEnabled = true;
-		this.alpha = 0;
-		Tweener.addTween( this, { alpha:1, time:1, transition:"EaseInOutQuint"} );
+		Tweener.addTween( _darkBackground, { alpha:1, time:1, transition:"EaseInOutQuint"} );
+		_display.alpha = 0;
+		Tweener.addTween( _display, { alpha:1, time:1, transition:"EaseInOutQuint"} );
 		this.visible = true;
 		_isHidden = false;
 	}
@@ -116,7 +120,8 @@ public class StockDetailView extends Sprite
 	public function close (  ):void
 	{
 		_darkBackground.mouseEnabled = false;
-		Tweener.addTween( this, { alpha:0, time:0.3, transition:"EaseInOutQuint", onComplete:hide} );
+		Tweener.addTween( _display, { alpha:0, time:0.3, transition:"EaseInOutQuint"} );
+		Tweener.addTween( _darkBackground, { alpha:0, time:0.3, transition:"EaseInOutQuint", onComplete:hide} );
 		dispatchEvent( new ModalEvent(ModalEvent.CLOSE_MODAL, true) );
 	}
 	

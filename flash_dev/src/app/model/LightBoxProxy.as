@@ -14,12 +14,13 @@ public class LightBoxProxy extends Proxy implements IProxy
 	private var _sharedObject:SharedObject;
 	private var _lightBoxStack:Array = new Array();
 	public var doShowLightBox:Boolean = false;			// Set this true if the lightbox was passed in via URL
+	public var lightBoxPhotoSet:StockPhotoSetVo;
 	
 	// Constructor
 	public function LightBoxProxy( ):void { 
 		super( NAME );
 		_sharedObject = SharedObject.getLocal("kiel-light-box");
-		emptyLightBox();
+		//emptyLightBox();
 	 };
 	
 	// _____________________________ API
@@ -34,22 +35,21 @@ public class LightBoxProxy extends Proxy implements IProxy
 		
 		// If there is a lightbox stack included in the url, split that
 		// and create the lightbox: EX - http://kiel.com/?/213/123/123/123/etc..
-		if( /*urlPath != null*/ 1 == 1 )
+		if( urlPath != null )
 		{
 			// FLIX: Split on the "?"
 			//var tempAr = urlPath.split("?"); 
 			//var tempAr = ["", "1,2,3"];
-			var tempAr:Array = [];
-			
+			var tempAr:Array = urlPath.split("?"); 
+
 			// If there are images in the second part of that string, create the array
 			if( tempAr.length > 1 ) {
-				echo( tempAr[0] + '  :  ' + tempAr[1] );
 				_lightBoxStack = tempAr[1].split(",");
 				_saveToLocalObject();
 				doShowLightBox = true;
 			}
 		}
-			
+		
 		// else if there is a shared object with a stack, use that !only! if there is no
 		// lightbox in the url
 		if( _sharedObject.data.lightBox != null && _lightBoxStack.length == 0 ){
@@ -58,6 +58,13 @@ public class LightBoxProxy extends Proxy implements IProxy
 		}
 		
 		updateTotalItemsInLightbox();
+		if( _lightBoxStack.length > 0 )
+			sendNotification( AppFacade.LOAD_LIGHTBOX_ITEMS, _lightBoxStack.join(",") );
+	}
+	
+	public function parseLightBoxJson ( $json:Object ):void {
+		lightBoxPhotoSet = new StockPhotoSetVo($json);
+		sendNotification( AppFacade.POPULATE_LIGHTBOX, lightBoxPhotoSet );
 	}
 	
 	/** 
@@ -65,17 +72,29 @@ public class LightBoxProxy extends Proxy implements IProxy
 	*	@param		The id of the item to add
 	*/
 	public function addItemToLightBox ( $itemId:String ):String
-	{
+	{		
 		// If it's already in the lightbox, don't add it
 		for each( var itemId:String in _lightBoxStack) {
 			if( itemId == $itemId )
 				return null;
 		}
-
+		
 		_lightBoxStack.push($itemId);
 		_saveToLocalObject();
 		updateTotalItemsInLightbox();
+		
+		// Add this item to the photo set
+		var stockProxy:StockProxy = facade.retrieveProxy( StockProxy.NAME ) as StockProxy;
+		lightBoxPhotoSet.addStockPhotoToSet( stockProxy.getPhotoVo($itemId) );
 		return null;
+	}
+	
+	/** 
+	*	Remove item from the lightbox stack
+	*/
+	public function removeItemFromLightBox ( $itemId:String ):void
+	{
+		lightBoxPhotoSet.removeStockPhotoFromSet($itemId);
 	}
 	
 	/** 
@@ -114,7 +133,6 @@ public class LightBoxProxy extends Proxy implements IProxy
 	// Save the contents of _lightBoxStack into a delimited sting in the shared object
 	private function _saveToLocalObject (  ):void
 	{
-		echo( _sharedObject.data.lightBox );
 		_sharedObject.data.lightBox = _lightBoxStack.join("/");
 	}
 	

@@ -108,7 +108,18 @@ public class StockProxy extends Proxy implements IProxy
 				_throwError( "This Stock photo id does not match any in the list" );
 			}
 		}
-			
+	}
+	
+	/** 
+	*	For activating a photo currently in the lightbox
+	*/
+	public function activateLightBoxPhotoById ( $id:String ):void
+	{
+		if( $id != _currentPhotoId){
+			var lightBoxProxy:LightBoxProxy = facade.retrieveProxy( LightBoxProxy.NAME ) as LightBoxProxy;
+			_currentPhotoId = $id;
+			sendNotification( AppFacade.DISPLAY_STOCK_PHOTO, lightBoxProxy.lightBoxPhotoSet.getStockPhotoById($id) );
+		}
 	}
 	
 	/** 
@@ -159,6 +170,7 @@ public class StockProxy extends Proxy implements IProxy
 		// then the lone set is considered the match
 		if( totalSets == 0 ) {	
 			// Don't show a white matches set
+			sendNotification( AppFacade.SHOW_SEARCH_OPTIONS );
 		}
 		
 		// else If there is only one set currently in the matches stack, 
@@ -178,6 +190,7 @@ public class StockProxy extends Proxy implements IProxy
 					_matches.addStockPhotoToSet($set.stack[i])
 				}
 			}
+			sendNotification( AppFacade.HIDE_SEARCH_OPTIONS );
 		}
 		
 		// Else, there are multiple matches to test against

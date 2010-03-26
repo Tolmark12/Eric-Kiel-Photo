@@ -21,7 +21,9 @@ public class LightBoxMediator extends Mediator implements IMediator
 		super( NAME );
 		$stage.addChild( _lightBox )
 		$stage.addChild( _lightBoxBtn );
-		_lightBoxBtn.addEventListener( MouseEvent.CLICK, _onShowLightBox, false,0,true );
+		_lightBoxBtn.addEventListener( 	MouseEvent.CLICK, _onLightBoxBtnClick, false,0,true );
+		_lightBox.addEventListener(		StockEvent.STOCK_PHOTO_CLICK, _onStockPhotoClick, false,0,true );
+		
    	}
 	
 	// PureMVC: List notifications
@@ -31,7 +33,9 @@ public class LightBoxMediator extends Mediator implements IMediator
 					AppFacade.STAGE_RESIZE,
 		 		 	AppFacade.UPDATE_LIGHTBOX_TOTAL,
 		 			AppFacade.STOCK_RESET,
-		 			AppFacade.SHOW_LIGHTBOX_CLICK ];
+		 			AppFacade.SHOW_LIGHTBOX,
+		 			AppFacade.HIDE_LIGHTBOX,
+		 			AppFacade.POPULATE_LIGHTBOX, ];
 	}
 	
 	// PureMVC: Handle notifications
@@ -52,19 +56,31 @@ public class LightBoxMediator extends Mediator implements IMediator
 			case AppFacade.STOCK_RESET :
 				_lightBoxBtn.clear();
 			break;
-			case AppFacade.POPULATE_LIGHBOX :
-				
+			case AppFacade.POPULATE_LIGHTBOX :
+				_lightBox.populate( note.getBody() as StockPhotoSetVo );
 			break;
-			case AppFacade.SHOW_LIGHTBOX_CLICK :
+			case AppFacade.SHOW_LIGHTBOX :
+				_lightBoxBtn.activate();
 				_lightBox.show();
+			break;
+			case AppFacade.HIDE_LIGHTBOX :
+				_lightBoxBtn.deactivate();
+				_lightBox.hide();
 			break;
 		}
 	}
 	
 	// _____________________________ Event Handlers
 	
-	private function _onShowLightBox ( e:Event ):void {
-		sendNotification( AppFacade.SHOW_LIGHTBOX_CLICK );
+	private function _onLightBoxBtnClick ( e:Event ):void {
+		if( _lightBoxBtn.isActive )
+			sendNotification( AppFacade.HIDE_LIGHTBOX );
+		else
+			sendNotification( AppFacade.SHOW_LIGHTBOX );
+	}
+	
+	private function _onStockPhotoClick ( e:Event ):void {
+		sendNotification( AppFacade.LIGHTBOX_PHOTO_CLICKED, e );
 	}
 	
 }

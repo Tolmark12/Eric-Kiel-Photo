@@ -109,7 +109,7 @@ public class StockMediator extends PageMediator implements IMediator
 	}
 	
 	private function _onSubmitTerm ( e:StockTagEvent ):void {
-		sendNotification( AppFacade.SUBMIT_SEARCH_TERM, e.searchTerm );
+		sendNotification( AppFacade.SUBMIT_SEARCH_TERM, e );
 	}
 	
 	private function _onStockPhotoClick ( e:StockEvent ):void {

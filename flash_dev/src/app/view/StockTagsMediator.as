@@ -35,7 +35,9 @@ public class StockTagsMediator extends Mediator implements IMediator
 		return	[	AppFacade.DISPLAY_TAG_HINTS,
 		  			AppFacade.STOCK_RESET,
 		 			AppFacade.STOCK_INIT,
-		 			AppFacade.STOCK_TAGS_LOADED, ];
+		 			AppFacade.STOCK_TAGS_LOADED,
+					AppFacade.SHOW_SEARCH_OPTIONS,
+		 			AppFacade.HIDE_SEARCH_OPTIONS, ];
 	}
 	
 	// PureMVC: Handle notifications
@@ -54,6 +56,12 @@ public class StockTagsMediator extends Mediator implements IMediator
 			break;
 			case AppFacade.STOCK_TAGS_LOADED :
 				_stockTags.show();
+			break;
+			case AppFacade.SHOW_SEARCH_OPTIONS :
+				_stockTags.enableFiltering();
+			break;
+			case AppFacade.HIDE_SEARCH_OPTIONS :
+				_stockTags.disableFiltering();
 			break;
 		}
 	}

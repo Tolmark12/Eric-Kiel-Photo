@@ -64,6 +64,8 @@ public class DataRequests extends SimpleCommand implements ICommand
 			// _____________________________ Stock
 			case AppFacade.STOCK_CONFIG_LOADED :
 				stockProxy.parseConfigData( note.getBody() as Object );
+				// Initialize Stock photo
+				lightBoxProxy.initLightBox();
 			break;
 			case AppFacade.LOAD_STOCK_DATA_SET :
 				externalDataProxy.loadStockDataSet( note.getBody() as String );
@@ -76,6 +78,12 @@ public class DataRequests extends SimpleCommand implements ICommand
 			break;
 			case AppFacade.LOAD_VIDEO :
 				externalDataProxy.loadAjaxVideo( note.getBody() as String );
+			break;
+			case AppFacade.LOAD_LIGHTBOX_ITEMS :
+				externalDataProxy.loadLightBoxItems( note.getBody() as String );
+			break;
+			case AppFacade.LIGHTBOX_ITEMS_LOADED :
+				lightBoxProxy.parseLightBoxJson( note.getBody() as Object );
 			break;
 		}
 	}

@@ -31,6 +31,16 @@ public class StockTags extends Sprite
 		this.visible = false;
 	}
 	
+	public function disableFiltering (  ):void
+	{
+		_search.disableFiltering();
+	}
+	
+	public function enableFiltering (  ):void
+	{
+		_search.enableFiltering();
+	}
+	
 	public function displaySearchTagHints ( $array:Array ):void
 	{
 		_search.showHints( $array );

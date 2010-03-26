@@ -77,7 +77,7 @@ public class StockPhotoLanding extends Sprite
 		var categoryBtn:StockLandingMainCat = e.currentTarget as StockLandingMainCat;
 		var ev:StockTagEvent = new StockTagEvent(StockTagEvent.SUBMIT_SEARCH_TERM, true);
 		ev.searchTerm = categoryBtn.searchTerm;
-		dispatchEvent( ev );
+		this.dispatchEvent( ev );
 	}
 	
 	private function _hideFadeComplete (  ):void

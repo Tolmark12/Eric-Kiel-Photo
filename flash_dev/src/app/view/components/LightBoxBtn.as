@@ -10,7 +10,7 @@ public class LightBoxBtn extends Sprite
 	
 	private var _titleTxt:TextField;
 	private var _lightBoxIcon:Sprite;
-	
+	public var isActive:Boolean = false;
 	public function LightBoxBtn():void
 	{
 		_lightBoxIcon 	= this.getChildByName( "lightBoxIcon" ) as Sprite;
@@ -52,6 +52,16 @@ public class LightBoxBtn extends Sprite
 	public function clear (  ):void
 	{
 		this.visible = false;
+	}
+	
+	public function activate (  ):void
+	{
+		isActive = true;
+	}
+	
+	public function deactivate (  ):void
+	{
+		isActive = false;
 	}
 	
 }

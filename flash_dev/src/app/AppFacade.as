@@ -76,6 +76,8 @@ public class AppFacade extends Facade implements IFacade
 	public static const STOCK_CATEGORY_REMOVED:String 				= "stock_category_removed";
 	public static const ACTIVATE_MODAL:String 						= "activate_modal";
 	public static const ADD_TO_LIGHTBOX:String 						= "add_to_lightbox";
+	public static const HIDE_SEARCH_OPTIONS:String 					= "hide_search_options";
+	public static const SHOW_SEARCH_OPTIONS:String 					= "show_search_options";
 	
 	// Tags
 	public static const STOCK_TAGS_LOADED:String 					= "stock_tags_loaded";
@@ -86,10 +88,13 @@ public class AppFacade extends Facade implements IFacade
 	public static const SUBMIT_SEARCH_TERM:String 					= "submit_search_term";
 	
 	// LIGHTBOX
+	public static const LOAD_LIGHTBOX_ITEMS:String 					= "load_lightbox_items";
+	public static const LIGHTBOX_ITEMS_LOADED:String 				= "lightbox_items_loaded";
 	public static const SHOW_LIGHTBOX:String 						= "show_lightbox";
-	public static const SHOW_LIGHTBOX_CLICK:String 					= "show_lightbox_click";
+	public static const HIDE_LIGHTBOX:String 						= "hide_lightbox";
 	public static const UPDATE_LIGHTBOX_TOTAL:String 				= "update_lightbox_total";
-	public static const POPULATE_LIGHBOX:String 					= "populate_lighbox";
+	public static const POPULATE_LIGHTBOX:String 					= "populate_lighbox";
+	public static const LIGHTBOX_PHOTO_CLICKED:String 				= "lightbox_photo_clicked";
 	
 	// VIDEO
 	public static const LOAD_VIDEO:String 							= "load_video";
@@ -152,9 +157,11 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( STOCK_PHOTO_CLOSE, Clicks );
 		registerCommand( SUBMIT_FORM, Clicks );
 		registerCommand( ADD_TO_LIGHTBOX, Clicks );
-		registerCommand( SHOW_LIGHTBOX_CLICK, Clicks );
 		registerCommand( PORTFOLIO_ITEM_SHOW_VIDEO, Clicks );
 		registerCommand( LOAD_VIDEO, DataRequests );
+		registerCommand( LOAD_LIGHTBOX_ITEMS, DataRequests );
+		registerCommand( LIGHTBOX_ITEMS_LOADED, DataRequests );
+		registerCommand( LIGHTBOX_PHOTO_CLICKED, Clicks );
 	}
 
 }
