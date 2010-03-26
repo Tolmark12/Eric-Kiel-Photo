@@ -94,6 +94,9 @@ public class AppFacade extends Facade implements IFacade
 	// VIDEO
 	public static const LOAD_VIDEO:String 							= "load_video";
 	
+	// MESSAGES
+	public static const SHOW_MESSAGE:String 						= "show_message";
+	
 	// Example: var myFacade:AppFacade = AppFacade.getInstance( 'app_facade' );
 	public function AppFacade( key:String ):void
 	{

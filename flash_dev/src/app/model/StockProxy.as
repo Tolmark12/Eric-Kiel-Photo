@@ -53,15 +53,12 @@ public class StockProxy extends Proxy implements IProxy
 	*	Request the data for the photos matching a set of tags
 	*	@param		List of tags
 	*/
+	private var _lastSearchTerm:String;
+	private var _doClearExistingSearch:Boolean;
 	public function loadNewPhotoSet ( $newTerm:String, $doClearExistingSearch:Boolean ):void
 	{
-		if( $doClearExistingSearch ) {
-			_tags				= null;
-			_sets 				= new Vector.<StockPhotoSetVo>();
-			_matches			= new StockPhotoSetMatchesVo({})
-			_currentPhotoId		= null;
-		}
-		
+		_doClearExistingSearch = $doClearExistingSearch;
+		_lastSearchTerm = $newTerm;
 		// Flix, we may need to do some validation here to make sure we're not searching for a tag that already has been searched for.
 		sendNotification( AppFacade.LOAD_STOCK_DATA_SET, $newTerm );
 	}
@@ -70,12 +67,27 @@ public class StockProxy extends Proxy implements IProxy
 	*	Parse a new stock photo data set
 	*/
 	public function parseNewStockDataSet ( $json:Object ):void
-	{   		
-		var newSet:StockPhotoSetVo 	= new StockPhotoSetVo($json);
-		_findAndAddNewMatches( newSet );
-		_sets.unshift(newSet);
+	{   
+		// If there are search results:
+		if( $json.items.length != 0 ) {
+			
+			if( _doClearExistingSearch ) {
+				_tags				= null;
+				_sets 				= new Vector.<StockPhotoSetVo>();
+				_matches			= new StockPhotoSetMatchesVo({})
+				_currentPhotoId		= null;
+			}
+			
+			var newSet:StockPhotoSetVo 	= new StockPhotoSetVo($json);
+			_findAndAddNewMatches( newSet );
+			_sets.unshift(newSet);
+			_prepareAneSentResults();
+		}
+		//...else:
+		else{
+			sendNotification( AppFacade.SHOW_MESSAGE, new MessageVo("No photos matched your search for: "+_lastSearchTerm) );
+		}
 		
-		_prepareAneSentResults();
 	}
 	
 	/** 

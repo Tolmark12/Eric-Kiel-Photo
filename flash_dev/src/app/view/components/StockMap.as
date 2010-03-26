@@ -127,6 +127,10 @@ public class StockMap extends Sprite
 		_mapDragger.setHorizontalBounds( _mapItemsHolder.x, _mapItemsHolder.x + _mapItemsHolder.width, browserWidth )
 	}
 	
+	public function set draggerVisible ( $isVisible:Boolean ):void{ 
+		_mapDragger.visible = $isVisible;
+	}
+	
 	public function activateItem ( $id:String ):void
 	{
 		

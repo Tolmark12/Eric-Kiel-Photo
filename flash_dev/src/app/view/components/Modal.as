@@ -13,8 +13,8 @@ package app.view.components
 		
 		public const PADDING:Number					= 15;
 		
-		private var _background:Sprite				= new Sprite();
-		private var _closeBtn:CloseBtn_swc			= new CloseBtn_swc();
+		protected var _background:Sprite				= new Sprite();
+		protected var _closeBtn:CloseBtn_swc			= new CloseBtn_swc();
 		
 		//private var closeButton:ModalClose_swc = new ModalClose_swc();
 		

@@ -25,7 +25,7 @@ package app.view.components
 		public function ModalForm()
 		{
 			// 330 is a pre-determined fixed width for this (ModalForm) modal. The height is arbitrarily set to 330.
-			super(_WIDTH, 330);
+			super(_WIDTH, 400);
 			
 			this.addChild(_contentHolder);
 			_contentHolder.addChild(_icon);
@@ -53,7 +53,7 @@ package app.view.components
 			_contentHolder.y 	= this.PADDING;
 
 			_icon.gotoAndStop( $formVo.icon );			
-			_buildForm( $formVo.fields );
+			_buildForm( $formVo.fields, $formVo.URLVars );
 			
 			_submitBtn.x = _formHolder.x+_formHolder.width - _submitBtn.width;
 			_submitBtn.y = _formHolder.y + _formHolder.height + 20;
@@ -77,7 +77,7 @@ package app.view.components
 		
 		// _____________________________ Helpers
 		
-		private function _buildForm ( $formItems:Vector.<FieldVO> ):void {
+		private function _buildForm ( $formItems:Vector.<FieldVO>, $urlVars:URLVariables ):void {
 			var len:uint = $formItems.length;
 			var yPos:Number = 0;
 			_formHolder.y = _description.y + _description.height + 30;
@@ -91,6 +91,12 @@ package app.view.components
 			 	formItem.y = yPos;
 				_formHolder.addChild( formItem );
 				yPos += formItem.height + 10;
+				
+				// It would be good to autopopulate 
+				// Figure this out when I've got more brain power available... :-)
+				//
+				//if( $urlVars[fieldVo.urlVarName] != null )
+				//	formItem.inputField.text = $urlVars[fieldVo.urlVarName];
 			}
 		}
 		
@@ -133,6 +139,7 @@ package app.view.components
 			var ev:ModalEvent = new ModalEvent(ModalEvent.SUBMIT_FORM, true);
 			ev.urlVars = extractVars();
 			dispatchEvent( ev );
+			super._closeBtn.dispatchEvent( new MouseEvent(MouseEvent.CLICK, true) );
 		}
 		
 	}

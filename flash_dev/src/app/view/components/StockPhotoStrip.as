@@ -97,8 +97,9 @@ public class StockPhotoStrip extends Sprite
 		if( count == 1 )
 			_photoHolder.graphics.clear();
 		
-		setScrollWindow(StageResizeVo.lastResize);
 		_stockMap.buildNewSet($sets);
+		setScrollWindow(StageResizeVo.lastResize);
+		scroll(0);
 	}
 	
 	/** 
@@ -145,6 +146,9 @@ public class StockPhotoStrip extends Sprite
 	{
 		//_scrollWindow = new Rectangle( 0,0, _photoHolder.width - StageResizeVo.lastResize.width ,0 );
 		_scrollWindow = new Rectangle( 0,0, _photoHolder.width - StageResizeVo.MIN_WIDTH ,0 );
+		_stockMap.draggerVisible = ( _photoHolder.width > StageResizeVo.MIN_WIDTH )? true : false;
+			
+			
 	}
 	
 	public function deleteStockTagById ( $tagIndex:uint ):void

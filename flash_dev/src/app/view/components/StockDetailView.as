@@ -132,7 +132,7 @@ public class StockDetailView extends Sprite
 	
 	private function _drawBackgroundBlocker (  ):void {
 		this.addChild( _darkBackground );
-		_darkBackground.addEventListener( MouseEvent.CLICK, _onDarkClick, false,0,true );
+		_darkBackground.addEventListener( MouseEvent.CLICK, _onCloseClick, false,0,true );
 		_darkBackground.graphics.beginFill( 0x000000, 0.8 );
 		_darkBackground.graphics.drawRect( 0, 0, 1000, 1000 );
 	}
@@ -173,9 +173,6 @@ public class StockDetailView extends Sprite
 		_addToLightBoxBtn.y = _imageHolder.y + _imageHolder.height + 7;
 	}
 	
-	private function _onDarkClick ( e:Event ):void {
-		close();
-	}
 
 }
 

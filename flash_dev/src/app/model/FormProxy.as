@@ -41,11 +41,15 @@ public class FormProxy extends Proxy implements IProxy
 		newModal.fields       	= [ fieldVo, fieldVo, fieldVo ];
 		*/
 		var stockProxy:StockProxy = facade.retrieveProxy( StockProxy.NAME ) as StockProxy;
-		sendNotification( AppFacade.CREATE_NEW_MODAL, stockProxy.stockConfigVo.getFormById( $modalEvent.type ) );
+		var form:FormVO = stockProxy.stockConfigVo.getFormById( $modalEvent.type );
+		form.updateFieldValues();
+		sendNotification( AppFacade.CREATE_NEW_MODAL, form );
 	}
 	
 	public function submitForm ( $urlVars:URLVariables ):void
 	{
+		FormVO.updateGlobalVars($urlVars);
+		
 		var daLoader:URLLoader = new URLLoader();
         daLoader.addEventListener( Event.COMPLETE, _onComplete, false,0,true );
 		daLoader.addEventListener( IOErrorEvent.IO_ERROR, _onIoError, false,0,true );
