@@ -11,6 +11,7 @@ import app.view.components.events.ImageLoadEvent;
 import flash.filters.BitmapFilter;
 import flash.filters.BitmapFilterQuality;
 import flash.filters.GlowFilter;
+import app.view.components.swc.SeeFilmBtn;
 
 public class PortfolioItem extends Sprite
 {
@@ -22,6 +23,7 @@ public class PortfolioItem extends Sprite
 	private var _portfolioImages:PortfolioImage;
 	public var targetX:Number;
 	private var _isTweening:Boolean = false;
+	private var _viewVideoBtn:SeeFilmBtn;
 	public var isHidden:Boolean = false;
 	public var index:uint;
 	
@@ -54,6 +56,11 @@ public class PortfolioItem extends Sprite
 
 		_portfolioImages.loadQueueNumber = $loadQueueNumber;
 		_portfolioImages.loadImages( _portfolioItemVo.lowResSrc, _portfolioItemVo.src, index < 9 );
+		
+		
+		if( $portfolioItemVo.videoEmbedTag != null )
+			_viewVideoBtn = new SeeFilmBtn_swc();
+			
 	}
 	
 	/** 
@@ -61,6 +68,7 @@ public class PortfolioItem extends Sprite
 	*/
 	public function activate (  ):void
 	{
+		_showVideoBtn();
 		_portfolioImages.isHidden = false;
 		_portfolioImages.loadLargeImage()
 		_removeTweens();
@@ -77,6 +85,7 @@ public class PortfolioItem extends Sprite
 	*/
 	public function deactivate ( $doTween:Boolean = true ):void
 	{
+		_hideVideoBtn();
 		_removeTweens();
 		if( $doTween ){
 			Tweener.removeTweens( this, "blur" );
@@ -184,7 +193,20 @@ public class PortfolioItem extends Sprite
 			deactivate(false);
 		else
 			dispatchEvent( new ImageLoadEvent(ImageLoadEvent.RECENTER_STRIP, true) );
+			
+		if( _viewVideoBtn != null ){
+			this.addChild( _viewVideoBtn );
+			_viewVideoBtn.addEventListener( MouseEvent.CLICK, _onVideoClick, false,0,true );
+			_viewVideoBtn.x =  Math.round( _portfolioImages.activeWidth - _viewVideoBtn.width );
+			_viewVideoBtn.y = 505;
+		}
 	}
+	
+	private function _onVideoClick ( e:Event ):void {
+		e.stopPropagation();
+		dispatchEvent( new NavEvent(NavEvent.SHOW_VIDEO, true) );
+	}
+	
 	
 	private function _arrivedAtTarget (  ):void
 	{
@@ -254,6 +276,19 @@ public class PortfolioItem extends Sprite
 	private function _updateGlow (  ):void
 	{
 		this.filters = [_getGlow()];
+	}
+	
+	// _____________________________ Helpers
+	private function _showVideoBtn (  ):void {
+		if( _viewVideoBtn != null ) {
+			_viewVideoBtn.visible = true;
+		}
+	}
+	
+	private function _hideVideoBtn (  ):void {
+		if( _viewVideoBtn != null ) {
+			_viewVideoBtn.visible = false;
+		}
 	}
 }
 

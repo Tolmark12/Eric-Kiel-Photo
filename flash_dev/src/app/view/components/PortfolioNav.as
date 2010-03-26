@@ -31,11 +31,19 @@ package app.view.components
 			this.addChild(_controller);
 			
 			_controllerArray = new Array();
-			
-			this.addEventListener(Event.ADDED_TO_STAGE, _onAddedToStage);
 		}
 		
 		// _____________________________ API
+		
+		public function activate (  ):void
+		{
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
+		}
+		
+		public function clear (  ):void
+		{
+			stage.removeEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
+		}
 		
 		public function build():void
 		{
@@ -99,11 +107,6 @@ package app.view.components
 		}
 		
 		// _____________________________  Helpers
-		
-		private function _onAddedToStage(e:Event):void
-		{
-			stage.addEventListener(KeyboardEvent.KEY_DOWN, _onKeyDown);
-		}
 		
 		private function _positionElements():void
 		{

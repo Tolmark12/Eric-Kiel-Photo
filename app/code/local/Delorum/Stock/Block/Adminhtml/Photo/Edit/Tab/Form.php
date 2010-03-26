@@ -8,12 +8,12 @@ class Delorum_Stock_Block_Adminhtml_Photo_Edit_Tab_Form extends Mage_Adminhtml_B
       $this->setForm($form);
       $fieldset = $form->addFieldset('stock_form', array());
      
-      $fieldset->addField('name', 'text', array(
-          'label'     => Mage::helper('stock')->__('Name'),
-          'class'     => 'required-entry',
-          'required'  => true,
-          'name'      => 'name',
-      ));
+//      $fieldset->addField('name', 'text', array(
+//          'label'     => Mage::helper('stock')->__('Name'),
+//          'class'     => 'required-entry',
+//          'required'  => true,
+//          'name'      => 'name',
+//      ));
 
       $fieldset->addField('image', 'file', array(
           'label'     => Mage::helper('stock')->__('File'),

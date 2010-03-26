@@ -8,8 +8,9 @@ import app.view.components.*;
 import flash.events.*;
 import app.view.components.events.*;
 import flash.display.Sprite;
+import delorum.utils.echo;
 
-public class PortfolioMediator extends Mediator implements IMediator
+public class PortfolioMediator extends PageMediator implements IMediator
 {	
 	public static const NAME:String = "portfolio_mediator";
 	
@@ -26,6 +27,7 @@ public class PortfolioMediator extends Mediator implements IMediator
 		_portfolio.addEventListener( NavEvent.PORTFOLIO_PREV, _onPortfolioPrev, false,0,true );
 		_portfolio.addEventListener( NavEvent.PORTFOLIO_START, _onPortfolioStart, false,0,true );
 		_portfolio.addEventListener( NavEvent.PORTFOLIO_END, _onPortfolioEnd, false,0,true );
+		_portfolio.addEventListener( NavEvent.SHOW_VIDEO, _onShowVideo, false,0,true );
 		
 		$stage.addChild( _portfolio );
    	}
@@ -40,7 +42,7 @@ public class PortfolioMediator extends Mediator implements IMediator
 				 AppFacade.DEACTIVATE_ACTIVE_PORTFOLIO_ITEM,
 				 AppFacade.ACTIVE_ITEM_CLICKED_AGAIN,
 				 AppFacade.UPDATE_TOTAL_LOADED,
-				 AppFacade.REMOVE_CURRENT_PAGE ];
+ 				];
 	}
 	
 	// PureMVC: Handle notifications
@@ -49,6 +51,7 @@ public class PortfolioMediator extends Mediator implements IMediator
 		switch ( note.getName() )
 		{
 			case AppFacade.PORTFOLIO_DATA_PARSED:
+				sendNotification( AppFacade.MEDIATOR_ACTIVATED, this );
 				_portfolio.showNewPortfolio( note.getBody() as PortfolioVo );
 			break;
 			case AppFacade.ACTIVATE_PORTFOLIO_ITEM :
@@ -74,10 +77,13 @@ public class PortfolioMediator extends Mediator implements IMediator
 				//	_portfolio = null;
 				//}
 			break;
-			case AppFacade.REMOVE_CURRENT_PAGE :
-				//_portfolio.reset();
-			break;
 		}
+	}
+	
+	// _____________________________ Clear
+	
+	override public function clear (  ):void{
+		_portfolio.clear();
 	}
 	
 	// _____________________________ Events
@@ -108,6 +114,10 @@ public class PortfolioMediator extends Mediator implements IMediator
 	
 	private function _onLowResImageLoaded ( e:ImageLoadEvent ):void {
 		sendNotification( AppFacade.IMAGE_LOADED, e.imageIndex );
+	}
+	
+	private function _onShowVideo ( e:NavEvent ):void {
+		sendNotification( AppFacade.PORTFOLIO_ITEM_SHOW_VIDEO );
 	}
 	
 }

@@ -54,22 +54,31 @@ public class LoadingDisplay extends Sprite
 	*/
 	public function reset (  ):void
 	{
-		this.visible = true;
 		_txt.text = "";
-		this.alpha = 1;
 		Tweener.removeTweens( this, "alpha" );
 	}
 	
 	// _____________________________ Helpers
 	
-	public function hide (  ):void
+	public function hide ( $hideFast:Boolean = false ):void
 	{
-		Tweener.addTween( this, { alpha:0, delay:1, time:4, transition:"EaseInOutQuint", onComplete:_makeInvisible} );
+		Tweener.removeTweens( this, "alpha" );
+		if( $hideFast )
+			Tweener.addTween( this, { alpha:0, time:1, transition:"EaseInOutQuint", onComplete:_makeInvisible} );
+		else
+			Tweener.addTween( this, { alpha:0, delay:1, time:4, transition:"EaseInOutQuint", onComplete:_makeInvisible} );
 	}
 	
 	private function _makeInvisible (  ):void
 	{
 		this.visible = false
+	}
+	
+	public function show (  ):void
+	{
+		Tweener.removeTweens( this, "alpha" );
+		this.alpha = 1;
+		this.visible = true;
 	}
 	
 	private function _drawLoadingBar (  ):void

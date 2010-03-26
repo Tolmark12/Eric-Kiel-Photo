@@ -5,7 +5,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 		<link rel="shortcut icon" href="favicon.ico">
 		<title>Eric Kiel Photography</title>
-		<scritp type="text/css" src="style.css" />
+		<script type="text/css" src="style.css" ></script>
 		<script type="text/javascript" src="prototype/js/swfobject/swfobject.js"></script>
 		<script type="text/javascript" src="prototype/js/swfaddress/swfaddress.js"></script>
 		<script type="text/javascript" src="prototype/js/swffit/swffit.js"></script>
@@ -25,7 +25,10 @@
 					lightbox = new Lightbox();
 				});
 			
-				var flashvars = {configData:"http://www.kielphoto.com/vladmin/api/"};
+				var flashvars = {
+									 configData	: "http://kielphoto.com/vladmin/api/",
+									 server		: "http://kielphoto.com/"
+								};
 				var params = {bgcolor:"#222222"};
 				var attributes = {id: "kiel_swf"};
 				swfobject.embedSWF("prototype/Kiel09.swf", "my_flash", "550", "450", "9.0.0", "", flashvars, params, attributes);

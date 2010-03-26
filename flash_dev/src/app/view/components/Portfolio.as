@@ -14,7 +14,7 @@ import delorum.loading.Queue;
 // TEMP
 import flash.net.LocalConnection;
 import delorum.loading.*;
-
+import delorum.utils.KeyTrigger;
 
 public class Portfolio extends Page
 {
@@ -51,8 +51,7 @@ public class Portfolio extends Page
 		this.addChild(_copyRight);
 		this.addChild(_portfolioNav);
 		this.addChild(_loading)
-		
-
+		_loading.hide();
 	}
 	
 	
@@ -63,6 +62,10 @@ public class Portfolio extends Page
 	*/
 	public function clear (  ):void
 	{
+		_portfolioNav.clear()
+		_portfolioNav.visible = false;
+		this.stage.removeEventListener( Event.ENTER_FRAME, _onEnterFrame );
+		
 		// Reset vars
 		_currentIndex 	= 0;
 		_currentItem	= null;
@@ -81,6 +84,7 @@ public class Portfolio extends Page
 
 		// Reset the loading display
 		_loading.reset();
+		_loading.hide(true);
 		
 		// Create image holder
 		_imageHolder = new Sprite();
@@ -95,9 +99,9 @@ public class Portfolio extends Page
 	public function showNewPortfolio ( $portfolioVo:PortfolioVo ):void
 	{ 
 		_portfolioNumber++;
-		trace( "NEW PORTFOLIO" );
 		// Reset
 		clear();
+		_portfolioNav.activate()
 		BaseLoader._currentlyLoading = false;
 		//Queue.setQueueIndex("low"+_portfolioNumber, 0);
 		//Queue.setQueueIndex("high"+_portfolioNumber, 1)
@@ -125,6 +129,7 @@ public class Portfolio extends Page
 		_portfolioNav.hideArrows();
 		_portfolioNav.visible = true;
 		_imageHolder.x = StageResizeVo.lastResize.left;
+		_loading.show();
 	}
 	
 	/** 

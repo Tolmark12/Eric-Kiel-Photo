@@ -8,32 +8,37 @@ import flash.display.Stage;
 import delorum.loading.DataLoader;
 import flash.events.*;
 import com.adobe.serialization.json.JSON;
+import delorum.utils.echo;
+import flash.external.ExternalInterface;
 
 
 public class ExternalDataProxy extends Proxy implements IProxy
 {
 	public static const NAME:String = "external_data_proxy";
-	
+	private var _server:String;
 	private var _configVo:ConfigVo;
 	
 	// Constructor
 	public function ExternalDataProxy( ):void { super( NAME ); };
 
-	/** 
-	*	Get Config Data
-	*	@param		Reference to the stage
-	*/
+	/************ CONFIG / NAV **********/
+
+	// Get Config Data
 	public function getConfigData ( $stage:Stage ):void
 	{
-		var configData:String = ( $stage.loaderInfo.parameters.configData != null )? $stage.loaderInfo.parameters.configData : 'http://www.kielphoto.com/vladmin/api/' ;
-		var ldr:DataLoader = new DataLoader( configData );
+		_server = ( $stage.loaderInfo.parameters.server != null )? $stage.loaderInfo.parameters.server : 'http://kielphoto.com/' ;
+//		_server = ( $stage.loaderInfo.parameters.server != null )? $stage.loaderInfo.parameters.server : 'http://staging.kielphoto.com/' ;
+		var ldr:DataLoader = new DataLoader( _server + "vladmin/api/" );
 		ldr.addEventListener( Event.COMPLETE, _onConfigLoad, false,0,true );
+		ldr.addEventListener( IOErrorEvent.IO_ERROR, _onError)
 		ldr.loadItem();
 	}
 	
-	/** 
-	*	Load Navigation data
-	*/
+	private function _onError ( e:IOErrorEvent ):void {
+		echo( "Error" + '  :  ' + e );
+	}
+	
+	// Load Navigation data
 	public function loadNavData (  ):void
 	{
 		var ldr:DataLoader = new DataLoader( _configVo.getNav );
@@ -41,18 +46,80 @@ public class ExternalDataProxy extends Proxy implements IProxy
 		ldr.loadItem();
 	}
 	
+	/************ PORTFOLIO **********/
+	
+	// Load Portfolio data
 	public function loadPortfolioData ( $feed:String ):void
 	{
 		// TEMP !!
 		var ldr:DataLoader
-		if( $feed != "http://www.kielphoto.com/vladmin/api/index/template/3" )
+		if( $feed != _server + "vladmin/api/index/template/3" )
 			ldr = new DataLoader( $feed );
 		else
-			ldr = new DataLoader( "http://www.kielphoto.com/prototype/content/json/tempPortfolio.json" );
+			ldr = new DataLoader( _server + "prototype/content/json/tempPortfolio.json" );
+			//ldr = new DataLoader( "http://www.kielphoto.com/vladmin/api/index/template/3" );
+		
 		// TEMP !!
 		
 		ldr.addEventListener( Event.COMPLETE, _onPortfolioDataLoad, false,0,true );
 		ldr.loadItem();
+	}
+	
+	/************ STOCK **********/
+	
+	// Load Stock Config Data
+	public function loadStockConfigData ( $feed:String ):void
+	{
+		var ldr:DataLoader = new DataLoader( $feed );
+		ldr.addEventListener( Event.COMPLETE, _onStockConfigDataLoad, false,0,true );
+		ldr.loadItem();
+		
+		loadAllStockTags();
+	}
+	
+	/** 
+	*	@param		A comma delimited list of tags
+	*/
+	private var _lastSearchTerm:String;
+	public function loadStockDataSet ( $searchTerm:String ):void
+	{
+		_lastSearchTerm = $searchTerm;
+		var ldr:DataLoader = new DataLoader( _server + "stock/api/getStockPhotosByTag/text/" + $searchTerm );
+		ldr.addEventListener( Event.COMPLETE, _onStockDataSetLoaded, false,0,true );
+		ldr.loadItem();
+	}
+	
+	/** 
+	*	Loads all of the stock tag options on the site
+	*/
+	public function loadAllStockTags (  ):void
+	{
+		var ldr:DataLoader = new DataLoader( _server + "stock/api/getAllStockTags" );
+		ldr.addEventListener( Event.COMPLETE, _onStockTagsLoaded, false,0,true );
+		ldr.loadItem();
+	}
+	
+	/** 
+	*	Load the lightbox items
+	*	@param		comma delimited list of ids to load
+	*/
+	public function loadLightBoxItems ( $items:String ):void
+	{
+		var ldr:DataLoader = new DataLoader( _server + "stock/api/getStockPhotosByIds/ids/" + $items );
+		ldr.addEventListener( Event.COMPLETE, _onLightBoxItemsLoaded, false,0,true );
+		ldr.loadItem();
+	}
+
+	/************ VIDEO **********/
+	/** 
+	*	Calls a javascirpt that opens a video modal window
+	*	@param		The entire embed tag for showing the video
+	*/
+	public function loadAjaxVideo ( $videoEmbedTag:String ):void{
+		trace( $videoEmbedTag );
+		if (ExternalInterface.available) {
+			ExternalInterface.call("playVideo", $videoEmbedTag);
+		}
 	}
 	
 	// _____________________________ Data Load Handlers
@@ -70,31 +137,28 @@ public class ExternalDataProxy extends Proxy implements IProxy
 		sendNotification( AppFacade.PORTFOLIO_DATA_LOADED, JSON.decode( e.target.data ) );
 	}
 	
-	
-	// _____________________________ TEMP!!!!!!!!!!!!!!!!!!!
-	public function addKeyHandler ( $stage ):void
-	{
-		//TEMP!!!!!
-		$stage.addEventListener (KeyboardEvent.KEY_DOWN, _keyDownHandler);
-		//TEMP!!!!!
+	private function _onStockConfigDataLoad ( e:Event ):void {
+		sendNotification( AppFacade.STOCK_CONFIG_LOADED, JSON.decode( e.target.data ) );
 	}
 	
-	//TEMP!!!!!
-	private function _keyDownHandler ( e:KeyboardEvent ):void
-	{
-		if(e.keyCode==48 && e.shiftKey)
-			loadPortfolioData("http://www.kielphoto.com//vladmin/api/index/template/106");
-		else if(e.keyCode==48 )
-			loadPortfolioData("http://www.kielphoto.com/vladmin/api/index/template/3");
-		
-		// Run the garbage collection
-		//this.parent.removeChild( this );
-		//try {
-		//new LocalConnection().connect('foo');
-		//new LocalConnection().connect('foo');
-		//} catch (e:*) {}
+	private function _onStockTagsLoaded ( e:Event ):void {
+		sendNotification( AppFacade.STOCK_TAGS_LOADED, JSON.decode( '{ "tags" : ' +  e.target.data + '}' ) );
 	}
-	//TEMP!!!!!
+	
+	private function _onStockDataSetLoaded ( e:Event ):void {
+		var json:Object = JSON.decode( e.target.data );
+		sendNotification( AppFacade.STOCK_DATA_SET_LOADED, {term:_lastSearchTerm, items:json });
+	}
+	
+	private function _onLightBoxItemsLoaded ( e:Event ):void {
+		var json:Object = JSON.decode( e.target.data );
+		sendNotification( AppFacade.LIGHTBOX_ITEMS_LOADED, {items:json, term:"lightbox" } );
+	}
+	
+	// _____________________________ Getters / Setters
+	
+	public function get server (  ):String{ return _server; };
+	
 	
 	
 }

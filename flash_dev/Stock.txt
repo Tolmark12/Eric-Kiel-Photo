@@ -1,0 +1,183 @@
+/** 
+*	TODO:
+*	I need to set up my content manager better, so that when we load new content, it removes the old content. Ex Portfolio loaded -> On Stock click
+*	unload Portfolio, and load in the Stock site. 
+*/
+
+
+// _____________________________ Model
+
+- StockPhotos
+	* Store all available tags - TagsVo
+	* Activate / Deactivate individual photos
+	-> Broadcast new photo sets (StockPhotoSetVo)
+	
+
+
+
+// _____________________________  VOs
+
+- StockConfigVo
+	public var mainCategories:Array;	// List of photos and the tag(s?) to trigger
+	
+- StockDefaultCategoryVo
+	public var name:String;
+	public var src:String;
+	public var tag:String;
+
+- TagsVo
+	public var popularTags:Vector;	// Maybe a list of tags
+	public var tags:Vector;
+	* getTagsBeginningWith( $string ):Array // Return a list of tags beginning with these letters
+
+/** 
+*	@This can be populated either from a "Shared Object" (flash cookie), or 
+*	from the url like so http://kielphoto.com/lightbox/123-123-4124-52-345-634-7-457-568-5685-68
+*/	
+- LightBoxVo
+	public var images:Array; 		// List of images
+
+/** 
+*	This is broadcasted out by the Model
+*/
+- StockPhotoSetVo
+	public var tags:Array; 						// Should this be a list of image, or of tags
+	public var photos:Vector.<StockPhotoVo>;	// A list of StockPhoto ids that match all the tags
+
+/** 
+*	The info associated with a single stock photo
+*/
+- StockPhotoVo
+	public var id:String			// the id saved by light box and server
+	public var name:String 			// Used for display purposes
+	public var lowResSrc:String		// Url to find the thumbnail
+	public var highResSrc:String	// Url to the full size image
+	public var tags:Array			// The tags associated with this image
+	public var width:Number;		// The width of the photo
+	
+/** 
+*	Feed the Form Component
+*/
+
+- FormVo
+	public var id:String;			// The id of the form we're submitting
+	public var postURL:String;		// The url to post the data to
+	public var vars:URLVariables;	// The url vars to post to the postURL
+	public var title:String;		// The title of the form
+	public var description:String;	// The description field
+	public var icon:String;			// The id of the icon to use
+	public var fields:Array;		// A list of fields to create (FieldVo)
+	
+- FieldVo
+	public var id:String;				// The id of this var 	- ex: first_name
+	public var title:String;			// The title			- ex: First Name
+	public var height:Number;			// The height of the field 
+	public var regexValidation:String;	// Possible validation
+	
+	
+// _____________________________ Components
+
+
+/** 
+*	This will be the parent class for all the modal type windows
+*/
+
+- Modal ($width:Number)
+	* Close button
+	* Set width based on value passed on
+	* updateHeight( $newHeight )
+	
+	- ModalLightBox
+		* Cookie /  Integration via LightBoxVo.as
+		* Display the contents of the LightBox 
+		-> Click on an image 
+		-> Email Light Box
+		-> Buy These items
+		
+	- ModalForm
+		* Icon - Library item w/ vector shapes on multiple frames
+		* Title | ex - Download Comp
+		* Description | ex - Fill out the form below...
+		* Submit Button
+		-> Submit click - FormEvent (URLVariables)
+	
+/** 
+*	This is the proxy strip that relates to the larger set shown above.
+*/	
+- StockPhotoStrip
+	* Tear down existing set
+	* Show new set - StockPhotoSetVo
+
+- Browser
+	* Layout Pucks
+	* Allow Dragging of ScreenAnalogue (little square)
+	-> Broadcast new square position
+	- PhotoPuck
+		* Change size
+		* Change color
+		* Hide / show
+		-> Broadcast click event
+	
+	
+- FilterEditor
+	
+	- Search
+		-> TypingLetters Event
+	- SelectFromList
+		-> Item has been selected
+	
+- Related Photos
+	
+	- Add photo images to
+	-> Broadcast click event
+	
+	
+// _____________________________ Event Object
+
+- FormEvent
+	SUBMIT_FORM
+	
+	* vars:URLVariables
+	
+	
+// Sample Json
+
+StockPhotoSetVo
+
+/** 
+*	These results would be returned by a call that looked something like:
+*	
+*	postVars.tags = "men,hats,winter";
+*	 
+*	These are then POSTed to some data service like:
+*	http://kielphoto.com/vladmin/api/getphotos
+*	
+*	The results would be something like:
+*/
+
+
+{
+	// These are the photos that match all of the tags
+	"overlappingMatches" : {
+		"tags" 		: ["men","hats","winter"],
+		"matches" 	: [ StockPhotoVo, StockPhotoVo, StockPhotoVo, etc.. ]
+	},
+	
+	// These are the photos that match one of the tags, but not all three
+	"secondaryMatches" : [
+		{
+			"tag" : "men",
+			"matches" : [ StockPhotoVo, StockPhotoVo, StockPhotoVo, etc.. ]
+		},
+		{
+			"tag" : "hats",
+			"matches" : [ StockPhotoVo, StockPhotoVo, StockPhotoVo, etc.. ]
+		},
+		{
+			"tag" : "winter",
+			"matches" : [ StockPhotoVo, StockPhotoVo, StockPhotoVo, etc.. ]
+		}
+	]
+	
+}
+	
