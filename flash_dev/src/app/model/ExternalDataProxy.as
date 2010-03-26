@@ -26,8 +26,8 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	// Get Config Data
 	public function getConfigData ( $stage:Stage ):void
 	{
-//		_server = ( $stage.loaderInfo.parameters.server != null )? $stage.loaderInfo.parameters.server : 'http://kielphoto.com/' ;
-		_server = ( $stage.loaderInfo.parameters.server != null )? $stage.loaderInfo.parameters.server : 'http://staging.kielphoto.com/' ;
+		_server = ( $stage.loaderInfo.parameters.server != null )? $stage.loaderInfo.parameters.server : 'http://kielphoto.com/' ;
+//		_server = ( $stage.loaderInfo.parameters.server != null )? $stage.loaderInfo.parameters.server : 'http://staging.kielphoto.com/' ;
 		var ldr:DataLoader = new DataLoader( _server + "vladmin/api/" );
 		ldr.addEventListener( Event.COMPLETE, _onConfigLoad, false,0,true );
 		ldr.addEventListener( IOErrorEvent.IO_ERROR, _onError)
@@ -56,8 +56,8 @@ public class ExternalDataProxy extends Proxy implements IProxy
 		if( $feed != _server + "vladmin/api/index/template/3" )
 			ldr = new DataLoader( $feed );
 		else
-			ldr = new DataLoader( "http://www.kielphoto.com/vladmin/api/index/template/3" );
-			//ldr = new DataLoader( _server + "prototype/content/json/tempPortfolio.json" );
+			ldr = new DataLoader( _server + "prototype/content/json/tempPortfolio.json" );
+			//ldr = new DataLoader( "http://www.kielphoto.com/vladmin/api/index/template/3" );
 		
 		// TEMP !!
 		
