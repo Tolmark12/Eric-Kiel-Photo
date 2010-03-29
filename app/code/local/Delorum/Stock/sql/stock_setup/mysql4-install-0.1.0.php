@@ -17,7 +17,7 @@ CREATE TABLE stock_photo (
 	,large_width	int(10) unsigned NOT NULL default '0'
 	,created_at		datetime
 	,updated_at		datetime
-	,INDEX (image);
+	,INDEX (image)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS stock_photo_tag;
