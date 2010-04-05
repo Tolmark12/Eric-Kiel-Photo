@@ -25,7 +25,7 @@ class Delorum_Template_Block_Adminhtml_Template_Edit_Tab_Form extends Mage_Admin
               ),
 
               array(
-                  'value'     => 2,
+                  'value'     => 0,
                   'label'     => Mage::helper('template')->__('Disabled'),
               ),
           ),

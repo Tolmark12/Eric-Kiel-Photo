@@ -15,7 +15,8 @@ class Delorum_Vladmin_Block_Adminhtml_Template_Grid extends Mage_Adminhtml_Block
   protected function _prepareCollection()
   {
       $collection = Mage::getModel('vladmin/template')->getCollection()
-      	->addAttributeToSelect('name');
+      	->addAttributeToSelect('name')
+		->addAttributeToSelect('status');
       $this->setCollection($collection);
       return parent::_prepareCollection();
   }
@@ -75,15 +76,15 @@ class Delorum_Vladmin_Block_Adminhtml_Template_Grid extends Mage_Adminhtml_Block
 			'index'     => 'updated_at',
 	  ));
 
-      $this->addColumn('is_active', array(
+      $this->addColumn('status', array(
           'header'    => Mage::helper('vladmin')->__('Status'),
           'align'     => 'left',
           'width'     => '80px',
-          'index'     => 'is_active',
+          'index'     => 'status',
           'type'      => 'options',
           'options'   => array(
               1 => 'Enabled',
-              2 => 'Disabled',
+              0 => 'Disabled',
           ),
       ));
 	  

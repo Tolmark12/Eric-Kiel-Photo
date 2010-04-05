@@ -3,116 +3,219 @@
     http://pear.php.net/dtd/tasks-1.0.xsd
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
- <name>stockphoto</name>
+ <name>vladmin</name>
  <channel>__uri</channel>
- <summary>Stock Photo</summary>
- <description>Stock Photo</description>
+ <summary>Flash Administration Module</summary>
+ <description>Ability to administer flash</description>
  <lead>
   <name>Tyler Flint</name>
   <user>tylerflint</user>
   <email>tflint@delorum.com</email>
   <active>no</active>
  </lead>
- <date>2010-03-09</date>
- <time>22:01:11</time>
+ <date>2010-04-05</date>
+ <time>21:58:01</time>
  <version>
-  <release>0.2.5.1</release>
-  <api>0.2.1</api>
+  <release>0.2.2.1</release>
+  <api>0.1.0</api>
  </version>
  <stability>
   <release>devel</release>
   <api>devel</api>
  </stability>
  <license>commercial</license>
- <notes>none</notes>
+ <notes>na</notes>
  <contents>
   <dir name="/">
    <dir name="adminhtml">
     <dir name="default">
      <dir name="default">
-      <dir name="layout">
-       <file md5sum="48c6a1ff49c8a397c749dc6fd1a33190" name="stock.xml" role="magedesign" />
-      </dir> <!-- /adminhtml/default/default/layout -->
       <dir name="template">
-       <dir name="stock">
-        <dir name="tag">
-         <dir name="import">
-          <file md5sum="65c1890351d33a6982f731d3dbf13807" name="results.phtml" role="magedesign" />
-         </dir> <!-- /adminhtml/default/default/template/stock/tag/import -->
-         <file md5sum="06476adfabf6093e8400bc667336077f" name="import.phtml" role="magedesign" />
-        </dir> <!-- /adminhtml/default/default/template/stock/tag -->
-       </dir> <!-- /adminhtml/default/default/template/stock -->
+       <dir name="vladmin">
+        <dir name="attribute">
+         <dir name="set">
+          <dir name="main">
+           <dir name="tree">
+            <file md5sum="b8fd00e658cae428d131d2c6e8e3b9bf" name="attribute.phtml" role="magedesign" />
+            <file md5sum="56d5512a076cf2aabc2f6c1901db883a" name="group.phtml" role="magedesign" />
+           </dir> <!-- /adminhtml/default/default/template/vladmin/attribute/set/main/tree -->
+          </dir> <!-- /adminhtml/default/default/template/vladmin/attribute/set/main -->
+          <dir name="toolbar">
+           <file md5sum="05ca4a60b58cc0fdd956e3c89171592b" name="add.phtml" role="magedesign" />
+           <file md5sum="be34a708da58d4d795675fda22631b76" name="main.phtml" role="magedesign" />
+          </dir> <!-- /adminhtml/default/default/template/vladmin/attribute/set/toolbar -->
+          <file md5sum="07cd831bc0f26b64e25b3b7bbf6375c9" name="main.phtml" role="magedesign" />
+         </dir> <!-- /adminhtml/default/default/template/vladmin/attribute/set -->
+         <file md5sum="8bf42b301110853f2131400fdc95d2d2" name="js.phtml" role="magedesign" />
+         <file md5sum="4c0a53f15026623ce4da062db09660e5" name="options.phtml" role="magedesign" />
+        </dir> <!-- /adminhtml/default/default/template/vladmin/attribute -->
+        <dir name="template">
+         <dir name="collection">
+          <file md5sum="1c0e20893e81ec8edc01b58a1724c1c5" name="sort.phtml" role="magedesign" />
+         </dir> <!-- /adminhtml/default/default/template/vladmin/template/collection -->
+         <dir name="edit">
+          <dir name="form">
+           <dir name="collection">
+            <dir name="instance">
+             <file md5sum="b340e01411999156e2e5ff4e791a9c88" name="grid.phtml" role="magedesign" />
+            </dir> <!-- /adminhtml/default/default/template/vladmin/template/edit/form/collection/instance -->
+            <file md5sum="84e234b36b636c0a6463ea9309e72232" name="instance.phtml" role="magedesign" />
+            <file md5sum="df4175fe7864d62ae661a219dac0a685" name="tag.phtml" role="magedesign" />
+           </dir> <!-- /adminhtml/default/default/template/vladmin/template/edit/form/collection -->
+           <dir name="image">
+            <file md5sum="3bc4bab4d8e13cdae438b7866942d64f" name="iframe.phtml" role="magedesign" />
+           </dir> <!-- /adminhtml/default/default/template/vladmin/template/edit/form/image -->
+           <file md5sum="ff080f7a8f45626d6b8c5dee3dabebe7" name="image.phtml" role="magedesign" />
+           <file md5sum="f2e0fcc802f2347255b2bc1786f51757" name="subcomponent.phtml" role="magedesign" />
+          </dir> <!-- /adminhtml/default/default/template/vladmin/template/edit/form -->
+         </dir> <!-- /adminhtml/default/default/template/vladmin/template/edit -->
+        </dir> <!-- /adminhtml/default/default/template/vladmin/template -->
+       </dir> <!-- /adminhtml/default/default/template/vladmin -->
+       <file md5sum="267f73be3144d188c6c6aad662158187" name="modal.phtml" role="magedesign" />
       </dir> <!-- /adminhtml/default/default/template -->
      </dir> <!-- /adminhtml/default/default -->
     </dir> <!-- /adminhtml/default -->
    </dir> <!-- /adminhtml -->
    <dir name="Delorum">
-    <dir name="Image">
-     <file md5sum="5dab23b137904c40e8cbe2a88b69706d" name="Resize.php" role="magelib" />
-    </dir> <!-- /Delorum/Image -->
-    <dir name="Stock">
+    <dir name="Vladmin">
      <dir name="Block">
       <dir name="Adminhtml">
-       <dir name="Photo">
+       <dir name="Attribute">
         <dir name="Edit">
          <dir name="Tab">
-          <file md5sum="88f600a617e6a0b97d4745fab933d18b" name="Form.php" role="magelocal" />
-         </dir> <!-- /Delorum/Stock/Block/Adminhtml/Photo/Edit/Tab -->
-         <file md5sum="be07d9556fbda49d6416aa535f9c33b0" name="Form.php" role="magelocal" />
-         <file md5sum="6f0b317cbc9bada803f56df1d9b78581" name="Tabs.php" role="magelocal" />
-        </dir> <!-- /Delorum/Stock/Block/Adminhtml/Photo/Edit -->
-        <file md5sum="3698a9d19aad5b5ec22c9d55e7eed504" name="Edit.php" role="magelocal" />
-        <file md5sum="b184e54cf9bceb7ddc5fbb720fb3522a" name="Grid.php" role="magelocal" />
-       </dir> <!-- /Delorum/Stock/Block/Adminhtml/Photo -->
-       <file md5sum="5ae136be7a5d7484c957e8299a5211ac" name="Photo.php" role="magelocal" />
-      </dir> <!-- /Delorum/Stock/Block/Adminhtml -->
-     </dir> <!-- /Delorum/Stock/Block -->
+          <file md5sum="39737bb7cd3d7d635f1a2c54e4dd3134" name="Main.php" role="magelocal" />
+          <file md5sum="69e4b7b11b336ad7bb9267697fb1ceae" name="Options.php" role="magelocal" />
+         </dir> <!-- /Delorum/Vladmin/Block/Adminhtml/Attribute/Edit/Tab -->
+         <file md5sum="f11bdfe48230523fe0ec04a689118ee0" name="Form.php" role="magelocal" />
+         <file md5sum="b59dcd6afe30878064d5a23515adc7e8" name="Tabs.php" role="magelocal" />
+        </dir> <!-- /Delorum/Vladmin/Block/Adminhtml/Attribute/Edit -->
+        <dir name="Set">
+         <dir name="Main">
+          <dir name="Tree">
+           <file md5sum="663432a5e454420c7f2611ed5a9617cc" name="Attribute.php" role="magelocal" />
+           <file md5sum="145b07bba28fae38fe4fb3d6227a56aa" name="Group.php" role="magelocal" />
+          </dir> <!-- /Delorum/Vladmin/Block/Adminhtml/Attribute/Set/Main/Tree -->
+          <file md5sum="c1c6cb6ec17761ae2555710f9619c3f5" name="Formattribute.php" role="magelocal" />
+          <file md5sum="c30dc48fd81912acef8c3676d428e772" name="Formgroup.php" role="magelocal" />
+          <file md5sum="4ed046797e710021de96b8d0753925a6" name="Formset.php" role="magelocal" />
+         </dir> <!-- /Delorum/Vladmin/Block/Adminhtml/Attribute/Set/Main -->
+         <dir name="Toolbar">
+          <dir name="Main">
+           <file md5sum="92d59d54d2101f064bcf995296367778" name="Filter.php" role="magelocal" />
+          </dir> <!-- /Delorum/Vladmin/Block/Adminhtml/Attribute/Set/Toolbar/Main -->
+          <file md5sum="e35e9595e24de5f0d2de99d2d92a068d" name="Add.php" role="magelocal" />
+          <file md5sum="0fb9877c7ccd9f22f0fbdd7e5c992f28" name="Main.php" role="magelocal" />
+         </dir> <!-- /Delorum/Vladmin/Block/Adminhtml/Attribute/Set/Toolbar -->
+         <file md5sum="12f549d4123e9c2c7f0069734c1ebf4f" name="Grid.php" role="magelocal" />
+         <file md5sum="fa55cf57c5e20053f4a03191b76e62ea" name="Main.php" role="magelocal" />
+        </dir> <!-- /Delorum/Vladmin/Block/Adminhtml/Attribute/Set -->
+        <file md5sum="41f2103a35de7df08b434beed27fd8fd" name="Edit.php" role="magelocal" />
+        <file md5sum="4014df904cdbca98756203a624919ace" name="Grid.php" role="magelocal" />
+       </dir> <!-- /Delorum/Vladmin/Block/Adminhtml/Attribute -->
+       <dir name="Template">
+        <dir name="Collection">
+         <file md5sum="7105edf13d9f76282ad236a09782203c" name="Sort.php" role="magelocal" />
+        </dir> <!-- /Delorum/Vladmin/Block/Adminhtml/Template/Collection -->
+        <dir name="Edit">
+         <dir name="Form">
+          <dir name="Collection">
+           <dir name="Instance">
+            <file md5sum="ca1fde69b9c9346ec8af3fdaff8924c8" name="Grid.php" role="magelocal" />
+           </dir> <!-- /Delorum/Vladmin/Block/Adminhtml/Template/Edit/Form/Collection/Instance -->
+           <file md5sum="c7b0d918364dc363135dac5dff19e90f" name="Instance.php" role="magelocal" />
+           <file md5sum="2b6299f964614da89f52bb07697c884b" name="Tag.php" role="magelocal" />
+          </dir> <!-- /Delorum/Vladmin/Block/Adminhtml/Template/Edit/Form/Collection -->
+          <file md5sum="716b96e7bdc3c94380d3212b594c52b8" name="Abstract.php" role="magelocal" />
+          <file md5sum="0ffebce71bd04b3818c40e2e471ce728" name="Image.php" role="magelocal" />
+          <file md5sum="5d06cb8caeef5b04129812dc08287ac5" name="Subcomponent.php" role="magelocal" />
+         </dir> <!-- /Delorum/Vladmin/Block/Adminhtml/Template/Edit/Form -->
+         <dir name="Tab">
+          <file md5sum="c2d17ee64b76ecd35485e44eb626f2c7" name="Attributes.php" role="magelocal" />
+          <file md5sum="c6552539e7db84f9405e6448295c88f1" name="Form.php" role="magelocal" />
+          <file md5sum="9577b7d56dda1095ab8aa0523c114d00" name="Settings.php" role="magelocal" />
+         </dir> <!-- /Delorum/Vladmin/Block/Adminhtml/Template/Edit/Tab -->
+         <file md5sum="39c6c6b7ad9b8cb601885ff29b8371d5" name="Form.php" role="magelocal" />
+         <file md5sum="57b2caf2c5c5a377c1748880d5df8eee" name="Tabs.php" role="magelocal" />
+        </dir> <!-- /Delorum/Vladmin/Block/Adminhtml/Template/Edit -->
+        <file md5sum="d0783f78e4e0dacaf0d374dcd4609a66" name="Edit.php" role="magelocal" />
+        <file md5sum="5a5d1183ac79889296a889dbabcaeca7" name="Grid.php" role="magelocal" />
+       </dir> <!-- /Delorum/Vladmin/Block/Adminhtml/Template -->
+       <file md5sum="78aec0283ce93cb50c9da1e272876e2c" name="Attribute.php" role="magelocal" />
+       <file md5sum="79d923b8bed5eeaf790f0b1db1465c8c" name="Template.php" role="magelocal" />
+      </dir> <!-- /Delorum/Vladmin/Block/Adminhtml -->
+     </dir> <!-- /Delorum/Vladmin/Block -->
      <dir name="controllers">
       <dir name="Adminhtml">
-       <file md5sum="f26bfa3b49b463e667fffaf390391b8a" name="PhotoController.php" role="magelocal" />
-       <file md5sum="39eb8045532b6ad8983b58593da7355b" name="TagController.php" role="magelocal" />
-      </dir> <!-- /Delorum/Stock/controllers/Adminhtml -->
-      <file md5sum="132f47c59ed73b5568b2249972342f99" name="ApiController.php" role="magelocal" />
-     </dir> <!-- /Delorum/Stock/controllers -->
+       <dir name="Template">
+        <file md5sum="7bfc9cf02eae16b9ae9167abb6a76a66" name="CollectionController.php" role="magelocal" />
+        <file md5sum="4b707d76bec2cbd1d4f26e86918cf315" name="FormController.php" role="magelocal" />
+        <file md5sum="87078ae371e8c7a945d0725c6b9dd3bd" name="MediaController.php" role="magelocal" />
+       </dir> <!-- /Delorum/Vladmin/controllers/Adminhtml/Template -->
+       <file md5sum="1105aad2808e548d3ecf222c0423037b" name="AttributeController.php" role="magelocal" />
+       <file md5sum="fe1bfad935db46d0b64b3c9dd175ba52" name="GroupController.php" role="magelocal" />
+       <file md5sum="e4c11de7a45a18ede6cca52c0ff5f441" name="SetController.php" role="magelocal" />
+       <file md5sum="8b270a8c32905c95ba8f137634fcdf8f" name="TemplateController.php" role="magelocal" />
+      </dir> <!-- /Delorum/Vladmin/controllers/Adminhtml -->
+      <file md5sum="7bbc754c8bf945b6776febee7199893b" name="ApiController.php" role="magelocal" />
+     </dir> <!-- /Delorum/Vladmin/controllers -->
      <dir name="etc">
-      <file md5sum="552ee5f21eaed24ac8491b0af035e534" name="config.xml" role="magelocal" />
-     </dir> <!-- /Delorum/Stock/etc -->
+      <file md5sum="6c4efef962b737e24e40b92a1f9db28d" name="config.xml" role="magelocal" />
+     </dir> <!-- /Delorum/Vladmin/etc -->
      <dir name="Helper">
-      <file md5sum="6673c077994ede2c086edf5949bef12c" name="Data.php" role="magelocal" />
-     </dir> <!-- /Delorum/Stock/Helper -->
+      <file md5sum="4ac0b8ce22c6b628886b07a417dd14a2" name="Data.php" role="magelocal" />
+     </dir> <!-- /Delorum/Vladmin/Helper -->
      <dir name="Model">
+      <dir name="Eav">
+       <dir name="Entity">
+        <dir name="Attribute">
+         <dir name="Source">
+          <file md5sum="8ab02fc82656faf0587e1bf63aab3883" name="Status.php" role="magelocal" />
+         </dir> <!-- /Delorum/Vladmin/Model/Eav/Entity/Attribute/Source -->
+         <file md5sum="65c76416a372bd4e9bd3fd0aa24d96c6" name="Observer.php" role="magelocal" />
+        </dir> <!-- /Delorum/Vladmin/Model/Eav/Entity/Attribute -->
+       </dir> <!-- /Delorum/Vladmin/Model/Eav/Entity -->
+      </dir> <!-- /Delorum/Vladmin/Model/Eav -->
+      <dir name="Entity">
+       <file md5sum="12697ae8aecd922adaa48b9ff4fef798" name="Attribute.php" role="magelocal" />
+      </dir> <!-- /Delorum/Vladmin/Model/Entity -->
+      <dir name="Media">
+       <file md5sum="1a1df3419004b8ad48cbbd39d4e98fb7" name="Config.php" role="magelocal" />
+      </dir> <!-- /Delorum/Vladmin/Model/Media -->
       <dir name="Mysql4">
-       <dir name="Photo">
-        <dir name="Tag">
-         <dir name="Link">
-          <file md5sum="f1c3a11a6b499b36d7c9672c2f8fc878" name="Collection.php" role="magelocal" />
-         </dir> <!-- /Delorum/Stock/Model/Mysql4/Photo/Tag/Link -->
-         <file md5sum="e51f066333ab4bd43863718837dea89b" name="Collection.php" role="magelocal" />
-         <file md5sum="58adfc09b3e4451a09502dcceb0f14d0" name="Link.php" role="magelocal" />
-        </dir> <!-- /Delorum/Stock/Model/Mysql4/Photo/Tag -->
-        <file md5sum="f5368d7e1cee57919919a1a8369776ad" name="Collection.php" role="magelocal" />
-        <file md5sum="5c2c5b8aa04897ad85f77fc3125e929b" name="Tag.php" role="magelocal" />
-       </dir> <!-- /Delorum/Stock/Model/Mysql4/Photo -->
-       <file md5sum="e3e98f8da7836400d6c775dd8d10dc37" name="Photo.php" role="magelocal" />
-      </dir> <!-- /Delorum/Stock/Model/Mysql4 -->
-      <dir name="Photo">
-       <dir name="Tag">
-        <file md5sum="16d1e004d516598e5389b34fda078900" name="Link.php" role="magelocal" />
-       </dir> <!-- /Delorum/Stock/Model/Photo/Tag -->
-       <file md5sum="8680bb210f0e97ecb311fbf280a5bfd0" name="Tag.php" role="magelocal" />
-      </dir> <!-- /Delorum/Stock/Model/Photo -->
-      <file md5sum="7053f5f1ae79d49ccf4ac7a88444ed0a" name="Photo.php" role="magelocal" />
-      <file md5sum="01fd783d8cdc7f2efd476326d599ef27" name="Status.php" role="magelocal" />
-     </dir> <!-- /Delorum/Stock/Model -->
+       <dir name="Template">
+        <dir name="Collection">
+         <dir name="Order">
+          <file md5sum="724bdefaef0c5ef0891ffa05c7f5b752" name="Collection.php" role="magelocal" />
+         </dir> <!-- /Delorum/Vladmin/Model/Mysql4/Template/Collection/Order -->
+         <file md5sum="ebd02f027bb4ee6f9fa0386b84548dba" name="Order.php" role="magelocal" />
+        </dir> <!-- /Delorum/Vladmin/Model/Mysql4/Template/Collection -->
+        <file md5sum="0bb0237d9b262470914dd847419bff10" name="Collection.php" role="magelocal" />
+       </dir> <!-- /Delorum/Vladmin/Model/Mysql4/Template -->
+       <file md5sum="e14f4b121bb69542573b9f55e3013765" name="Template.php" role="magelocal" />
+      </dir> <!-- /Delorum/Vladmin/Model/Mysql4 -->
+      <dir name="Template">
+       <dir name="Collection">
+        <file md5sum="3eb6114bb63a147c25f7ec09acd2008f" name="Order.php" role="magelocal" />
+       </dir> <!-- /Delorum/Vladmin/Model/Template/Collection -->
+      </dir> <!-- /Delorum/Vladmin/Model/Template -->
+      <file md5sum="258553af691a96bb81e6cd494beb7b08" name="Status.php" role="magelocal" />
+      <file md5sum="2edfb3071689b2431ee93e922350a429" name="Template.php" role="magelocal" />
+     </dir> <!-- /Delorum/Vladmin/Model -->
      <dir name="sql">
-      <dir name="stock_setup">
-       <file md5sum="7cdc4d4db257bb148bb1f7036b44862e" name="mysql4-install-0.1.0.php" role="magelocal" />
-      </dir> <!-- /Delorum/Stock/sql/stock_setup -->
-     </dir> <!-- /Delorum/Stock/sql -->
-    </dir> <!-- /Delorum/Stock -->
+      <dir name="vladmin_setup">
+       <file md5sum="65098cc547ca3b1cb1fdb57ad8a8a997" name="mysql4-install-0.1.0.php" role="magelocal" />
+       <file md5sum="cb0a939598fb9fd2023558e9ac063df5" name="mysql4-upgrade-0.1.0-0.2.0.php" role="magelocal" />
+      </dir> <!-- /Delorum/Vladmin/sql/vladmin_setup -->
+     </dir> <!-- /Delorum/Vladmin/sql -->
+    </dir> <!-- /Delorum/Vladmin -->
    </dir> <!-- /Delorum -->
+   <dir name="js">
+    <dir name="delorum">
+     <file md5sum="9ad809424a7ac4434c223c24f0e19ff7" name="vladmin.js" role="mageweb" />
+    </dir> <!-- /js/delorum -->
+   </dir> <!-- /js -->
    <dir name="modules">
-    <file md5sum="0e0f3c8514469fd64f72a741ec03f521" name="Delorum_Stock.xml" role="mageetc" />
+    <file md5sum="fc1ac36bc51504925ccb7e1e5bd3c31a" name="Delorum_Vladmin.xml" role="mageetc" />
    </dir> <!-- /modules -->
   </dir> <!-- / -->
  </contents>
