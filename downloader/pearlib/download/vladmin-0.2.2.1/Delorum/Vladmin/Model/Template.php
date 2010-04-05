@@ -67,8 +67,6 @@ class Delorum_Vladmin_Model_Template extends Mage_Core_Model_Abstract
 		    					,array()
 		    				)->order('o.position');
 						
-						echo $collection->getSelect();
-						exit;
 	    				foreach($collection as $template){
 	    					if($attribute->getIsFeed()){
 	    						$instanceCollection[] = Mage::getBaseUrl('web') . 'vladmin/api/index/template/' . $template->getId();
