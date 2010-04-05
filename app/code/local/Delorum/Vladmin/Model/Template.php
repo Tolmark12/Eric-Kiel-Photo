@@ -57,7 +57,7 @@ class Delorum_Vladmin_Model_Template extends Mage_Core_Model_Abstract
 	    				$collection = Mage::getModel('vladmin/template')->getCollection()
 	    					->addFieldToFilter('entity_id', array('in'=>explode(",", $this->getData($key))))
 	    					->addFieldToFilter('entity_id', array('neq'=>$this->getId()))
-							->addFieldToFilter('status', 1)
+							->addAttributeToFilter('status', 1)
 	    					->addAttributeToSelect('*');
 	    				// add collection sorting
 	    				$collection->getSelect()
@@ -80,7 +80,7 @@ class Delorum_Vladmin_Model_Template extends Mage_Core_Model_Abstract
 	    				$collection = Mage::getModel('vladmin/template')->getCollection()
 	    					->addFieldToFilter('entity_id', array('neq'=>$this->getId()))
 	    					->addAttributeToFilter('tags', array('like'=>"%{$this->getData($key)}%"))
-							->addFieldToFilter('status', 1)
+							->addAttributeToFilter('status', 1)
 	    					->addAttributeToSelect('*');
 	    				// add collection sorting
 	    				$collection->getSelect()
