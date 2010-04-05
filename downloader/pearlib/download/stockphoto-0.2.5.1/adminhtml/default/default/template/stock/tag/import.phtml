@@ -1,0 +1,35 @@
+<div id="page:main-container">
+	<?php echo $this->getChildHtml('import.results') ?>
+	<div class="content-header">
+		<table cellspacing="0">
+			<tr>
+				<td style="width: 50%;">
+					<h3 class="icon-head head-product-attribute-sets">Import Stock Photo Tag File</h3>
+				</td>
+				<td class="form-buttons">
+					<button  type="button" class="scalable back" onclick=""><span>Back</span></button>
+					<button  type="button" class="scalable" onclick="submitCsv()"><span>Submit File</span></button>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<form id="stock-tag" action="<?php echo Mage::getBaseUrl('web') ?>stock/adminhtml_tag/importPost" enctype="multipart/form-data" method="post">
+		<fieldset>
+			<input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+			<span class="field-row">
+				<label>File:</label>
+				<input type="file" name="file" id="file" />
+			</span>
+			<!-- <input type="submit" value="Submit File" /> -->
+		</fieldset>
+	</form>
+</div>
+<script type="text/javascript">
+	function submitCsv(){
+		if(!$('file').value){
+			alert('Please select a file to submit');
+		}else{
+			$('stock-tag').submit();
+		}
+	}
+</script>
