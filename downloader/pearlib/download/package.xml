@@ -14,7 +14,7 @@
   <active>no</active>
  </lead>
  <date>2010-04-06</date>
- <time>00:56:39</time>
+ <time>00:58:00</time>
  <version>
   <release>0.2.2.1</release>
   <api>0.1.0</api>
@@ -199,7 +199,7 @@
        </dir> <!-- /Delorum/Vladmin/Model/Template/Collection -->
       </dir> <!-- /Delorum/Vladmin/Model/Template -->
       <file md5sum="258553af691a96bb81e6cd494beb7b08" name="Status.php" role="magelocal" />
-      <file md5sum="7bd04e9b6f51b7a883edfbf71c13f7c1" name="Template.php" role="magelocal" />
+      <file md5sum="d60cd131b666ee85c0e7c35c87e20a57" name="Template.php" role="magelocal" />
      </dir> <!-- /Delorum/Vladmin/Model -->
      <dir name="sql">
       <dir name="vladmin_setup">
