@@ -83,7 +83,7 @@ class Delorum_Vladmin_Block_Adminhtml_Template_Grid extends Mage_Adminhtml_Block
           'type'      => 'options',
           'options'   => array(
               1 => 'Enabled',
-              2 => 'Disabled',
+              0 => 'Disabled',
           ),
       ));
 	  
@@ -123,22 +123,22 @@ class Delorum_Vladmin_Block_Adminhtml_Template_Grid extends Mage_Adminhtml_Block
              'confirm'  => Mage::helper('vladmin')->__('Are you sure?')
         ));
 
-        $statuses = Mage::getSingleton('vladmin/status')->getOptionArray();
-
-        array_unshift($statuses, array('label'=>'', 'value'=>''));
-        $this->getMassactionBlock()->addItem('status', array(
-             'label'=> Mage::helper('vladmin')->__('Change status'),
-             'url'  => $this->getUrl('*/*/massStatus', array('_current'=>true)),
-             'additional' => array(
-                    'visibility' => array(
-                         'name' => 'status',
-                         'type' => 'select',
-                         'class' => 'required-entry',
-                         'label' => Mage::helper('vladmin')->__('Status'),
-                         'values' => $statuses
-                     )
-             )
-        ));
+        // $statuses = Mage::getSingleton('vladmin/status')->getOptionArray();
+        // 
+        //        array_unshift($statuses, array('label'=>'', 'value'=>''));
+        //        $this->getMassactionBlock()->addItem('status', array(
+        //             'label'=> Mage::helper('vladmin')->__('Change status'),
+        //             'url'  => $this->getUrl('*/*/massStatus', array('_current'=>true)),
+        //             'additional' => array(
+        //                    'visibility' => array(
+        //                         'name' => 'status',
+        //                         'type' => 'select',
+        //                         'class' => 'required-entry',
+        //                         'label' => Mage::helper('vladmin')->__('Status'),
+        //                         'values' => $statuses
+        //                     )
+        //             )
+        //        ));
         return $this;
     }
 
