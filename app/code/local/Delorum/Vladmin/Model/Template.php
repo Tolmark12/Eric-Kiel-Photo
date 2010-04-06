@@ -34,8 +34,6 @@ class Delorum_Vladmin_Model_Template extends Mage_Core_Model_Abstract
     
 	public function build()
 	{
-		echo "I am here";
-		exit;
 		$array = array();
     	foreach($this->getResource()->getAttributesByCode() as $key=>$attribute){
     		// ignore certain attributes
@@ -43,6 +41,7 @@ class Delorum_Vladmin_Model_Template extends Mage_Core_Model_Abstract
     			continue;
     		}
     		if($this->getData($key)){
+				echo "here";
 	    		switch($attribute->getFrontendInput()){
 	    			case 'select':
 	    				$array[$key] = $this->getAttributeText($key);
