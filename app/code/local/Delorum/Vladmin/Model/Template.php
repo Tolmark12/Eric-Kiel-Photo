@@ -53,8 +53,6 @@ class Delorum_Vladmin_Model_Template extends Mage_Core_Model_Abstract
 						$array[$key] = $selected; 				
 	    				break;
 	    			case 'instance_collection':
-						echo "bam";
-						exit;
 	    				$instanceCollection = array();
 	    				$collection = Mage::getModel('vladmin/template')->getCollection()
 	    					->addFieldToFilter('entity_id', array('in'=>explode(",", $this->getData($key))))
@@ -62,12 +60,12 @@ class Delorum_Vladmin_Model_Template extends Mage_Core_Model_Abstract
 							->addAttributeToFilter('status', 1)
 	    					->addAttributeToSelect('*');
 	    				// add collection sorting
-	    				$collection->getSelect()
-	    					->joinLeft(
-		    					 array('o'=>'vladmin_template_entity_collection_order')
-		    					,"e.entity_id = o.template_id AND o.parent_id = {$this->getId()} AND o.attribute_id = {$attribute->getId()}"
-		    					,array()
-		    				)->order('o.position');
+	    				// $collection->getSelect()
+	    				// 	    					->joinLeft(
+	    				// 		    					 array('o'=>'vladmin_template_entity_collection_order')
+	    				// 		    					,"e.entity_id = o.template_id AND o.parent_id = {$this->getId()} AND o.attribute_id = {$attribute->getId()}"
+	    				// 		    					,array()
+	    				// 		    				)->order('o.position');
 						
 	    				foreach($collection as $template){
 	    					if($attribute->getIsFeed()){
