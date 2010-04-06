@@ -91,13 +91,13 @@ class Delorum_Vladmin_Model_Template extends Mage_Core_Model_Abstract
 		    					,array()
 		    				)->order('o.position');
 						$collection->getSelect()->limit(20);
-	    				foreach($collection as $template){
-	    					if($attribute->getIsFeed()){
-	    						$tagCollection[] = Mage::getBaseUrl('web') . 'vladmin/api/index/template/' . $template->getId();
-	    					}else{
-    							$tagCollection[] = $template->build();
-	    					}
-	    				}
+	    				// foreach($collection as $template){
+	    				// 	    					if($attribute->getIsFeed()){
+	    				// 	    						$tagCollection[] = Mage::getBaseUrl('web') . 'vladmin/api/index/template/' . $template->getId();
+	    				// 	    					}else{
+	    				//     							$tagCollection[] = $template->build();
+	    				// 	    					}
+	    				// 	    				}
 	    				$array[$key] = $tagCollection;
 	    				break;
 	    			case 'subcomponent':
