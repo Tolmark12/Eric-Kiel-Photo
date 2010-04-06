@@ -42,6 +42,7 @@ class Delorum_Vladmin_Model_Template extends Mage_Core_Model_Abstract
     		}
     		if($this->getData($key)){
 				echo "here";
+				exit;
 	    		switch($attribute->getFrontendInput()){
 	    			case 'select':
 	    				$array[$key] = $this->getAttributeText($key);
