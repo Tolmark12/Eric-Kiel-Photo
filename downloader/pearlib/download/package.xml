@@ -14,7 +14,7 @@
   <active>no</active>
  </lead>
  <date>2010-04-06</date>
- <time>00:59:38</time>
+ <time>14:42:17</time>
  <version>
   <release>0.2.2.1</release>
   <api>0.1.0</api>
@@ -138,7 +138,7 @@
          <file md5sum="57b2caf2c5c5a377c1748880d5df8eee" name="Tabs.php" role="magelocal" />
         </dir> <!-- /Delorum/Vladmin/Block/Adminhtml/Template/Edit -->
         <file md5sum="d0783f78e4e0dacaf0d374dcd4609a66" name="Edit.php" role="magelocal" />
-        <file md5sum="5a5d1183ac79889296a889dbabcaeca7" name="Grid.php" role="magelocal" />
+        <file md5sum="19cd222cbcc835ebe5aca754178f21d1" name="Grid.php" role="magelocal" />
        </dir> <!-- /Delorum/Vladmin/Block/Adminhtml/Template -->
        <file md5sum="78aec0283ce93cb50c9da1e272876e2c" name="Attribute.php" role="magelocal" />
        <file md5sum="79d923b8bed5eeaf790f0b1db1465c8c" name="Template.php" role="magelocal" />
@@ -199,7 +199,7 @@
        </dir> <!-- /Delorum/Vladmin/Model/Template/Collection -->
       </dir> <!-- /Delorum/Vladmin/Model/Template -->
       <file md5sum="258553af691a96bb81e6cd494beb7b08" name="Status.php" role="magelocal" />
-      <file md5sum="98834740202f8dddb4d6ff5b179d5b66" name="Template.php" role="magelocal" />
+      <file md5sum="49de3b0588f410b45a7cbd5857902cdc" name="Template.php" role="magelocal" />
      </dir> <!-- /Delorum/Vladmin/Model -->
      <dir name="sql">
       <dir name="vladmin_setup">

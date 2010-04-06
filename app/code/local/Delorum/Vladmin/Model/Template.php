@@ -57,6 +57,7 @@ class Delorum_Vladmin_Model_Template extends Mage_Core_Model_Abstract
 	    				$collection = Mage::getModel('vladmin/template')->getCollection()
 	    					->addFieldToFilter('entity_id', array('in'=>explode(",", $this->getData($key))))
 	    					->addFieldToFilter('entity_id', array('neq'=>$this->getId()))
+							->addFieldToFilter('is_active', 1)
 	    					->addAttributeToSelect('*');
 	    				// add collection sorting
 	    				$collection->getSelect()
@@ -79,6 +80,7 @@ class Delorum_Vladmin_Model_Template extends Mage_Core_Model_Abstract
 	    				$tagCollection = array();
 	    				$collection = Mage::getModel('vladmin/template')->getCollection()
 	    					->addFieldToFilter('entity_id', array('neq'=>$this->getId()))
+							->addFieldToFilter('is_active', 1)
 	    					->addAttributeToFilter('tags', array('like'=>"%{$this->getData($key)}%"))
 	    					->addAttributeToSelect('*');
 	    				// add collection sorting
@@ -89,12 +91,12 @@ class Delorum_Vladmin_Model_Template extends Mage_Core_Model_Abstract
 		    					,array()
 		    				)->order('o.position');
 	    				foreach($collection as $template){
-	    					if($attribute->getIsFeed()){
-	    						$tagCollection[] = Mage::getBaseUrl('web') . 'vladmin/api/index/template/' . $template->getId();
-	    					}else{
-    							$tagCollection[] = $template->build();
-	    					}
-	    				}
+			    				if($attribute->getIsFeed()){
+		    						$tagCollection[] = Mage::getBaseUrl('web') . 'vladmin/api/index/template/' . $template->getId();
+		    					}else{
+	    							$tagCollection[] = $template->build();
+		    					}
+		    				}
 	    				$array[$key] = $tagCollection;
 	    				break;
 	    			case 'subcomponent':
