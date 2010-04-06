@@ -72,6 +72,9 @@ class Delorum_Vladmin_ApiController extends Mage_Core_Controller_Front_Action
 		ini_set('memory_limit', '512M');
 		Mage::setIsDeveloperMode(true);
 		
+		echo "hello?";
+		exit;
+		
 		$output = '';
 		// if (!($output = $this->_loadCache())) {
 			$template = '';
