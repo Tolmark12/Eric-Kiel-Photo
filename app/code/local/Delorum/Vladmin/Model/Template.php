@@ -60,15 +60,15 @@ class Delorum_Vladmin_Model_Template extends Mage_Core_Model_Abstract
 							->addAttributeToFilter('status', 1)
 	    					->addAttributeToSelect('*');
 	    				// add collection sorting
-	    				// $collection->getSelect()
-	    				// 	    					->joinLeft(
-	    				// 		    					 array('o'=>'vladmin_template_entity_collection_order')
-	    				// 		    					,"e.entity_id = o.template_id AND o.parent_id = {$this->getId()} AND o.attribute_id = {$attribute->getId()}"
-	    				// 		    					,array()
-	    				// 		    				)->order('o.position');
-						$collection->getSelect()->limit(2);
+	    				$collection->getSelect()
+	    					->joinLeft(
+		    					 array('o'=>'vladmin_template_entity_collection_order')
+		    					,"e.entity_id = o.template_id AND o.parent_id = {$this->getId()} AND o.attribute_id = {$attribute->getId()}"
+		    					,array()
+		    				)->order('o.position');
+						
 	    				foreach($collection as $template){
-				    		if($attribute->getIsFeed()){
+	    					if($attribute->getIsFeed()){
 	    						$instanceCollection[] = Mage::getBaseUrl('web') . 'vladmin/api/index/template/' . $template->getId();
 	    					}else{
 	    						$instanceCollection[] = $template->build();
@@ -81,25 +81,22 @@ class Delorum_Vladmin_Model_Template extends Mage_Core_Model_Abstract
 	    				$collection = Mage::getModel('vladmin/template')->getCollection()
 	    					->addFieldToFilter('entity_id', array('neq'=>$this->getId()))
 	    					->addAttributeToFilter('tags', array('like'=>"%{$this->getData($key)}%"))
-							->addAttributeToFilter('status', 1);
-						echo "here";
-						exit;
-	    					// ->addAttributeToSelect('*');
+							->addAttributeToFilter('status', 1)
+	    					->addAttributeToSelect('*');
 	    				// add collection sorting
-	    				// $collection->getSelect()
-	    				// 	    					->joinLeft(
-	    				// 		    					 array('o'=>'vladmin_template_entity_collection_order')
-	    				// 		    					,"e.entity_id = o.template_id AND o.parent_id = {$this->getId()} AND o.attribute_id = {$attribute->getId()}"
-	    				// 		    					,array()
-	    				// 		    				)->order('o.position');
-						$collection->getSelect()->limit(20);
-	    				// foreach($collection as $template){
-	    				// 	    					if($attribute->getIsFeed()){
-	    				// 	    						$tagCollection[] = Mage::getBaseUrl('web') . 'vladmin/api/index/template/' . $template->getId();
-	    				// 	    					}else{
-	    				//     							$tagCollection[] = $template->build();
-	    				// 	    					}
-	    				// 	    				}
+	    				$collection->getSelect()
+	    					->joinLeft(
+		    					 array('o'=>'vladmin_template_entity_collection_order')
+		    					,"e.entity_id = o.template_id AND o.parent_id = {$this->getId()} AND o.attribute_id = {$attribute->getId()}"
+		    					,array()
+		    				)->order('o.position');
+	    				foreach($collection as $template){
+	    					if($attribute->getIsFeed()){
+	    						$tagCollection[] = Mage::getBaseUrl('web') . 'vladmin/api/index/template/' . $template->getId();
+	    					}else{
+    							$tagCollection[] = $template->build();
+	    					}
+	    				}
 	    				$array[$key] = $tagCollection;
 	    				break;
 	    			case 'subcomponent':
