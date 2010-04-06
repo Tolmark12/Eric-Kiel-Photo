@@ -73,7 +73,7 @@ class Delorum_Vladmin_ApiController extends Mage_Core_Controller_Front_Action
 		Mage::setIsDeveloperMode(true);
 		
 		$output = '';
-		if (!($output = $this->_loadCache())) {
+		// if (!($output = $this->_loadCache())) {
 			$template = '';
 			$id = (int) $this->getRequest()->getParam('template');
 			if($id){
@@ -88,7 +88,7 @@ class Delorum_Vladmin_ApiController extends Mage_Core_Controller_Front_Action
 			$json = Zend_Json::encode($build);
 			$this->_saveCache($json);
 			$output = $json;
-		}
+		// }
 		
 		echo $output;
 	}
