@@ -41,8 +41,6 @@ class Delorum_Vladmin_Model_Template extends Mage_Core_Model_Abstract
     			continue;
     		}
     		if($this->getData($key)){
-				echo "here";
-				exit;
 	    		switch($attribute->getFrontendInput()){
 	    			case 'select':
 	    				$array[$key] = $this->getAttributeText($key);
@@ -55,6 +53,8 @@ class Delorum_Vladmin_Model_Template extends Mage_Core_Model_Abstract
 						$array[$key] = $selected; 				
 	    				break;
 	    			case 'instance_collection':
+						echo "bam";
+						exit;
 	    				$instanceCollection = array();
 	    				$collection = Mage::getModel('vladmin/template')->getCollection()
 	    					->addFieldToFilter('entity_id', array('in'=>explode(",", $this->getData($key))))
