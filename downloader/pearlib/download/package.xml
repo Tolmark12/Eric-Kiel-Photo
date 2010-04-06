@@ -14,7 +14,7 @@
   <active>no</active>
  </lead>
  <date>2010-04-06</date>
- <time>00:05:09</time>
+ <time>00:08:49</time>
  <version>
   <release>0.2.2.1</release>
   <api>0.1.0</api>
@@ -156,7 +156,7 @@
        <file md5sum="e4c11de7a45a18ede6cca52c0ff5f441" name="SetController.php" role="magelocal" />
        <file md5sum="8b270a8c32905c95ba8f137634fcdf8f" name="TemplateController.php" role="magelocal" />
       </dir> <!-- /Delorum/Vladmin/controllers/Adminhtml -->
-      <file md5sum="235a293980aab819726d276d2be76473" name="ApiController.php" role="magelocal" />
+      <file md5sum="7716bffe44600e8fcc422add2652a0ae" name="ApiController.php" role="magelocal" />
      </dir> <!-- /Delorum/Vladmin/controllers -->
      <dir name="etc">
       <file md5sum="6c4efef962b737e24e40b92a1f9db28d" name="config.xml" role="magelocal" />
