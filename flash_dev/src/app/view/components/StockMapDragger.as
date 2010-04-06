@@ -15,7 +15,8 @@ public class StockMapDragger extends Sprite
 	private var _pageWidth:Number;
 	private var _pointerHolder:Sprite = new Sprite();
 	private var _hasDraggedAlready:Boolean = false;
-	private var _isBuilt:Boolean = false;		
+	private var _isBuilt:Boolean = false;	
+//	private var _dragHandHint:DragHand_swc = new DragHand_swc();	
 	
 	public function StockMapDragger():void{
 		this.addChild( _pointerHolder );
@@ -49,29 +50,34 @@ public class StockMapDragger extends Sprite
 			this.graphics.beginFill( 0x000000, 0.6 );
 			this.graphics.drawRect( -$overshoot, -$overshoot, $width+$overshoot*2, $height+$overshoot*2 );
 
-			// Add the arrows
-			var arrowPadding = 5;
-			_pointerHolder.x = -$overshoot;
-			_pointerHolder.y = -$overshoot - arrowPadding;
-			var arrowTL:ArrowPointer_swc = new ArrowPointer_swc();
-			var arrowTR:ArrowPointer_swc = new ArrowPointer_swc();
-			var arrowBL:ArrowPointer_swc = new ArrowPointer_swc();
-			var arrowBR:ArrowPointer_swc = new ArrowPointer_swc();
+//			// Add the arrows
+//			var arrowPadding = 5;
+//			_pointerHolder.x = -$overshoot;
+//			_pointerHolder.y = -$overshoot - arrowPadding;
+//			var arrowTL:ArrowPointer_swc = new ArrowPointer_swc();
+//			var arrowTR:ArrowPointer_swc = new ArrowPointer_swc();
+//			var arrowBL:ArrowPointer_swc = new ArrowPointer_swc();
+//			var arrowBR:ArrowPointer_swc = new ArrowPointer_swc();
+//
+//			var wid 			= arrowTL.width;
+//			arrowTL.scaleX 		= -1;
+//			arrowTL.x 			= -arrowPadding; 
+//			arrowTR.x 			= this.width + arrowPadding;
+//			arrowBL.scaleX		= -1;
+//			arrowBL.x			= -arrowPadding;
+//			arrowBL.y			= this.height + arrowPadding*2;
+//			arrowBR.x			= this.width + arrowPadding;
+//			arrowBR.y			= this.height + arrowPadding*2;
 
-			var wid 			= arrowTL.width;
-			arrowTL.scaleX 		= -1;
-			arrowTL.x 			= -arrowPadding; 
-			arrowTR.x 			= this.width + arrowPadding;
-			arrowBL.scaleX		= -1;
-			arrowBL.x			= -arrowPadding;
-			arrowBL.y			= this.height + arrowPadding*2;
-			arrowBR.x			= this.width + arrowPadding;
-			arrowBR.y			= this.height + arrowPadding*2;
-
-			_pointerHolder.addChild(arrowTL);
-			_pointerHolder.addChild(arrowTR);
-			_pointerHolder.addChild(arrowBL);
-			_pointerHolder.addChild(arrowBR);
+//			_pointerHolder.addChild(arrowTL);
+//			_pointerHolder.addChild(arrowTR);
+//			_pointerHolder.addChild(arrowBL);
+//			_pointerHolder.addChild(arrowBR);
+			
+			_pointerHolder.x = -17;
+			_pointerHolder.y = -2;
+//			_pointerHolder.addChild( _dragHandHint );
+			
 		}
 	}
 	

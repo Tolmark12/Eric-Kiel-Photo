@@ -78,6 +78,8 @@ public class AppFacade extends Facade implements IFacade
 	public static const ADD_TO_LIGHTBOX:String 						= "add_to_lightbox";
 	public static const HIDE_SEARCH_OPTIONS:String 					= "hide_search_options";
 	public static const SHOW_SEARCH_OPTIONS:String 					= "show_search_options";
+	public static const UPDATE_LIGHTBOX_STATUS:String 				= "update_lightbox_status";
+	public static const ACTIVE_STOCK_LIGHTBOX_CHANGE:String 		= "active_stock_lightbox_change";
 	
 	// Tags
 	public static const STOCK_TAGS_LOADED:String 					= "stock_tags_loaded";
@@ -95,6 +97,8 @@ public class AppFacade extends Facade implements IFacade
 	public static const UPDATE_LIGHTBOX_TOTAL:String 				= "update_lightbox_total";
 	public static const POPULATE_LIGHTBOX:String 					= "populate_lighbox";
 	public static const LIGHTBOX_PHOTO_CLICKED:String 				= "lightbox_photo_clicked";
+	public static const REMOVE_FROM_LIGHTBOX:String 				= "remove_from_lightbox";
+	public static const EMAIL_LIGHTBOX:String 						= "email_lightbox";
 	
 	// VIDEO
 	public static const LOAD_VIDEO:String 							= "load_video";
@@ -162,6 +166,8 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( LOAD_LIGHTBOX_ITEMS, DataRequests );
 		registerCommand( LIGHTBOX_ITEMS_LOADED, DataRequests );
 		registerCommand( LIGHTBOX_PHOTO_CLICKED, Clicks );
+		registerCommand( REMOVE_FROM_LIGHTBOX, Clicks );
+		registerCommand( EMAIL_LIGHTBOX, Clicks );
 	}
 
 }

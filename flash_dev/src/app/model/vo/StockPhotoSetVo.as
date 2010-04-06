@@ -7,10 +7,12 @@ public class StockPhotoSetVo
 	public var setName:String;						// Usually the tag these photos share in common	
 	public var dictionary:Object = {};				// Holds a reference to all the photovo's by id
 	
-	public function StockPhotoSetVo( $json:Object ):void
+	public function StockPhotoSetVo( $json:Object, $itemsInLightBox:Object=null ):void
 	{
+		if( $itemsInLightBox == null )
+			$itemsInLightBox = {};
+			
 		stack 		= new Vector.<StockPhotoVo>();
-		
 		if( $json.items != null ) {
 			setName		= $json.term;
 
@@ -20,6 +22,8 @@ public class StockPhotoSetVo
 				var stockPhotoVo:StockPhotoVo = new StockPhotoVo( $json.items[i] );
 				stockPhotoVo.parentSet = this;
 				this.addStockPhotoToSet( stockPhotoVo );
+				if( $itemsInLightBox[stockPhotoVo.id] != null )
+					stockPhotoVo.isInLightBox = true;
 			}
 		}
 	}

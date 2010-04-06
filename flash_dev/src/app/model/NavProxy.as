@@ -5,16 +5,20 @@ import org.puremvc.as3.multicore.patterns.proxy.Proxy;
 import app.model.vo.*;
 import app.AppFacade;
 import flash.external.ExternalInterface;
-
+import Kiel09;
 public class NavProxy extends Proxy implements IProxy
 {
 	public static const NAME:String = "nav_proxy";
 	
 	private var _navVo:NavVo;
 	private var _currentPageId:String;
-
+	private var _defaultPageFromRoot:String;
+	
 	// Constructor
-	public function NavProxy( ):void { super( NAME ); };
+	public function NavProxy( $root:Kiel09 ):void { 
+		super( NAME );
+		_defaultPageFromRoot = $root.defaultPage;
+	};
 	
 	public function config ( $vo:ConfigVo ):void {
 		sendNotification( AppFacade.LOAD_NAV_DATA );
@@ -27,9 +31,11 @@ public class NavProxy extends Proxy implements IProxy
 		sendNotification( AppFacade.NAV_INITIALIZED );
 	}
 	
-	public function showDefaultPage (  ):void
-	{
-		changePage( _navVo.defaultNavItem.id );
+	public function showDefaultPage (  ):void {
+		if( _defaultPageFromRoot.length != 0 )
+			changePage( _defaultPageFromRoot );
+		else
+			changePage( _navVo.defaultNavItem.id )
 	}
 	
 	public function changePage ( $newId:String ):void

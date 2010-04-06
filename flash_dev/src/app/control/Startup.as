@@ -1,5 +1,6 @@
 package app.control
 {
+import Kiel09;
 import org.puremvc.as3.multicore.interfaces.*;
 import org.puremvc.as3.multicore.patterns.command.SimpleCommand;
 import app.view.*;
@@ -16,8 +17,7 @@ public class Startup extends SimpleCommand implements ICommand
 	override public function execute( note:INotification ):void
 	{
 		
-		echo( "Startup" );
-		var kielRoot = note.getBody() as Sprite;
+		var kielRoot:Kiel09 = note.getBody() as Kiel09;
 		
 		// Mediators
 		var browserMediator:BrowserMediator 		= new BrowserMediator(kielRoot.stage);
@@ -34,10 +34,10 @@ public class Startup extends SimpleCommand implements ICommand
 					
 		// Proxies
 		var externalDataProxy:ExternalDataProxy 	= new ExternalDataProxy();
-		var navProxy:NavProxy 						= new NavProxy();
+		var navProxy:NavProxy 						= new NavProxy( kielRoot );
 		var portfolioProxy:PortfolioProxy 			= new PortfolioProxy();
 		var stockProxy:StockProxy 					= new StockProxy();
-		var lightBoxProxy:LightBoxProxy 			= new LightBoxProxy();
+		var lightBoxProxy:LightBoxProxy 			= new LightBoxProxy(kielRoot.urlLightboxItems);
 		var tagsProxy:TagsProxy 					= new TagsProxy();
 		var formProxy:FormProxy 					= new FormProxy();
 		

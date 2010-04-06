@@ -166,6 +166,11 @@ public class PortfolioItem extends Sprite
 		var navEvent:NavEvent = new NavEvent( NavEvent.PORTFOLIO_ITEM_CLICK, true );
 		navEvent.portfolioItemIndex = _portfolioItemVo.index;
 		dispatchEvent( navEvent );
+	
+		if( _portfolioItemVo.isOnlyVideo ) {
+			var ev:NavEvent = new NavEvent(NavEvent.SHOW_VIDEO, true);
+			dispatchEvent( ev );
+		}
 	}
 	
 	private function _onMouseOver ( e:Event ):void {
@@ -204,7 +209,8 @@ public class PortfolioItem extends Sprite
 	
 	private function _onVideoClick ( e:Event ):void {
 		e.stopPropagation();
-		dispatchEvent( new NavEvent(NavEvent.SHOW_VIDEO, true) );
+		var ev:NavEvent = new NavEvent(NavEvent.SHOW_VIDEO, true);
+		dispatchEvent( ev );
 	}
 	
 	

@@ -21,12 +21,14 @@ public class StockTagsMediator extends Mediator implements IMediator
 		super( NAME );
 		$stage.addChild( _stockTags );
 		_stockTags.y = 60;
-		_stockTags.x = 400;
+		_stockTags.x = 450;
 		
 		_stockTags.addEventListener( 			StockTagEvent.ADD_LETTER_TO_SEARCH, _onAddLetterToSearch, false,0,true );
 		_stockTags.addEventListener( 			StockTagEvent.NEW_TAG_SEARCH, _onNewTagSearch, false,0,true );
 		_stockTags.addEventListener( 			StockTagEvent.SEARCH_TERM_CHANGE, _onSearchTermChange, false,0,true );
 		_stockTags.addEventListener(			StockTagEvent.SUBMIT_SEARCH_TERM, _onSubmitSearchTerm, false,0,true );
+		
+		_stockTags.disableFiltering();
    	}
 	
 	// PureMVC: List notifications

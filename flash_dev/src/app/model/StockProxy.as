@@ -78,7 +78,7 @@ public class StockProxy extends Proxy implements IProxy
 				_currentPhotoId		= null;
 			}
 			
-			var newSet:StockPhotoSetVo 	= new StockPhotoSetVo($json);
+			var newSet:StockPhotoSetVo 	= new StockPhotoSetVo($json, _itemsInLigitBox);
 			_findAndAddNewMatches( newSet );
 			_sets.unshift(newSet);
 			_prepareAneSentResults();
@@ -146,6 +146,47 @@ public class StockProxy extends Proxy implements IProxy
 	
 	public function getPhotoVo ( $id:String ) : StockPhotoVo {
 		return _getStockPhotoById( $id );
+	}
+	
+	private var _itemsInLigitBox:Object = {};
+	public function updateLightBoxItems ( $itemsInLightBox:Array ):void
+	{
+		var lightBoxDispayItems:LightBoxDispayItemsVo = new LightBoxDispayItemsVo()
+		var newItems:Object = {}
+		var photoVo:StockPhotoVo;
+		
+		// Create the list of items to update..
+		var len:uint = $itemsInLightBox.length;
+		for ( var i:uint=0; i<len; i++ ) 	{
+			if( _itemsInLigitBox[$itemsInLightBox[i]] != null ){
+				delete _itemsInLigitBox[$itemsInLightBox[i]];
+				newItems[ $itemsInLightBox[i] ] = "no change";
+			}else{
+				newItems[ $itemsInLightBox[i] ] = "do change"
+				lightBoxDispayItems.itemsToAddToLightBox.push( $itemsInLightBox[i] );
+				
+				photoVo = _getStockPhotoById($itemsInLightBox[i]) ;
+				if( photoVo != null )
+					photoVo.isInLightBox = true;
+			}
+		}
+		
+		// Create the list of items to remove from the light box
+		for( var j:String in _itemsInLigitBox ){
+			lightBoxDispayItems.itemsToRemoveFromLightbox.push( j );
+			
+			photoVo = _getStockPhotoById(j) ;
+			if( photoVo != null )
+				photoVo.isInLightBox = false;
+		}
+		
+		if( _itemsInLigitBox[_currentPhotoId] != null )
+			sendNotification( AppFacade.ACTIVE_STOCK_LIGHTBOX_CHANGE, false );
+		else if( newItems[_currentPhotoId] == "do change" )
+			sendNotification( AppFacade.ACTIVE_STOCK_LIGHTBOX_CHANGE, true );
+		
+		_itemsInLigitBox = newItems;
+		sendNotification( AppFacade.UPDATE_LIGHTBOX_STATUS, lightBoxDispayItems );
 	}
 	
 	// _____________________________ Helpers

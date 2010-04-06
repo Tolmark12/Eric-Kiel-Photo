@@ -1,0 +1,7 @@
+- design nav to show where they are at – High contrast
+- Facts and pricing
+- Fonts
+- Back to landing page
+- hide the dropdown hints
+- Clear example tags
+- Image # on the detail view

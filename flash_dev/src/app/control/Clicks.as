@@ -94,6 +94,12 @@ public class Clicks extends SimpleCommand implements ICommand
 				var stockEventTwo:StockEvent = note.getBody() as StockEvent;
 				stockProxy.activateLightBoxPhotoById(stockEventTwo.id)
 			break;
+			case AppFacade.REMOVE_FROM_LIGHTBOX :
+				lightBoxProxy.removeItemFromLightBox( note.getBody() as String );
+			break;
+			case AppFacade.EMAIL_LIGHTBOX :
+				lightBoxProxy.emailLightBox();
+			break;
 		}
 	}
 }
