@@ -14,7 +14,7 @@
   <active>no</active>
  </lead>
  <date>2010-04-06</date>
- <time>14:42:17</time>
+ <time>15:01:16</time>
  <version>
   <release>0.2.2.1</release>
   <api>0.1.0</api>
@@ -203,7 +203,7 @@
      </dir> <!-- /Delorum/Vladmin/Model -->
      <dir name="sql">
       <dir name="vladmin_setup">
-       <file md5sum="65098cc547ca3b1cb1fdb57ad8a8a997" name="mysql4-install-0.1.0.php" role="magelocal" />
+       <file md5sum="9550fac531c54dccc04a02768e39564f" name="mysql4-install-0.1.0.php" role="magelocal" />
        <file md5sum="cb0a939598fb9fd2023558e9ac063df5" name="mysql4-upgrade-0.1.0-0.2.0.php" role="magelocal" />
       </dir> <!-- /Delorum/Vladmin/sql/vladmin_setup -->
      </dir> <!-- /Delorum/Vladmin/sql -->
