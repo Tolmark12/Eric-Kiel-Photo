@@ -4,9 +4,11 @@ import org.puremvc.as3.multicore.interfaces.IProxy;
 import org.puremvc.as3.multicore.patterns.proxy.Proxy;
 import app.model.vo.*;
 import app.AppFacade;
-import flash.external.ExternalInterface;
 import delorum.utils.echo;
 import flash.net.SharedObject;
+import flash.net.navigateToURL;
+import flash.net.URLRequest;
+
 public class LightBoxProxy extends Proxy implements IProxy
 {
 	public static const NAME:String = "light_box_proxy";
@@ -14,11 +16,13 @@ public class LightBoxProxy extends Proxy implements IProxy
 	private var _sharedObject:SharedObject;
 	private var _lightBoxStack:Array = new Array();
 	public var doShowLightBox:Boolean = false;			// Set this true if the lightbox was passed in via URL
-	public var lightBoxPhotoSet:StockPhotoSetVo;
+	public var lightBoxPhotoSet:StockPhotoSetVo = new StockPhotoSetVo({});
+	private var _urlLightBoxItems:Array;
 	
 	// Constructor
-	public function LightBoxProxy( ):void { 
+	public function LightBoxProxy( $urlLightBoxItems:Array ):void { 
 		super( NAME );
+		_urlLightBoxItems = $urlLightBoxItems;
 		_sharedObject = SharedObject.getLocal("kiel-light-box");
 		//emptyLightBox();
 	 };
@@ -31,24 +35,10 @@ public class LightBoxProxy extends Proxy implements IProxy
 	*/
 	public function initLightBox (  ):void
 	{
-		var urlPath:String = ExternalInterface.call( "window.location.href.toString" );
-		
-		// If there is a lightbox stack included in the url, split that
-		// and create the lightbox: EX - http://kiel.com/?/213/123/123/123/etc..
-		if( urlPath != null )
-		{
-			// FLIX: Split on the "?"
-			//var tempAr = urlPath.split("?"); 
-			//var tempAr = ["", "1,2,3"];
-			var tempAr:Array = urlPath.split("?"); 
-
-			// If there are images in the second part of that string, create the array
-			if( tempAr.length > 1 ) {
-				_lightBoxStack = tempAr[1].split(",");
-				_saveToLocalObject();
-				doShowLightBox = true;
-			}
+		if( _urlLightBoxItems.length != 0 ){
+			_lightBoxStack = _urlLightBoxItems;
 		}
+			
 		
 		// else if there is a shared object with a stack, use that !only! if there is no
 		// lightbox in the url
@@ -60,11 +50,20 @@ public class LightBoxProxy extends Proxy implements IProxy
 		updateTotalItemsInLightbox();
 		if( _lightBoxStack.length > 0 )
 			sendNotification( AppFacade.LOAD_LIGHTBOX_ITEMS, _lightBoxStack.join(",") );
+			
 	}
 	
 	public function parseLightBoxJson ( $json:Object ):void {
-		lightBoxPhotoSet = new StockPhotoSetVo($json);
+		// Create an object with all the ids in the lightbox
+		var tempObj:Object = {};
+		var len:uint = _lightBoxStack.length;
+		for ( var i:uint=0; i<len; i++ ) {
+			tempObj[ _lightBoxStack[i] ] = "";
+		}
+		
+		lightBoxPhotoSet = new StockPhotoSetVo($json, tempObj);
 		sendNotification( AppFacade.POPULATE_LIGHTBOX, lightBoxPhotoSet );
+		_broadcastLightbox();
 	}
 	
 	/** 
@@ -78,7 +77,6 @@ public class LightBoxProxy extends Proxy implements IProxy
 			if( itemId == $itemId )
 				return null;
 		}
-		
 		_lightBoxStack.push($itemId);
 		_saveToLocalObject();
 		updateTotalItemsInLightbox();
@@ -86,15 +84,27 @@ public class LightBoxProxy extends Proxy implements IProxy
 		// Add this item to the photo set
 		var stockProxy:StockProxy = facade.retrieveProxy( StockProxy.NAME ) as StockProxy;
 		lightBoxPhotoSet.addStockPhotoToSet( stockProxy.getPhotoVo($itemId) );
+		sendNotification( AppFacade.POPULATE_LIGHTBOX, lightBoxPhotoSet );
+		_broadcastLightbox();
 		return null;
 	}
 	
 	/** 
 	*	Remove item from the lightbox stack
 	*/
-	public function removeItemFromLightBox ( $itemId:String ):void
-	{
+	public function removeItemFromLightBox ( $itemId:String ):void{
+		var len:uint = _lightBoxStack.length;
+		for ( var i:uint=0; i<len; i++ ) {
+			if( _lightBoxStack[i] == $itemId ){
+				_lightBoxStack.splice(i,1);
+			}
+		}
+		
 		lightBoxPhotoSet.removeStockPhotoFromSet($itemId);
+		_saveToLocalObject();
+		updateTotalItemsInLightbox();
+		sendNotification( AppFacade.POPULATE_LIGHTBOX, lightBoxPhotoSet );
+		_broadcastLightbox()
 	}
 	
 	/** 
@@ -128,6 +138,12 @@ public class LightBoxProxy extends Proxy implements IProxy
 		_saveToLocalObject();
 	}
 	
+	public function emailLightBox (  ):void
+	{
+		var emailLink = "mailto:?subject=Check out my Lightbox at Kielphoto.com&body=View the following lightbox I created at Kiel Photo.com:%0A%0ahttp://staging.kielphoto.com/#" + getLightBoxURL();
+		navigateToURL(new URLRequest(emailLink), "_top");
+	}
+	
 	// _____________________________ Helpers	
 	
 	// Save the contents of _lightBoxStack into a delimited sting in the shared object
@@ -142,7 +158,8 @@ public class LightBoxProxy extends Proxy implements IProxy
 		for each( var itemId:String in _lightBoxStack) {
 			sendAr.push( stockProxy.getPhotoVo(itemId) );
 		}
-		
+
+		stockProxy.updateLightBoxItems(_lightBoxStack);
 		sendNotification( AppFacade.SHOW_LIGHTBOX, sendAr );
 	}
 	

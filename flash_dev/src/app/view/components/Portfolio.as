@@ -41,6 +41,7 @@ public class Portfolio extends Page
 		this.addEventListener( ImageLoadEvent.RECENTER_STRIP, _onRecenterStrip, false,0,true );
 		
 		_copyRight = new Copyright_swc();
+		_copyRight.alpha = 0.4;
 		
 		_portfolioNav = new PortfolioNav();
 		_portfolioNav.build();

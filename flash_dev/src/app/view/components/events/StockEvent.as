@@ -10,7 +10,8 @@ public class StockEvent extends Event
 	public static const STOCK_PHOTO_OUT:String = "stock_photo_out";
 	public static const REMOVE_CATEGORY:String = "remove_category";
 	public static const ADD_TO_LIGHTBOX:String = "add_to_lightbox";
-
+	public static const REMOVE_FROM_LIGHTBOX:String = "remove_from_lightbox";
+	
 	public var id:String;
 	
 	public function StockEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)

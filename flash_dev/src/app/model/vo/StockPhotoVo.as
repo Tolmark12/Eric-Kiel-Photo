@@ -15,7 +15,7 @@ public class StockPhotoVo
 											// can be returned to its parent after having been
 											// in the "match" PhotoSetVo
 	public var doShowInParentSet:Boolean;	// Set to true if this is not in the matches set
-	
+	public var isInLightBox:Boolean;		// Set to true if this is placed in the lightbox
 	
 	public function StockPhotoVo( $json:Object ):void
 	{

@@ -29,7 +29,7 @@ public class Search extends Sprite
 		
 		// Radio Buttons
 		_newSearchRadeioBtn.build("filter", "New Search");
-		_filterSearchRadioBtn.build("filter", "Filter Results");
+		_filterSearchRadioBtn.build("filter", "Filter Current Search");
 		_newSearchRadeioBtn.activate();
 		
 		// Position Radio Buttons
@@ -48,8 +48,10 @@ public class Search extends Sprite
 		if( $ar.length != 0 ) {
 			_tagSuggestions.show();
 			_tagSuggestions.showTags( $ar );
+			this.stage.addEventListener( MouseEvent.CLICK, _onClick, false,0,true );
 		}else{
 			_tagSuggestions.hide();
+			this.stage.removeEventListener( MouseEvent.CLICK, _onClick );
 		}
 		
 	}
@@ -117,6 +119,10 @@ public class Search extends Sprite
 	
 	private function _onHintSelected ( e:TagBrowserEvent ):void {
 		submit();
+	}
+	
+	private function _onClick ( e:Event ):void {
+		showHints([]);
 	}
 	
 }

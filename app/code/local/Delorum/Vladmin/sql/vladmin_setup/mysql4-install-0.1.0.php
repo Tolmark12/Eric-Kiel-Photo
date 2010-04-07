@@ -213,12 +213,12 @@ INSERT INTO eav_attribute (
 VALUES (
 	NULL
 	,(SELECT entity_type_id FROM eav_entity_type WHERE entity_type_code = 'vladmin_template')
-	,'status'
+	,'is_active'
 	,''
 	,'int'
 	,'select'
 	,'Status'
-	,'eav/entity_attribute_source_table'
+	,'vladmin/eav_entity_attribute_source_status'
 );
 
 -- create a tags attribute

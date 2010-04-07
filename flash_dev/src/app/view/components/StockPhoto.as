@@ -27,10 +27,9 @@ public class StockPhoto extends Sprite
 		this.addChild( _addToLightBoxBtn );
 
 		id 	= $vo.id;
+		isInLightBox = $vo.isInLightBox;
 		_addToLightBoxBtn.id = id;
 		unHighlight();
-
-		
 	}
 	
 	// _____________________________ API
@@ -75,12 +74,20 @@ public class StockPhoto extends Sprite
 		//this.alpha = 0.3;
 	}
 	
+	public function set isInLightBox ( $bool:Boolean ):void{
+		if( $bool )
+			_addToLightBoxBtn.showRemove();
+		else
+			_addToLightBoxBtn.showAdd();
+	};
+	
 	// _____________________________ Event Handlers
 	
-	private function _onClick ( e:Event ):void {
+	protected function _onClick ( e:Event ):void {
 		var stockEvent:StockEvent = new StockEvent( StockEvent.STOCK_PHOTO_CLICK, true );
 		stockEvent.id = this.id;
 		dispatchEvent( stockEvent );
+		_onMouseOut()
 	}
 	
 	private function _onMouseOver ( e:Event ):void {
@@ -89,8 +96,8 @@ public class StockPhoto extends Sprite
 		dispatchEvent( stockEvent );
 	}
 	
-	private function _onMouseOut ( e:Event ):void {
-		if( !this.hitTestPoint(this.stage.mouseX, this.stage.mouseY, true) ) {
+	private function _onMouseOut ( e:Event=null ):void {
+		if( !this.hitTestPoint(this.stage.mouseX, this.stage.mouseY, true) || e == null ) {
 			var stockEvent:StockEvent = new StockEvent( StockEvent.STOCK_PHOTO_OUT, true );
 			stockEvent.id = this.id;
 			dispatchEvent( stockEvent );			

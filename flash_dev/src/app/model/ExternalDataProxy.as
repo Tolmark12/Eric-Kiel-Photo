@@ -51,16 +51,10 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	// Load Portfolio data
 	public function loadPortfolioData ( $feed:String ):void
 	{
-		// TEMP !!
-		var ldr:DataLoader
-		if( $feed != _server + "vladmin/api/index/template/3" )
-			ldr = new DataLoader( $feed );
-		else
-			ldr = new DataLoader( _server + "prototype/content/json/tempPortfolio.json" );
-			//ldr = new DataLoader( "http://www.kielphoto.com/vladmin/api/index/template/3" );
-		
-		// TEMP !!
-		
+		if( $feed == _server + "vladmin/api/index/template/3" )
+			$feed = _server + "prototype/content/json/tempPortfolio.json"
+			
+		var ldr:DataLoader = new DataLoader( $feed );
 		ldr.addEventListener( Event.COMPLETE, _onPortfolioDataLoad, false,0,true );
 		ldr.loadItem();
 	}
@@ -116,7 +110,6 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	*	@param		The entire embed tag for showing the video
 	*/
 	public function loadAjaxVideo ( $videoEmbedTag:String ):void{
-		trace( $videoEmbedTag );
 		if (ExternalInterface.available) {
 			ExternalInterface.call("playVideo", $videoEmbedTag);
 		}

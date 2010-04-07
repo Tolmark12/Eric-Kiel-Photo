@@ -12,7 +12,7 @@ public class PortfolioItemVo
 	public var name:String;
 	// Video
 	public var videoEmbedTag:String;
-	public var isOnlyVideo:Boolean;
+	public var isOnlyVideo:Boolean = false;
 	
 	public function PortfolioItemVo( $json:Object ):void
 	{
@@ -24,7 +24,8 @@ public class PortfolioItemVo
 		isActive			= true;
 		
 		videoEmbedTag		= $json.video_embed_tag;
-		isOnlyVideo			= Boolean($json.is_only_video);
+		if( $json.is_only_video != null )
+			isOnlyVideo			= new Boolean($json.is_only_video.toLowerCase() == "true");
 	}
 	
 	public function toString (  ):String

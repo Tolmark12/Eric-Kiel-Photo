@@ -8,11 +8,32 @@ import flash.display.StageScaleMode;
 import delorum.utils.EchoMachine;
 import app.AppFacade;
 import delorum.utils.KeyTrigger;
+import flash.external.ExternalInterface;
 
 public class Kiel09 extends Sprite
 {
+	public var urlLightboxItems:Array = new Array();
+	//public var defaultPage:String = "/portfolio";
+	public var defaultPage:String = "";
+	
 	public function Kiel09():void
 	{
+		var urlPath:String = ExternalInterface.call( "window.location.href.toString" );
+		
+		if( urlPath != null ){
+			// Find out what the url is and specify a default page if none is specified
+			if( urlPath.indexOf("kielphotofilms") != -1 )
+				defaultPage = "/films";
+
+			if( urlPath.indexOf("kielphotostock") != -1)
+				defaultPage = "/stock";
+			
+			// Grab any lightbox vars
+			var tempAr:Array = urlPath.split("?");
+			if( tempAr.length > 1 )
+				urlLightboxItems = tempAr[1].split("/");
+		}
+		
 		// Init echo
 		EchoMachine.register( this.stage );
 		KeyTrigger.stage = this.stage;

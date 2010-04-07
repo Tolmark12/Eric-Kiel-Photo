@@ -98,6 +98,15 @@ Lightbox.prototype = {
         
 		// Removed 'object' by Delorum - Domino
 		$$('select', 'embed').each(function (node) { node.style.visibility = 'visible'; });
+		
+		// Added a callback to flash for when the window closes - Mark
+		var flashRef;
+		if (navigator.appName.indexOf("Microsoft") != -1) {
+		    flashRef = window["kiel_swf"];
+		} else {
+		    flashRef = document["kiel_swf"];
+		}
+		flashRef.showRoot();
     },
 
     //

@@ -15,6 +15,7 @@ public class TextIconBtn extends MovieClip
 		this.buttonMode = true;
 		this.mouseChildren = false;
 		_titleTxt 	= this.getChildByName( "titleTxt" ) as TextField;
+		_titleTxt.autoSize = "left";
 		_icon 		= this.getChildByName( "icon" ) as MovieClip;
 		
 		this.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOver, false,0,true );
@@ -36,9 +37,11 @@ public class TextIconBtn extends MovieClip
 		_icon.gotoAndStop($frame);
 		
 		// Draw invisible hit area
+		this.graphics.clear();
 		this.graphics.beginFill(0xFF0000, 0);
 		this.graphics.drawRect(-10, -5, this.width+30, this.height+10);
 	}
+	
 	
 	// _____________________________ Event Handlers
 	

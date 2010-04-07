@@ -23,9 +23,12 @@ public class PortfolioItem extends Sprite
 	private var _portfolioImages:PortfolioImage;
 	public var targetX:Number;
 	private var _isTweening:Boolean = false;
-	private var _viewVideoBtn:SeeFilmBtn;
 	public var isHidden:Boolean = false;
 	public var index:uint;
+
+	// Video Btns, I should probably move these into a sub class at some point..
+	private var _viewVideoBtn:SeeFilmBtn;
+	private var _playBtn:FilmPlayButton_swc;
 	
 	public function PortfolioItem():void
 	{
@@ -57,9 +60,16 @@ public class PortfolioItem extends Sprite
 		_portfolioImages.loadQueueNumber = $loadQueueNumber;
 		_portfolioImages.loadImages( _portfolioItemVo.lowResSrc, _portfolioItemVo.src, index < 9 );
 		
-		
-		if( $portfolioItemVo.videoEmbedTag != null )
-			_viewVideoBtn = new SeeFilmBtn_swc();
+		// If this has video...
+		if( _portfolioItemVo.videoEmbedTag != null ){
+			
+			// If this is a photo with video associated with it...
+			if( !_portfolioItemVo.isOnlyVideo )
+				_viewVideoBtn = new SeeFilmBtn_swc();
+			// this is a photo with only video...	
+			else
+				_playBtn = new FilmPlayButton_swc();
+		}
 			
 	}
 	
@@ -71,10 +81,16 @@ public class PortfolioItem extends Sprite
 		_showVideoBtn();
 		_portfolioImages.isHidden = false;
 		_portfolioImages.loadLargeImage()
-		_removeTweens();
-		Tweener.addTween( super, { y:0, scaleX:1, scaleY:1, time:_TIME, transition:"EaseInOutQuint", onComplete:_sendActivationEvent} );
-		blur = 0;
-		Tweener.addTween( this, { blur:30, time:0.6, delay:0.3, transition:"EaseInOutQuint", onUpdate:_updateGlow} );
+		
+		// Only grow if this is a normal button
+		if( _portfolioItemVo.isOnlyVideo ) {
+			_sendActivationEvent()
+		}else{
+			_removeTweens();
+			Tweener.addTween( super, { y:0, scaleX:1, scaleY:1, time:_TIME, transition:"EaseInOutQuint", onComplete:_sendActivationEvent} );
+			blur = 0;
+			Tweener.addTween( this, { blur:30, time:0.6, delay:0.3, transition:"EaseInOutQuint", onUpdate:_updateGlow} );
+		}
 		
 		_onMouseOver(null);
 		this.isActive = true;
@@ -166,6 +182,11 @@ public class PortfolioItem extends Sprite
 		var navEvent:NavEvent = new NavEvent( NavEvent.PORTFOLIO_ITEM_CLICK, true );
 		navEvent.portfolioItemIndex = _portfolioItemVo.index;
 		dispatchEvent( navEvent );
+	
+		if( _portfolioItemVo.isOnlyVideo ) {
+			var ev:NavEvent = new NavEvent(NavEvent.SHOW_VIDEO, true);
+			dispatchEvent( ev );
+		}
 	}
 	
 	private function _onMouseOver ( e:Event ):void {
@@ -200,11 +221,19 @@ public class PortfolioItem extends Sprite
 			_viewVideoBtn.x =  Math.round( _portfolioImages.activeWidth - _viewVideoBtn.width );
 			_viewVideoBtn.y = 505;
 		}
+		
+		if( _playBtn != null ) {
+			this.addChild( _playBtn );
+			_playBtn.scaleX = _playBtn.scaleY = 1/_portfolioImages.shrinkPercentage;
+			_playBtn.x = _portfolioImages.activeWidth/2 - _playBtn.width/2;
+			_playBtn.y = 250-_playBtn.height/2;
+		}
 	}
 	
 	private function _onVideoClick ( e:Event ):void {
 		e.stopPropagation();
-		dispatchEvent( new NavEvent(NavEvent.SHOW_VIDEO, true) );
+		var ev:NavEvent = new NavEvent(NavEvent.SHOW_VIDEO, true);
+		dispatchEvent( ev );
 	}
 	
 	
@@ -231,7 +260,7 @@ public class PortfolioItem extends Sprite
 	{
 		if( this.isHidden )
 			return 0;
-		else if( this.isActive ) 
+		else if( this.isActive && !_portfolioItemVo.isOnlyVideo ) 
 			return _portfolioImages.activeWidth;
 		else
 			return _portfolioImages.inactiveWidth;

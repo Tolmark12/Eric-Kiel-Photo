@@ -9,7 +9,7 @@ import delorum.utils.KeyTrigger;
 import caurina.transitions.Tweener;
 import app.model.vo.StageResizeVo;
 import flash.geom.Rectangle;
-
+import app.model.vo.LightBoxDispayItemsVo;
 
 public class StockPhotoStrip extends Sprite
 {
@@ -155,6 +155,26 @@ public class StockPhotoStrip extends Sprite
 	{
 		_stockMap.bumpColorToEndOfList($tagIndex);
 	}
+	
+	public function updatePhotoLightBoxStatus ( $vo:LightBoxDispayItemsVo ):void
+	{
+		var i:uint; var len:uint; var photo:StockPhoto;
+		
+		len = $vo.itemsToAddToLightBox.length;
+		for ( i=0; i<len; i++ ) {
+			photo = _dictionary[ $vo.itemsToAddToLightBox[i] ];
+			if( photo != null )
+				photo.isInLightBox = true;
+		}
+		
+		len = $vo.itemsToRemoveFromLightbox.length;
+		for ( i=0; i<len; i++ ) {
+			photo = _dictionary[ $vo.itemsToRemoveFromLightbox[i] ];
+			if( photo != null )
+				photo.isInLightBox = false;
+		}
+	}
+	
 	// _____________________________ Helpers
 	
 	

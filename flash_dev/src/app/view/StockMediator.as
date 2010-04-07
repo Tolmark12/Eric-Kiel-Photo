@@ -35,13 +35,14 @@ public class StockMediator extends PageMediator implements IMediator
 		_stockPhotoStrip.addEventListener( 		StockEvent.STOCK_PHOTO_OVER, _onStockPhotoOver, false,0,true );
 		_stockPhotoStrip.addEventListener( 		StockEvent.STOCK_PHOTO_OUT, _onStockPhotoOut, false,0,true );
 		_stockPhotoStrip.addEventListener( 		StockEvent.ADD_TO_LIGHTBOX, _onAddToLightbox, false,0,true );
+		_stockPhotoStrip.addEventListener( 		StockEvent.REMOVE_FROM_LIGHTBOX, _onRemoveFromLightbox, false,0,true );
 		
 		_stockDetailView.addEventListener( 		ModalEvent.ASK_A_QUESTION, _onAskAQuestion, false,0,true );
 		_stockDetailView.addEventListener( 		ModalEvent.DOWNLOAD_COMP, _onDownloadComp, false,0,true );
 		_stockDetailView.addEventListener( 		ModalEvent.CLOSE_MODAL, _onCloseModal, false,0,true );
 		_stockDetailView.addEventListener( 		StockEvent.STOCK_PHOTO_CLOSE, _onStockPhotoClose, false,0,true );
 		_stockDetailView.addEventListener( 		StockEvent.ADD_TO_LIGHTBOX, _onAddToLightbox, false,0,true );
-		
+		_stockDetailView.addEventListener( 		StockEvent.REMOVE_FROM_LIGHTBOX, _onRemoveFromLightbox, false,0,true );
    	}
 	
 	
@@ -54,6 +55,8 @@ public class StockMediator extends PageMediator implements IMediator
 					AppFacade.STOCK_SCROLL,
 					AppFacade.STAGE_RESIZE,
 					AppFacade.STOCK_CATEGORY_REMOVED,
+					AppFacade.UPDATE_LIGHTBOX_STATUS,
+					AppFacade.ACTIVE_STOCK_LIGHTBOX_CHANGE,
 			  	];
 	}
 	
@@ -76,13 +79,18 @@ public class StockMediator extends PageMediator implements IMediator
 			case AppFacade.DISPLAY_STOCK_PHOTO :
 				_stockPhotoStrip.displayPhoto( note.getBody() as StockPhotoVo );
 				_stockDetailView.displayImage( note.getBody() as StockPhotoVo );
-				
 			break;
 			case AppFacade.STAGE_RESIZE :
 				_stockPhotoStrip.setScrollWindow( note.getBody() as StageResizeVo );
 			break;
 			case AppFacade.STOCK_CATEGORY_REMOVED :
 				_stockPhotoStrip.deleteStockTagById( note.getBody() as uint );
+			break;
+			case AppFacade.UPDATE_LIGHTBOX_STATUS :
+				_stockPhotoStrip.updatePhotoLightBoxStatus( note.getBody() as LightBoxDispayItemsVo )
+			break;
+			case AppFacade.ACTIVE_STOCK_LIGHTBOX_CHANGE : 
+				_stockDetailView.changeDisplayLightboxStatus( note.getBody() as Boolean );
 			break;
 		}
 	}
@@ -150,6 +158,10 @@ public class StockMediator extends PageMediator implements IMediator
 	
 	private function _onAddToLightbox ( e:StockEvent ):void {
 		sendNotification( AppFacade.ADD_TO_LIGHTBOX, e.id );
+	}
+	
+	private function _onRemoveFromLightbox ( e:StockEvent ):void {
+		sendNotification( AppFacade.REMOVE_FROM_LIGHTBOX, e.id );
 	}
 	
 }

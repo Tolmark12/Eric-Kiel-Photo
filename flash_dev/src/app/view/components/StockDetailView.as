@@ -26,6 +26,9 @@ public class StockDetailView extends Sprite
 	private var _addToLightBoxBtn:TextIconBtn = new TextIconBtn_swc();;
 	// Close Btn
 	private var _closeBtn:CloseBtn_swc = new CloseBtn_swc();
+	// Buy Button
+	private var _buyBtn:GreenBtn = new GreenBtn_swc();
+	
 	
 	// Title (number)
 	// Buy Now
@@ -49,16 +52,20 @@ public class StockDetailView extends Sprite
 		// Create the buttons
 		_askQuestionBtn.build(  "Ask A Question", "_ask");
 		_downloadCompBtn.build( "Downlad Comp", "_download");
-		_addToLightBoxBtn.build( "Add To Lightbox", "_lightbox")
+		changeDisplayLightboxStatus(true);
 		_downloadCompBtn.y = _askQuestionBtn.y = _imageHolder.y - 20;
 		
 		_display.addChild( _askQuestionBtn );
 		_display.addChild( _downloadCompBtn );
 		_display.addChild( _addToLightBoxBtn );
 		_display.addChild( _closeBtn );
+		_display.addChild( _buyBtn );
 		
 		_closeBtn.buttonMode = true;
 		_closeBtn.mouseChildren = false;
+		
+		_buyBtn.setTitle("Buy Now");
+		
 		
 		// Events
 		_askQuestionBtn.addEventListener( MouseEvent.CLICK, _onAskQuestionClick, false,0,true );
@@ -82,6 +89,8 @@ public class StockDetailView extends Sprite
 		if( _imageHolder.numChildren != 0 )
 			_imageHolder.removeChildAt(0);
 		
+		changeDisplayLightboxStatus($stockPhotoVo.isInLightBox);
+		
 		var ldr:ImageLoader = new ImageLoader( $stockPhotoVo.highResSrc, _imageHolder );
 		ldr.addEventListener( Event.COMPLETE, _onImageLoaded );
 		ldr.loadItem();
@@ -100,7 +109,6 @@ public class StockDetailView extends Sprite
 		_darkBackground.mouseEnabled = true;
 		Tweener.addTween( _darkBackground, { alpha:1, time:1, transition:"EaseInOutQuint"} );
 		_display.alpha = 0;
-		Tweener.addTween( _display, { alpha:1, time:1, transition:"EaseInOutQuint"} );
 		this.visible = true;
 		_isHidden = false;
 	}
@@ -133,6 +141,19 @@ public class StockDetailView extends Sprite
 		hide();
 	}
 	
+	/** 
+	*	Change whether the button on this says "Add" or "Remove" from the Lightbox
+	*/
+	private var _isInLightBox:Boolean;
+	public function changeDisplayLightboxStatus ( $isInLightBox:Boolean ):void
+	{
+		_isInLightBox = $isInLightBox;
+		if( !$isInLightBox )
+			_addToLightBoxBtn.build( "Add To Lightbox", "_lightbox")
+		else
+			_addToLightBoxBtn.build( "Remove From Lightbox", "_lightbox")
+	}
+	
 	// _____________________________ Helpers
 	
 	private function _drawBackgroundBlocker (  ):void {
@@ -161,21 +182,30 @@ public class StockDetailView extends Sprite
 	}
 	
 	private function _onAddToLightBoxClick ( e:Event ):void {
-		var ev:StockEvent = new StockEvent(StockEvent.ADD_TO_LIGHTBOX, true);
+		var ev:StockEvent;
+		
+		if( !_isInLightBox )
+			ev = new StockEvent(StockEvent.ADD_TO_LIGHTBOX, true);
+		else
+			ev = new StockEvent(StockEvent.REMOVE_FROM_LIGHTBOX, true);
+			
 		ev.id = _id;
 		dispatchEvent( ev );
 	}
 	
 	private function _onImageLoaded ( e:Event ):void {
-		_imageHolder.x 		= StageResizeVo.CENTER - _imageHolder.width / 2;
-		var right:Number 	= _imageHolder.x + _imageHolder.width;
-		_closeBtn.visible 	= true;
-		_closeBtn.x 		= Math.round( _imageHolder.x - 10 );
-		_closeBtn.y			= Math.round( _imageHolder.y - 10 );
-		_downloadCompBtn.x 	= right - _downloadCompBtn.width + 30;
-		_askQuestionBtn.x  	= _downloadCompBtn.x - _askQuestionBtn.width;
-		_addToLightBoxBtn.x = _imageHolder.x;
-		_addToLightBoxBtn.y = _imageHolder.y + _imageHolder.height + 7;
+		_imageHolder.x 			= StageResizeVo.CENTER - _imageHolder.width / 2;
+		var right:Number 		= _imageHolder.x + _imageHolder.width;
+		_closeBtn.visible 		= true;
+		_closeBtn.x 			= Math.round( _imageHolder.x - 10 );
+		_closeBtn.y				= Math.round( _imageHolder.y - 10 );
+		_downloadCompBtn.x 		= right - _downloadCompBtn.width + 30;
+		_askQuestionBtn.x  		= _downloadCompBtn.x - _askQuestionBtn.width;
+		_addToLightBoxBtn.x 	= _imageHolder.x;
+		_addToLightBoxBtn.y 	= _imageHolder.y + _imageHolder.height + 7;
+		_buyBtn.y 				= _addToLightBoxBtn.y - 6;
+		_buyBtn.x 				= _imageHolder.x + _imageHolder.width - _buyBtn.width + 13;
+		Tweener.addTween( _display, { alpha:1, time:1, transition:"EaseInOutQuint"} );
 	}
 	
 
