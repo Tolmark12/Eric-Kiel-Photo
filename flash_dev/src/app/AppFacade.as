@@ -11,6 +11,7 @@ public class AppFacade extends Facade implements IFacade
 	public static const STARTUP:String = "startup";
 
 	
+	
 	// DATA REQUESTS AND COMPLETIONS::
 		// ...General / Nav
 	public static const CONFIG_LOADED_AND_PARSED:String 			= "config_loaded_and_parsed";
@@ -46,6 +47,8 @@ public class AppFacade extends Facade implements IFacade
 	public static const REFRESH_ALIGN:String 						= "refresh_align";
     public static const IMAGE_LOADED:String 						= "image_loaded";
 	public static const IMAGE_LOADED_LOW:String 					= "image_loaded_low";
+	public static const HIDE_ROOT:String 							= "hide_root";
+	public static const SHOW_ROOT:String 							= "show_root";
 	
 	// STATE CHANGES        
 	public static const REMOVE_CURRENT_PAGE:String 					= "remove_current_page";                                		

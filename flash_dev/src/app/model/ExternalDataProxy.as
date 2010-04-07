@@ -110,7 +110,6 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	*	@param		The entire embed tag for showing the video
 	*/
 	public function loadAjaxVideo ( $videoEmbedTag:String ):void{
-		trace( $videoEmbedTag );
 		if (ExternalInterface.available) {
 			ExternalInterface.call("playVideo", $videoEmbedTag);
 		}
@@ -124,7 +123,6 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	}
 	
 	private function _onNavLoad ( e:Event ):void{
-		trace( e.target.data );
 		sendNotification( AppFacade.NAV_DATA_LOADED, JSON.decode( e.target.data ) );
 	}
 	
