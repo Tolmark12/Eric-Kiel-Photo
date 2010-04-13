@@ -9,7 +9,7 @@ $installer->run("
 DROP TABLE IF EXISTS client_detail;
 CREATE TABLE client_detail (
 	 client_id		int(10) unsigned NOT NULL auto_increment PRIMARY KEY
-	,name			varchar(255) NOT NULL DEFUALT ''
+	,name			varchar(255) NOT NULL DEFAULT ''
 	,email			varchar(255) NOT NULL DEFAULT ''
 	,message		mediumtext
 	,company		varchar(255)
