@@ -26,5 +26,6 @@ class Delorum_Client_IndexController extends Mage_Core_Controller_Front_Action
 		} catch(Exception $e) {
 			echo 'There was an error in saving information';
 		}
+		return $this;
 	}
 }
