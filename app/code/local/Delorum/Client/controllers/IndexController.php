@@ -19,9 +19,9 @@ class Delorum_Client_IndexController extends Mage_Core_Controller_Front_Action
 				->sendTransactional(
 					$type, 
 					array('email' => 'web@kielphoto.com', 'name' => 'Eric Kiel Photo'), 
-					$data['email'], 
-					$data['name'], 
-					array('name' => $data['name'])
+					$data['targetemail'], 
+					$data['targetemail'],  
+					$data
 			);
 		} catch(Exception $e) {
 			echo 'There was an error in saving information';
