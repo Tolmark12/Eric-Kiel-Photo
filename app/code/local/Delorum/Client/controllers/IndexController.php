@@ -11,16 +11,20 @@ class Delorum_Client_IndexController extends Mage_Core_Controller_Front_Action
 		}
 		$data['created_at'] = now();
 		$data['updated_at'] = now();
-		$client = Mage::getModel('client/client');
-		$client->setData($data);
-		$client->save();
-		Mage::getModel('core/email_template')
-			->sendTransactional(
-				$type, 
-				array('email' => 'web@kielphoto.com', 'name' => 'Eric Kiel Photo'), 
-				$data['email'], 
-				$data['name'], 
-				array('name' => $data['name'])
-		);
+		try {
+			$client = Mage::getModel('client/client');
+			$client->setData($data);
+			$client->save();
+			Mage::getModel('core/email_template')
+				->sendTransactional(
+					$type, 
+					array('email' => 'web@kielphoto.com', 'name' => 'Eric Kiel Photo'), 
+					$data['email'], 
+					$data['name'], 
+					array('name' => $data['name'])
+			);
+		} catch(Exception $e) {
+			echo 'There was an error in saving information';
+		}
 	}
 }
