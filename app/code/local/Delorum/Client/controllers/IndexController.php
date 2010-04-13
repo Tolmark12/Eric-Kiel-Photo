@@ -15,6 +15,12 @@ class Delorum_Client_IndexController extends Mage_Core_Controller_Front_Action
 			$client = Mage::getModel('client/client');
 			$client->setData($data);
 			$client->save();
+			if(isset($data['name'])) {
+				$data['emailname'] = $data['name'];
+			}
+			if(isset($data['email'])) {
+				$data['emailemail'] = $data['email'];
+			}
 			Mage::getModel('core/email_template')
 				->sendTransactional(
 					$type, 
