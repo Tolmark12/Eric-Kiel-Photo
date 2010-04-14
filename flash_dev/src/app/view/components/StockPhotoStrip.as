@@ -10,6 +10,8 @@ import caurina.transitions.Tweener;
 import app.model.vo.StageResizeVo;
 import flash.geom.Rectangle;
 import app.model.vo.LightBoxDispayItemsVo;
+import flash.events.*;
+import app.view.components.events.StockEvent;
 
 public class StockPhotoStrip extends Sprite
 {
@@ -24,15 +26,22 @@ public class StockPhotoStrip extends Sprite
 	// Map
 	private var _stockMap:StockMap = new StockMap();
 	
+	// Back button
+	private var _backBtn:SimpleTextButton = new SimpleTextButton_swc();
 	
 	public function StockPhotoStrip():void
 	{
+		this.visible = false;
 		this.addChild(_photoHolder);
 		this.addChild( _stockMap );
-
+		this.addChild( _backBtn );
+		
+		_backBtn.y = 100;
+		_backBtn.build();
 		_stockMap.y  = 605;
 		_photoHolder.y = 135;
 		KeyTrigger.addKeyListener( _tempTween, "w", true );
+		_backBtn.addEventListener( MouseEvent.CLICK, _onBackBtnClick, false,0,true );
 	}
 	
 	private function _tempTween (  ):void
@@ -53,6 +62,7 @@ public class StockPhotoStrip extends Sprite
 	*/
 	public function buildNewSet ( $sets:Vector.<StockPhotoSetVo> ):void
 	{
+		this.visible = true;
 		_photoHolder.graphics.clear();
 		_dictionary = _buildNewDictionary($sets);
 		_stockMap.clear();
@@ -100,6 +110,11 @@ public class StockPhotoStrip extends Sprite
 		_stockMap.buildNewSet($sets);
 		setScrollWindow(StageResizeVo.lastResize);
 		scroll(0);
+	}
+	
+	public function hide (  ):void
+	{
+		this.visible = false;
 	}
 	
 	/** 
@@ -247,6 +262,12 @@ public class StockPhotoStrip extends Sprite
 	private function _drawColoredBar ( $startX:Number, $endX:Number, $color:Number ):void {
 		_photoHolder.graphics.beginFill($color);
 		_photoHolder.graphics.drawRect($startX, -8, $endX - $startX-1, 2);
+	}
+	
+	// _____________________________ Event Handlers
+	
+	private function _onBackBtnClick ( e:Event ):void {
+		dispatchEvent( new StockEvent(StockEvent.RETURN_TO_MAIN_CATEGORIES, true) );
 	}
 	
 }

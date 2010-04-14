@@ -4,11 +4,7 @@ class Delorum_Client_IndexController extends Mage_Core_Controller_Front_Action
 	public function postDataAction()
 	{
 		$data = $this->getRequest()->getParams();
-		if(isset($data['message'])) {
-			$type = 3;
-		} else {
-			$type = 2;
-		}
+		$type = $data['formtype'];
 		$data['created_at'] = now();
 		$data['updated_at'] = now();
 		try {

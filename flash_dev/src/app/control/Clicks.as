@@ -100,6 +100,9 @@ public class Clicks extends SimpleCommand implements ICommand
 			case AppFacade.EMAIL_LIGHTBOX :
 				lightBoxProxy.emailLightBox();
 			break;
+			case AppFacade.SHOW_STOCK_MAIN_CATEGORIES :
+				stockProxy.clearCurrentItems();
+			break;
 		}
 	}
 }
