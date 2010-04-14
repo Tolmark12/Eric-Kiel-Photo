@@ -8,17 +8,17 @@
 
 √ (modified) when on stock site get rid of portfolio/reel etc and have it read “Facts & Pricing   Ask a Question    Contact”
 
-• Indicate w/ more clarity which section you're in
+√ Indicate w/ more clarity which section you're in
 
-• search box and font need to be bigger- maybe move to side or bottom to make top less cluttered?
+√ search box and font need to be bigger- maybe move to side or bottom to make top less cluttered?
 
 • ALL font on site should match main font
 
 • ONLY tag words used should show up
 
-• when search has no results we need to tell the user, not do nothing as it does now
+√ when search has no results we need to tell the user, not do nothing as it does now
 
-• can we easily go back to home page? And to stock home page?
+√ can we easily go back to home page? And to stock home page?
 
 √ top should read: Portfolio   Stock   Film Reel   Campaign   Contact
 

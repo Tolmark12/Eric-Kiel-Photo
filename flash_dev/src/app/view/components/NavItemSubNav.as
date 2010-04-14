@@ -36,7 +36,7 @@ public class NavItemSubNav extends NavItem
 		
 		// Add the sub nav
 		_subNav 	= new SubNav();
-		_subNav.y 	= this.y + this.height + 20;
+		_subNav.y 	= this.y + 49;
 		_subNav.build( $navItemVo.subNav );
 		this.addChild( _subNav );
 		

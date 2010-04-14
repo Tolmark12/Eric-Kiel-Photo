@@ -29,8 +29,7 @@ public class FormsMediator extends Mediator implements IMediator
 	override public function listNotificationInterests():Array
 	{
 		return [	AppFacade.CREATE_NEW_MODAL,
-		 			AppFacade.CLOSE_MODAL,
-		 			AppFacade.SHOW_MESSAGE ];
+		 			AppFacade.CLOSE_MODAL, ];
 	}
 	
 	// PureMVC: Handle notifications
@@ -43,9 +42,6 @@ public class FormsMediator extends Mediator implements IMediator
 			break;
 			case AppFacade.CLOSE_MODAL :
 				_modalMachine.closeModal()
-			break;
-			case AppFacade.SHOW_MESSAGE :
-				trace( note.getBody() as MessageVo );
 			break;
 		}
 	}

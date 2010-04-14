@@ -83,6 +83,7 @@ public class AppFacade extends Facade implements IFacade
 	public static const SHOW_SEARCH_OPTIONS:String 					= "show_search_options";
 	public static const UPDATE_LIGHTBOX_STATUS:String 				= "update_lightbox_status";
 	public static const ACTIVE_STOCK_LIGHTBOX_CHANGE:String 		= "active_stock_lightbox_change";
+	public static const SHOW_STOCK_MAIN_CATEGORIES:String 			= "show_stock_main_categories";
 	
 	// Tags
 	public static const STOCK_TAGS_LOADED:String 					= "stock_tags_loaded";
@@ -108,6 +109,7 @@ public class AppFacade extends Facade implements IFacade
 	
 	// MESSAGES
 	public static const SHOW_MESSAGE:String 						= "show_message";
+	public static const DIALOGUE_MESSAGE:String 					= "dialogue_message";
 	
 	// Example: var myFacade:AppFacade = AppFacade.getInstance( 'app_facade' );
 	public function AppFacade( key:String ):void
@@ -171,6 +173,7 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( LIGHTBOX_PHOTO_CLICKED, Clicks );
 		registerCommand( REMOVE_FROM_LIGHTBOX, Clicks );
 		registerCommand( EMAIL_LIGHTBOX, Clicks );
+		registerCommand( SHOW_STOCK_MAIN_CATEGORIES, Clicks );
 	}
 
 }

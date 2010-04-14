@@ -12,7 +12,7 @@ public class NavItem extends Sprite
 	public var hoverColor:uint	= 0xFFFFFF;
 	public var color:uint		= 0x000000;	
 	
-	private var _txt:NavText_swc;
+	protected var _txt:NavText_swc;
 	private var _isSelected:Boolean = false;
 	private var _id:String;
 	protected var _hitArea:Sprite = new Sprite();
@@ -21,6 +21,9 @@ public class NavItem extends Sprite
 	protected var _hitAreaWidth:Number;
 	protected var _hitAreaHeight:Number;
 	protected var _hitAreaX:Number;
+	
+	// hover square
+	protected var _activatedSquare:Sprite;
 	
 	public function NavItem( $navItemVo:NavItemVo ):void
 	{
@@ -32,12 +35,18 @@ public class NavItem extends Sprite
 	
 	public function activate (  ):void
 	{
+		if( _activatedSquare != null )
+			_activatedSquare.visible = true;
+			
 		_onMouseOver(null);
 		_isSelected = true;
 	}
 	
 	public function deactivate (  ):void
-	{
+	{	
+		if( _activatedSquare != null )
+			_activatedSquare.visible = false;
+			
 		_isSelected = false;
 		_onMouseOut(null);
 	}
@@ -63,10 +72,15 @@ public class NavItem extends Sprite
 //			_hitArea.buttonMode = true;
 			this.addChild(_hitArea)
 			
-
-			_hitArea.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOver, false,0,true );
-			_hitArea.addEventListener( MouseEvent.MOUSE_OUT, _onMouseOut, false,0,true );
-			_hitArea.addEventListener( MouseEvent.CLICK, _onClick, false,0,true );
+			_activatedSquare = new Sprite();
+			_activatedSquare.graphics.lineStyle( 0.1, 0xFFFFFF);
+			_activatedSquare.graphics.drawRect( 2,3,this.width + hitPadding*2, this.height + hitPadding-6 )
+			_activatedSquare.x = -hitPadding;
+			_activatedSquare.y = 19;
+			_activatedSquare.visible = false;
+						
+			this.addChild( _activatedSquare );
+				
 			// Allow nav to manually call mouse out
 			this.addEventListener( "forceMouseOut", _onMouseOut, false,0,true );
 			
@@ -74,6 +88,10 @@ public class NavItem extends Sprite
 			var logo:Logo_swc = new Logo_swc();
 			this.addChild(logo);
 		}
+		
+		_hitArea.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOver, false,0,true );
+		_hitArea.addEventListener( MouseEvent.MOUSE_OUT, _onMouseOut, false,0,true );
+		_hitArea.addEventListener( MouseEvent.CLICK, _onClick, false,0,true );
 	}
 	
 	public function activateSubItems ( $tags:Array ):void{
