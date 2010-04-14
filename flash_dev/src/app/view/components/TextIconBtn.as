@@ -31,7 +31,7 @@ public class TextIconBtn extends MovieClip
 	{
 		// Set Text
 		_titleTxt.text = $title;
-		_icon.x = _titleTxt.textWidth + 14;
+		_icon.x = _titleTxt.textWidth + 8;
 		
 		// Show the specified icon
 		_icon.gotoAndStop($frame);

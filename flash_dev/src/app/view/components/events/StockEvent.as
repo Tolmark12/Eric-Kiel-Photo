@@ -11,6 +11,7 @@ public class StockEvent extends Event
 	public static const REMOVE_CATEGORY:String = "remove_category";
 	public static const ADD_TO_LIGHTBOX:String = "add_to_lightbox";
 	public static const REMOVE_FROM_LIGHTBOX:String = "remove_from_lightbox";
+	public static const RETURN_TO_MAIN_CATEGORIES:String = "return_to_main_categories";
 	
 	public var id:String;
 	

@@ -13,9 +13,10 @@ public class ContentMediator extends Mediator implements IMediator
 {	
 	public static const NAME:String = "content_mediator";
 	
-	private var _background:Background 	= new Background();
+	private var _background:Background 			= new Background();
 	private var _currentMediator:PageMediator;
-	private var _rootHider:RootHider = new RootHider();
+	private var _rootHider:RootHider 			= new RootHider();
+	private var _dialogueBox:ModalDialogueBox	= new ModalDialogueBox(280, 70);
 	
 	public function ContentMediator( $root:Sprite ):void
 	{
@@ -23,7 +24,11 @@ public class ContentMediator extends Mediator implements IMediator
 		_rootHider.theRoot = $root;
 		_background.alignCenter = true;
 		_rootHider.addEventListener( MouseEvent.CLICK, _onRootHiderClick, false,0,true );
-		$root.addChild( _background );
+		_dialogueBox.clear();
+		_dialogueBox.x = 417;
+		
+		$root.addChildAt( _background, 0 );
+		$root.addChild( _dialogueBox )
 	}
 	
 	// PureMVC: List notifications
@@ -34,7 +39,8 @@ public class ContentMediator extends Mediator implements IMediator
 				 AppFacade.REMOVE_CURRENT_PAGE, 
 				 AppFacade.MEDIATOR_ACTIVATED,
 				 AppFacade.HIDE_ROOT,
-				 AppFacade.LOAD_VIDEO, ];
+				 AppFacade.LOAD_VIDEO,
+				 AppFacade.DIALOGUE_MESSAGE, ];
 	}
 	
 	// PureMVC: Handle notifications
@@ -71,6 +77,9 @@ public class ContentMediator extends Mediator implements IMediator
 			break;
 			case AppFacade.HIDE_ROOT :
 				_rootHider.showRoot();
+			break;
+			case AppFacade.DIALOGUE_MESSAGE :
+				_dialogueBox.showMessage( note.getBody() as DialogueVo )
 			break;
 		}
 	}

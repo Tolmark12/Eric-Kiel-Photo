@@ -36,6 +36,7 @@ public class StockMediator extends PageMediator implements IMediator
 		_stockPhotoStrip.addEventListener( 		StockEvent.STOCK_PHOTO_OUT, _onStockPhotoOut, false,0,true );
 		_stockPhotoStrip.addEventListener( 		StockEvent.ADD_TO_LIGHTBOX, _onAddToLightbox, false,0,true );
 		_stockPhotoStrip.addEventListener( 		StockEvent.REMOVE_FROM_LIGHTBOX, _onRemoveFromLightbox, false,0,true );
+		_stockPhotoStrip.addEventListener( 		StockEvent.RETURN_TO_MAIN_CATEGORIES, _onReturnToMainCategoriesClick, false,0,true );
 		
 		_stockDetailView.addEventListener( 		ModalEvent.ASK_A_QUESTION, _onAskAQuestion, false,0,true );
 		_stockDetailView.addEventListener( 		ModalEvent.DOWNLOAD_COMP, _onDownloadComp, false,0,true );
@@ -57,6 +58,7 @@ public class StockMediator extends PageMediator implements IMediator
 					AppFacade.STOCK_CATEGORY_REMOVED,
 					AppFacade.UPDATE_LIGHTBOX_STATUS,
 					AppFacade.ACTIVE_STOCK_LIGHTBOX_CHANGE,
+					AppFacade.SHOW_STOCK_MAIN_CATEGORIES,
 			  	];
 	}
 	
@@ -91,6 +93,10 @@ public class StockMediator extends PageMediator implements IMediator
 			break;
 			case AppFacade.ACTIVE_STOCK_LIGHTBOX_CHANGE : 
 				_stockDetailView.changeDisplayLightboxStatus( note.getBody() as Boolean );
+			break;
+			case AppFacade.SHOW_STOCK_MAIN_CATEGORIES :
+				_stockPhotoLanding.show();
+				_stockPhotoStrip.hide();
 			break;
 		}
 	}
@@ -162,6 +168,10 @@ public class StockMediator extends PageMediator implements IMediator
 	
 	private function _onRemoveFromLightbox ( e:StockEvent ):void {
 		sendNotification( AppFacade.REMOVE_FROM_LIGHTBOX, e.id );
+	}
+	
+	private function _onReturnToMainCategoriesClick ( e:StockEvent ):void {
+		sendNotification( AppFacade.SHOW_STOCK_MAIN_CATEGORIES );
 	}
 	
 }

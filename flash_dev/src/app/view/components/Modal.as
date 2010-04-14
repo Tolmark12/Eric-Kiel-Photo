@@ -16,8 +16,6 @@ package app.view.components
 		protected var _background:Sprite				= new Sprite();
 		protected var _closeBtn:CloseBtn_swc			= new CloseBtn_swc();
 		
-		//private var closeButton:ModalClose_swc = new ModalClose_swc();
-		
 		public function Modal($width:Number, $height:Number):void
 		{
 			this.addChild(_closeBtn);
@@ -63,7 +61,7 @@ package app.view.components
 		
 		// _____________________________ Event Handlers
 		
-		private function _onCloseClick ( e:Event ):void {
+		protected function _onCloseClick ( e:Event ):void {
 			clear();
 		}
 	}

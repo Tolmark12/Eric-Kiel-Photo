@@ -85,7 +85,7 @@ public class StockProxy extends Proxy implements IProxy
 		}
 		//...else:
 		else{
-			sendNotification( AppFacade.SHOW_MESSAGE, new MessageVo("No photos matched your search for: "+_lastSearchTerm) );
+			sendNotification( AppFacade.DIALOGUE_MESSAGE, new DialogueVo("No photos matched your search for: "+_lastSearchTerm) );
 		}
 		
 	}
@@ -137,12 +137,16 @@ public class StockProxy extends Proxy implements IProxy
 	
 	public function reset (  ):void
 	{
-		_configVo 			= null;
+		_configVo = null;
+		clearCurrentItems();
+	}
+	
+	public function clearCurrentItems (  ):void
+	{
 		_tags				= null;
 		_sets 				= new Vector.<StockPhotoSetVo>();
 		_matches			= new StockPhotoSetMatchesVo({})
-		_currentPhotoId		= null;
-	}
+		_currentPhotoId		= null;	}
 	
 	public function getPhotoVo ( $id:String ) : StockPhotoVo {
 		return _getStockPhotoById( $id );

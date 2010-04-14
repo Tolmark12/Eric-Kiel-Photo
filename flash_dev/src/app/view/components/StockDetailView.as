@@ -24,6 +24,8 @@ public class StockDetailView extends Sprite
 	private var _downloadCompBtn:TextIconBtn = new TextIconBtn_swc();
 	// Add to Lightbox
 	private var _addToLightBoxBtn:TextIconBtn = new TextIconBtn_swc();;
+	// Terms	
+	private var _termsBtn:TextIconBtn_swc = new TextIconBtn_swc();;
 	// Close Btn
 	private var _closeBtn:CloseBtn_swc = new CloseBtn_swc();
 	// Buy Button
@@ -52,14 +54,16 @@ public class StockDetailView extends Sprite
 		// Create the buttons
 		_askQuestionBtn.build(  "Ask A Question", "_ask");
 		_downloadCompBtn.build( "Downlad Comp", "_download");
+		_termsBtn.build( "Terms", "_terms" );
 		changeDisplayLightboxStatus(true);
-		_downloadCompBtn.y = _askQuestionBtn.y = _imageHolder.y - 20;
+		_downloadCompBtn.y = _askQuestionBtn.y = _termsBtn.y = _imageHolder.y - 20;
 		
 		_display.addChild( _askQuestionBtn );
 		_display.addChild( _downloadCompBtn );
 		_display.addChild( _addToLightBoxBtn );
 		_display.addChild( _closeBtn );
 		_display.addChild( _buyBtn );
+		_display.addChild( _termsBtn );
 		
 		_closeBtn.buttonMode = true;
 		_closeBtn.mouseChildren = false;
@@ -200,10 +204,11 @@ public class StockDetailView extends Sprite
 		_closeBtn.x 			= Math.round( _imageHolder.x - 10 );
 		_closeBtn.y				= Math.round( _imageHolder.y - 10 );
 		_downloadCompBtn.x 		= right - _downloadCompBtn.width + 30;
-		_askQuestionBtn.x  		= _downloadCompBtn.x - _askQuestionBtn.width;
+		_askQuestionBtn.x  		= _downloadCompBtn.x - _askQuestionBtn.width + 20;
+		_termsBtn.x 			= _askQuestionBtn.x - _termsBtn.width + 20;
 		_addToLightBoxBtn.x 	= _imageHolder.x;
 		_addToLightBoxBtn.y 	= _imageHolder.y + _imageHolder.height + 7;
-		_buyBtn.y 				= _addToLightBoxBtn.y - 6;
+		_buyBtn.y 				= _imageHolder.y + _imageHolder.height + 1;
 		_buyBtn.x 				= _imageHolder.x + _imageHolder.width - _buyBtn.width + 13;
 		Tweener.addTween( _display, { alpha:1, time:1, transition:"EaseInOutQuint"} );
 	}

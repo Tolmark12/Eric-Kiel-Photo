@@ -71,6 +71,12 @@ public class StockPhotoLanding extends Sprite
 		Tweener.addTween( this, { alpha:0, time:1, transition:"EaseInOutQuint", onComplete:_hideFadeComplete} );
 	}
 	
+	public function show (  ):void
+	{
+		this.visible = true;
+		Tweener.addTween( this, { alpha:1, time:1, transition:"EaseInOutQuint"} );
+	}
+	
 	// _____________________________ Event Handlers
 	
 	private function _onCategoryBtnClick ( e:Event ):void {
