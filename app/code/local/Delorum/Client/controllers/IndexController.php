@@ -5,7 +5,7 @@ class Delorum_Client_IndexController extends Mage_Core_Controller_Front_Action
 	{
 		$data = $this->getRequest()->getParams();
 		$formData = $data['formData'];
-		$type = $data['formtype'];
+		$type = $data['formType'];
 		$data['created_at'] = now();
 		$data['updated_at'] = now();
 		try {
@@ -20,8 +20,8 @@ class Delorum_Client_IndexController extends Mage_Core_Controller_Front_Action
 				->sendTransactional(
 					2,
 					array('email' => 'web@kielphoto.com', 'name' => 'Eric Kiel Photo'), 
-					$data['targetemail'], 
-					$data['targetemail'],  
+					$data['targetEmail'], 
+					$data['targetEmail'],  
 					$data
 			);
 		} catch(Exception $e) {
