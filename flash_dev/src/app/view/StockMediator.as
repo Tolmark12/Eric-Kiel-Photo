@@ -38,8 +38,9 @@ public class StockMediator extends PageMediator implements IMediator
 		_stockPhotoStrip.addEventListener( 		StockEvent.REMOVE_FROM_LIGHTBOX, _onRemoveFromLightbox, false,0,true );
 		_stockPhotoStrip.addEventListener( 		StockEvent.RETURN_TO_MAIN_CATEGORIES, _onReturnToMainCategoriesClick, false,0,true );
 		
-		_stockDetailView.addEventListener( 		ModalEvent.ASK_A_QUESTION, _onAskAQuestion, false,0,true );
-		_stockDetailView.addEventListener( 		ModalEvent.DOWNLOAD_COMP, _onDownloadComp, false,0,true );
+		_stockDetailView.addEventListener( 		ModalEvent.ASK_A_QUESTION, _onModalTriggerClick, false,0,true );
+		_stockDetailView.addEventListener( 		ModalEvent.LICENCE_IMAGE, _onModalTriggerClick, false,0,true );
+		_stockDetailView.addEventListener( 		ModalEvent.DOWNLOAD_COMP, _onModalTriggerClick, false,0,true );
 		_stockDetailView.addEventListener( 		ModalEvent.CLOSE_MODAL, _onCloseModal, false,0,true );
 		_stockDetailView.addEventListener( 		StockEvent.STOCK_PHOTO_CLOSE, _onStockPhotoClose, false,0,true );
 		_stockDetailView.addEventListener( 		StockEvent.ADD_TO_LIGHTBOX, _onAddToLightbox, false,0,true );
@@ -138,12 +139,8 @@ public class StockMediator extends PageMediator implements IMediator
 		_stockPhotoStrip.unHighlightImage( e.id );
 	}
 	
-	private function _onAskAQuestion ( e:ModalEvent ):void {
+	private function _onModalTriggerClick ( e:ModalEvent ):void {
 		sendNotification( AppFacade.SHOW_MODAL_CLICK, e );
-	}
-	
-	private function _onDownloadComp ( e:ModalEvent ):void {
-		sendNotification( AppFacade.SHOW_MODAL_CLICK, e )
 	}
 	
 	private function _onScroll ( e:StockScrollEvent ):void {

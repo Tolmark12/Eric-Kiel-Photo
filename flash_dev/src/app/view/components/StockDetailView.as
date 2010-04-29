@@ -19,7 +19,7 @@ public class StockDetailView extends Sprite
 	// Background
 	private var _darkBackground:Sprite = new Sprite();	
 	// Ask A question
-	private var _askQuestionBtn:TextIconBtn = new TextIconBtn_swc();
+	/*private var _askQuestionBtn:TextIconBtn = new TextIconBtn_swc();*/
 	// Download Comp
 	private var _downloadCompBtn:TextIconBtn = new TextIconBtn_swc();
 	// Add to Lightbox
@@ -30,7 +30,8 @@ public class StockDetailView extends Sprite
 	private var _closeBtn:CloseBtn_swc = new CloseBtn_swc();
 	// Buy Button
 	private var _buyBtn:GreenBtn = new GreenBtn_swc();
-	
+	// Small Text
+	private var _smallTxt:SmallText_swc = new SmallText_swc();
 	
 	// Title (number)
 	// Buy Now
@@ -52,30 +53,34 @@ public class StockDetailView extends Sprite
 		_imageHolder.y  = 50;
 		
 		// Create the buttons
-		_askQuestionBtn.build(  "Ask A Question", "_ask");
+		/*_askQuestionBtn.build(  "Ask A Question", "_ask");*/
 		_downloadCompBtn.build( "Downlad Comp", "_download");
 		_termsBtn.build( "Terms", "_terms" );
 		changeDisplayLightboxStatus(true);
-		_downloadCompBtn.y = _askQuestionBtn.y = _termsBtn.y = _imageHolder.y - 20;
+		_downloadCompBtn.y = /*_askQuestionBtn.y =*/ _termsBtn.y = _imageHolder.y - 20;
 		
-		_display.addChild( _askQuestionBtn );
+		/*_display.addChild( _askQuestionBtn );*/
 		_display.addChild( _downloadCompBtn );
 		_display.addChild( _addToLightBoxBtn );
 		_display.addChild( _closeBtn );
 		_display.addChild( _buyBtn );
 		_display.addChild( _termsBtn );
+		_display.addChild( _smallTxt );
+		
+		_smallTxt.txt.autoSize = "left";
 		
 		_closeBtn.buttonMode = true;
 		_closeBtn.mouseChildren = false;
 		
-		_buyBtn.setTitle("Buy Now");
+		_buyBtn.setTitle("License Image");
 		
 		
 		// Events
-		_askQuestionBtn.addEventListener( MouseEvent.CLICK, _onAskQuestionClick, false,0,true );
+		/*_askQuestionBtn.addEventListener( MouseEvent.CLICK, _onAskQuestionClick, false,0,true );*/
 		_downloadCompBtn.addEventListener( MouseEvent.CLICK, _onDownloadClick, false,0,true );
 		_addToLightBoxBtn.addEventListener( MouseEvent.CLICK, _onAddToLightBoxClick, false,0,true );
 		_closeBtn.addEventListener( MouseEvent.CLICK, _onCloseClick, false,0,true );
+		_buyBtn.addEventListener( MouseEvent.CLICK, _onBuyClick, false,0,true );
 		// Set initial state to hidden
 		hide();		
 	}
@@ -85,6 +90,7 @@ public class StockDetailView extends Sprite
 	*/
 	public function displayImage ( $stockPhotoVo:StockPhotoVo ):void
 	{
+		_smallTxt.txt.text = $stockPhotoVo.name.split(".")[0];
 		_id = $stockPhotoVo.id;
 		show();
 		if( _isHidden ) // if hidden, show..
@@ -170,13 +176,15 @@ public class StockDetailView extends Sprite
 	
 	// _____________________________ Event Handlers
 	
-	private function _onAskQuestionClick ( e:Event ):void {
-		var ev:ModalEvent = new ModalEvent(ModalEvent.ASK_A_QUESTION, true);
+	private function _onBuyClick ( e:Event ):void {
+		var ev:ModalEvent = new ModalEvent(ModalEvent.LICENCE_IMAGE, true);
+		ev.stockVoId = _id;
 		dispatchEvent( ev );
 	}
 	
 	private function _onDownloadClick ( e:Event ):void {
 		var ev:ModalEvent = new ModalEvent(ModalEvent.DOWNLOAD_COMP, true);
+		ev.stockVoId = _id;
 		dispatchEvent( ev );
 	}
 	
@@ -204,12 +212,14 @@ public class StockDetailView extends Sprite
 		_closeBtn.x 			= Math.round( _imageHolder.x - 10 );
 		_closeBtn.y				= Math.round( _imageHolder.y - 10 );
 		_downloadCompBtn.x 		= right - _downloadCompBtn.width + 30;
-		_askQuestionBtn.x  		= _downloadCompBtn.x - _askQuestionBtn.width + 20;
-		_termsBtn.x 			= _askQuestionBtn.x - _termsBtn.width + 20;
+		/*_askQuestionBtn.x  		= _downloadCompBtn.x - _askQuestionBtn.width + 20;*/
+		_termsBtn.x 			= _downloadCompBtn.x - _termsBtn.width + 20;
 		_addToLightBoxBtn.x 	= _imageHolder.x;
 		_addToLightBoxBtn.y 	= _imageHolder.y + _imageHolder.height + 7;
+		_smallTxt.x				= _imageHolder.x + 20;
+		_smallTxt.y				= _imageHolder.y - 14;
 		_buyBtn.y 				= _imageHolder.y + _imageHolder.height + 1;
-		_buyBtn.x 				= _imageHolder.x + _imageHolder.width - _buyBtn.width + 13;
+		_buyBtn.x 				= _imageHolder.x + _imageHolder.width - _buyBtn.width;
 		Tweener.addTween( _display, { alpha:1, time:1, transition:"EaseInOutQuint"} );
 	}
 	

@@ -17,6 +17,7 @@ public class GreenBtn extends Sprite
 		
 		_background = this.getChildByName( "background" ) as MovieClip;
 		_titleTxt = this.getChildByName( "titleTxt" ) as TextField;
+		_titleTxt.autoSize = "left";
 		
 		this.mouseChildren = false;
 		this.buttonMode = true;

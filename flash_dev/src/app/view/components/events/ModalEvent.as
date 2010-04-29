@@ -15,6 +15,8 @@ public class ModalEvent extends Event
 	public static const SUBMIT_FORM:String = "submit_form";
 	
 	public var urlVars:URLVariables;
+	public var formId:String;
+	public var stockVoId:String;
 
 	public function ModalEvent(type:String, bubbles:Boolean = false, cancelable:Boolean = false)
 	{
