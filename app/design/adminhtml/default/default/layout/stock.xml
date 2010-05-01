@@ -5,7 +5,7 @@
             <block type="stock/adminhtml_photo" name="stock.photo" />
         </reference>
     </stock_adminhtml_photo_index>
-    
+	
    	<stock_adminhtml_tag_import>
 		<reference name="content">
 			<block type="core/template" name="product.import" template="stock/tag/import.phtml" />
