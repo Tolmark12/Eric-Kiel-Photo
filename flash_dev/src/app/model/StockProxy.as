@@ -152,6 +152,8 @@ public class StockProxy extends Proxy implements IProxy
 		return _getStockPhotoById( $id );
 	}
 	
+	public function get currentPhotoVo (  ):StockPhotoVo{ return getPhotoVo(_currentPhotoId); };
+	
 	private var _itemsInLigitBox:Object = {};
 	public function updateLightBoxItems ( $itemsInLightBox:Array ):void
 	{

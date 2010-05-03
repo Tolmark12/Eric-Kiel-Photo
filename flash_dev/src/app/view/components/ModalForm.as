@@ -40,6 +40,7 @@ package app.view.components
 		
 		public function build( $formVo:FormVO ):void
 		{
+			_id							= $formVo.id;
 			_title.titleTxt.htmlText	= $formVo.title;
 			_description.htmlText 		= $formVo.description;
 			
@@ -138,6 +139,7 @@ package app.view.components
 		private function _onSubmitClick ( e:Event ):void {
 			var ev:ModalEvent = new ModalEvent(ModalEvent.SUBMIT_FORM, true);
 			ev.urlVars = extractVars();
+			ev.formId = _id;
 			dispatchEvent( ev );
 			super._closeBtn.dispatchEvent( new MouseEvent(MouseEvent.CLICK, true) );
 		}

@@ -9,6 +9,8 @@ import flash.net.URLVariables;
 import flash.net.URLRequest;
 import flash.events.*;
 import flash.net.URLLoader;
+import flash.net.URLRequestMethod;
+import app.view.components.events.ModalEvent;
 
 public class FormProxy extends Proxy implements IProxy
 {
@@ -40,34 +42,64 @@ public class FormProxy extends Proxy implements IProxy
 		
 		newModal.fields       	= [ fieldVo, fieldVo, fieldVo ];
 		*/
+		_currentStockPhotoVo = $modalEvent.vo;
 		var stockProxy:StockProxy = facade.retrieveProxy( StockProxy.NAME ) as StockProxy;
 		var form:FormVO = stockProxy.stockConfigVo.getFormById( $modalEvent.type );
 		form.updateFieldValues();
 		sendNotification( AppFacade.CREATE_NEW_MODAL, form );
 	}
 	
-	public function submitForm ( $urlVars:URLVariables ):void
+	private var _currentStockPhotoVo:StockPhotoVo;
+	public function submitForm ( $modalEvent:ModalEvent ):void
 	{
-		FormVO.updateGlobalVars($urlVars);
+		trace( _currentStockPhotoVo.name );
+		trace( _currentStockPhotoVo.lowResSrc );
 		
-		var daLoader:URLLoader = new URLLoader();
-        daLoader.addEventListener( Event.COMPLETE, _onComplete, false,0,true );
-		daLoader.addEventListener( IOErrorEvent.IO_ERROR, _onIoError, false,0,true );
+		FormVO.updateGlobalVars( $modalEvent.urlVars );
 		
-		var daRequest:URLRequest = new URLRequest("http://kielphoto.dev/crossdomain.xml");
-		try {
-		    daLoader.load(daRequest);
-		} catch (error:Error) {
-		    trace("Unable to load requested document.");
+		var stockProxy:StockProxy = facade.retrieveProxy( StockProxy.NAME ) as StockProxy;
+		var form:FormVO = stockProxy.stockConfigVo.getFormById( $modalEvent.formId );
+		
+		// Pull out the form data
+		var formData:String = "";
+		var emailFormData:String = "";
+		for( var i:String in $modalEvent.urlVars ){
+			formData 		+= i + ':' + $modalEvent.urlVars[i] + "|";
+			emailFormData 	+= "<b>" + i  + "</b>"  + '  :  <i>' + $modalEvent.urlVars[i] + "</i><br>";
 		}
+		// Chomp of the trailing pipe (|)
+		formData = formData.substr(0,formData.length-1);
+		var imageData = "<b>Image Info:</b><br>" + 
+		 				"<i>" + _currentStockPhotoVo.name + "</i><br>" + 
+						"<img src='" + _currentStockPhotoVo.lowResSrc + "' />";
+		
+		var urlVars:URLVariables 	= new URLVariables();
+		//var urlVars:Object	 		= new Object();
+		urlVars.targetEmail 		= form.targetEmail;
+		urlVars.formType	 		= form.id;
+		urlVars.emailSubject		= form.emailSubject;
+		urlVars.body		 		= form.emailBody + "<br><br>" + emailFormData  + "<br><br>" + imageData;
+		urlVars.formData			= formData;
 
-		trace( "URL VARS::" );
-		for( var i:String in $urlVars )
-		{
-			trace( "  "+ i + '  :  ' + $urlVars[i] );
-		}
-		trace( "::" );
-
+		
+	   
+	   var daLoader:URLLoader = new URLLoader();
+       daLoader.addEventListener( Event.COMPLETE, _onComplete, false,0,true );
+	   daLoader.addEventListener( IOErrorEvent.IO_ERROR, _onIoError, false,0,true );
+	   
+	   //var feed:String = "http://www.kielphoto.dev/crossdomain.xml";
+	   var feed:String = "http://www.kielphoto.com/client/index/postdata";
+	   //var feed:String = ( facade.retrieveProxy( ExternalDataProxy.NAME ) as ExternalDataProxy ).server + "client/index/postdata";
+	   
+	   var daRequest:URLRequest = new URLRequest(feed);
+	   daRequest.data = urlVars;
+	   daRequest.method = URLRequestMethod.POST;
+	   
+	   try {
+	       daLoader.load(daRequest);
+	   } catch (error:Error) {
+	       trace("Unable to load requested document.");
+	   }
 	}
 	
 	private function _onComplete ( e:Event ):void {

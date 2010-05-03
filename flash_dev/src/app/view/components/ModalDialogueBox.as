@@ -16,6 +16,7 @@ public class ModalDialogueBox extends Modal
 	
 	public function ModalDialogueBox($width:Number, $height:Number):void
 	{
+		this.alpha = 0;
 		super($width, $height);
 		
 		_navText.x = _navText.y			= super.PADDING;

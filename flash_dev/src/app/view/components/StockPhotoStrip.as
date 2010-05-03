@@ -125,6 +125,7 @@ public class StockPhotoStrip extends Sprite
 		_clearDictionaryPhotos();
 		_stockMap.clear();
 		_photoHolder.graphics.clear();
+		hide();
 		//_photoMap.clear();
 	}
 	

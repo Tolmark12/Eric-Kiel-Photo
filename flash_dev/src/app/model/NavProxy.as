@@ -1,5 +1,6 @@
 package app.model
 {
+import flash.net.*;
 import org.puremvc.as3.multicore.interfaces.IProxy;
 import org.puremvc.as3.multicore.patterns.proxy.Proxy;
 import app.model.vo.*;
@@ -38,16 +39,23 @@ public class NavProxy extends Proxy implements IProxy
 			changePage( _navVo.defaultNavItem.id )
 	}
 	
-	public function changePage ( $newId:String ):void
+	public function changePage ( $newId:String ):String
 	{
 		// Make sure this page isn't already active
 		if( _currentPageId != $newId ){
+			var vo:NavItemVo = _navVo.getNavItemById( $newId );
+			
+			// If this is an external url, go there
+			if( vo.pageType == "external" ){
+				navigateToURL( new URLRequest(vo.id), "_self" );
+				return null;
+			}
 			
 			// Unload the current view
 			sendNotification( AppFacade.REMOVE_CURRENT_PAGE );
 			
 			// Change the page content
-			sendNotification( AppFacade.LOAD_PAGE_DATA, _navVo.getNavItemById( $newId ) );
+			sendNotification( AppFacade.LOAD_PAGE_DATA, vo );
 			var pathVo = new PathVo( _currentPageId, $newId );
 			_currentPageId = $newId;
 			_sendToAnalytics(_currentPageId);
@@ -69,6 +77,7 @@ public class NavProxy extends Proxy implements IProxy
 			sendNotification( AppFacade.UPDATE_PATH, pathVo );			
 			sendNotification( AppFacade.REFRESH_ALIGN );
 		}
+		return null;
 	}
 	
 	/** 

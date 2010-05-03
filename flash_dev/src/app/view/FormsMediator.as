@@ -49,7 +49,7 @@ public class FormsMediator extends Mediator implements IMediator
 	// _____________________________ Event Handlers
 	
 	private function _onSubmitForm ( e:ModalEvent ):void {
-		sendNotification( AppFacade.SUBMIT_FORM, e.urlVars );
+		sendNotification( AppFacade.SUBMIT_FORM, e );
 	}
 	
 }

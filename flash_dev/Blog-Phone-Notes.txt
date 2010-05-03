@@ -1,0 +1,11 @@
+- General design changes
+	- Make links look like links
+
+
+- Fix the Design of the right hand column
+	- Headings
+	- better ia
+
+- Allow him to add little modules	
+	- Eats, etc
+	

@@ -7,7 +7,6 @@ import app.model.*;
 import app.model.vo.*;
 import app.AppFacade;
 import app.view.components.events.*;
-import flash.net.URLVariables;
 
 public class Clicks extends SimpleCommand implements ICommand
 {
@@ -82,7 +81,7 @@ public class Clicks extends SimpleCommand implements ICommand
 				stockProxy.deactivateCurrentPhoto();
 			break;
 			case AppFacade.SUBMIT_FORM :
-				formProxy.submitForm( note.getBody() as URLVariables);
+				formProxy.submitForm( note.getBody() as ModalEvent );
 			break;
 			case AppFacade.ADD_TO_LIGHTBOX :
 				lightBoxProxy.addItemToLightBox( note.getBody() as String );
