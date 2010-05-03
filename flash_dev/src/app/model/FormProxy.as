@@ -42,14 +42,19 @@ public class FormProxy extends Proxy implements IProxy
 		
 		newModal.fields       	= [ fieldVo, fieldVo, fieldVo ];
 		*/
+		_currentStockPhotoVo = $modalEvent.vo;
 		var stockProxy:StockProxy = facade.retrieveProxy( StockProxy.NAME ) as StockProxy;
 		var form:FormVO = stockProxy.stockConfigVo.getFormById( $modalEvent.type );
 		form.updateFieldValues();
 		sendNotification( AppFacade.CREATE_NEW_MODAL, form );
 	}
 	
+	private var _currentStockPhotoVo:StockPhotoVo;
 	public function submitForm ( $modalEvent:ModalEvent ):void
 	{
+		trace( _currentStockPhotoVo.name );
+		trace( _currentStockPhotoVo.lowResSrc );
+		
 		FormVO.updateGlobalVars( $modalEvent.urlVars );
 		
 		var stockProxy:StockProxy = facade.retrieveProxy( StockProxy.NAME ) as StockProxy;
@@ -65,8 +70,8 @@ public class FormProxy extends Proxy implements IProxy
 		// Chomp of the trailing pipe (|)
 		formData = formData.substr(0,formData.length-1);
 		var imageData = "<b>Image Info:</b><br>" + 
-		 				"<i>" + stockProxy.currentPhotoVo.name + "</i><br>" + 
-						"<img src='" + stockProxy.currentPhotoVo.lowResSrc + "' />";
+		 				"<i>" + _currentStockPhotoVo.name + "</i><br>" + 
+						"<img src='" + _currentStockPhotoVo.lowResSrc + "' />";
 		
 		var urlVars:URLVariables 	= new URLVariables();
 		//var urlVars:Object	 		= new Object();
