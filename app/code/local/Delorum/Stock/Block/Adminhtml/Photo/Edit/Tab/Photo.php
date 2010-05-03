@@ -53,7 +53,9 @@ class Delorum_Stock_Block_Adminhtml_Photo_Edit_Tab_Photo extends Mage_Adminhtml_
 	
 	public function popularTags()
 	{
-		$collection = Mage::getModel('stock/photo_tag_link')->getCollection();
+		$narr = $this->_staticArray('neq');
+		$collection = Mage::getModel('stock/photo_tag_link')->getCollection()
+			->addFieldToFilter('name', $narr);
 		$collection->getSelect()
 			->joinLeft(array('t'=>'stock_photo_tag'),
 			'main_table.tag_id = t.tag_id',
@@ -62,5 +64,25 @@ class Delorum_Stock_Block_Adminhtml_Photo_Edit_Tab_Photo extends Mage_Adminhtml_
 			->order(array('tag_count DESC'))
 			->limit(20);
 		return $collection;
+	}
+	
+	public function staticTags()
+	{
+		$arr = $this->_staticArray('eq');
+		$collection = Mage::getModel('stock/photo_tag')->getCollection()
+			->addFieldToFilter('name', $arr);
+		return $collection;
+	}
+	
+	protected function _staticArray($operand)
+	{
+		$array = array();
+		$array[] = array(array($operand => 'places'));
+		$array[] = array(array($operand => 'people'));
+		$array[] = array(array($operand => 'sports'));
+		$array[] = array(array($operand => 'water'));
+		$array[] = array(array($operand => 'motors'));
+		$array[] = array(array($operand => 'pieces+parts'));
+		return $array;
 	}
 }
