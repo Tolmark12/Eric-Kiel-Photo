@@ -40,6 +40,7 @@ public class StockDetailView extends Sprite
 	// State
 	private var _isHidden:Boolean;
 	private var _id:String;
+	private var _currentStockPhotoVo:StockPhotoVo;
 	
 	public function StockDetailView():void
 	{
@@ -90,6 +91,7 @@ public class StockDetailView extends Sprite
 	*/
 	public function displayImage ( $stockPhotoVo:StockPhotoVo ):void
 	{
+		_currentStockPhotoVo = $stockPhotoVo;
 		_smallTxt.txt.text = $stockPhotoVo.name.split(".")[0];
 		_id = $stockPhotoVo.id;
 		show();
@@ -179,12 +181,14 @@ public class StockDetailView extends Sprite
 	private function _onBuyClick ( e:Event ):void {
 		var ev:ModalEvent = new ModalEvent(ModalEvent.LICENCE_IMAGE, true);
 		ev.stockVoId = _id;
+		ev.vo = _currentStockPhotoVo;
 		dispatchEvent( ev );
 	}
 	
 	private function _onDownloadClick ( e:Event ):void {
 		var ev:ModalEvent = new ModalEvent(ModalEvent.DOWNLOAD_COMP, true);
 		ev.stockVoId = _id;
+		ev.vo = _currentStockPhotoVo;
 		dispatchEvent( ev );
 	}
 	

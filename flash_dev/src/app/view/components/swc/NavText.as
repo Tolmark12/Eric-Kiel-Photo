@@ -14,7 +14,7 @@ public class NavText extends MovieClip
 		titleTxt.autoSize = "left";
 	}
 	
-	public function set text ( $str:String ):void{ htmlText = $str; trace( $str ); }
+	public function set text ( $str:String ):void{ htmlText = $str; }
 	public function set htmlText ( $str:String ):void
 	{
 		var format:TextFormat = titleTxt.getTextFormat();
