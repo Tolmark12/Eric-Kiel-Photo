@@ -52,9 +52,40 @@ class Delorum_Stock_Adminhtml_PhotoController extends Mage_Adminhtml_Controller_
  
 	public function saveAction() {
 		if ($data = $this->getRequest()->getPost()) {
+			if(isset($data['populartags'])) {
+	  			foreach($data['populartags'] as $tagId) {
+	  				Mage::getModel('stock/photo_tag_link')
+	  					->setLinkId(null)
+	  					->setPhotoId($this->getRequest()->getParam('id'))
+	  					->setTagId($tagId)
+	  					->save();
+	  			}
+	  		}
 			
-//			print_r($_FILES);
-//			exit;
+			if(isset($data['newtags']) && $data['newtags'] != 'Write custom tags here' && $data['newtags'] != '') {
+				$tagarr = explode(",", $data['newtags']);
+				foreach($tagarr as $tagname) {
+					//add tags to list and assign link
+					$collection = Mage::getModel('stock/photo_tag')->getCollection()
+						->addFieldToFilter('name', $tagname)
+						->getFirstItem();
+					if(!$collection->getName()) {
+						$tag = Mage::getModel('stock/photo_tag')
+							->setTagId(null)
+							->setName($tagname)
+							->setRank(0)
+							->save();
+						$tagid = $tag->getTagId();
+					} else {
+						$tagid = $collection->getTagId();
+					}
+					Mage::getModel('stock/photo_tag_link')
+	  					->setLinkId(null)
+	  					->setPhotoId($this->getRequest()->getParam('id'))
+	  					->setTagId($tagid)
+	  					->save();
+				}
+			}
 			
 			if(isset($_FILES['image']['name']) && $_FILES['image']['name'] != '') {
 				try {
@@ -116,7 +147,7 @@ class Delorum_Stock_Adminhtml_PhotoController extends Mage_Adminhtml_Controller_
 	  			$data['mid_width']		= $midWidth;
 	  			$data['large_width']	= $width;
 			}
-	  			
+
 	  			
 			$model = Mage::getModel('stock/photo');		
 			$model->setData($data)
@@ -167,6 +198,20 @@ class Delorum_Stock_Adminhtml_PhotoController extends Mage_Adminhtml_Controller_
 			}
 		}
 		$this->_redirect('*/*/');
+	}
+	
+	public function deleteTagAction()
+	{
+		$tagId = $this->getRequest()->getParam('tag_id');
+		$pid = $this->getRequest()->getParam('pid');
+	
+		$collection = Mage::getModel('stock/photo_tag_link')->getCollection()
+			->addFieldToFilter('photo_id', $pid)
+			->addFieldToFilter('tag_id', $tagId)
+			->getFirstItem();
+		$row = $collection->load($collection->getLinkId());
+		$row->delete();
+		//remove tag link
 	}
 
     public function massDeleteAction() {
