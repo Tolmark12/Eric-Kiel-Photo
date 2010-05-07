@@ -83,6 +83,7 @@ class Delorum_Stock_Block_Adminhtml_Photo_Edit_Tab_Photo extends Mage_Adminhtml_
 		$array[] = array(array($operand => 'water'));
 		$array[] = array(array($operand => 'motors'));
 		$array[] = array(array($operand => 'pieces+parts'));
+		$array[] = array(array($operand => 'lifestyle'));
 		return $array;
 	}
 }
