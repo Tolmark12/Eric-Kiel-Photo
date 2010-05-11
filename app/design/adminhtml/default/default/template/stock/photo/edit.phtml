@@ -42,17 +42,17 @@
 			<?php $x++; ?>
 		<?php endforeach ?>
 
-		<?php $x = 0 ?>
-		<?php foreach($this->popularTags() as $tag): ?>
-			<?php if(!$x%2): ?>
-				<tr>
-			<?php endif ?>
-			<td><input type="checkbox" class="tag-checkbox" name="populartags[]" value="<?php echo $tag->getTagId() ?>"><?php echo $tag->getTagName() ?></td>
-			<?php if($x % 2): ?>
-				</tr>
-			<?php endif ?>
-			<?php $x++; ?>
-		<?php endforeach ?>
+		<?php //$x = 0 ?>
+		<?php //foreach($this->popularTags() as $tag): ?>
+			<?php //if(!$x%2): ?>
+				<!-- <tr> -->
+			<?php //endif ?>
+			<!-- <td><input type="checkbox" class="tag-checkbox" name="populartags[]" value="<?php //echo $tag->getTagId() ?>"><?php //echo $tag->getTagName() ?></td> -->
+			<?php //if($x % 2): ?>
+				<!-- </tr> -->
+			<?php //endif ?>
+			<?php //$x++; ?>
+		<?php //endforeach ?>
 		</table>
 	</div>
 </div>

@@ -77,6 +77,7 @@ class Delorum_Stock_Block_Adminhtml_Photo_Edit_Tab_Photo extends Mage_Adminhtml_
 	protected function _staticArray($operand)
 	{
 		$array = array();
+		$array[] = array(array($operand => 'snow'));
 		$array[] = array(array($operand => 'places'));
 		$array[] = array(array($operand => 'people'));
 		$array[] = array(array($operand => 'sports'));
@@ -84,7 +85,7 @@ class Delorum_Stock_Block_Adminhtml_Photo_Edit_Tab_Photo extends Mage_Adminhtml_
 		$array[] = array(array($operand => 'motors'));
 		$array[] = array(array($operand => 'pieces+parts'));
 		$array[] = array(array($operand => 'lifestyle'));
-		$array[] = array(array($operand => 'animals'));
+		$array[] = array(array($operand => 'travel'));
 		return $array;
 	}
 }
