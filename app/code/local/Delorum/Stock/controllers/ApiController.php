@@ -32,15 +32,17 @@ class Delorum_Stock_ApiController extends Mage_Core_Controller_Front_Action
 			$id = $tag->getId();
 		}
 		$photos = array();
-		$photoCollection = Mage::getResourceModel('stock/photo_collection');
+		$photoCollection = Mage::getModel('stock/photo')->getCollection();
 		$photoCollection->getSelect()
-		->join(
-		array('t'=>'stock_photo_tag_link')
-		,'t.photo_id = main_table.photo_id'
-		)
-		->where('t.tag_id = ?', $id);
+				->join(
+					array('t'=>'stock_photo_tag_link')
+					,'t.photo_id = main_table.photo_id'
+				)
+				->where('t.tag_id = ?', $id)
+				->group('main_table.photo_id');
 		if(count($photoCollection)){
 			foreach($photoCollection as $photo){
+				
 				$photos[] = array(
 				 'id'					=> $photo->getId()
 				,'name'					=> $photo->getName()

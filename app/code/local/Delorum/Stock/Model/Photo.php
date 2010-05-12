@@ -17,6 +17,8 @@ class Delorum_Stock_Model_Photo extends Mage_Core_Model_Abstract
     	if(!$this->_tagArray){
 	    	$tags = array();
 			$tagCollection = $this->getTags();
+			
+			
 			if(count($tagCollection)){
 				foreach($tagCollection as $tag){
 					$tags[] = array('id'=>(int) $tag->getId(), 'name'=>$tag->getName(), 'rank'=>(int) $tag->getRank());
@@ -36,7 +38,8 @@ class Delorum_Stock_Model_Photo extends Mage_Core_Model_Abstract
 				 	array('l'=>'stock_photo_tag_link')
 					,'l.tag_id = main_table.tag_id'
 				)
-				->where('l.photo_id = ?', $this->getId());
+				->where('l.photo_id = ?', $this->getId())
+				->group('main_table.tag_id');
 			$this->_tags = $tags;
     	}
     	return $this->_tags;
