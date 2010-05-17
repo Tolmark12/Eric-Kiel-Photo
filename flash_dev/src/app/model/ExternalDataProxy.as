@@ -77,6 +77,7 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	private var _lastSearchTerm:String;
 	public function loadStockDataSet ( $searchTerm:String ):void
 	{
+		sendNotification( AppFacade.DIALOGUE_MESSAGE, new DialogueVo("Searching for "+$searchTerm+"...", true) );
 		_lastSearchTerm = $searchTerm;
 		var ldr:DataLoader = new DataLoader( _server + "stock/api/getStockPhotosByTag/text/" + $searchTerm );
 		ldr.addEventListener( Event.COMPLETE, _onStockDataSetLoaded, false,0,true );
@@ -139,6 +140,7 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	}
 	
 	private function _onStockDataSetLoaded ( e:Event ):void {
+		sendNotification( AppFacade.HIDE_DIALOGUE );
 		var json:Object = JSON.decode( e.target.data );
 		sendNotification( AppFacade.STOCK_DATA_SET_LOADED, {term:_lastSearchTerm, items:json });
 	}

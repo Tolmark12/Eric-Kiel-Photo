@@ -10,6 +10,7 @@ import flash.net.URLRequest;
 import flash.events.*;
 import flash.net.URLLoader;
 import flash.net.URLRequestMethod;
+import flash.net.navigateToURL;
 import app.view.components.events.ModalEvent;
 
 public class FormProxy extends Proxy implements IProxy
@@ -100,6 +101,11 @@ public class FormProxy extends Proxy implements IProxy
 	   } catch (error:Error) {
 	       trace("Unable to load requested document.");
 	   }
+	
+		// If they're downloading an image:
+		if( $modalEvent.formId == "download" )
+			navigateToURL( new URLRequest( _currentStockPhotoVo.compImgSrc ), "_blank" );
+			
 	}
 	
 	private function _onComplete ( e:Event ):void {
