@@ -14,11 +14,11 @@ public class PortfolioItemVo
 	public var videoEmbedTag:String;
 	public var isOnlyVideo:Boolean = false;
 	
+	public var tempId:String;
+	
 	public function PortfolioItemVo( $json:Object ):void
 	{
-		// Used for tracint out photo ids		
-		 trace( $json.name );
-		
+		// Used for tracint out photo ids				
 		name				= $json.name;
 		tags				= $json.photo_tags;
 		title 				= "";

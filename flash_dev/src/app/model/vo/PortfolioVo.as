@@ -17,22 +17,24 @@ public class PortfolioVo
 			items.push( new PortfolioItemVo( $json.images[i] ) );
 		}
 
-// 		Used for tracint out photo ids		
-		trace( "+++++++++++++++++++++++++++++++++ \n\n " );
 
 
 		// Temp - hopefully we'll introduce sorting via the admin, 
 		// until then, we're sorting on a specific field
-//		if( $json.sort_on != "null" && $json.sort_on != null ){
-//			items.sortOn( $json.sort_on );
-//		}
+		if( $json.sort_on != "null" && $json.sort_on != null ){
+			items.sortOn( $json.sort_on );
+		}
 			
 		var len2:uint = items.length;
 		for ( var j:uint=0; j<len2; j++ ) 
 		{
+			trace( items[j].name );
 			items[j].index = j;
 		}
-			
+
+		// 		Used for tracint out photo ids		
+		trace( "+++++++++++++++++++++++++++++++++ \n\n " );
+	
 	}
 
 }
