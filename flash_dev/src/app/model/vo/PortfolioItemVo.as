@@ -16,6 +16,9 @@ public class PortfolioItemVo
 	
 	public function PortfolioItemVo( $json:Object ):void
 	{
+		// Used for tracint out photo ids		
+		 trace( $json.name );
+		
 		name				= $json.name;
 		tags				= $json.photo_tags;
 		title 				= "";

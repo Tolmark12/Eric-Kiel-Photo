@@ -51,8 +51,8 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	// Load Portfolio data
 	public function loadPortfolioData ( $feed:String ):void
 	{
-		if( $feed == _server + "vladmin/api/index/template/3" )
-			$feed = _server + "prototype/content/json/tempPortfolio.json"
+//		if( $feed == _server + "vladmin/api/index/template/3" )
+//			$feed = _server + "prototype/content/json/tempPortfolio.json"
 			
 		var ldr:DataLoader = new DataLoader( $feed );
 		ldr.addEventListener( Event.COMPLETE, _onPortfolioDataLoad, false,0,true );
