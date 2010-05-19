@@ -94,7 +94,7 @@ public class StockMap extends Sprite
 		_closeBtnHolder.addChild(btn);
 	}
 	
-	public function buildNewSet ( $stack:Vector.<StockPhotoSetVo> ):void
+	public function buildNewSet ( $stack:Vector.<StockPhotoSetVo>, $draggerWidthMod:Number ):void
 	{
 		this.visible = true;
 		var rows:Array = [0,0];
@@ -107,7 +107,8 @@ public class StockMap extends Sprite
 		_miniPageHolder.y = _mapItemsHolder.y + _mapItemsHolder.height + 20;
 		
 		//// TEMP - dividers...
-		var browserWidth:Number		= Math.round( 1024 * SHRINK_PERCENTAGE );
+		var mod:Number 				= 0;
+		var browserWidth:Number		= Math.round(( 1024 * SHRINK_PERCENTAGE ) * $draggerWidthMod);
 		var distance:Number			= browserWidth;
 		var numberOfPages:uint	 	= Math.ceil( _mapItemsHolder.width / browserWidth );
 		for ( var j:uint=0; j<=numberOfPages; j++ ) 
@@ -117,14 +118,14 @@ public class StockMap extends Sprite
 			var pageNumber:String = ( j == numberOfPages )? "" : String( j + 1 );
 			_miniPageHolder.addChild( page );
 
-			page.build( pageNumber, browserWidth, 10 * rows.length + _miniPageHolder.y );
+			page.build( pageNumber, browserWidth, 10 * rows.length + _miniPageHolder.y + mod );
 			page.x = distance * j;
 		}
 		
 		//// Dragger
 		_mapDragger.y = 0;
 		_mapDragger.build( browserWidth, _mapItemsHolder.height, 6 );
-		_mapDragger.setHorizontalBounds( _mapItemsHolder.x, _mapItemsHolder.x + _mapItemsHolder.width, browserWidth )
+		_mapDragger.setHorizontalBounds( _mapItemsHolder.x, _mapItemsHolder.x + _mapItemsHolder.width, browserWidth );
 	}
 	
 	public function set draggerVisible ( $isVisible:Boolean ):void{ 
@@ -174,6 +175,28 @@ public class StockMap extends Sprite
 	
 	private function _onStockPhotoClick ( e:StockEvent ):void {
 		_mapDragger.scrollTo( e.target.x );
+	}
+	
+	// _____________________________ Getters / Setters
+	
+	/** 
+	*	We were having a problem of the stock map results stretching off the page, and therefore
+	*	needed a way to compress the map. this method finds out if there are more than 100 results, and if there
+	*	are, returns a percentage that each individual item should be shrunk
+	*/
+	public function getPercentageOfFullWidth ( $stack:Vector.<StockPhotoSetVo> ):Number
+	{
+		// Count all the items
+		var len:uint = $stack.length;
+		var count:Number = 0;
+		for ( var i:uint=0; i<len; i++ ) {
+			count += $stack[i].stack.length
+		}
+		
+		if( count <= 100 )
+			return 1;
+		else
+			return 100 / count;
 	}
 
 }

@@ -71,6 +71,7 @@ public class StockPhotoStrip extends Sprite
 		var setIndex:uint = 0;		
 		var xPos:Number = pad;
 		var count:Number = 0;
+		var widthMod:Number = _stockMap.getPercentageOfFullWidth( $sets );		
 		
 		// Loop through each set of photos
 		for each( var photoSet:StockPhotoSetVo in $sets)
@@ -93,7 +94,7 @@ public class StockPhotoStrip extends Sprite
 				photo.y = 220 * smallestRowIndex;						// Set the y position based on the position in the array
 				photo.x = rows[smallestRowIndex] + pad;					// Set the x position based on value of item
 				
-				_stockMap.addItem( stack[i].id, smallestRowIndex, setIndex, stack[i].width );
+				_stockMap.addItem( stack[i].id, smallestRowIndex, setIndex, stack[i].width * widthMod );
 				
 				rows[smallestRowIndex] += pad + photo.width;			// update row width
 			}
@@ -107,7 +108,7 @@ public class StockPhotoStrip extends Sprite
 		if( count == 1 )
 			_photoHolder.graphics.clear();
 		
-		_stockMap.buildNewSet($sets);
+		_stockMap.buildNewSet($sets, widthMod);
 		setScrollWindow(StageResizeVo.lastResize);
 		scroll(0);
 	}
