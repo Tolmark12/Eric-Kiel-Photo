@@ -20,6 +20,7 @@ public class StockMapDragger extends Sprite
 	
 	public function StockMapDragger():void{
 		this.addChild( _pointerHolder );
+		this.buttonMode = true;
 	}
 	
 	/** 
@@ -39,14 +40,15 @@ public class StockMapDragger extends Sprite
 	*/
 	public function build ( $width:Number, $height:Number, $overshoot:Number=0 ):void
 	{
+		clear();
 		this.addEventListener( MouseEvent.MOUSE_DOWN, _onMouseDown, false,0,true );
 		this.stage.addEventListener( MouseEvent.MOUSE_UP, _onMouseUp, false,0,true );
 		
-		if( !_isBuilt ) {
-			_isBuilt = true;
+//		if( !_isBuilt ) {
+//			_isBuilt = true;
 			this.x = 0
 			//$overshoot = 0;
-			this.buttonMode = true;
+
 			this.graphics.beginFill( 0x000000, 0.6 );
 			this.graphics.drawRect( -$overshoot, -$overshoot, $width+$overshoot*2, $height+$overshoot*2 );
 
@@ -78,12 +80,12 @@ public class StockMapDragger extends Sprite
 			_pointerHolder.y = -2;
 //			_pointerHolder.addChild( _dragHandHint );
 			
-		}
+//		}
 	}
 	
 	public function clear (  ):void
 	{
-		//this.graphics.clear();
+		this.graphics.clear();
 		this.removeEventListener( MouseEvent.MOUSE_DOWN, _onMouseDown );
 		this.stage.removeEventListener( MouseEvent.MOUSE_UP, _onMouseUp );
 	}

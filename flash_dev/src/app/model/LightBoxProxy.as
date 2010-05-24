@@ -140,7 +140,7 @@ public class LightBoxProxy extends Proxy implements IProxy
 	
 	public function emailLightBox (  ):void
 	{
-		var emailLink = "mailto:?subject=Check out my Lightbox at Kielphoto.com&body=View the following lightbox I created at Kiel Photo.com:%0A%0ahttp://staging.kielphoto.com/#" + getLightBoxURL();
+		var emailLink = "mailto:?subject=Check out my Lightbox at Kielphoto.com&body=View the following lightbox I created at Kiel Photo.com: " + getLightBoxURL();
 		navigateToURL(new URLRequest(emailLink), "_top");
 	}
 	

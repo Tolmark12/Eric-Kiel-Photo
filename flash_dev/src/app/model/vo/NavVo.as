@@ -20,6 +20,8 @@ public class NavVo
 			// Add the parent nav item to the pages list:
 			pages.push( navItemVo );
 		}
+		
+		// Order the pages
 		pages.sortOn("sortVal");
 	}
 	

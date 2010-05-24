@@ -45,7 +45,11 @@ public class ModalDialogueBox extends Modal
 		Tweener.addTween( this, { alpha:1, time:0.4, transition:"EaseInOutQuint"} );
 		_navText.text = $dialogueMessageVo.message;
 		_okBtn.y = _navText.y + _navText.height + super.PADDING;
-		super.updateHeight(_okBtn.y + _okBtn.height + super.PADDING)
+		super.updateHeight(_okBtn.y + _okBtn.height + super.PADDING);
+		if( $dialogueMessageVo.hideButtons )
+			_okBtn.visible = false;
+		else
+			_okBtn.visible = true;
 	}
 	
 	override public function clear (  ):void

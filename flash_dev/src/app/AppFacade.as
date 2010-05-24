@@ -110,6 +110,7 @@ public class AppFacade extends Facade implements IFacade
 	// MESSAGES
 	public static const SHOW_MESSAGE:String 						= "show_message";
 	public static const DIALOGUE_MESSAGE:String 					= "dialogue_message";
+	public static const HIDE_DIALOGUE:String 						= "hide_dialogue";
 	
 	// Example: var myFacade:AppFacade = AppFacade.getInstance( 'app_facade' );
 	public function AppFacade( key:String ):void

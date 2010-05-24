@@ -40,7 +40,8 @@ public class ContentMediator extends Mediator implements IMediator
 				 AppFacade.MEDIATOR_ACTIVATED,
 				 AppFacade.HIDE_ROOT,
 				 AppFacade.LOAD_VIDEO,
-				 AppFacade.DIALOGUE_MESSAGE, ];
+				 AppFacade.DIALOGUE_MESSAGE, 
+				 AppFacade.HIDE_DIALOGUE, ];
 	}
 	
 	// PureMVC: Handle notifications
@@ -80,6 +81,9 @@ public class ContentMediator extends Mediator implements IMediator
 			break;
 			case AppFacade.DIALOGUE_MESSAGE :
 				_dialogueBox.showMessage( note.getBody() as DialogueVo )
+			break;
+			case AppFacade.HIDE_DIALOGUE :
+				_dialogueBox.clear();
 			break;
 		}
 	}

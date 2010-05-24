@@ -56,7 +56,7 @@ public class StockDetailView extends Sprite
 		// Create the buttons
 		/*_askQuestionBtn.build(  "Ask A Question", "_ask");*/
 		_downloadCompBtn.build( "Downlad Comp", "_download");
-		_termsBtn.build( "Terms", "_terms" );
+		_termsBtn.build( "FAQ & Pricing", "_terms" );
 		changeDisplayLightboxStatus(true);
 		_downloadCompBtn.y = /*_askQuestionBtn.y =*/ _termsBtn.y = _imageHolder.y - 20;
 		
@@ -73,7 +73,7 @@ public class StockDetailView extends Sprite
 		_closeBtn.buttonMode = true;
 		_closeBtn.mouseChildren = false;
 		
-		_buyBtn.setTitle("License Image");
+		_buyBtn.setTitle("Contact For Image Use");
 		
 		
 		// Events
