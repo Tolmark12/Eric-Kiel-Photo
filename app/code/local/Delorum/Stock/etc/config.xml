@@ -53,9 +53,14 @@
 						<sort_order>0</sort_order>
 						<action>stock/adminhtml_photo</action>
 					</items>
+					<tags module="stock">
+						<title>Manage Tags</title>
+						<sort_order>1</sort_order>
+						<action>stock/adminhtml_tag</action>
+					</tags>
 					<import module="stock">
 						<title>Import Tags</title>
-						<sort_order>1</sort_order>
+						<sort_order>2</sort_order>
 						<action>stock/adminhtml_tag/import</action>
 					</import>
 				</children>
