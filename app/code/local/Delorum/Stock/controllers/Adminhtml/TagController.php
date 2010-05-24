@@ -8,6 +8,28 @@ class Delorum_Stock_Adminhtml_TagController extends Mage_Adminhtml_Controller_ac
 		$this->renderLayout();
 	}
 	
+	protected function _initAction() {
+		$this->loadLayout()
+			->_setActiveMenu('stock/tags')
+			->_addBreadcrumb(Mage::helper('adminhtml')->__('Tags Manager'), Mage::helper('adminhtml')->__('Tags Manager'));
+		
+		return $this;
+	}   
+	public function indexAction() {
+		$collection = Mage::getModel('stock/photo_tag')->getCollection();
+      	$collection->getSelect()
+      		->joinLeft(array('tl' => 'stock_photo_tag_link'),
+      			'main_table.tag_id = tl.tag_id',
+      			array('COUNT(tl.tag_id) as tag_count'))
+      		->group('main_table.tag_id');
+      	foreach($collection as $tag) {
+      		$tag->setUsed($tag->getTagCount());
+      		$tag->save();
+      	}
+		$this->_initAction()
+			->renderLayout();
+	}
+	
 	public function importPostAction()
 	{
 		if($this->getRequest()->isPost()){
@@ -54,5 +76,25 @@ class Delorum_Stock_Adminhtml_TagController extends Mage_Adminhtml_Controller_ac
 			$this->renderLayout();
 		}
 	}
-	
+	public function massDeleteAction() {
+        $tagIds = $this->getRequest()->getParam('tag');
+        if(!is_array($tagIds)) {
+			Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select tags(s)'));
+        } else {
+            try {
+                foreach ($tagIds as $tagId) {
+                    $tag = Mage::getModel('stock/photo_tag')->load($tagId);
+                    $tag->delete();
+                }
+                Mage::getSingleton('adminhtml/session')->addSuccess(
+                    Mage::helper('adminhtml')->__(
+                        'Total of %d tag(s) were successfully deleted', count($tagIds)
+                    )
+                );
+            } catch (Exception $e) {
+                Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
+            }
+        }
+        $this->_redirect('*/*/index');
+    }
 }
