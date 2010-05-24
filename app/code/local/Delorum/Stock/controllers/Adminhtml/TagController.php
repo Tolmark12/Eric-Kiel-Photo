@@ -83,6 +83,13 @@ class Delorum_Stock_Adminhtml_TagController extends Mage_Adminhtml_Controller_ac
         } else {
             try {
                 foreach ($tagIds as $tagId) {
+                	//remove tag links incase tag links exist
+                	$collection = Mage::getModel('stock/photo_tag_link')->getCollection()
+                		->addFieldToFilter('tag_id', $tagId);
+                	foreach($collection as $link) {
+                		$link->delete();
+                	}
+                	//remove tag itself
                     $tag = Mage::getModel('stock/photo_tag')->load($tagId);
                     $tag->delete();
                 }
