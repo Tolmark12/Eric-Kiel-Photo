@@ -82,6 +82,7 @@ public class StockDetailView extends Sprite
 		_addToLightBoxBtn.addEventListener( MouseEvent.CLICK, _onAddToLightBoxClick, false,0,true );
 		_closeBtn.addEventListener( MouseEvent.CLICK, _onCloseClick, false,0,true );
 		_buyBtn.addEventListener( MouseEvent.CLICK, _onBuyClick, false,0,true );
+		_termsBtn.addEventListener( MouseEvent.CLICK, _onTermsClick, false,0,true );
 		// Set initial state to hidden
 		hide();		
 	}
@@ -191,6 +192,11 @@ public class StockDetailView extends Sprite
 		ev.vo = _currentStockPhotoVo;
 		dispatchEvent( ev );
 	}
+	
+	private function _onTermsClick ( e:Event ):void {
+		dispatchEvent( new ModalEvent(ModalEvent.SHOW_TERMS, true) );
+	}
+	
 	
 	private function _onCloseClick ( e:Event ):void {
 		dispatchEvent( new StockEvent(StockEvent.STOCK_PHOTO_CLOSE, true) );

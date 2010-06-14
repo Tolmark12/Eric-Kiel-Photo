@@ -26,9 +26,18 @@ public class PortfolioItemVo
 		lowResSrc			= $json.low_res_src;
 		isActive			= true;
 		
+		/* TEMP - Live site
 		videoEmbedTag		= $json.video_embed_tag;
 		if( $json.is_only_video != null )
 			isOnlyVideo			= new Boolean($json.is_only_video.toLowerCase() == "true");
+		//*/
+
+		//* TEMP - Staging
+		videoEmbedTag		= $json.video_emved_code;
+        
+		if( $json.is_video_only != null )
+			isOnlyVideo			= new Boolean($json.is_video_only.toLowerCase() == "true");
+		//*/
 	}
 	
 	public function toString (  ):String

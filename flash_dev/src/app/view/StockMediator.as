@@ -41,6 +41,7 @@ public class StockMediator extends PageMediator implements IMediator
 		_stockDetailView.addEventListener( 		ModalEvent.ASK_A_QUESTION, _onModalTriggerClick, false,0,true );
 		_stockDetailView.addEventListener( 		ModalEvent.LICENCE_IMAGE, _onModalTriggerClick, false,0,true );
 		_stockDetailView.addEventListener( 		ModalEvent.DOWNLOAD_COMP, _onModalTriggerClick, false,0,true );
+		_stockDetailView.addEventListener( 		ModalEvent.SHOW_TERMS, _onShowTerms, false,0,true );
 		_stockDetailView.addEventListener( 		ModalEvent.CLOSE_MODAL, _onCloseModal, false,0,true );
 		_stockDetailView.addEventListener( 		StockEvent.STOCK_PHOTO_CLOSE, _onStockPhotoClose, false,0,true );
 		_stockDetailView.addEventListener( 		StockEvent.ADD_TO_LIGHTBOX, _onAddToLightbox, false,0,true );
@@ -169,6 +170,10 @@ public class StockMediator extends PageMediator implements IMediator
 	
 	private function _onReturnToMainCategoriesClick ( e:StockEvent ):void {
 		sendNotification( AppFacade.SHOW_STOCK_MAIN_CATEGORIES );
+	}
+	
+	private function _onShowTerms ( e:Event ):void {
+		sendNotification( AppFacade.SHOW_STOCK_TERMS );
 	}
 	
 }
