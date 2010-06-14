@@ -5,6 +5,12 @@
             <block type="stock/adminhtml_photo" name="stock.photo" />
         </reference>
     </stock_adminhtml_photo_index>
+    
+    <stock_adminhtml_tag_index>
+        <reference name="content">
+            <block type="stock/adminhtml_tag" name="stock.tag" />
+        </reference>
+    </stock_adminhtml_tag_index>
 	
    	<stock_adminhtml_tag_import>
 		<reference name="content">

@@ -17,17 +17,23 @@ ul.sortable li {
 	</tr>
 	<tr>
 		<td>
-			<?php $collection = $this->getCollection() ?>
-			<?php if(count($collection)): ?>
-				<ul id="collection_items" class="sortable">
-					<?php foreach($collection as $template): ?>
-						<li id="<?php echo $template->getId() ?>"><?php echo $template->getName() ?></li>
-					<?php endforeach ?>
-				</ul>
-			<?php endif; ?>
+			<div id="sortable-tank" style="position: relative; height: 425px; margin-top: 20px; overflow: scroll;">
+				<?php $collection = $this->getCollection() ?>
+				<?php if(count($collection)): ?>
+					<ul id="collection_items" class="sortable">
+						<?php foreach($collection as $template): ?>
+							<li id="<?php echo $template->getId() ?>"><?php echo $template->getName() ?></li>
+						<?php endforeach ?>
+					</ul>
+				<?php endif; ?>
+			</div>
 		</td>
 	</tr>
 </table>
+
 <script type="text/javascript">
-	Sortable.create("collection_items", { scroll:true });
+
+Position.includeScrollOffsets = true;
+Sortable.create("collection_items", {scroll: 'sortable-tank'});
+
 </script>

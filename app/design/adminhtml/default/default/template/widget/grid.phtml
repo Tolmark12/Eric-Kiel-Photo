@@ -84,6 +84,7 @@ $numColumns = sizeof($this->getColumns());
                 <option value="50"<?php if($this->getCollection()->getPageSize()==50): ?> selected="selected"<?php endif; ?>>50</option>
                 <option value="100"<?php if($this->getCollection()->getPageSize()==100): ?> selected="selected"<?php endif; ?>>100</option>
                 <option value="200"<?php if($this->getCollection()->getPageSize()==200): ?> selected="selected"<?php endif; ?>>200</option>
+                <option value="500"<?php if($this->getCollection()->getPageSize()==500): ?> selected="selected"<?php endif; ?>>500</option>
             </select>
             <?php echo $this->__('per page') ?><span class="separator">|</span>
             <?php echo $this->__('Total %d records found', $this->getCollection()->getSize()) ?>
