@@ -10,6 +10,7 @@ public class ModalEvent extends Event
 	public static const ASK_A_QUESTION:String = "ask";
 	public static const LICENCE_IMAGE:String = "licence";
 	public static const INPUT_CHANGE:String = "input_change";
+	public static const SHOW_TERMS:String = "show_terms";
 	
 	// EVENTS
 	public static const CLOSE_MODAL:String = "close_modal";

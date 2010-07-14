@@ -28,15 +28,29 @@ public class StockPhotoLanding extends Sprite
 		this.alpha = 1;
 		_categoryBtnHolder = new Sprite();
 		var len:uint = $stockConfigVo.defaultStockCategories.length;
+		var column:uint = 0;
+		var totalColumns:uint = 3;
+		var yPos = 0;
+		var xPos = 0
+		
 		for ( var i:uint=0; i<len; i++ ) 
 		{
 			var categoryBtn:StockLandingMainCat = new StockLandingMainCat( $stockConfigVo.defaultStockCategories[i] );
-			categoryBtn.x = i*296;
+			categoryBtn.x = xPos;
+			categoryBtn.y = yPos;
 			categoryBtn.addEventListener( MouseEvent.CLICK, _onCategoryBtnClick, false,0,true );
 			_categoryBtnHolder.addChild(categoryBtn);
+			
+			xPos += 296;
+			
+			if( column++ == 2){
+				column = 0;
+				yPos += 220;
+				xPos = 0;
+			}
 		}
 		
-		_categoryBtnHolder.y = 200;
+		_categoryBtnHolder.y = 175;
 		_categoryBtnHolder.x = StageResizeVo.CENTER - (296*3)/2
 		_categoryBtnHolder.filters = [new DropShadowFilter(10, 45, 0x000000, .45, 15, 15, 1, 3)];
 		

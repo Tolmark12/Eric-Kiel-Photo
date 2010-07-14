@@ -44,7 +44,7 @@ public class BrowserMediator extends Mediator implements IMediator
 			// browser address changes
 			case AppFacade.NAV_DATA_PARSED :
 				SWFAddress.addEventListener(SWFAddressEvent.CHANGE, _onSwfAddressChange );
-				ExternalInterface.call("swffit.fit", "kiel_swf", StageResizeVo.MIN_WIDTH, 650 );
+				//ExternalInterface.call("swffit.fit", "kiel_swf", StageResizeVo.MIN_WIDTH, 650 );
 			break;
 			case AppFacade.UPDATE_PATH:
 				var pathVo:PathVo = note.getBody() as PathVo;

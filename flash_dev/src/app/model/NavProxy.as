@@ -33,14 +33,29 @@ public class NavProxy extends Proxy implements IProxy
 	}
 	
 	public function showDefaultPage (  ):void {
-		if( _defaultPageFromRoot.length != 0 )
-			changePage( _defaultPageFromRoot );
-		else
-			changePage( _navVo.defaultNavItem.id )
+		
+		// If there is a sub page defined, that trumps all - http://kielphoto.com/#/some/page
+		if( _defaultPageFromRoot != "there is sub page" ){
+			
+			// We should redirect based on the url : http://kielphotofilms.com	
+			if( _defaultPageFromRoot.length != 0 )
+				changePage( _defaultPageFromRoot );
+				
+			// else there is no redirect from main url, goto default page : 
+			else
+				changePage( _navVo.defaultNavItem.id )
+		}
+		
 	}
 	
 	public function changePage ( $newId:String ):String
 	{
+		// If they've clicked on the logo, call the default page:
+		if( $newId == "/" ) {
+			showDefaultPage();
+			return null;
+		}
+		
 		// Make sure this page isn't already active
 		if( _currentPageId != $newId ){
 			var vo:NavItemVo = _navVo.getNavItemById( $newId );
@@ -55,6 +70,7 @@ public class NavProxy extends Proxy implements IProxy
 			sendNotification( AppFacade.REMOVE_CURRENT_PAGE );
 			
 			// Change the page content
+			
 			sendNotification( AppFacade.LOAD_PAGE_DATA, vo );
 			var pathVo = new PathVo( _currentPageId, $newId );
 			_currentPageId = $newId;

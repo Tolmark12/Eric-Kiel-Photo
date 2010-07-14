@@ -22,12 +22,17 @@ public class Kiel09 extends Sprite
 		
 		if( urlPath != null ){
 			// Find out what the url is and specify a default page if none is specified
-			if( urlPath.indexOf("kielphotofilms") != -1 )
-				defaultPage = "/films";
+			if( urlPath.split("/#/").length == 1 ) {
+				if( urlPath.indexOf("kielphotofilms") != -1 )
+					defaultPage = "/films";
 
-			if( urlPath.indexOf("kielphotostock") != -1)
-				defaultPage = "/stock";
-			
+				if( urlPath.indexOf("kielphotostock") != -1)
+					defaultPage = "/stock";
+					
+			}else{
+				defaultPage = "there is sub page"
+			}
+
 			// Grab any lightbox vars
 			var tempAr:Array = urlPath.split("?");
 			if( tempAr.length > 1 )

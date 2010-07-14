@@ -112,6 +112,9 @@ public class AppFacade extends Facade implements IFacade
 	public static const DIALOGUE_MESSAGE:String 					= "dialogue_message";
 	public static const HIDE_DIALOGUE:String 						= "hide_dialogue";
 	
+	// Show the stock Terms
+	public static const SHOW_STOCK_TERMS:String 					= "show_stock_terms";
+	
 	// Example: var myFacade:AppFacade = AppFacade.getInstance( 'app_facade' );
 	public function AppFacade( key:String ):void
 	{
@@ -175,6 +178,7 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( REMOVE_FROM_LIGHTBOX, Clicks );
 		registerCommand( EMAIL_LIGHTBOX, Clicks );
 		registerCommand( SHOW_STOCK_MAIN_CATEGORIES, Clicks );
+		registerCommand( SHOW_STOCK_TERMS, Clicks );
 	}
 
 }

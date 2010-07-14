@@ -87,6 +87,9 @@ public class NavItem extends Sprite
 		}else{
 			var logo:Logo_swc = new Logo_swc();
 			this.addChild(logo);
+			_hitArea.graphics.beginFill(0x99FF00, 0);
+			_hitArea.graphics.drawRect( 0,0,340, this.height);
+			this.addChild(_hitArea)
 		}
 		
 		_hitArea.addEventListener( MouseEvent.MOUSE_OVER, _onMouseOver, false,0,true );
@@ -118,6 +121,7 @@ public class NavItem extends Sprite
 	protected function _onClick ( e:Event ):void {
 			var navBtnClick:NavEvent = new NavEvent( NavEvent.NAV_BTN_CLICK, true );
 			navBtnClick.id = _id;
+			trace( navBtnClick.id );
 			dispatchEvent( navBtnClick );
 	}
 	
@@ -127,6 +131,7 @@ public class NavItem extends Sprite
 	{
 		if( _txt != null )
 			return _txt.titleTxt.textWidth;
+		// Else, this is the logo
 		else
 			return super.width + 380;
 	}

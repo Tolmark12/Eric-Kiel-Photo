@@ -59,6 +59,13 @@ class Delorum_Stock_Block_Adminhtml_Photo_Grid extends Mage_Adminhtml_Block_Widg
 //          ),
 //      ));
 	  
+		$this->addColumn('created_at', array(
+            'header' => Mage::helper('sales')->__('Creation Time'),
+            'index' => 'created_at',
+            'type' => 'datetime',
+            'width' => '100px',
+        ));
+	
         $this->addColumn('action',
             array(
                 'header'    =>  Mage::helper('stock')->__('Action'),

@@ -102,6 +102,9 @@ public class Clicks extends SimpleCommand implements ICommand
 			case AppFacade.SHOW_STOCK_MAIN_CATEGORIES :
 				stockProxy.clearCurrentItems();
 			break;
+			case AppFacade.SHOW_STOCK_TERMS :
+				stockProxy.showPricingTerms();
+			break;
 		}
 	}
 }

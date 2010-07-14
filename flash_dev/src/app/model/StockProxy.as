@@ -195,6 +195,11 @@ public class StockProxy extends Proxy implements IProxy
 		sendNotification( AppFacade.UPDATE_LIGHTBOX_STATUS, lightBoxDispayItems );
 	}
 	
+	public function showPricingTerms (  ):void
+	{
+		sendNotification( AppFacade.DIALOGUE_MESSAGE, new DialogueVo( _configVo.faqText ) );
+	}
+	
 	// _____________________________ Helpers
 	
 	private function _prepareAneSentResults (  ):void {

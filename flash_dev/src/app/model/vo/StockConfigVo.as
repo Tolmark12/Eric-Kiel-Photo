@@ -5,9 +5,12 @@ public class StockConfigVo
 {
 	public var defaultStockCategories:Vector.<StockDefaultCategoryVo> = new Vector.<StockDefaultCategoryVo>();
 	public var formDefinitions:Vector.<FormVO> = new Vector.<FormVO>();
+	public var faqText:String;
 	
 	public function StockConfigVo( $json:Object ):void
 	{
+		faqText = $json.faq_pricing;
+		
 		// Init All the default categories
 		var len:uint = $json.default_stock_categories.length;
 		for ( var i:uint=0; i<len; i++ ) {

@@ -28,7 +28,7 @@ public class PortfolioVo
 		var len2:uint = items.length;
 		for ( var j:uint=0; j<len2; j++ ) 
 		{
-			trace( items[j].name );
+			trace( items[j].isOnlyVideo );
 			items[j].index = j;
 		}
 
