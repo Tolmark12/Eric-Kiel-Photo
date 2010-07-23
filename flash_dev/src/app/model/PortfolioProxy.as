@@ -102,7 +102,8 @@ public class PortfolioProxy extends Proxy implements IProxy
 				}
 			}
 			
-			//_filters.push($filter);
+			///////////////////////////////////
+			// _filters.push($filter);
 			// UNCOMMENT ABOVE AND DELETE BELOW
 			// FOR TAG FILTERING
 			_filters = [$filter];
@@ -203,6 +204,7 @@ public class PortfolioProxy extends Proxy implements IProxy
 		for ( var i:uint=0; i<len; i++ ) 
 		{
 			var portfolioItemVo:PortfolioItemVo = _sequence.items[i];
+
 			activate = false;
 			filtersLoop : for ( var j:uint=0; j<len2; j++ ) {
 				if( portfolioItemVo.tags.indexOf(_filters[j]) != -1 ){
@@ -210,9 +212,7 @@ public class PortfolioProxy extends Proxy implements IProxy
 					break filtersLoop;
 				}
 			}
-			
 			portfolioItemVo.isActive = activate;
-			
 			if( activate )
 				returnArray.push(true);
 			else

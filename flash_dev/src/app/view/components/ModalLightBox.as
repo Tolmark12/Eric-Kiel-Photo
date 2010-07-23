@@ -8,8 +8,6 @@ package app.view.components
 		
 		public function ModalLightBox()
 		{
-			trace('new modallightbox');
-			
 			// 600 is a pre-determined fixed width for this (ModalForm) modal. The height is arbitrarily set to 600.
 			super(_WIDTH, 600);
 		}

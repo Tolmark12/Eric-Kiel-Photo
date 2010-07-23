@@ -7,9 +7,6 @@ public class PortfolioVo
 	public function PortfolioVo( $json:Object ):void
 	{
 
-// 		Used for tracing out photo ids		
-		trace( $json.name );
-		
 		var len:uint = $json.images.length;
 		var portfolioItemVo:PortfolioItemVo;
 		for ( var i:uint=0; i<len; i++ ) 
@@ -28,12 +25,9 @@ public class PortfolioVo
 		var len2:uint = items.length;
 		for ( var j:uint=0; j<len2; j++ ) 
 		{
-			trace( items[j].isOnlyVideo );
 			items[j].index = j;
 		}
 
-		// 		Used for tracint out photo ids		
-		trace( "+++++++++++++++++++++++++++++++++ \n\n " );
 	
 	}
 
