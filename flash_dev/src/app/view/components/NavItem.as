@@ -121,7 +121,6 @@ public class NavItem extends Sprite
 	protected function _onClick ( e:Event ):void {
 			var navBtnClick:NavEvent = new NavEvent( NavEvent.NAV_BTN_CLICK, true );
 			navBtnClick.id = _id;
-			trace( navBtnClick.id );
 			dispatchEvent( navBtnClick );
 	}
 	
