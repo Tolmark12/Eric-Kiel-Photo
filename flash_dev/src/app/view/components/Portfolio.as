@@ -34,7 +34,7 @@ public class Portfolio extends Page
 		//Queue.setQueueIndex("high", 1);
 	}
 	
-	public function init (  ):void
+	public function init (	):void
 	{
 		this.addEventListener( ImageLoadEvent.HIGH_RES_IMAGE_LOADED, _onHighResImageLoaded, false,0,true );
 		this.addEventListener( ImageLoadEvent.LOW_RES_IMAGE_LOADED, _onLowResImageLoaded, false,0,true );
@@ -61,14 +61,14 @@ public class Portfolio extends Page
 	/** 
 	*	Reset and prepare for new data
 	*/
-	public function clear (  ):void
+	public function clear (	 ):void
 	{
 		_portfolioNav.clear()
 		_portfolioNav.visible = false;
 		this.stage.removeEventListener( Event.ENTER_FRAME, _onEnterFrame );
 		
 		// Reset vars
-		_currentIndex 	= 0;
+		_currentIndex	= 0;
 		_currentItem	= null;
 		
 		// Remove any current images
@@ -224,9 +224,9 @@ public class Portfolio extends Page
 	*/
 	public function onStageResize ( $vo:StageResizeVo ):void
 	{
-		_loading.x 		= $vo.left//StageResizeVo.CENTER - LoadingDisplay.WIDTH/2;
-		_copyRight.x 	= $vo.right - _copyRight.width - 20;
-		_copyRight.y 	= $vo.height - _copyRight.height - 20
+		_loading.x		= $vo.left//StageResizeVo.CENTER - LoadingDisplay.WIDTH/2;
+		_copyRight.x	= $vo.right - _copyRight.width - 20;
+		_copyRight.y	= $vo.height - _copyRight.height - 20
 	}
 	
 	public function updateTotalImagesLoaded ( $loaded:Number, $total:Number ):void
@@ -234,7 +234,7 @@ public class Portfolio extends Page
 		_loading.update($loaded, $total, StageResizeVo.lastResize.width)
 	}
 	
-	private function _totalWidth (  ):Number
+	private function _totalWidth (	):Number
 	{
 		var totalWidth:Number = 0;
 		var len:uint = _items.length;
@@ -268,16 +268,23 @@ public class Portfolio extends Page
 	
 	private function _centerStripOnImage ( $index:uint, $speed:Number =1.3, $speed2:Number=0.8 ):void
 	{
-		_distributeObjects(0,true,$speed2);
-		_lastXmouse = this.mouseX;
-		var xTarg:Number = (_currentItem != null)? StageResizeVo.CENTER - _currentItem.targetX - _currentItemWidth/2 : StageResizeVo.lastResize.left ;
-		Tweener.addTween( _imageHolder, { x:xTarg, time:$speed, transition:"EaseInOutQuint"} );
+		// FLIX
+		// Only center on this image if the strip is wider than the window. 
+		// We were running into issues where there were only three images, and 
+		// centering on the image was strange and cause images to appear off screen. 
+		// We will probably need to address this further as we get more videos... 
+		if( _scrollWindowWidth > _imageHolder.width ) {
+			_distributeObjects(0,true,$speed2);
+			_lastXmouse = this.mouseX;
+			var xTarg:Number = (_currentItem != null)? StageResizeVo.CENTER - _currentItem.targetX - _currentItemWidth/2 : StageResizeVo.lastResize.left ;
+			Tweener.addTween( _imageHolder, { x:xTarg, time:$speed, transition:"EaseInOutQuint"} );
+		}
 	}
 	
 	public var count:Number = 0;
 	private function _distributeObjects ( $startingIndex:Number, $doTween:Boolean=true, $speed:Number=0.8 ):void
 	{
-		var len:uint 	= _items.length;
+		var len:uint	= _items.length;
 		var xPos:Number = _ITEM_PADDING;
 		var item:PortfolioItem;
 		
@@ -319,9 +326,9 @@ public class Portfolio extends Page
 				_isScrolling = true;
 				pos += (pos < 1)? _scrollWindowWidth : -_scrollWindowWidth ;
 				var xTarg:Number = Math.round( _imageHolder.x + pos * 0.07 );
-				
+			
 				var sidePadding = _ITEM_PADDING;//(StageResizeVo.lastResize.width/2 - _currentItemWidth/2);
-				
+			
 				if( pos > 1 ){
 					if( xTarg < StageResizeVo.lastResize.left + sidePadding )
 						_imageHolder.x = xTarg;
@@ -334,8 +341,7 @@ public class Portfolio extends Page
 						_imageHolder.x = StageResizeVo.lastResize.right - _totalWidth() - sidePadding
 				}
 			}			
-		}
-
+		}			
 	}
 	
 	private function _onItemActivationComplete ( e:Event ):void
@@ -347,7 +353,7 @@ public class Portfolio extends Page
 	{
 		var sidePadding = (StageResizeVo.lastResize.width/2 - _currentItemWidth/2);
 		
-		var xTarget:Number = StageResizeVo.lastResize.left + sidePadding + (( - _totalWidth()-sidePadding*2 + StageResizeVo.lastResize.width )   * e.percent);
+		var xTarget:Number = StageResizeVo.lastResize.left + sidePadding + (( - _totalWidth()-sidePadding*2 + StageResizeVo.lastResize.width )	 * e.percent);
 		Tweener.addTween( _imageHolder, { x:xTarget, time:0.5} );
 		//_imageHolder.x = xTarget;
 	}

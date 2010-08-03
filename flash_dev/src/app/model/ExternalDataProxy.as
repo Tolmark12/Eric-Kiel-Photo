@@ -26,8 +26,8 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	// Get Config Data
 	public function getConfigData ( $stage:Stage ):void
 	{
-//		_server = ( $stage.loaderInfo.parameters.server != null )? $stage.loaderInfo.parameters.server : 'http://www.kielphoto.com/' ;
-		_server = ( $stage.loaderInfo.parameters.server != null )? $stage.loaderInfo.parameters.server : 'http://staging.kielphoto.com/' ;
+		_server = ( $stage.loaderInfo.parameters.server != null )? $stage.loaderInfo.parameters.server : 'http://www.kielphoto.com/' ;
+//		_server = ( $stage.loaderInfo.parameters.server != null )? $stage.loaderInfo.parameters.server : 'http://staging.kielphoto.com/' ;
 		var ldr:DataLoader = new DataLoader( _server + "vladmin/api/" );
 		ldr.addEventListener( Event.COMPLETE, _onConfigLoad, false,0,true );
 		ldr.addEventListener( IOErrorEvent.IO_ERROR, _onError)
@@ -52,7 +52,7 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	public function loadPortfolioData ( $feed:String ):void
 	{
 //		if( $feed == _server + "vladmin/api/index/template/3" )
-//			$feed = _server + "prototype/content/json/tempPortfolio.json"
+//			$feed = _server + "http://staging.kielphoto.com/prototype/content/json/tempPortfolio.json"
 			
 		var ldr:DataLoader = new DataLoader( $feed );
 		ldr.addEventListener( Event.COMPLETE, _onPortfolioDataLoad, false,0,true );
@@ -140,6 +140,8 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	}
 	
 	private function _onStockDataSetLoaded ( e:Event ):void {
+		trace( "-----" );
+		trace( e.target.data );
 		sendNotification( AppFacade.HIDE_DIALOGUE );
 		var json:Object = JSON.decode( e.target.data );
 		sendNotification( AppFacade.STOCK_DATA_SET_LOADED, {term:_lastSearchTerm, items:json });

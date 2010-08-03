@@ -24,7 +24,7 @@ package app.view.components
 		private var _bigRight:ArrowButton;
 		
 		private var _navEvent:NavEvent;	
-			
+
 		public function PortfolioNav(  ):void
 		{		
 			_controller = new Sprite();
