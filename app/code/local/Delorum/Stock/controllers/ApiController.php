@@ -33,6 +33,7 @@ class Delorum_Stock_ApiController extends Mage_Core_Controller_Front_Action
 		}
 		$photos = array();
 		$photoCollection = Mage::getModel('stock/photo')->getCollection();
+		$photoCollection->addOrder('image', 'asc');
 		$photoCollection->getSelect()
 				->join(
 					array('t'=>'stock_photo_tag_link')
