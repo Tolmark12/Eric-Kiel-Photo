@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<config>
-    <modules>
-        <Delorum_Client>
-            <active>true</active>
-            <codePool>local</codePool>
-        </Delorum_Client>
-    </modules>
-</config> 
