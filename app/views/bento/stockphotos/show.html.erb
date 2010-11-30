@@ -1,0 +1,44 @@
+<% content_for :bread_crumb do %>
+	<%= bread_crumb bread_crumb_trail, @stockphoto %>
+<% end %>
+<%= seventy_thirty_container do |c| %>
+  <%= c.left do %>
+    <%= bento_form([:bento, @stockphoto], :editable => false) do |f| %>
+      <% if @stockphoto.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@stockphoto.errors.count, "error") %> prohibited this stockphoto from being saved:</h2>
+    
+          <ul>
+          <% @stockphoto.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= f.group :default, {} do |g|%> 
+      <div class="left-container">
+        <%= g.label :name %>
+		</div>
+        <%= g.text_field :name %><br />
+              		<div class="left-container">
+        <%= g.label :small_image %>
+		</div>
+        <%= g.image_uploader :small_image %><br />
+              		<div class="left-container">
+        <%= g.label :mid_image %>
+		</div>
+        <%= g.image_uploader :mid_image %><br />
+      <div class="left-container">
+        <%= g.label :image %>
+		</div>
+        <%= g.image_uploader :image %><br />
+      <div class="left-container">
+        <%= g.label :tags %>
+		</div>
+        <%= g.selector :tags %><br />
+          <% end %>
+    <% end %>
+  <% end %>
+  <%= c.right do %>
+  <% end %>
+<% end %>

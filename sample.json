@@ -1,0 +1,198 @@
+/* Root Service */
+{
+    "name": "root",
+    "entity_id": "29",
+    "is_active": {
+        "label": "Enabled",
+        "value": 1
+    },
+    "root_services": [
+        "http:\/\/www.kielphoto.com\/vladmin\/api\/index\/template\/13"
+    ],
+    "background_image": "http:\/\/www.kielphoto.com\/media\/template\/g\/r\/greenish_sky_bg_1.jpg",
+    "available_filters": "people,places,current,motion,all",
+    "get_nav": "http:\/\/www.kielphoto.com\/vladmin\/api\/index\/template\/13"
+}
+/* Navigation */
+{
+    "entity_id": "13",
+    "name": "Navigation",
+    "pages": [
+        {
+            "entity_id": "24",
+            "name": "nav item - Stock",
+            "is_active": {
+                "label": "Enabled",
+                "value": 1
+            },
+            "data_service": "http:\/\/www.kielphoto.com\/vladmin\/api\/index\/template\/128",
+            "text": "Stock",
+            "url_id": "\/stock",
+            "page_type": "stock",
+            "sort": "003"
+        },
+        {
+            "entity_id": "148",
+            "name": "Nav Item - Reel",
+            "is_active": {
+                "label": "Enabled",
+                "value": 1
+            },
+            "data_service": "http:\/\/www.kielphoto.com\/vladmin\/api\/index\/template\/146",
+            "text": "Film Reel",
+            "url_id": "\/films",
+            "page_type": "portfolio",
+            "sort": "002"
+        },
+        {
+            "entity_id": "16",
+            "name": "nav item - Portfolio",
+            "is_active": {
+                "label": "Enabled",
+                "value": 1
+            },
+            "data_service": "http:\/\/www.kielphoto.com\/vladmin\/api\/index\/template\/3",
+            "text": "Portfolio",
+            "url_id": "\/portfolio",
+            "page_type": "portfolio",
+            "is_default": "true",
+            "sub": {
+                "entity_id": "18",
+                "name": "nav item - Portfolio - subnav",
+                "is_active": {
+                    "label": "Enabled",
+                    "value": 1
+                },
+                "pages": [
+                    {
+                        "entity_id": "21",
+                        "name": "sub nav item - Portfolio\/Places",
+                        "is_active": {
+                            "label": "Enabled",
+                            "value": 1
+                        },
+                        "text": "Places",
+                        "url_id": "\/portfolio\/places",
+                        "page_type": "filter",
+                        "nav_filter_tag": "places",
+                        "sort": "12"
+                    },
+                    {
+                        "entity_id": "20",
+                        "name": "sub nav item - Portfolio\/People",
+                        "is_active": {
+                            "label": "Enabled",
+                            "value": 1
+                        },
+                        "text": "People",
+                        "url_id": "\/portfolio\/people",
+                        "page_type": "filter",
+                        "nav_filter_tag": "people",
+                        "sort": "11"
+                    },
+                    {
+                        "entity_id": "19",
+                        "name": "sub nav item - Portfolio\/Current",
+                        "is_active": {
+                            "label": "Enabled",
+                            "value": 1
+                        },
+                        "text": "Current",
+                        "url_id": "\/portfolio\/current",
+                        "page_type": "filter",
+                        "nav_filter_tag": "current",
+                        "sort": "10"
+                    },
+                    {
+                        "entity_id": "23",
+                        "name": "sub nav item - Portfolio\/ View All",
+                        "is_active": {
+                            "label": "Enabled",
+                            "value": 1
+                        },
+                        "text": "View All",
+                        "url_id": "\/portfolio\/all",
+                        "page_type": "filter",
+                        "nav_filter_tag": "all",
+                        "sort": "14"
+                    },
+                    {
+                        "entity_id": "22",
+                        "name": "sub nav item - Portfolio\/Motion",
+                        "is_active": {
+                            "label": "Enabled",
+                            "value": 1
+                        },
+                        "text": "Motion",
+                        "url_id": "\/portfolio\/motion",
+                        "page_type": "filter",
+                        "nav_filter_tag": "motion",
+                        "sort": "13"
+                    }
+                ],
+                "kind": "subNav"
+            },
+            "sort": "001"
+        },
+        {
+            "entity_id": "147",
+            "name": "nav item - Blog",
+            "is_active": {
+                "label": "Enabled",
+                "value": 1
+            },
+            "text": "Blog",
+            "url_id": "http:\/\/blog.kielphoto.com\/",
+            "page_type": "external",
+            "sort": "005"
+        },
+        {
+            "entity_id": "15",
+            "name": "nav item - Home",
+            "is_active": {
+                "label": "Enabled",
+                "value": 1
+            },
+            "data_service": "http:\/\/www.kielphoto.com\/vladmin\/api\/index\/template\/3",
+            "text": "Home",
+            "url_id": "\/",
+            "is_logo": "true",
+            "sort": "000"
+        },
+        {
+            "entity_id": "105",
+            "name": "nav item - Tear sheets",
+            "is_active": {
+                "label": "Enabled",
+                "value": 1
+            },
+            "data_service": "http:\/\/www.kielphoto.com\/vladmin\/api\/index\/template\/106",
+            "text": "Campaigns",
+            "url_id": "\/tear_sheets",
+            "page_type": "portfolio",
+            "sort": "004"
+        },
+        {
+            "entity_id": "27",
+            "name": "nav item - Contact",
+            "is_active": {
+                "label": "Enabled",
+                "value": 1
+            },
+            "text": "Contact",
+            "url_id": "\/contact",
+            "page_type": "none",
+            "sub": {
+                "entity_id": "28",
+                "name": "sub - Contact",
+                "is_active": {
+                    "label": "Enabled",
+                    "value": 1
+                },
+                "kind": "contact"
+            },
+            "sort": "006"
+        }
+    ]
+}
+

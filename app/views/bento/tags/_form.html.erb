@@ -1,0 +1,34 @@
+<%= seventy_thirty_container do |c| %>
+  <%= c.left do %>  
+    <%= bento_form([:bento, @tag]) do |f| %>
+      <% if @tag.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@tag.errors.count, "error") %> prohibited this tag from being saved:</h2>
+    
+          <ul>
+          <% @tag.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= f.group :default, {} do |g|%> 
+          		<div class="left-container">
+          <%= g.label :text_id %>
+		</div>
+          <%= g.text_field :text_id %><br />
+                		<div class="left-container">
+          <%= g.label :name %>
+		</div>
+          <%= g.text_field :name %><br />
+                		<div class="left-container">
+          <%= g.label :rank %>
+		</div>
+          <%= g.text_field :rank %><br />
+                <% end %>
+      <%= f.submit %>
+    <% end %>
+  <% end %>
+  <%= c.right do %>
+  <% end %>
+<% end %>

@@ -1,0 +1,46 @@
+<%= seventy_thirty_container do |c| %>
+  <%= c.left do %>  
+    <%= bento_form([:bento, @form_field]) do |f| %>
+      <% if @form_field.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@form_field.errors.count, "error") %> prohibited this form_field from being saved:</h2>
+    
+          <ul>
+          <% @form_field.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= f.group :default, {} do |g|%> 
+        <div class="left-container">
+          <%= g.label :field_id %>
+		</div>
+          <%= g.text_field :field_id %><br />
+        <div class="left-container">
+          <%= g.label :title %>
+		</div>
+          <%= g.text_field :title %><br />
+        <div class="left-container">
+          <%= g.label :default_text %>
+		</div>
+          <%= g.text_field :default_text %><br />
+        <div class="left-container">
+          <%= g.label :lines %>
+		</div>
+          <%= g.text_field :lines %><br />
+        <div class="left-container">
+          <%= g.label :url_var_name %>
+		</div>
+          <%= g.text_field :url_var_name %><br />
+        <div class="left-container">
+          <%= g.label :regex_pattern %>
+		</div>
+          <%= g.text_field :regex_pattern %><br />
+      <% end %>
+      <%= f.submit %>
+    <% end %>
+  <% end %>
+  <%= c.right do %>
+  <% end %>
+<% end %>

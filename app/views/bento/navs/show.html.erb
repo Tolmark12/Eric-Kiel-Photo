@@ -1,0 +1,27 @@
+<% content_for :bread_crumb do %>
+	<%= bread_crumb bread_crumb_trail, @nav %>
+<% end %>
+<%= seventy_thirty_container do |c| %>
+  <%= c.left do %>
+    <%= bento_form([:bento, @nav], :editable => false) do |f| %>
+      <% if @nav.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@nav.errors.count, "error") %> prohibited this nav from being saved:</h2>
+    
+          <ul>
+          <% @nav.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= f.group :default, {} do |g|%> 
+                    <%= g.label :name %>
+          <%= g.text_field :name %><br />
+      
+          <% end %>
+    <% end %>
+  <% end %>
+  <%= c.right do %>
+  <% end %>
+<% end %>

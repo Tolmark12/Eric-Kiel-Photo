@@ -1,0 +1,38 @@
+<% content_for :bread_crumb do %>
+	<%= bread_crumb bread_crumb_trail, @config_settings %>
+<% end %>
+<%= seventy_thirty_container do |c| %>
+  <%= c.left do %>  
+    <%= bento_form([:bento, @config_settings]) do |f| %>
+      <% if @config_settings.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@config_settings.errors.count, "error") %> prohibited this config_settings from being saved:</h2>
+    
+          <ul>
+          <% @config_settings.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= f.group :default, {} do |g|%> 
+        <div class="left-container">
+          <%= g.label :default_nav %>
+		</div>
+          <%= g.collection_select :config_setting, :default_nav, Nav.all, :id, :name %><br />
+        <div class="left-container">
+          <%= g.label :background_image %>
+		</div>
+		  <%= g.text_field :background_image %>
+        <div class="left-container">
+          <%= g.label :filters %>
+		</div>
+          <%= g.text_field :filters %><br />
+
+      <% end %>
+      <%= f.submit %>
+    <% end %>
+  <% end %>
+  <%= c.right do %>
+  <% end %>
+<% end %>

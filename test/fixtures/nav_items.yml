@@ -1,0 +1,25 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  url_id: MyString
+  text: MyString
+  data_service: MyString
+  is_logo: false
+  sub_type: MyText
+  sub_id: 1
+  page_type_id: 1
+  nav_filter_tag_id: 1
+  is_default: false
+  sort: 1
+
+two:
+  url_id: MyString
+  text: MyString
+  data_service: MyString
+  is_logo: false
+  sub_type: MyText
+  sub_id: 1
+  page_type_id: 1
+  nav_filter_tag_id: 1
+  is_default: false
+  sort: 1

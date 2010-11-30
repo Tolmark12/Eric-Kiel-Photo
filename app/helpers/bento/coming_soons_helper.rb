@@ -1,0 +1,3 @@
+module Bento::ComingSoonsHelper
+  
+end

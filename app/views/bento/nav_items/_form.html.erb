@@ -1,0 +1,63 @@
+<%= seventy_thirty_container do |c| %>
+  <%= c.left do %>  
+    <%= bento_form([:bento, @nav_item]) do |f| %>
+      <% if @nav_item.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@nav_item.errors.count, "error") %> prohibited this nav_item from being saved:</h2>
+    
+          <ul>
+          <% @nav_item.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= f.group :default, {} do |g|%> 
+          		<div class="left-container">
+          <%= g.label :name %>
+		</div>
+          <%= g.text_field :name %><br />
+        <div class="left-container">
+          <%= g.label :url_id %>
+		</div>
+          <%= g.text_field :url_id %><br />
+                		<div class="left-container">
+          <%= g.label :text %>
+		</div>
+          <%= g.text_field :text %><br />
+                		<div class="left-container">
+          <%= g.label :is_logo %>
+		</div>
+          <%= g.check_box :is_logo %><br />
+                		<div class="left-container">
+          <%= g.label :sub_id  %>
+		</div>
+          <%= g.collection_select :nav_item, :sub_id, Sub.all, :id, :name, {:include_blank => 'None'} %><br />
+                		<div class="left-container">
+          <%= g.label :page_type_id %>
+		</div>
+        <%= g.select :nav_item, :page_type, [['External','external'],['Filter','filter'], ['Portfolio','portfolio'], 
+					['Stock','stock']], {:include_blank => 'None'} %><br />
+                		<div class="left-container">
+          <%= g.label :nav_filter_tag %>
+		</div>
+          <%= g.text_field :nav_filter_tag %><br />
+        <div class="left-container">
+          <%= g.label :is_default %>
+		</div>
+          <%= g.check_box :is_default %><br />
+        <div class="left-container">
+          <%= g.label :sort %>
+		</div>
+          <%= g.text_field :sort %><br />
+        <div class="left-container">
+          <%= g.label :service_id %>
+		</div>
+        <%= g.collection_select :nav_item, :service_id, Service.all, :id, :name, {:include_blank => 'None'} %><br />
+      <% end %>
+      <%= f.submit %>
+    <% end %>
+  <% end %>
+  <%= c.right do %>
+  <% end %>
+<% end %>

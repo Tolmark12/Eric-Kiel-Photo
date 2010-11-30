@@ -1,0 +1,7 @@
+<% content_for :bread_crumb do %>
+	<%= bread_crumb bread_crumb_trail, @portfolio_item %>
+<% end %>
+<% content_for :toolbar do %>
+  <%= link_to bento_portfolio_item_path(@portfolio_item), :confirm => 'Are you sure?', :method => :delete  do %><input type="submit" value="Delete" class="button-thin delete" /><% end %>
+<% end %>
+<%= render 'form' %>

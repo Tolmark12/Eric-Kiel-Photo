@@ -1,0 +1,39 @@
+<% content_for :bread_crumb do %>
+	<%= bread_crumb bread_crumb_trail, @portfolio_item %>
+<% end %>
+<%= seventy_thirty_container do |c| %>
+  <%= c.left do %>
+    <%= bento_form([:bento, @portfolio_item], :editable => false) do |f| %>
+      <% if @portfolio_item.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@portfolio_item.errors.count, "error") %> prohibited this portfolio_item from being saved:</h2>
+    
+          <ul>
+          <% @portfolio_item.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= f.group :default, {} do |g|%> 
+                    <%= g.label :name %>
+          <%= g.text_field :name %><br />
+      
+                    <%= g.label :src %>
+          <%= g.text_field :src %><br />
+      
+                    <%= g.label :low_res_src %>
+          <%= g.text_field :low_res_src %><br />
+      
+                    <%= g.label :video_embed_code %>
+          <%= g.text_field :video_embed_code %><br />
+      
+                    <%= g.label :is_video_only %>
+          <%= g.check_box :is_video_only %><br />
+      
+          <% end %>
+    <% end %>
+  <% end %>
+  <%= c.right do %>
+  <% end %>
+<% end %>

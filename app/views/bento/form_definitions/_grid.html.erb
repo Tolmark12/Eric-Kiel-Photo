@@ -1,0 +1,7 @@
+<% body_only ||= nil %>
+<%= grid(@form_definitions, :sortable => true, :filterable => true, :paginatable => true, :ajax => body_only) do |g| %>
+  <% g.default_action Proc.new {|form_definition| %{ 	return ajaxClick('#{edit_bento_form_definition_path(form_definition)}'); } } %>
+  <% g.add_column :form_id %>
+  <% g.add_column :title %>
+  <% g.add_column :description %>
+<% end %>

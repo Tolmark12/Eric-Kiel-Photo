@@ -1,0 +1,27 @@
+
+/* FORM COMPONENT */
+.form-container											{margin:0; padding:5px 10px 10px 0; width:100%; overflow:hidden;}
+ul.form-component										{margin:20px 0 0 0; padding:0 0 0 17px; width:24.5%; list-style-type:none; float:left;}
+ul.form-component li									{margin:0; padding:0; width:100%; background-color:#F1F1F2; border-bottom:1px solid #d6d6d6; position:relative;}
+ul.form-component li.active								{background-color:#fff; position:relative;}
+ul.form-component li.active	a							{color:#44ABE0;}
+ul.form-component li.last								{border:none;}
+ul.form-component li a									{margin:0; padding:8px 0 8px 10px; width:94%; display:block; color:#757779; font-size:14px; font-weight:bold; position:relative;}
+ul.form-component li a .not-saved						{margin:0; padding:0; width:33px; height:17px; display:block; position:absolute; top:8px; right:5px; background:url('/images/bento/bento-box-sprite.png') no-repeat -350px -1px;}
+ul.form-component li .required							{margin:0; padding:0; width:6px; height:6px; display:block; position:absolute; top:13px; left:-10px; background:url('/images/bento/bento-box-sprite.png') no-repeat -342px -6px;}
+ul.form-component li .error								{margin:0; padding:0; width:2px; height:8px; display:block; position:absolute; top:13px; left:-17px; background:url('/images/bento/bento-box-sprite.png') no-repeat -338px -5px;}
+.form-content											{margin:0 0 15px; padding:20px 0; width:73%; float:right; overflow:hidden; -moz-box-shadow: 0px 3px 10px #d6d6d6; -webkit-box-shadow: 0px 3px 10px #d6d6d6; box-shadow: 0px 3px 10px #d6d6d6; -moz-border-radius: 5px; border-radius: 5px;}
+.form-content .left-container							{margin:2px 10px 0 0; padding:0; width:25%; overflow:hidden; float:left; clear:left;}
+.form-content .left-container label						{margin:0; padding:0; color:#848688; font-size:13px; font-weight:bold; float:right;}
+.form-content .left-container .required					{margin:4px 5px 0 0; padding:0; width:6px; height:6px; display:block; float:right; background:url('/images/bento/bento-box-sprite.png') no-repeat -342px -6px;}
+.form-content .left-container .error					{margin:4px 5px 0 0; padding:0; width:2px; height:8px; display:block; float:right; background:url('/images/bento/bento-box-sprite.png') no-repeat -338px -5px;}
+.form-content input										{margin:0 0 10px 0; padding:0; width:68%;}
+.form-content input.active								{border:3px solid #70C3EA; background-color:#FFFDE8;}
+.form-content input.select-items						{margin:0 0 10px 0; padding:0 15px 0 8px; width:auto; float:left; border-color:#919396; color:#919396; font-weight:normal; background:url('/images/bento/arrow-ro.png') no-repeat 95% center;}
+.form-content textarea									{margin:0 0 10px 0; padding:0 0 0 4px; width:69%; height:160px;}
+.form-content textarea.active							{border:3px solid #CB0F29; background-color:#FFFDE8; width:67%;}
+.form-content select									{margin:0 0 10px 0; padding:0; width:40%; color:#848688;}
+ul.key													{margin:0 0 0 195px; padding:0; list-style-type:none; clear:both;}
+ul.key li												{margin:0; padding:0 0 0 10px; color:#919396; font-size:12px; position:relative;}
+ul.key li .error										{margin:0; padding:0; width:2px; height:8px; display:block; position:absolute; top:4px; left:2px; background:url('/images/bento/bento-box-sprite.png') no-repeat -338px -5px;}
+ul.key li .required										{margin:0; padding:0; width:6px; height:6px; display:block; position:absolute; top:4px; left:0px; background:url('/images/bento/bento-box-sprite.png') no-repeat -342px -6px;}

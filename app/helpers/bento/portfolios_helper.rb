@@ -1,0 +1,3 @@
+module Bento::PortfoliosHelper
+  
+end

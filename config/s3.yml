@@ -1,0 +1,12 @@
+development:
+  bucket: bentobox
+  access_key_id: AKIAIGD4BGCJYJ4KSKLQ
+  secret_access_key: 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
+test:
+  bucket: bucket-test
+  access_key_id: xxx
+  secret_access_key: xxx
+production:
+  bucket: bucket-pro
+  access_key_id: xxx
+  secret_access_key: xxx

@@ -1,0 +1,3 @@
+module ComingSoonsHelper
+  
+end

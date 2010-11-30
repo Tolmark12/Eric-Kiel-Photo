@@ -1,0 +1,58 @@
+<%= seventy_thirty_container do |c| %>
+  <%= c.left do %>  
+    <%= bento_form([:bento, @form_definition]) do |f| %>
+      <% if @form_definition.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@form_definition.errors.count, "error") %> prohibited this form_definition from being saved:</h2>
+    
+          <ul>
+          <% @form_definition.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= f.group :default, {} do |g|%> 
+        <div class="left-container">
+          <%= g.label :form_id %>
+		</div>
+          <%= g.text_field :form_id %><br />
+        <div class="left-container">
+          <%= g.label :port_url %>
+		</div>
+          <%= g.text_field :port_url %><br />
+        <div class="left-container">
+          <%= g.label :title %>
+		</div>
+          <%= g.text_field :title %><br />
+        <div class="left-container">
+          <%= g.label :description %>
+		</div>
+          <%= g.text_field :description %><br />
+        <div class="left-container">
+          <%= g.label :form_icon %>
+		</div>
+          <%= g.text_field :form_icon %><br />
+        <div class="left-container">
+          <%= g.label :target_email %>
+		</div>
+          <%= g.text_field :target_email %><br />
+        <div class="left-container">
+          <%= g.label :email_subject %>
+		</div>
+          <%= g.text_field :email_subject %><br />
+        <div class="left-container">
+          <%= g.label :email_body %>
+		</div>
+          <%= g.text_area :email_body %><br />
+        <div class="left-container">
+          <%= g.label :form_fields %>
+		</div>
+          <%= g.selector :form_fields %><br />
+      <% end %>
+      <%= f.submit %>
+    <% end %>
+  <% end %>
+  <%= c.right do %>
+  <% end %>
+<% end %>

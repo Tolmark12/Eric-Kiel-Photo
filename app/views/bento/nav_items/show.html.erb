@@ -1,0 +1,71 @@
+<% content_for :bread_crumb do %>
+	<%= bread_crumb bread_crumb_trail, @nav_item %>
+<% end %>
+<%= seventy_thirty_container do |c| %>
+  <%= c.left do %>
+    <%= bento_form([:bento, @nav_item], :editable => false) do |f| %>
+      <% if @nav_item.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@nav_item.errors.count, "error") %> prohibited this nav_item from being saved:</h2>
+    
+          <ul>
+          <% @nav_item.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= f.group :default, {} do |g|%> 
+                    <%= g.label :name %>
+          <%= g.text_field :name %><br />
+      
+                    <%= g.label :nav_id %>
+          <%= g.text_field :nav_id %><br />
+      
+                    <%= g.label :url_id %>
+          <%= g.text_field :url_id %><br />
+      
+                    <%= g.label :text %>
+          <%= g.text_field :text %><br />
+      
+                    <%= g.label :is_logo %>
+          <%= g.check_box :is_logo %><br />
+      
+                    <%= g.label :sub_id %>
+          <%= g.text_field :sub_id %><br />
+      
+                    <%= g.label :sub_type %>
+          <%= g.text_field :sub_type %><br />
+      
+                    <%= g.label :page_type_id %>
+          <%= g.text_field :page_type_id %><br />
+      
+                    <%= g.label :nav_filter_tag %>
+          <%= g.text_field :nav_filter_tag %><br />
+      
+                    <%= g.label :is_default %>
+          <%= g.check_box :is_default %><br />
+      
+                    <%= g.label :sort %>
+          <%= g.text_field :sort %><br />
+      
+                    <%= g.label :serviceable_id %>
+          <%= g.text_field :serviceable_id %><br />
+      
+                    <%= g.label :serviceable_type %>
+          <%= g.text_field :serviceable_type %><br />
+      
+          
+          <%= g.label :created_at %>
+          <div><%= @nav_item.created_at %></div><br />      
+      
+          
+          <%= g.label :updated_at %>
+          <div><%= @nav_item.updated_at %></div><br />      
+      
+          <% end %>
+    <% end %>
+  <% end %>
+  <%= c.right do %>
+  <% end %>
+<% end %>

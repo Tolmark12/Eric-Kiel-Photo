@@ -1,0 +1,8 @@
+<% body_only ||= nil %>
+<%= grid(@stock_default_categories, :sortable => true, :filterable => true, :paginatable => true, :ajax => body_only) do |g| %>
+  <% g.default_action Proc.new {|stock_default_category| %{ 	return ajaxClick('#{edit_bento_stock_default_category_path(stock_default_category)}'); } } %>
+  <% g.add_column :name %>
+  <% g.add_column :small_image %>
+  <% g.add_column :mid_image %>
+  <% g.add_column :image %>
+<% end %>

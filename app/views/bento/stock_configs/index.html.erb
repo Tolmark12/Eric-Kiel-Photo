@@ -1,0 +1,38 @@
+<% content_for :bread_crumb do %>
+	<%= bread_crumb bread_crumb_trail, @stock_config %>
+<% end %>
+<%= seventy_thirty_container do |c| %>
+  <%= c.left do %>  
+    <%= bento_form([:bento, @stock_config]) do |f| %>
+      <% if @stock_config.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@stock_config.errors.count, "error") %> prohibited this config_settings from being saved:</h2>
+    
+          <ul>
+          <% @stock_config.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= f.group :default, {} do |g|%> 
+      <div class="left-container">
+        <%= g.label :stock_default_categories %>
+	  </div>
+        <%= g.selector :stock_default_categories %><br />
+        <div class="left-container">
+          <%= g.label :faq_pricing %>
+		</div>
+		  <%= g.text_area :faq_pricing %>
+        <div class="left-container">
+          <%= g.label :form_definitions %>
+		</div>
+          <%= g.selector :form_definitions %><br />
+
+      <% end %>
+      <%= f.submit %>
+    <% end %>
+  <% end %>
+  <%= c.right do %>
+  <% end %>
+<% end %>

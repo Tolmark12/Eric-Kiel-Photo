@@ -1,0 +1,33 @@
+<% content_for :bread_crumb do %>
+	<%= bread_crumb bread_crumb_trail, @tag %>
+<% end %>
+<%= seventy_thirty_container do |c| %>
+  <%= c.left do %>
+    <%= bento_form([:bento, @tag], :editable => false) do |f| %>
+      <% if @tag.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@tag.errors.count, "error") %> prohibited this tag from being saved:</h2>
+    
+          <ul>
+          <% @tag.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= f.group :default, {} do |g|%> 
+                    <%= g.label :text_id %>
+          <%= g.text_field :text_id %><br />
+      
+                    <%= g.label :name %>
+          <%= g.text_field :name %><br />
+      
+                    <%= g.label :rank %>
+          <%= g.text_field :rank %><br />
+      
+          <% end %>
+    <% end %>
+  <% end %>
+  <%= c.right do %>
+  <% end %>
+<% end %>

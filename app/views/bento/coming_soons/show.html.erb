@@ -1,0 +1,27 @@
+<% content_for :bread_crumb do %>
+	<%= bread_crumb bread_crumb_trail, @coming_soon %>
+<% end %>
+<%= seventy_thirty_container do |c| %>
+  <%= c.left do %>
+    <%= bento_form([:bento, @coming_soon], :editable => false) do |f| %>
+      <% if @coming_soon.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@coming_soon.errors.count, "error") %> prohibited this coming_soon from being saved:</h2>
+    
+          <ul>
+          <% @coming_soon.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= f.group :default, {} do |g|%> 
+                    <%= g.label :message %>
+          <%= g.text_field :message %><br />
+      
+          <% end %>
+    <% end %>
+  <% end %>
+  <%= c.right do %>
+  <% end %>
+<% end %>

@@ -1,0 +1,50 @@
+<%= seventy_thirty_container do |c| %>
+  <%= c.left do %>  
+    <%= bento_form([:bento, @portfolio_item]) do |f| %>
+      <% if @portfolio_item.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@portfolio_item.errors.count, "error") %> prohibited this portfolio_item from being saved:</h2>
+    
+          <ul>
+          <% @portfolio_item.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= f.group :default, {} do |g|%> 
+        <div class="left-container">
+          <%= g.label :name %>
+		</div>
+          <%= g.text_field :name %><br />
+        <div class="left-container">
+          <%= g.label :src %>
+		</div>
+          <%= g.image_uploader :src %><br />
+        <div class="left-container">
+          <%= g.label :low_res_src %>
+		</div>
+          <%= g.image_uploader :low_res_src %><br />
+        <div class="left-container">
+          <%= g.label :item_type %>
+		</div>
+          <%= g.select :portfolio_item, :item_type, [['Image','Image'],['Video','Video']] %><br />
+        <div class="left-container">
+          <%= g.label :video_embed_code %>
+		</div>
+          <%= g.text_field :video_embed_code %><br />
+        <div class="left-container">
+          <%= g.label :is_video_only %>
+		</div>
+          <%= g.check_box :is_video_only %><br />
+        <div class="left-container">
+          <%= g.label :tags %>
+		</div>
+          <%= g.selector :tags %><br />
+        <% end %>
+      <%= f.submit %>
+    <% end %>
+  <% end %>
+  <%= c.right do %>
+  <% end %>
+<% end %>

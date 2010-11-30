@@ -1,0 +1,35 @@
+<%= seventy_thirty_container do |c| %>
+  <%= c.left do %>  
+    <%= bento_form([:bento, @nav]) do |f| %>
+      <% if @nav.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@nav.errors.count, "error") %> prohibited this nav from being saved:</h2>
+    
+          <ul>
+          <% @nav.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <%= f.group :default, {} do |g|%> 
+        <div class="left-container">
+          <%= g.label :name %>
+		</div>
+          <%= g.text_field :name %><br />
+        <div class="left-container">
+          <%= g.label :type %>
+		</div>
+          <%= g.select :nav, :type, [['Main Navigation','Nav'],['Subnavigation','SubNav']] %><br />
+        <div class="left-container">
+          <%= g.label :nav_items %>
+		</div>
+          <%= g.selector :nav_items %><br />
+
+      <% end %>
+      <%= f.submit %>
+    <% end %>
+  <% end %>
+  <%= c.right do %>
+  <% end %>
+<% end %>

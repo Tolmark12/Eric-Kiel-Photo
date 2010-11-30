@@ -1,0 +1,6 @@
+<% body_only ||= nil %>
+<%= grid(@navs, :sortable => true, :filterable => true, :paginatable => true, :ajax => body_only) do |g| %>
+  <% g.default_action Proc.new {|nav| %{ 	return ajaxClick('#{edit_bento_nav_path(nav)}'); } } %>
+  
+  <% g.add_column :name %>
+<% end %>

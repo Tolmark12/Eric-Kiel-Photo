@@ -1,0 +1,5 @@
+{
+	"default_stock_categories" : <%= sub_url(@stock_config.default_stock_categories.to_json) %>,
+	"faq_pricing": "<%= @stock_config.faq_pricing %>",
+	"form_definitions": <%= @stock_config.form_definitions.to_json %>
+}
