@@ -7,5 +7,6 @@ class Sub
   field :name, :type => String
   field :type, :type => String, :default => 'Sub'
   key :name
+  validates_uniqueness_of :name
   
 end

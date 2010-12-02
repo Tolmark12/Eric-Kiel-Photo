@@ -36,6 +36,9 @@ EricKielPhoto::Application.routes.draw do
     namespace :image do 
       post :upload
     end
+    namespace :tags do 
+      post :upload
+    end
     namespace :profile do 
       get :index
       get  :view

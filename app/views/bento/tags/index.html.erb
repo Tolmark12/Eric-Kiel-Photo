@@ -6,4 +6,9 @@
 	<input type="submit" value="New" class="button-thin select-items" onclick="$(this).prev('a').click();return false;">
 <% end %>
 <br />
+<%= form_tag(bento_tags_upload_url, :method => :post, :multipart => true) do %>
+	<label for="file">Upload Tags:</label><%= file_field_tag "file" %>
+	<%= submit_tag('Upload tags') %>
+<% end %>
+<br />
 <%= render 'grid' %>
