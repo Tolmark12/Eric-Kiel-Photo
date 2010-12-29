@@ -1,16 +1,17 @@
 EricKielPhoto::Application.routes.draw do
   
-  resources :nav_items, :only => [:index, :show]
-  resources :tags, :only => [:index, :show]
-  resources :subs, :only => [:index, :show]
-  resources :navs, :only => [:index, :show]
-  resources :services, :only => [:index, :show]
   resources :coming_soons, :only => [:index, :show]
   resources :config_settings, :only => [:index], :defaults => {:format => :js}
+  resources :nav_items, :only => [:index, :show]
+  resources :navs, :only => [:index, :show]
+  resources :services, :only => [:index, :show]
   resources :stock_configs, :only => [:index], :defaults => {:format => :js}
+  resources :subs, :only => [:index, :show]
+  resources :tags, :only => [:index, :show]
     
   match "/stockphotos/by_ids/:ids" => "stockphotos#by_ids"
   match "/stockphotos/by_tag/:tag" => "stockphotos#by_tag"
+  match "/stock/api/getAllStockTags" => "tags#index"
 
 
   match "/selector/:type/:object/:attribute/:label/:destination", :controller => 'bento/bento', :action => 'selector_call', :as => 'selector'
@@ -20,25 +21,18 @@ EricKielPhoto::Application.routes.draw do
   match "/vladmin/api", :controller => 'config_settings', :action => 'index', :defaults => {:format => :js}
 
   namespace :bento, :path => "bento" do
-    resources :tags
-    resources :sub_navs
-    resources :navs
-    resources :portfolios
-    resources :portfolio_items
-    resources :stock_default_categories
-    resources :stockphotos
+    resources :bento_users, :except => [:edit, :update]
+    resources :categories
+    resources :config_settings, :only => [:index, :update]
     resources :form_definitions
     resources :form_fields
-    resources :nav_items
-    resources :config_settings, :only => [:index, :update]
-    resources :stock_configs, :only => [:index, :update]
-    resources :bento_users, :except => [:edit, :update]
     namespace :image do 
       post :upload
     end
-    namespace :tags do 
-      post :upload
-    end
+    resources :nav_items
+    resources :navs
+    resources :portfolios
+    resources :portfolio_items
     namespace :profile do 
       get :index
       get  :view
@@ -47,6 +41,20 @@ EricKielPhoto::Application.routes.draw do
     end
     match '/', :to => 'dashboard#index', :as => "home"
     resources :roles
+    resources :stock_configs, :only => [:index, :update]
+    resources :stock_default_categories
+    resources :stockphotos
+    resources :sub_navs
+    resources :tags
+    
+    namespace :seed do 
+      get :index
+      post :seed
+    end
+    
+    namespace :tags do 
+      post :upload
+    end
   end
 
   # The priority is based upon order of creation:

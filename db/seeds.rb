@@ -3,33 +3,60 @@
 #
 # Examples:
 #
-#   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
-#   Mayor.create(:name => 'Daley', :city => cities.first)
+BentoUser.create({:username => 'admin', :password => 'password', :email => 'admin@local.host'})
+main_nav            = Nav.new({:name => 'Navigation'})
+portfolio_nav       = SubNav.new({:name => 'Portfolio'})
 
-{"entity_id":"13","name":"Navigation","pages":
+portfolio_nav_items = [{:name => 'Portfolio Places', :text => 'Places', 
+                                      :page_type => 'filter', :nav_filter_tag => 'places',
+                                      :url_id => '/portfolio/places', :sort => 12},
+                                      {:name => 'Portfolio People', :text => 'People', 
+                                      :page_type => 'filter', :nav_filter_tag => 'people',
+                                      :url_id => '/portfolio/people', :sort => 11},
+                                      {:name => 'Portfolio Current', :text => 'Current', 
+                                      :page_type => 'filter', :nav_filter_tag => 'current',
+                                      :url_id => '/portfolio/current', :sort => 10},
+                                      {:name => 'Portfolio Motion', :text => 'Motion', 
+                                      :page_type => 'filter', :nav_filter_tag => 'motion',
+                                      :url_id => '/portfolio/motion', :sort => 13},
+                                      {:name => 'Portfolio All', :text => 'View All', 
+                                      :page_type => 'filter', :nav_filter_tag => 'all',
+                                      :url_id => '/portfolio/all', :sort => 14}]
+portfolio_nav_items.map! { |ni|  record = NavItem.create(ni); record.id }
+main_nav_items      = [{:name => 'Reel', :text => 'Film Reels', 
+                                      :page_type => 'portfolio',
+                                      :url_id => '/films', :sort => 2},
+                                      {:name => 'Contact', :text => 'Contact', 
+                                      :url_id => '/contact', :sort => 6},
+                                      {:name => 'Portfolio', :text => 'Portfolio', 
+                                      :page_type => 'portfolio', :is_default => true,
+                                      :sub => portfolio_nav,
+                                      :url_id => '/portfolio', :sort => 1},
+                                      {:name => 'Blog', :text => 'Blog', 
+                                      :page_type => 'external',
+                                      :url_id => 'http://blog.kielphoto.com/', :sort => 5},
+                                      {:name => 'Home', :text => 'Home', :is_logo => true,
+                                      :url_id => '/', :sort => 0},
+                                      {:name => 'Tear Sheets', :text => 'Campaigns', 
+                                      :page_type => 'portfolio',
+                                      :url_id => '/tear_sheets', :sort => 4},
+                                      {:name => 'Stock', :text => 'Stock', 
+                                      :page_type => 'stock',
+                                      :url_id => '/stock', :sort => 3}]
 
-[{"entity_id":"24","name":"nav item - Stock",
-  "text":"Stock",
-  "url_id":"\/stock",
-  "page_type":"stock",
-  "sort":"003"},
-{"entity_id":"148","name":"Nav Item - Reel",
-  "text":"Film Reel",
-  "url_id":"\/films",
-  "page_type":"portfolio",
-  "sort":"002"},
-{"entity_id":"16","name":"nav item - Portfolio",
-  "text":"Portfolio","url_id":"\/portfolio","page_type":"portfolio","is_default":"true","sub":
-  {"entity_id":"18","name":"nav item - Portfolio - subnav","pages":
-    [{"entity_id":"21","name":"sub nav item - Portfolio\/Places","text":"Places","url_id":"\/portfolio\/places","page_type":"filter","nav_filter_tag":"places","sort":"12"}
-    ,{"entity_id":"20","name":"sub nav item - Portfolio\/People","text":"People","url_id":"\/portfolio\/people","page_type":"filter","nav_filter_tag":"people","sort":"11"},
-    {"entity_id":"19","name":"sub nav item - Portfolio\/Current","text":"Current","url_id":"\/portfolio\/current","page_type":"filter","nav_filter_tag":"current","sort":"10"},
-    {"entity_id":"23","name":"sub nav item - Portfolio\/ View All","text":"View All","url_id":"\/portfolio\/all","page_type":"filter","nav_filter_tag":"all","sort":"14"},
-    {"entity_id":"22","name":"sub nav item - Portfolio\/Motion","text":"Motion","url_id":"\/portfolio\/motion","page_type":"filter","nav_filter_tag":"motion","sort":"13"}],
-  "kind":"subNav"},"sort":"001"},
-  {"entity_id":"147","name":"nav item - Blog","text":"Blog","url_id":"http:\/\/blog.kielphoto.com\/","page_type":"external","sort":"005"},
-  {"entity_id":"15","name":"nav item - Home","data_service":"http:\/\/www.kielphoto.com\/vladmin\/api\/index\/template\/3","text":"Home","url_id":"\/","is_logo":"true","sort":"000"},
-  {"entity_id":"105","name":"nav item - Tear sheets","data_service":"http:\/\/www.kielphoto.com\/vladmin\/api\/index\/template\/106","text":"Campaigns","url_id":"\/tear_sheets","page_type":"portfolio","sort":"004"},
-  {"entity_id":"27","name":"nav item - Contact","text":"Contact","url_id":"\/contact","page_type":"none","sub":
-    {"entity_id":"28","name":"sub - Contact","kind":"contact"},
-  "sort":"006"}]}
+main_nav_items.map! { |ni| record = NavItem.create(ni); record.id }
+main_nav.nav_item_ids = main_nav_items
+main_nav.save!
+portfolio_nav.nav_item_ids = portfolio_nav_items
+portfolio_nav.save!
+categories = [{:name => 'Current',:text_id => 'current' ,:rank => 1},
+                              {:name => 'Default Portfolio',:text_id => 'default_profile' ,:rank => 1},
+                              {:name => 'People',:text_id => 'people' ,:rank => 2}]
+categories.map! {|c| record = Category.create(c); record.id }
+main_portfolio       = Portfolio.create({:name => 'Main Photo Portfolio', :portfolio_item_ids => []})
+portfolio_nav_item   = NavItem.find('portfolio')
+portfolio_nav_item.service_id = main_portfolio.id
+portfolio_nav_item.save!
+
+ConfigSetting.create({:default_nav => main_nav.id, :background_image => '/images/greenish_sky_bg_1.jpg', :filters => 'all, current, motion, people, places'})
+

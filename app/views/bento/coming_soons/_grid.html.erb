@@ -1,5 +1,5 @@
 <% body_only ||= nil %>
-<%= grid(@coming_soons, :sortable => true, :filterable => true, :paginatable => true, :ajax => body_only) do |g| %>
+<%= grid(@coming_soons, :sortable => true, :filterable => true, :paginatable => true, :page => (params[:category_page] || 1), :ajax => body_only) do |g| %>
   <% g.default_action Proc.new {|coming_soon| %{ 	return ajaxClick('#{edit_bento_coming_soon_path(coming_soon)}'); } } %>
   
   <% g.add_column :message %>

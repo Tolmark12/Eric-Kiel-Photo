@@ -11,16 +11,16 @@ BentoBox::Menu.map do
   end
   item :portfolios, :label => 'Portfolios', :to => { :controller => 'bento/portfolios', :action => 'index'}, :priority => 2 do
     item :portfolio_items, :label => 'Portfolio items', :to => { :controller => 'bento/portfolio_items', :action => 'index'}, :priority => 1
+    item :categories, :label => 'Categories', :to => { :controller => 'bento/categories', :action => 'index'}, :priority => 2
   end
   
   item :stock_configs, :label => 'Stock Photos', :to => { :controller => 'bento/stock_configs', :action => 'index'}, :priority => 3 do
     item :stockphotos, :label => 'Stock Photos', :to => { :controller => 'bento/stockphotos', :action => 'index'}, :priority => 1    
-    item :stock_default_categories, :label => 'Stock Categories', :to => { :controller => 'bento/stock_default_categories', :action => 'index'}, :priority => 2    
-    item :form_definitions, :label => 'Form Definitions', :to => { :controller => 'bento/form_definitions', :action => 'index'}, :priority => 3 do
+    item :tags, :label => 'Tags', :to => { :controller => 'bento/tags', :action => 'index'}, :priority => 2
+    item :stock_default_categories, :label => 'Stock Categories', :to => { :controller => 'bento/stock_default_categories', :action => 'index'}, :priority => 3    
+    item :form_definitions, :label => 'Form Definitions', :to => { :controller => 'bento/form_definitions', :action => 'index'}, :priority => 4 do
       item :form_definitions, :label => 'Form Fields', :to => { :controller => 'bento/form_fields', :action => 'index'}, :priority => 1      
     end  
   end
-
-  item :tags, :label => 'Tags', :to => { :controller => 'bento/tags', :action => 'index'}, :priority => 4
 
 end

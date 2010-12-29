@@ -17,18 +17,11 @@
           <%= g.label :name %>
 		</div>
           <%= g.text_field :name %><br />
-                		<div class="left-container">
-          <%= g.label :small_image %>
-		</div>
-          <%= g.image_uploader :small_image %><br />
-                		<div class="left-container">
-          <%= g.label :mid_image %>
-		</div>
-          <%= g.image_uploader :mid_image %><br />
         <div class="left-container">
           <%= g.label :image %>
 		</div>
-          <%= g.image_uploader :image %><br />
+          <%= g.image_uploader :image, {:resize => {:mid => {:field => :mid_image, :height => 500},
+											:small => {:field => :small_image, :height => 100}}} %><br />
         <div class="left-container">
           <%= g.label :tags %>
 		</div>

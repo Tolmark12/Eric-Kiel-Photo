@@ -1,5 +1,5 @@
 <% body_only ||= nil %>
-<%= grid(@portfolio_items, :sortable => true, :filterable => true, :paginatable => true, :ajax => body_only) do |g| %>
+<%= grid(@portfolio_items, :sortable => true, :filterable => true, :paginatable => true, :page => (params[:portfolio_item_page] || 1), :ajax => body_only) do |g| %>
   <% g.default_action Proc.new {|portfolio_item| %{ 	return ajaxClick('#{edit_bento_portfolio_item_path(portfolio_item)}'); } } %>
   
   <% g.add_column :name %>

@@ -3,7 +3,7 @@ class TagsController < ApplicationController
   # GET /bento/tags.xml
   def index
     @tags = Tag.scoped
-    render :json => { :tags => @tags }
+    render :json => @tags.to_a.to_json
   end
 
   # GET /bento/tags/1

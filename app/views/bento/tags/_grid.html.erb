@@ -1,5 +1,5 @@
 <% body_only ||= nil %>
-<%= grid(@tags, :sortable => true, :filterable => true, :paginatable => true, :ajax => body_only) do |g| %>
+<%= grid(@tags, :sortable => true, :filterable => true, :paginatable => true, :page => (params[:tag_page] || 1), :ajax => body_only) do |g| %>
   <% g.default_action Proc.new {|tag| %{ 	return ajaxClick('#{edit_bento_tag_path(tag)}'); } } %>
   
   <% g.add_column :text_id %>

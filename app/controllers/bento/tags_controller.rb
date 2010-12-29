@@ -72,16 +72,14 @@ class Bento::TagsController < Bento::BentoController
     lines     = tags_file.split(/\r/)
     lines.delete_at(0)
     lines.each do |line|
-      puts line
       fields     = line.split(/\t/)
-      puts line
-      puts fields
       photo      = Stockphoto.where({:image => /#{fields[0]}$/}).first
       tag_names  = fields[1].split(';')
       tag_names.each do |tag_name|
+        tag_name.strip!
         tag = Tag.where({:name => tag_name}).first
         if tag.nil?
-          tag = Tag.new({:text => tag_name.underscore, :name => tag_name, :rank => 0})
+          tag = Tag.new({:text_id => tag_name.underscore, :name => tag_name, :rank => 0})
           tag.save!
         end
         photo.tags << tag unless photo.nil?    

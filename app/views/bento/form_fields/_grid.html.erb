@@ -1,8 +1,8 @@
 <% body_only ||= nil %>
-<%= grid(@form_fields, :sortable => true, :filterable => true, :paginatable => true, :ajax => body_only) do |g| %>
+<%= grid(@form_fields, :sortable => true, :filterable => true, :paginatable => true, :page => (params[:form_field_page] || 1), :ajax => body_only) do |g| %>
   <% g.default_action Proc.new {|form_field| %{ 	return ajaxClick('#{edit_bento_form_field_path(form_field)}'); } } %>
   <% g.add_column :name %>
-  <% g.add_column :small_image %>
-  <% g.add_column :mid_image %>
-  <% g.add_column :image %>
+  <% g.add_column :title %>
+  <% g.add_column :field_id %>
+  <% g.add_column :default_text %>
 <% end %>

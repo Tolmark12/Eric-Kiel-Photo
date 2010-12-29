@@ -1,0 +1,9 @@
+<% content_for :bread_crumb do %>
+	<%= bread_crumb bread_crumb_trail %>
+<% end %>
+<% content_for :toolbar do %>
+<%= link_to '', new_bento_category_path, :rel => "address:#{new_bento_category_path}" %>
+	<input type="submit" value="New" class="button-thin select-items" onclick="$(this).prev('a').click();return false;">
+<% end %>
+<br />
+<%= render 'grid' %>

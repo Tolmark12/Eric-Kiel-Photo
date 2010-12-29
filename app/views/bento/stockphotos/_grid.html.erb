@@ -1,5 +1,5 @@
 <% body_only ||= nil %>
-<%= grid(@stockphotos, :sortable => true, :filterable => true, :paginatable => true, :ajax => body_only) do |g| %>
+<%= grid(@stockphotos, :sortable => true, :filterable => true, :paginatable => true, :page => (params[:stockphoto_page] || 1),  :ajax => body_only) do |g| %>
   <% g.default_action Proc.new {|stockphoto| %{ 	return ajaxClick('#{edit_bento_stockphoto_path(stockphoto)}'); } } %>
   <% g.add_column :name %>
   <% g.add_column :small_image %>

@@ -1,6 +1,7 @@
 class FormField 
   include Mongoid::Document
   
+  field :name, :type => String
   field :field_id, :type => String
   field :title, :type => String
   field :default_text, :type => String
@@ -8,7 +9,7 @@ class FormField
   field :url_var_name, :type => String
   field :regex_pattern, :type => String
   
-  key :field_id
+  key :name
   
   def as_json(options={})
     {

@@ -1,0 +1,9 @@
+<% content_for :bread_crumb do %>
+	<%= bread_crumb bread_crumb_trail %>
+<% end %>
+<br />
+<%= form_tag(bento_seed_seed_url, :method => :post, :multipart => true) do %>
+	<label for="file">Seed data:</label><%= file_field_tag "file" %>
+	<%= submit_tag('Seed data') %>
+<% end %>
+<br />

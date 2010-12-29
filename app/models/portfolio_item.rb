@@ -5,17 +5,18 @@ class PortfolioItem < Service
   field :video_embed_code, :type => String
   field :is_video_only, :type => Boolean
   field :item_type, :type => String, :default => 'Image'
+  field :rank, :type => Integer
   
   belongs_to_related :service
   
-  references_many :tags, :stored_as => :array, :inverse_of => :portfolio_item
+  references_many :categories, :stored_as => :array, :inverse_of => :portfolio_item
   references_many :portfolios, :stored_as => :array, :inverse_of => :portfolio_item
   
   def as_json(options={})
     json = {
       :name => self.name,
       :tags => ["default_portfolio"],
-      :photo_tags => self.tags.map(&:text_id),
+      :photo_tags => self.categories.map(&:text_id),
       :src => self.src,
       :low_res_src => self.low_res_src,
       :is_active => {:label=>"Enabled",:value => 1}

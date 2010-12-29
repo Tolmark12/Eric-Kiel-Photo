@@ -1,12 +1,11 @@
-
-
-
 function ajaxClick(href, title) {
 		$.address.value(href);
-        $.get(href,
+		(href.match(/\?/g) != null) ? jsonLink = href.replace(/\?/g, ".json?") : jsonLink = href + '.json';
+        $.get(jsonLink,
         function(data) {
 			$('.buttons').hide();
 			var previousToolbar = $('.buttons > div:last');
+			var content = data["content"];
 			$('.buttons').append("<div><input type=\"submit\" class=\"button-thin cancel back\" value=\"Back\">"+((data["toolbar"] != null) ? data["toolbar"] : "")+"</div>");
 			$('.buttons > div:not(div:last)').hide();
 			$('.buttons').fadeIn('slow'); // **MP** Changed to Fadein
@@ -14,7 +13,7 @@ function ajaxClick(href, title) {
             var width = $('.view-port-container:first').width();
             $('.view-port-container').width(width+1014);
 	        var divCount = $('.view-port-container > div').length;
-            lastViewDiv.after(data["content"]);
+            lastViewDiv.after(unescape(content));
 		    $('.view-port-container > div').width(1005);
 	        $('.view-port-container > div:last').css('float','left');
             $('.view-port-container > div').each( function(index, value) {

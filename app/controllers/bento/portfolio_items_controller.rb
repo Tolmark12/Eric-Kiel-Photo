@@ -46,7 +46,7 @@ class Bento::PortfolioItemsController < Bento::BentoController
   # POST /bento/portfolio_items
   # POST /bento/portfolio_items.xml
   def create
-    @portfolio_item = PortfolioItem.new(params[:portfolio_item].merge({:tag_ids => params[:tags] || []}))
+    @portfolio_item = PortfolioItem.new(params[:portfolio_item].merge({:category_ids => params[:categories] || []}))
 
     respond_to do |format|
       if @portfolio_item.save
@@ -71,7 +71,7 @@ class Bento::PortfolioItemsController < Bento::BentoController
     @portfolio_item = PortfolioItem.find(params[:id])
 
     respond_to do |format|
-      if @portfolio_item.update_attributes(params[:portfolio_item].merge({:tag_ids => params[:tags] || []}))
+      if @portfolio_item.update_attributes(params[:portfolio_item].merge({:category_ids => params[:categories] || []}))
         @respond_type = :success
         @message = 'Portfolio item was successfully updated.'
         format.js   { render 'bento/shared/message'}
@@ -101,7 +101,7 @@ class Bento::PortfolioItemsController < Bento::BentoController
 
   def grid
     @portfolio_items = PortfolioItem.scoped
-    render :partial => 'grid', :layout => false, :locals => {:body_only => true}
+    with_format(:html) { render '_grid', :layout => 'bento_json', :locals => {:body_only => true} }
   end
 
 end

@@ -1,5 +1,8 @@
 development:
-  bucket: bentobox
+  bucket: bentobox2
+  bucket_mid: bentobox2
+  bucket_small: bentobox2
+  bucket_thumb: bentobox2
   access_key_id: AKIAIGD4BGCJYJ4KSKLQ
   secret_access_key: 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
 test:

@@ -101,7 +101,7 @@ class Bento::FormFieldsController < Bento::BentoController
 
   def grid
     @form_fields = FormField.scoped
-    render :partial => 'grid', :layout => false, :locals => {:body_only => true}
+    with_format(:html) { render '_grid', :layout => 'bento_json', :locals => {:body_only => true} }
   end
 
 end
