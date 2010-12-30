@@ -12,7 +12,7 @@ class Tag
 
   def as_json(options={})
     {
-      :id   => self.id,
+      :id   => 1,
       :name => self.name,
       :rank => self.rank
     }

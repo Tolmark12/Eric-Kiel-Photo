@@ -47,7 +47,6 @@ class Bento::NavsController < Bento::BentoController
   # POST /bento/navs.xml
   def create
     @nav = (['Nav', 'SubNav'].include?(params[:nav][:type]))? params[:nav][:type].constantize.new(params[:nav]) : Nav.new(params[:nav])
-    @nav.nav_item_ids = params[:nav_items] || []
     respond_to do |format|
       if @nav.save
         @respond_type = :success
@@ -70,7 +69,7 @@ class Bento::NavsController < Bento::BentoController
   def update
     @nav = Nav.find(params[:id])
     respond_to do |format|
-      if @nav.update_attributes(params[:nav].merge({:nav_item_ids => params[:nav_items] || []}))
+      if @nav.update_attributes(params[:nav])
         @respond_type = :success
         @message = 'Nav was successfully updated.'
         format.js   { render 'bento/shared/message'}

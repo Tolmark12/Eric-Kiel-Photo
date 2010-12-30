@@ -46,7 +46,7 @@ class Bento::PortfolioItemsController < Bento::BentoController
   # POST /bento/portfolio_items
   # POST /bento/portfolio_items.xml
   def create
-    @portfolio_item = PortfolioItem.new(params[:portfolio_item].merge({:category_ids => params[:categories] || []}))
+    @portfolio_item = PortfolioItem.new(params[:portfolio_item])
 
     respond_to do |format|
       if @portfolio_item.save
@@ -71,7 +71,7 @@ class Bento::PortfolioItemsController < Bento::BentoController
     @portfolio_item = PortfolioItem.find(params[:id])
 
     respond_to do |format|
-      if @portfolio_item.update_attributes(params[:portfolio_item].merge({:category_ids => params[:categories] || []}))
+      if @portfolio_item.update_attributes(params[:portfolio_item])
         @respond_type = :success
         @message = 'Portfolio item was successfully updated.'
         format.js   { render 'bento/shared/message'}

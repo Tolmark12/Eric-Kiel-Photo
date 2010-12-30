@@ -46,7 +46,7 @@ class Bento::FormDefinitionsController < Bento::BentoController
   # POST /bento/form_definitions
   # POST /bento/form_definitions.xml
   def create
-    @form_definition = FormDefinition.new(params[:form_definition].merge({:tag_ids => params[:tags] || []}))
+    @form_definition = FormDefinition.new(params[:form_definition])
 
     respond_to do |format|
       if @form_definition.save
@@ -71,7 +71,7 @@ class Bento::FormDefinitionsController < Bento::BentoController
     @form_definition = FormDefinition.find(params[:id])
 
     respond_to do |format|
-      if @form_definition.update_attributes(params[:form_definition].merge({:tag_ids => params[:tags] || []}))
+      if @form_definition.update_attributes(params[:form_definition])
         @respond_type = :success
         @message = 'Portfolio item was successfully updated.'
         format.js   { render 'bento/shared/message'}

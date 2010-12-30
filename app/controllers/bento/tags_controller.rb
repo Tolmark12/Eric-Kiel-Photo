@@ -67,13 +67,14 @@ class Bento::TagsController < Bento::BentoController
 
   # POST /bento/upload
   def upload
-    tags_file = params[:file].read
-    tag_count = 0
-    lines     = tags_file.split(/\r/)
+    tags_file   = params[:file].read
+    tag_count   = 0
+    photo_count = 0
+    lines       = tags_file.split(/\r/)
     lines.delete_at(0)
     lines.each do |line|
       fields     = line.split(/\t/)
-      photo      = Stockphoto.where({:image => /#{fields[0]}$/}).first
+      photo      = Stockphoto.where({:name => fields[0]}).first
       tag_names  = fields[1].split(';')
       tag_names.each do |tag_name|
         tag_name.strip!
@@ -82,12 +83,17 @@ class Bento::TagsController < Bento::BentoController
           tag = Tag.new({:text_id => tag_name.underscore, :name => tag_name, :rank => 0})
           tag.save!
         end
-        photo.tags << tag unless photo.nil?    
+        photo.tag_ids << tag.id unless photo.nil?    
       end
       tag_count  = tag_count + tag_names.count
-      photo.save! unless photo.nil?
+      unless photo.nil?
+        photo_count = photo_count + 1
+        puts "Photo: #{photo}"
+        puts "Photo Tags: #{photo.tag_ids}"
+        photo.save
+      end
     end
-    redirect_to(bento_tags_url, :notice => "#{tag_count} tags uploaded!") 
+    redirect_to(bento_tags_url, :notice => "#{tag_count} tags uploaded! Tags added to #{photo_count} photos!") 
   end
   
   # PUT /bento/tags/1
