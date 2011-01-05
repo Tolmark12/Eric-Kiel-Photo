@@ -9,4 +9,10 @@ class Sub
   key :name
   validates_uniqueness_of :name
   
+  def as_json(options={})
+    { :name => self.name,
+      :kind => self.type}
+  end
+  
+  
 end

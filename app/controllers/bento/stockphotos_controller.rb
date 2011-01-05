@@ -49,6 +49,12 @@
 
      respond_to do |format|
        if @stockphoto.save
+         (params[:stockphoto][:tag_ids] || []).each { |tag_id| 
+          tag = Tag.find(tag_id)
+          tag.stockphoto_ids << @stockphoto.id
+          tag.stockphoto_ids.uniq!
+          tag.save!
+         }
          @respond_type = :success
          @message = 'Stockphoto was successfully created.'
          format.js   { render 'bento/shared/message'}
@@ -71,6 +77,12 @@
 
      respond_to do |format|
        if @stockphoto.update_attributes(params[:stockphoto])
+         (params[:stockphoto][:tag_ids] || []).each { |tag_id| 
+          tag = Tag.find(tag_id)
+          tag.stockphoto_ids << @stockphoto.id
+          tag.stockphoto_ids.uniq!
+          tag.save!
+         }
          @respond_type = :success
          @message = 'Stockphoto was successfully updated.'
          format.js   { render 'bento/shared/message'}

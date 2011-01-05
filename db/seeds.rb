@@ -4,8 +4,10 @@
 # Examples:
 #
 BentoUser.create({:username => 'admin', :password => 'password', :email => 'admin@local.host'})
-main_nav            = Nav.new({:name => 'Navigation'})
-portfolio_nav       = SubNav.new({:name => 'Portfolio'})
+main_nav      = Nav.new({:name => 'Navigation'})
+portfolio_nav = SubNav.new({:name => 'Portfolio'})
+contact       = Sub.new({:name => 'Contact', :type => 'contact'})
+contact.save!
 
 portfolio_nav_items = [{:name => 'Portfolio Places', :text => 'Places', 
                                       :page_type => 'filter', :nav_filter_tag => 'places',
@@ -22,11 +24,13 @@ portfolio_nav_items = [{:name => 'Portfolio Places', :text => 'Places',
                                       {:name => 'Portfolio All', :text => 'View All', 
                                       :page_type => 'filter', :nav_filter_tag => 'all',
                                       :url_id => '/portfolio/all', :sort => 14}]
+                                      
 portfolio_nav_items.map! { |ni|  record = NavItem.create(ni); record.id }
 main_nav_items      = [{:name => 'Reel', :text => 'Film Reels', 
                                       :page_type => 'portfolio',
                                       :url_id => '/films', :sort => 2},
                                       {:name => 'Contact', :text => 'Contact', 
+                                      :sub => contact,
                                       :url_id => '/contact', :sort => 6},
                                       {:name => 'Portfolio', :text => 'Portfolio', 
                                       :page_type => 'portfolio', :is_default => true,

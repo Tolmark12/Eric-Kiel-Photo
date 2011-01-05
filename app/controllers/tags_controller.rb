@@ -2,7 +2,7 @@ class TagsController < ApplicationController
   # GET /bento/tags
   # GET /bento/tags.xml
   def index
-    @tags = Tag.scoped
+    @tags = Tag.order_by(:text_id.asc)
     render :json => @tags.to_a.to_json
   end
 

@@ -27,8 +27,7 @@
         <div class="left-container">
           <%= g.label :form_definitions %>
 		</div>
-          <%= g.selector :form_definitions %><br />
-
+          <%= g.selector :form_definitions, :label => :form_id %><br />
       <% end %>
       <%= f.submit %>
     <% end %>

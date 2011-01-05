@@ -25,7 +25,8 @@ class FormDefinition
       :target_email   => self.target_email,
       :email_subject  => self.email_subject,
       :email_body     => self.email_body,
-      :fields         => self.form_fields.as_json
+      :fields         => self.form_fields.as_json,
+      :is_active => {:label=>"Enabled",:value => 1}
     }
     json
   end

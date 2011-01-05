@@ -9,8 +9,8 @@ EricKielPhoto::Application.routes.draw do
   resources :subs, :only => [:index, :show]
   resources :tags, :only => [:index, :show]
     
-  match "/stockphotos/by_ids/:ids" => "stockphotos#by_ids"
-  match "/stockphotos/by_tag/:tag" => "stockphotos#by_tag"
+  match "/stock/api/getStockPhotosByIds/ids/:ids" => "stockphotos#by_ids"
+  match "/stock/api/getStockPhotosByTag/text/:tag" => "stockphotos#by_tag"
   match "/stock/api/getAllStockTags" => "tags#index"
 
 

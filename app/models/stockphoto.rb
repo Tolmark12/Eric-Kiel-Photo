@@ -17,11 +17,12 @@ class Stockphoto
     json              = {
       :id                => self.id,
       :name              => self.name,
-      :tags              => self.tags.map(&:text_id),
+      :tags              => self.tags.to_a,
       :small_image       => self.small_image,
       :mid_image         => self.mid_image,
       :image             => self.image,
-      :small_image_width => self.small_width
+      :small_image_width => self.small_width.to_s,
+      :rank => 0
     }
     json
   end

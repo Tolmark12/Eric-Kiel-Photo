@@ -14,7 +14,8 @@ class StockDefaultCategory
     json              = {
       :text           => self.text,
       :src            => self.src,
-      :search_term    => self.search_term
+      :search_term    => self.search_term,
+      :is_active => {:label=>"Enabled",:value => 1}
     }
     json
   end

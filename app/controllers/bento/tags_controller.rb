@@ -83,13 +83,17 @@ class Bento::TagsController < Bento::BentoController
           tag = Tag.new({:text_id => tag_name.underscore, :name => tag_name, :rank => 0})
           tag.save!
         end
-        photo.tag_ids << tag.id unless photo.nil?    
+        unless photo.nil?
+          photo.tag_ids << tag.id
+          tag.stockphoto_ids << photo.id
+          tag.stockphoto_ids.uniq!
+          tag.save
+        end
       end
       tag_count  = tag_count + tag_names.count
       unless photo.nil?
         photo_count = photo_count + 1
-        puts "Photo: #{photo}"
-        puts "Photo Tags: #{photo.tag_ids}"
+        photo.tag_ids.uniq!
         photo.save
       end
     end
@@ -132,7 +136,7 @@ class Bento::TagsController < Bento::BentoController
 
   def grid
     @tags = Tag.scoped
-    render :partial => 'grid', :layout => false, :locals => {:body_only => true}
+    with_format(:html) { render '_grid', :layout => 'bento_json', :locals => {:body_only => true} }
   end
 
 end

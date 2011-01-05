@@ -23,7 +23,7 @@ class PortfolioItem < Service
     }
     if self.item_type == 'Video' then
       json[:video_emved_code] = self.video_embed_code unless self.video_embed_code.nil? || self.video_embed_code.blank?
-      json[:is_video_only] = self.is_video_only unless self.is_video_only.nil?name
+      json[:is_video_only] = "#{self.is_video_only}" unless self.is_video_only.nil?
     end
     json
   end

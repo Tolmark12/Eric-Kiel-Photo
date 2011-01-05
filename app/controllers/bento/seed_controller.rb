@@ -48,7 +48,7 @@ class Bento::SeedController < Bento::BentoController
   def handler_map
     @handler_map ||= {'portfolio' => DefaultHandler, 'image' => PortfolioItemHandler,
                       'stock_photo' => StockPhotoHandler, 'form_field' => DefaultHandler,
-                      'form' => DefaultHandler, 'stock_default_category' => DefaultHandler}
+                      'form' => DefaultHandler, 'stock_default_category' => PortfolioItemHandler}
   end
   
   

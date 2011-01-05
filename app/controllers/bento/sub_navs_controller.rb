@@ -101,7 +101,7 @@ class Bento::SubNavsController < Bento::BentoController
 
   def grid
     @sub_navs = SubNav.scoped
-    render :partial => 'grid', :layout => false, :locals => {:body_only => true}
+    with_format(:html) { render '_grid', :layout => 'bento_json', :locals => {:body_only => true} }
   end
 
 end

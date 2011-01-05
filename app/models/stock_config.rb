@@ -22,11 +22,12 @@ class StockConfig < Service
   
   def as_json(options={})
     {
-      :stock_default_categories => self.stock_default_categories.to_a,
+      :default_stock_categories => self.stock_default_categories.to_a,
       :entity_id => self.id,
       :faq_pricing => self.faq_pricing,
-      :form_definitions => self.form_definitions,
-      :name => self.name
+      :form_definitions => self.form_definitions.to_a,
+      :name => self.name,
+      :is_active => {:label=>"Enabled",:value => 1}
     }
   end
   
