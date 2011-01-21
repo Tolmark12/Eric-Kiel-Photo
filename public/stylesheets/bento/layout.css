@@ -6,6 +6,7 @@
 @import url('containers/thirty-three-container.css');
 
 /***** COMPONENTS *****/
+@import url('components/file-uploader.css');
 @import url('components/simple-list-component.css');
 @import url('components/note-component.css');
 @import url('components/bread-crumb-component.css');

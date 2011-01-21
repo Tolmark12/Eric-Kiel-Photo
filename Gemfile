@@ -5,12 +5,12 @@ gem 'rails', '3.0.3'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem "mongoid", "2.0.0.rc.6"
+gem "mongoid", ">=2.0.0.rc.6"
 gem "bson_ext"
 
 gem 'blockpile', :git => 'git@github.com:tylerflint/blockpile.git'
-gem 'bento_box', :path => '../bento'
-gem 'bento_box_mongo', :path => '../bento_mongoid'
+gem 'bento_box', :git => 'git@github.com:Tolmark12/bento.git'
+gem 'bento_box_mongo', :git => 'git@github.com:Tolmark12/bento-mongoid.git'
 
 # Use unicorn as the web server
 # gem 'unicorn'
