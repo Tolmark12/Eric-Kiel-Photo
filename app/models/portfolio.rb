@@ -1,7 +1,15 @@
 class Portfolio < Service
 
-  references_many :portfolio_items, :stored_as => :array, :inverse_of => :portfolio
+  references_and_referenced_in_many :portfolio_items
   referenced_in :nav_item
+  
+  alias_attribute :orig_portfolio_items, :portfolio_items
+
+  #TODO Fix this to me more efficient
+  # as of mongoid 2.0.0.rc.6 mongoid sorts all results by id
+  def portfolio_items
+    @portfolio_items ||= self.portfolio_item_ids.map {|e_id| PortfolioItem.find(e_id) }
+  end
 
   def as_json(options={})
     { :name => self.name,

@@ -5,8 +5,8 @@ class StockConfig < Service
   
   field :name, :type => String, :default => 'stock_landing_page'
   field :faq_pricing, :type => String
-  references_many :stock_default_categories, :stored_as => :array, :inverse_of => :stock_config
-  references_many :form_definitions, :stored_as => :array, :inverse_of => :stock_config
+  references_and_referenced_in_many :stock_default_categories
+  references_and_referenced_in_many :form_definitions
   
   def initialize(*args)
     @settings ||= StockConfig.first()

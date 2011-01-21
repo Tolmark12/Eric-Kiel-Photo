@@ -9,8 +9,8 @@ class PortfolioItem < Service
   
   belongs_to_related :service
   
-  references_many :categories, :stored_as => :array, :inverse_of => :portfolio_item
-  references_many :portfolios, :stored_as => :array, :inverse_of => :portfolio_item
+  references_and_referenced_in_many :categories
+  references_and_referenced_in_many :portfolios
   
   def as_json(options={})
     json = {

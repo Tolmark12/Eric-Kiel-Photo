@@ -46,7 +46,7 @@ Complete the email form below."
 133,"form_field","url_var_name","email"
 133,"form_field","default_text",""
 133,"form_field","regex_pattern","(\\w|[_.\\-])+@((\\w|-)+\\.)+\\w{2,4}+"
-133,"form_field","lines",33
+133,"form_field","lines",1
 134,"form_field","name","Field - phone"
 134,"form_field","tags",""
 134,"form_field","title","Phone"
@@ -54,7 +54,7 @@ Complete the email form below."
 134,"form_field","url_var_name","phone"
 134,"form_field","default_text",""
 134,"form_field","regex_pattern","([\\(\\s])*([0-9]){3}([\\)\\s\\-\\_\\.])*([0-9]){3}([\\)\\s\\-\\_\\.])*([0-9]){4}"
-134,"form_field","lines",33
+134,"form_field","lines",1
 135,"form_field","name","Field - name"
 135,"form_field","tags",""
 135,"form_field","title","Name"
@@ -62,7 +62,7 @@ Complete the email form below."
 135,"form_field","url_var_name","name"
 135,"form_field","default_text",""
 135,"form_field","regex_pattern",".+"
-135,"form_field","lines",33
+135,"form_field","lines",1
 136,"form_field","name","Field - message"
 136,"form_field","tags",""
 136,"form_field","title","Message"
@@ -78,7 +78,7 @@ Complete the email form below."
 137,"form_field","url_var_name","company"
 137,"form_field","default_text",""
 137,"form_field","regex_pattern",".+"
-137,"form_field","lines",33
+137,"form_field","lines",1
 1,"image","name","Image 01"
 1,"image","tags",5
 1,"image","photo_tags","9,6"

@@ -2,7 +2,7 @@ class Filter
   include Mongoid::Document 
 
   field :name, :type => String
-  embedded_in :filterable, :inverse_of => :filter
+  embedded_in :filterable
 
   def as_json(options={})
     {

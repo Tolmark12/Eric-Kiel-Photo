@@ -3,7 +3,7 @@ class Service
   include Mongoid::Document 
   include Mongoid::Timestamps 
 
-  references_one :nav_items 
+  references_one :nav_items, :autosave => true
 
   field :name, :type => String
   

@@ -5,7 +5,7 @@ class Category
   field :name, :type => String
   field :rank, :type => Integer
 
-  references_many :services, :stored_as => :array, :inverse_of => :tag
+  references_and_referenced_in_many :services
   key :text_id
   
   validates_uniqueness_of :name

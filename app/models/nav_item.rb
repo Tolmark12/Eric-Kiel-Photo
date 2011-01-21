@@ -14,7 +14,7 @@ class NavItem
   field :sort, :type => Integer
   referenced_in :service
   referenced_in :subs
-  references_many :navs, :stored_as => :array, :inverse_of => :nav_item
+  references_and_referenced_in_many :navs
   key :name
 
   def as_json(options={})

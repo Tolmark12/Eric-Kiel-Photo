@@ -13,7 +13,7 @@ class FormDefinition
 
   key :form_id
   
-  references_many :form_fields, :stored_as => :array, :inverse_of => :form_definition
+  references_and_referenced_in_many :form_fields
 
   def as_json(options = {})
     json              = {

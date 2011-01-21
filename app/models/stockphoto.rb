@@ -11,7 +11,7 @@ class Stockphoto
   field :mid_width, :type => Integer
   field :large_width, :type => Integer
 
-  references_many :tags, :stored_as => :array, :inverse_of => :stockphoto
+  references_and_referenced_in_many :tags
   
   def as_json(options = {})
     json              = {

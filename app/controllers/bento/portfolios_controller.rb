@@ -46,7 +46,6 @@ class Bento::PortfoliosController < Bento::BentoController
   # POST /bento/portfolios.xml
   def create
     @portfolio = Portfolio.new(params[:portfolio])
-
     respond_to do |format|
       if @portfolio.save
         @respond_type = :success
@@ -68,7 +67,7 @@ class Bento::PortfoliosController < Bento::BentoController
   # PUT /bento/portfolios/1.xml
   def update
     @portfolio = Portfolio.find(params[:id])
-
+    @portfolio.portfolio_item_ids = []
     respond_to do |format|
       if @portfolio.update_attributes(params[:portfolio])
         @respond_type = :success

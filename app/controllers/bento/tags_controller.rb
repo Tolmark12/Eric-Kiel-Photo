@@ -1,3 +1,5 @@
+require 'csv'
+
 class Bento::TagsController < Bento::BentoController
   # GET /bento/tags
   # GET /bento/tags.xml
@@ -67,13 +69,10 @@ class Bento::TagsController < Bento::BentoController
 
   # POST /bento/upload
   def upload
-    tags_file   = params[:file].read
+    tags_file   = params[:file].tempfile.path
     tag_count   = 0
     photo_count = 0
-    lines       = tags_file.split(/\r/)
-    lines.delete_at(0)
-    lines.each do |line|
-      fields     = line.split(/\t/)
+    CSV.foreach(tags_file,:col_sep => "\t", :headers => true) do |fields|
       photo      = Stockphoto.where({:name => fields[0]}).first
       tag_names  = fields[1].split(';')
       tag_names.each do |tag_name|
