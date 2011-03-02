@@ -8,6 +8,8 @@ class StockDefaultCategory
   field :tag, :type => String
   field :search_term, :type => String
   
+  # TODO: I have no idea if this is correct or not
+  references_and_referenced_in_many :categories
 
   key :name
   def as_json(options = {})

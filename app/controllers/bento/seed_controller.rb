@@ -65,7 +65,8 @@ class Bento::SeedController < Bento::BentoController
   
   class PortfolioItemHandler < DefaultHandler
     def self.id_mapper
-      @@id_mapper ||= {'1' => 'people', ''}
+      # TODO: Not sure if this will break anything
+      @@id_mapper ||= {'1' => 'people'}
     end
     
     def self.handle(obj, fields)
@@ -76,8 +77,9 @@ class Bento::SeedController < Bento::BentoController
           unless fields[3].nil? or fields[3].gsub(/"/,'').empty?
             obj.item_type = 'Video'
           end
-        end 
-        when /src/ fields[3] = "\"http://www.kielphoto.com/media/template#{fields[3].gsub(/^"/, '')}"
+        end
+        # TODO: Hopefully this won't break anything
+        when /src/ then fields[3] = %Q{"http://www.kielphoto.com/media/template#{fields[3].gsub(/^\"/, '')}"}
         when /tags/
         begin
           obj.category_ids = fields[3].gsub(/"/,'').split(',').map{|id| id_mapper[id]}

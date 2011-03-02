@@ -17,6 +17,15 @@ class NavItem
   references_and_referenced_in_many :navs
   key :name
 
+  # TODO: What are you doing mongoid?  Why the heck do you need an entries method?
+  def entries
+    []
+  end
+  
+  def self.entries
+    []
+  end
+
   def as_json(options={})
     { 
       :name           => self.name,
