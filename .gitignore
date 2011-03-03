@@ -17,3 +17,4 @@ app/.settings/*
 app/.cache/*
 .project
 use_cache.ser
+vendor/bundle
