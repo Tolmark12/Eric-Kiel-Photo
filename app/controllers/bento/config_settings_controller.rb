@@ -14,13 +14,13 @@ class Bento::ConfigSettingsController < Bento::BentoController
       if @config_settings.update_attributes(params[:config_setting])
         @respond_type = :success
         @message = 'Config settings were successfully updated.'
-        format.js   { render 'bento/shared/message'}
+        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(ConfigSetting) }) }
         format.html { redirect_to(bento_config_settings_url, :notice => @message) }
         format.xml  { head :ok }
       else
         @respond_type = :error
       	@message = "Config settings were not updated. #{@config_settings.errors.join(' ')}"
-        format.js   { render 'bento/shared/message'}
+        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(ConfigSetting) }) }
         format.html { render :action => "edit", :error => @message }
         format.xml  { render :xml => @config_settings.errors, :status => :unprocessable_entity }
       end

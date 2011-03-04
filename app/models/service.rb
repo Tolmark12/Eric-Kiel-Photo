@@ -1,7 +1,8 @@
 class Service
   include Rails.application.routes.url_helpers
   include Mongoid::Document 
-  include Mongoid::Timestamps 
+  include Mongoid::Timestamps
+  include Mongoid::NamedScope
 
   references_one :nav_items, :autosave => true
 

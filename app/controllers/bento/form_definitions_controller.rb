@@ -52,13 +52,13 @@ class Bento::FormDefinitionsController < Bento::BentoController
       if @form_definition.save
         @respond_type = :success
         @message = 'Portfolio item was successfully created.'
-        format.js   { render 'bento/shared/message'}
+        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(FormDefinition) }) }
         format.html { redirect_to(bento_form_definitions_url, :notice => @message) }
         format.xml  { render :xml => @form_definition, :status => :created, :location => @form_definition }
       else
         @respond_type = :error
       	@message = "Portfolio item was not created. #{@form_definition.errors.join(' ')}"
-        format.js   { render 'bento/shared/message'}
+        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(FormDefinition) }) }
         format.html { render :action => "new", :error => @message }
         format.xml  { render :xml => @form_definition.errors, :status => :unprocessable_entity }
       end
@@ -74,13 +74,13 @@ class Bento::FormDefinitionsController < Bento::BentoController
       if @form_definition.update_attributes(params[:form_definition])
         @respond_type = :success
         @message = 'Portfolio item was successfully updated.'
-        format.js   { render 'bento/shared/message'}
+        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(FormDefinition) }) }
         format.html { redirect_to(bento_form_definition_url(@form_definition), :notice => @message) }
         format.xml  { head :ok }
       else
         @respond_type = :error
       	@message = "Portfolio item was not updated. #{@form_definition.errors.join(' ')}"
-        format.js   { render 'bento/shared/message'}
+        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(FormDefinition) }) }
         format.html { render :action => "edit", :error => @message }
         format.xml  { render :xml => @form_definition.errors, :status => :unprocessable_entity }
       end

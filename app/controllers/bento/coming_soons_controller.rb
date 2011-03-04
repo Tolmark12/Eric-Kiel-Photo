@@ -52,13 +52,13 @@ class Bento::ComingSoonsController < Bento::BentoController
       if @coming_soon.save
         @respond_type = :success
         @message = 'Coming soon was successfully created.'
-        format.js   { render 'bento/shared/message'}
+        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(ComingSoon) }) }
         format.html { redirect_to(bento_coming_soons_url, :notice => @message) }
         format.xml  { render :xml => @coming_soon, :status => :created, :location => @coming_soon }
       else
         @respond_type = :error
       	@message = "Coming soon was not created. #{@coming_soon.errors.join(' ')}"
-        format.js   { render 'bento/shared/message'}
+        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(ComingSoon) }) }
         format.html { render :action => "new", :error => @message }
         format.xml  { render :xml => @coming_soon.errors, :status => :unprocessable_entity }
       end
@@ -74,13 +74,13 @@ class Bento::ComingSoonsController < Bento::BentoController
       if @coming_soon.update_attributes(params[:coming_soon])
         @respond_type = :success
         @message = 'Coming soon was successfully updated.'
-        format.js   { render 'bento/shared/message'}
+        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(ComingSoon) }) }
         format.html { redirect_to(bento_coming_soon_url(@coming_soon), :notice => @message) }
         format.xml  { head :ok }
       else
         @respond_type = :error
       	@message = "Coming soon was not updated. #{@coming_soon.errors.join(' ')}"
-        format.js   { render 'bento/shared/message'}
+        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(ComingSoon) }) }
         format.html { render :action => "edit", :error => @message }
         format.xml  { render :xml => @coming_soon.errors, :status => :unprocessable_entity }
       end

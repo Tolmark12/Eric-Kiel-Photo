@@ -50,13 +50,13 @@ class Bento::PortfoliosController < Bento::BentoController
       if @portfolio.save
         @respond_type = :success
         @message = 'Portfolio was successfully created.'
-        format.js   { render 'bento/shared/message'}
+        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(Portfolio) }) }
         format.html { redirect_to(bento_portfolios_url, :notice => @message) }
         format.xml  { render :xml => @portfolio, :status => :created, :location => @portfolio }
       else
         @respond_type = :error
       	@message = "Portfolio was not created. #{@portfolio.errors.join(' ')}"
-        format.js   { render 'bento/shared/message'}
+        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(Portfolio) }) }
         format.html { render :action => "new", :error => @message }
         format.xml  { render :xml => @portfolio.errors, :status => :unprocessable_entity }
       end
@@ -72,13 +72,13 @@ class Bento::PortfoliosController < Bento::BentoController
       if @portfolio.update_attributes(params[:portfolio])
         @respond_type = :success
         @message = 'Portfolio was successfully updated.'
-        format.js   { render 'bento/shared/message'}
+        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(Portfolio) }) }
         format.html { redirect_to(bento_portfolio_url(@portfolio), :notice => @message) }
         format.xml  { head :ok }
       else
         @respond_type = :error
       	@message = "Portfolio was not updated. #{@portfolio.errors.join(' ')}"
-        format.js   { render 'bento/shared/message'}
+        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(Portfolio) }) }
         format.html { render :action => "edit", :error => @message }
         format.xml  { render :xml => @portfolio.errors, :status => :unprocessable_entity }
       end
@@ -98,7 +98,7 @@ class Bento::PortfoliosController < Bento::BentoController
   end
 
   def grid
-    @portfolios = Portfolio.where({:type => 'Portfolio'})
+    @portfolios = Portfolio.scoped #.where({:type => 'Portfolio'})
     with_format(:html) { render '_grid', :layout => 'bento_json', :locals => {:body_only => true} }
   end
 

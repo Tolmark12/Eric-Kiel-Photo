@@ -52,13 +52,13 @@ class Bento::NavItemsController < Bento::BentoController
       if @nav_item.save
         @respond_type = :success
         @message = 'Nav item was successfully created.'
-        format.js   { render 'bento/shared/message'}
+        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(NavItem) }) }
         format.html { redirect_to(bento_nav_items_url, :notice => @message) }
         format.xml  { render :xml => @nav_item, :status => :created, :location => @nav_item }
       else
         @respond_type = :error
       	@message = "Nav item was not created. #{@nav_item.errors.join(' ')}"
-        format.js   { render 'bento/shared/message'}
+        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(NavItem) }) }
         format.html { render :action => "new", :error => @message }
         format.xml  { render :xml => @nav_item.errors, :status => :unprocessable_entity }
       end
@@ -74,13 +74,13 @@ class Bento::NavItemsController < Bento::BentoController
       if @nav_item.update_attributes(params[:nav_item])
         @respond_type = :success
         @message = 'Nav item was successfully updated.'
-        format.js   { render 'bento/shared/message'}
+        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(NavItem) }) }
         format.html { redirect_to(bento_nav_item_url(@nav_item), :notice => @message) }
         format.xml  { head :ok }
       else
         @respond_type = :error
       	@message = "Nav item was not updated. #{@nav_item.errors.join(' ')}"
-        format.js   { render 'bento/shared/message'}
+        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(NavItem) }) }
         format.html { render :action => "edit", :error => @message }
         format.xml  { render :xml => @nav_item.errors, :status => :unprocessable_entity }
       end
