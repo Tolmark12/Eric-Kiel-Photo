@@ -52,13 +52,13 @@ class Bento::PortfolioItemsController < Bento::BentoController
       if @portfolio_item.save
         @respond_type = :success
         @message = 'Portfolio item was successfully created.'
-        format.js   { render 'bento/shared/message'}
+        format.js   { render(*grid_instance(PortfolioItem).message) }
         format.html { redirect_to(bento_portfolio_items_url, :notice => @message) }
         format.xml  { render :xml => @portfolio_item, :status => :created, :location => @portfolio_item }
       else
         @respond_type = :error
       	@message = "Portfolio item was not created. #{@portfolio_item.errors.join(' ')}"
-        format.js   { render 'bento/shared/message'}
+        format.js   { render(*grid_instance(PortfolioItem).message) }
         format.html { render :action => "new", :error => @message }
         format.xml  { render :xml => @portfolio_item.errors, :status => :unprocessable_entity }
       end
@@ -74,13 +74,13 @@ class Bento::PortfolioItemsController < Bento::BentoController
       if @portfolio_item.update_attributes(params[:portfolio_item])
         @respond_type = :success
         @message = 'Portfolio item was successfully updated.'
-        format.js   { render 'bento/shared/message'}
+        format.js   { render(*grid_instance(PortfolioItem).message) }
         format.html { redirect_to(bento_portfolio_item_url(@portfolio_item), :notice => @message) }
         format.xml  { head :ok }
       else
         @respond_type = :error
       	@message = "Portfolio item was not updated. #{@portfolio_item.errors.join(' ')}"
-        format.js   { render 'bento/shared/message'}
+        format.js   { render(*grid_instance(PortfolioItem).message) }
         format.html { render :action => "edit", :error => @message }
         format.xml  { render :xml => @portfolio_item.errors, :status => :unprocessable_entity }
       end

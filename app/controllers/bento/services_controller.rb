@@ -9,13 +9,13 @@ def create
     if @service.save
       @respond_type = :success
       @message = "#{@service.type} was successfully created."
-      format.js   { render 'bento/shared/message'}
+      format.js   { render(*grid_instance(Service).message) }
       format.html { redirect_to(bento_portfolios_url, :notice => @message) }
       format.xml  { render :xml => @service, :status => :created, :location => @service }
     else
       @respond_type = :error
     	@message = "#{@service.type} was not created. #{@service.errors.join(' ')}"
-      format.js   { render 'bento/shared/message'}
+      format.js   { render(*grid_instance(Service).message) }
       format.html { render :action => "new", :error => @message }
       format.xml  { render :xml => @service.errors, :status => :unprocessable_entity }
     end
@@ -31,13 +31,13 @@ def update
     if @service.update_attributes(params[:service])
       @respond_type = :success
       @message = "#{@service.type} was successfully updated."
-      format.js   { render 'bento/shared/message'}
+      format.js   { render(*grid_instance(Service).message) }
       format.html { redirect_to(bento_portfolio_url(@service), :notice => @message) }
       format.xml  { head :ok }
     else
       @respond_type = :error
     	@message = "#{@service.type} was not updated. #{@service.errors.join(' ')}"
-      format.js   { render 'bento/shared/message'}
+      format.js   { render(*grid_instance(Service).message) }
       format.html { render :action => "edit", :error => @message }
       format.xml  { render :xml => @service.errors, :status => :unprocessable_entity }
     end

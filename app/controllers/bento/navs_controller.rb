@@ -51,13 +51,13 @@ class Bento::NavsController < Bento::BentoController
       if @nav.save
         @respond_type = :success
         @message = 'Nav was successfully created.'
-        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(Nav) }) }
+        format.js   { render(*grid_instance(Nav).message) }
         format.html { redirect_to(bento_navs_url, :notice => @message) }
         format.xml  { render :xml => @nav, :status => :created, :location => @nav }
       else
         @respond_type = :error
       	@message = "Nav was not created. #{@nav.errors.join(' ')}"
-        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(Nav) }) }
+        format.js   { render(*grid_instance(Nav).message) }
         format.html { render :action => "new", :error => @message }
         format.xml  { render :xml => @nav.errors, :status => :unprocessable_entity }
       end
@@ -72,13 +72,13 @@ class Bento::NavsController < Bento::BentoController
       if @nav.update_attributes(params[:nav])
         @respond_type = :success
         @message = 'Nav was successfully updated.'
-        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(Nav) }) }
+        format.js   { render(*grid_instance(Nav).message) }
         format.html { redirect_to(bento_nav_url(@nav), :notice => @message) }
         format.xml  { head :ok }
       else
         @respond_type = :error
       	@message = "Nav was not updated. #{@nav.errors.join(' ')}"
-        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(Nav) }) }
+        format.js   { render(*grid_instance(Nav).message) }
         format.html { render :action => "edit", :error => @message }
         format.xml  { render :xml => @nav.errors, :status => :unprocessable_entity }
       end

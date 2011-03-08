@@ -51,13 +51,13 @@ class Bento::StockDefaultCategoriesController < Bento::BentoController
       if @stock_default_category.save
         @respond_type = :success
         @message = 'StockDefaultCategory was successfully created.'
-        format.js   { render 'bento/shared/message'}
+        format.js   { render(*grid_instance(StockDefaultCategory).message) }
         format.html { redirect_to(bento_stock_default_categories_url, :notice => @message) }
         format.xml  { render :xml => @stock_default_category, :status => :created, :location => @stock_default_category }
       else
         @respond_type = :error
       	 @message = "StockDefaultCategory was not created. #{@stock_default_category.errors.join(' ')}"
-        format.js   { render 'bento/shared/message'}
+        format.js   { render(*grid_instance(StockDefaultCategory).message) }
         format.html { render :action => "new", :error => @message }
         format.xml  { render :xml => @stock_default_category.errors, :status => :unprocessable_entity }
       end
@@ -73,13 +73,13 @@ class Bento::StockDefaultCategoriesController < Bento::BentoController
       if @stock_default_category.update_attributes(params[:stock_default_category])
         @respond_type = :success
         @message = 'StockDefaultCategory was successfully updated.'
-        format.js   { render 'bento/shared/message'}
+        format.js   { render(*grid_instance(StockDefaultCategory).message) }
         format.html { redirect_to(bento_stock_default_category_url(@stock_default_category), :notice => @message) }
         format.xml  { head :ok }
       else
         @respond_type = :error
       	 @message = "StockDefaultCategory was not updated. #{@stock_default_category.errors.join(' ')}"
-        format.js   { render 'bento/shared/message'}
+        format.js   { render(*grid_instance(StockDefaultCategory).message) }
         format.html { render :action => "edit", :error => @message }
         format.xml  { render :xml => @stock_default_category.errors, :status => :unprocessable_entity }
       end

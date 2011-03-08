@@ -52,13 +52,13 @@ class Bento::CategoriesController < Bento::BentoController
       if @category.save
         @respond_type = :success
         @message = 'Category was successfully created.'
-        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(Category) }) }
+        format.js   { render(*grid_instance(Category).message) }
         format.html { redirect_to(bento_categories_url, :notice => @message) }
         format.xml  { render :xml => @category, :status => :created, :location => @category }
       else
         @respond_type = :error
       	@message = "Category was not created. #{@category.errors.join(' ')}"
-        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(Category) }) }
+        format.js   { render(*grid_instance(Category).message) }
         format.html { render :action => "new", :error => @message }
         format.xml  { render :xml => @category.errors, :status => :unprocessable_entity }
       end
@@ -74,13 +74,13 @@ class Bento::CategoriesController < Bento::BentoController
       if @category.update_attributes(params[:category])
         @respond_type = :success
         @message = 'Category was successfully updated.'
-        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(Category) }) }
+        format.js   { render(*grid_instance(Category).message) }
         format.html { redirect_to(bento_category_url(@category), :notice => @message) }
         format.xml  { head :ok }
       else
         @respond_type = :error
       	@message = "Category was not updated. #{@category.errors.join(' ')}"
-        format.js   { render('bento/shared/message', :locals => { :pile => grid_instance(Category) }) }
+        format.js   { render(*grid_instance(Category).message) }
         format.html { render :action => "edit", :error => @message }
         format.xml  { render :xml => @category.errors, :status => :unprocessable_entity }
       end

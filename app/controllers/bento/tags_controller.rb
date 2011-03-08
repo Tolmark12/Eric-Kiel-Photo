@@ -54,13 +54,13 @@ class Bento::TagsController < Bento::BentoController
       if @tag.save
         @respond_type = :success
         @message = 'Tag was successfully created.'
-        format.js   { render 'bento/shared/message'}
+        format.js   { render(*grid_instance(Tag).message) }
         format.html { redirect_to(bento_tags_url, :notice => @message) }
         format.xml  { render :xml => @tag, :status => :created, :location => @tag }
       else
         @respond_type = :error
       	@message = "Tag was not created. #{@tag.errors.join(' ')}"
-        format.js   { render 'bento/shared/message'}
+        format.js   { render(*grid_instance(Tag).message) }
         format.html { render :action => "new", :error => @message }
         format.xml  { render :xml => @tag.errors, :status => :unprocessable_entity }
       end
@@ -108,13 +108,13 @@ class Bento::TagsController < Bento::BentoController
       if @tag.update_attributes(params[:tag])
         @respond_type = :success
         @message = 'Tag was successfully updated.'
-        format.js   { render 'bento/shared/message'}
+        format.js   { render(*grid_instance(Tag).message) }
         format.html { redirect_to(bento_tag_url(@tag), :notice => @message) }
         format.xml  { head :ok }
       else
         @respond_type = :error
       	@message = "Tag was not updated. #{@tag.errors.join(' ')}"
-        format.js   { render 'bento/shared/message'}
+        format.js   { render(*grid_instance(Tag).message) }
         format.html { render :action => "edit", :error => @message }
         format.xml  { render :xml => @tag.errors, :status => :unprocessable_entity }
       end

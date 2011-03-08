@@ -57,13 +57,13 @@
          }
          @respond_type = :success
          @message = 'Stockphoto was successfully created.'
-         format.js   { render 'bento/shared/message'}
+         format.js   { render(*grid_instance(Stockphoto).message) }
          format.html { redirect_to(bento_stockphotos_url, :notice => @message) }
          format.xml  { render :xml => @stockphoto, :status => :created, :location => @stockphoto }
        else
          @respond_type = :error
        	 @message = "Stockphoto was not created. #{@stockphoto.errors.join(' ')}"
-         format.js   { render 'bento/shared/message'}
+         format.js   { render(*grid_instance(Stockphoto).message) }
          format.html { render :action => "new", :error => @message }
          format.xml  { render :xml => @stockphoto.errors, :status => :unprocessable_entity }
        end
@@ -85,13 +85,13 @@
          }
          @respond_type = :success
          @message = 'Stockphoto was successfully updated.'
-         format.js   { render 'bento/shared/message'}
+         format.js   { render(*grid_instance(Stockphoto).message) }
          format.html { redirect_to(bento_stockphoto_url(@stockphoto), :notice => @message) }
          format.xml  { head :ok }
        else
          @respond_type = :error
        	 @message = "Stockphoto was not updated. #{@stockphoto.errors.join(' ')}"
-         format.js   { render 'bento/shared/message'}
+         format.js   { render(*grid_instance(Stockphoto).message) }
          format.html { render :action => "edit", :error => @message }
          format.xml  { render :xml => @stockphoto.errors, :status => :unprocessable_entity }
        end

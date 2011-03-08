@@ -13,19 +13,23 @@
         </div>
       <% end %>
       <%= f.group :default, {} do |g|%> 
-          		<div class="left-container">
+        <div class="left-container">
           <%= g.label :text_id %>
-		</div>
+		    </div>
           <%= g.text_field :text_id %><br />
-                		<div class="left-container">
+        <div class="left-container">
           <%= g.label :name %>
-		</div>
+		    </div>
           <%= g.text_field :name %><br />
-                		<div class="left-container">
+        <div class="left-container">
           <%= g.label :rank %>
-		</div>
+		    </div>
           <%= g.text_field :rank %><br />
-                <% end %>
+        <div class="left-container">
+          <%= g.label :portfolio_items %>
+        </div>
+          <%= g.selector :portfolio_items, {:label => :low_res_src, :is_label_image => true, :orderable => true} %><br />
+      <% end %>
       <%= f.submit %>
     <% end %>
   <% end %>

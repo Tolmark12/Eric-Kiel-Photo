@@ -52,13 +52,13 @@ class Bento::SubNavsController < Bento::BentoController
       if @sub_nav.save
         @respond_type = :success
         @message = 'Sub nav was successfully created.'
-        format.js   { render 'bento/shared/message'}
+        format.js   { render(*grid_instance(SubNav).message) }
         format.html { redirect_to(bento_sub_navs_url, :notice => @message) }
         format.xml  { render :xml => @sub_nav, :status => :created, :location => @sub_nav }
       else
         @respond_type = :error
       	@message = "Sub nav was not created. #{@sub_nav.errors.join(' ')}"
-        format.js   { render 'bento/shared/message'}
+        format.js   { render(*grid_instance(SubNav).message) }
         format.html { render :action => "new", :error => @message }
         format.xml  { render :xml => @sub_nav.errors, :status => :unprocessable_entity }
       end
@@ -74,13 +74,13 @@ class Bento::SubNavsController < Bento::BentoController
       if @sub_nav.update_attributes(params[:sub_nav])
         @respond_type = :success
         @message = 'Sub nav was successfully updated.'
-        format.js   { render 'bento/shared/message'}
+        format.js   { render(*grid_instance(SubNav).message) }
         format.html { redirect_to(bento_sub_nav_url(@sub_nav), :notice => @message) }
         format.xml  { head :ok }
       else
         @respond_type = :error
       	@message = "Sub nav was not updated. #{@sub_nav.errors.join(' ')}"
-        format.js   { render 'bento/shared/message'}
+        format.js   { render(*grid_instance(SubNav).message) }
         format.html { render :action => "edit", :error => @message }
         format.xml  { render :xml => @sub_nav.errors, :status => :unprocessable_entity }
       end
