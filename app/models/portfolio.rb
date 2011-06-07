@@ -8,7 +8,10 @@ class Portfolio < Service
   #TODO Fix this to me more efficient
   # as of mongoid 2.0.0.rc.6 mongoid sorts all results by id
   def portfolio_items
-    @portfolio_items ||= self.portfolio_item_ids.map {|e_id| PortfolioItem.find(e_id) }
+    @portfolio_items ||=  begin
+                            e_ids = self.portfolio_item_ids.map {|e_id| { :_id => e_id } };
+                            (e_ids == []) ? [] : PortfolioItem.any_of(e_ids)
+                          end
   end
 
   def as_json(options={})

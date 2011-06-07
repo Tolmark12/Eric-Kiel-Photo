@@ -13,11 +13,6 @@ EricKielPhoto::Application.routes.draw do
   match "/stock/api/getStockPhotosByTag/text/:tag" => "stockphotos#by_tag"
   match "/stock/api/getAllStockTags" => "tags#index"
 
-
-  match "/selector/:type/:object/:attribute/:label/:destination", :controller => 'bento/bento', :action => 'selector_call', :as => 'selector'
-
-  match "/grid/:controller", :controller => /bento\/.+?/, :action => 'grid', :as => 'grid'
-
   match "/vladmin/api", :controller => 'config_settings', :action => 'index', :defaults => {:format => :js}
 
   namespace :bento, :path => "bento" do

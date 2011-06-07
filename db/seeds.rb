@@ -5,7 +5,9 @@
 #
 BentoUser.create({:username => 'admin', :password => 'password', :email => 'admin@local.host'})
 main_nav      = Nav.new({:name => 'Navigation'})
+main_nav.save!
 portfolio_nav = SubNav.new({:name => 'Portfolio'})
+portfolio_nav.save!
 contact       = Sub.new({:name => 'Contact', :type => 'contact'})
 contact.save!
 
@@ -26,6 +28,9 @@ portfolio_nav_items = [{:name => 'Portfolio Places', :text => 'Places',
                                       :url_id => '/portfolio/all', :sort => 14}]
                                       
 portfolio_nav_items.map! { |ni|  record = NavItem.create(ni); record.id }
+portfolio_nav.nav_item_ids = portfolio_nav_items
+portfolio_nav.save!
+
 main_nav_items      = [{:name => 'Reel', :text => 'Film Reels', 
                                       :page_type => 'portfolio',
                                       :url_id => '/films', :sort => 2},
@@ -34,7 +39,7 @@ main_nav_items      = [{:name => 'Reel', :text => 'Film Reels',
                                       :url_id => '/contact', :sort => 6},
                                       {:name => 'Portfolio', :text => 'Portfolio', 
                                       :page_type => 'portfolio', :is_default => true,
-                                      :sub => portfolio_nav,
+                                      :sub_id => portfolio_nav.id,
                                       :url_id => '/portfolio', :sort => 1},
                                       {:name => 'Blog', :text => 'Blog', 
                                       :page_type => 'external',
@@ -48,11 +53,9 @@ main_nav_items      = [{:name => 'Reel', :text => 'Film Reels',
                                       :page_type => 'stock',
                                       :url_id => '/stock', :sort => 3}]
 
-main_nav_items.map! { |ni| record = NavItem.create(ni); record.id }
+main_nav_items.map! { |ni| puts ni[:name];  record = NavItem.create(ni); record.id }
 main_nav.nav_item_ids = main_nav_items
 main_nav.save!
-portfolio_nav.nav_item_ids = portfolio_nav_items
-portfolio_nav.save!
 categories = [{:name => 'Current',:text_id => 'current' ,:rank => 1},
                               {:name => 'Default Portfolio',:text_id => 'default_profile' ,:rank => 1},
                               {:name => 'People',:text_id => 'people' ,:rank => 2}]

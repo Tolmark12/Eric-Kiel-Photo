@@ -1,5 +1,4 @@
 class SubNav < Nav
-
   
   def as_json(options = {})
     { :name           => self.name,

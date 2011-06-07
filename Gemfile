@@ -1,11 +1,11 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.5'
+gem 'rails', '3.0.7'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem "mongoid", ">=2.0.0.rc.7"
+gem "mongoid", ">=2.0.2s"
 gem "bson_ext"
 
 gem 'blockpile', :git => 'git@github.com:tylerflint/blockpile.git'
