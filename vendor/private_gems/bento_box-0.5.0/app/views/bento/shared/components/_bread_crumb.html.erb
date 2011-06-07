@@ -1,0 +1,7 @@
+  <ul data-path="<%=url_for(pile.last[:url])%>">
+    <% pile.crumbs.each do |crumb| 
+         last = crumb == pile.last %>
+      <li class="<%= "last" if last %>">
+        <%= link_to(crumb[:url], :class => (last)? 'last' : '', :rel => "address:#{url_for(crumb[:url])}") do %><%= crumb[:label] %><% unless last %><span class="arrow"></span><% end %><% end %></li>
+    <% end %>
+  </ul>

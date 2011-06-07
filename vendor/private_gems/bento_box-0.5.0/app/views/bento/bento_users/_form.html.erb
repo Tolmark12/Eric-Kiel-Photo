@@ -1,0 +1,34 @@
+<%= bento_form([:bento, @bento_user]) do |f| %>
+  <% if @bento_user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@bento_user.errors.count, "error") %> prohibited this bento_user from being saved:</h2>
+
+      <ul>
+      <% @bento_user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.group :default, {} do |g| %>
+	<div class="left-container">
+    	<%= g.label :username %>
+	</div>
+    <%= g.text_field :username %><br />
+	<div class="left-container">
+    	<%= g.label :email %>
+	</div>
+    <%= g.text_field :email %><br />
+	<div class="left-container">
+    	<%= g.label :password %>
+	</div>
+    <%= g.password_field :password %><br />
+	<div class="left-container">
+    	<%= g.label :password_confirmation %>
+	</div>
+    <%= g.password_field :password_confirmation %><br />
+  <% end %>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

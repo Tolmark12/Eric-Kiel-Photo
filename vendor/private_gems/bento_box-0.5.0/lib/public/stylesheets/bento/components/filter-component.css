@@ -1,0 +1,31 @@
+
+/* GRID COMPONENT */
+.grid-container										{margin:0; padding:0; width:100%; position:relative; overflow:auto;}
+.grid-container input.go							{position:absolute; top:0; right:10px; z-index:5; border-color:#F79431; color:#F79431;}
+table.grid											{margin:0; padding:0; width:100%; border-bottom:1px solid #d6d6d6;}
+table.grid th										{margin:0; padding:0 1%; background-color:#47494E; vertical-align:middle; text-align:left; height:25px; color:#fff; font-weight:normal; border-left:1px solid #B9B8B9;}
+table.grid th.hidden								{border-left:1px solid #fff; background-color:#fff;}
+table.grid th.active								{background-color:#FFDC2C; color:#47494E;}
+table.grid th.active .box							{margin:0; padding:0; width:100%; position:relative;}
+table.grid th.active a.arrow						{margin:0; padding:0; width:9px; height:5px; display:block; background:url('/images/bento/bento-box-sprite.png') no-repeat -124px -15px; position:absolute; top:43%; right:1%;}
+table.grid th input									{margin:0; padding:0; width:100%; height:22px; border:none;}
+table.grid th.calendar p							{margin:0; padding:0; float:left; font-size:9px; line-height:9px; white-space:nowrap;}
+table.grid th.calendar								{min-width:110px;}
+table.grid th.calendar a							{margin:0; padding:0; font-size:9px; line-height:9px; color:#fff; white-space:nowrap; text-decoration:underline;}
+table.grid th.calendar a.calendar-icon				{margin:0 5px 0 0; padding:0; width:13px; height:13px; float:left; display:block; background:url('/images/bento/bento-box-sprite.png') no-repeat -201px -1px;}
+table.grid th.calendar .grey						{padding:0 10px; color:#; line-height:14px;}
+table.grid td										{margin:0; padding:0 1%; height:25px; vertical-align:middle; color:#000; border-left:1px solid #d6d6d6;}
+table.grid .fixed									{margin:0; padding:0; text-align:center; width:20px;}
+table.grid .last									{border-right:1px solid #d6d6d6;}
+table.grid tr.second-row th							{padding:5px 1%; background-color:#797B83;}
+table.grid tr.second-row th.fixed					{border-right:1px solid #d6d6d6;}
+table.grid tr.second-row th.hidden					{border-left:1px solid #fff; background-color:#fff;}
+table.grid tr.second-row th.active					{background-color:#857B71;}
+tr:nth-child(odd) 									{background-color:#fff;}
+tr:nth-child(even) 									{background-color:#F3F3F4;}
+tr:nth-child(odd) td.active							{background-color:#fffbef;}
+tr:nth-child(even) td.active						{background-color:#f3f1e5;}
+tr:nth-child(odd) td.fixed							{background-color:#E2E4E5;}
+tr:nth-child(even) td.fixed							{background-color:#ECEDEE;}
+table.grid td.checked								{background-color:#E8AE4B;}
+table.grid tr.highlight								{background-color:#FDDF96;}

@@ -1,0 +1,18 @@
+/images/bento
+/* MESSAGE COMPONENT */
+.message-box													{margin:0; padding:0; position:absolute; top:-45px; right:30px; z-index:5;}
+.message-box .message											{margin:0; padding:8px 20px; font-size:12px; font-family:Verdana, Geneva, sans-serif; background-color:#fff; border:4px solid; -moz-border-radius: 6px; border-radius: 6px; -moz-box-shadow: 0px 1px 2px #999; -webkit-box-shadow: 0px 1px 2px #999; box-shadow: 0px 1px 2px #999;}
+.message-box .success											{border-color:#6ebe44;}
+.message-box .success .close									{margin:0; padding:0; width:8px; height:9px; display:block; background:url('/images/bento/bento-box-sprite.png') no-repeat -322px -51px; position:absolute; top:8px; right:8px;}
+.message-box .success .icon										{margin:0; padding:0; width:29px; height:40px; display:block; background:url('/images/bento/bento-box-sprite.png') no-repeat -268px -18px; position:absolute; top:-8px; left:-11px;}
+.message-box .message-small										{margin:0; padding:0; width:19px; height:22px; background:url('/images/bento/bento-box-sprite.png') no-repeat;}
+.message-box .message-small:hover								{cursor:pointer;}			
+.message-box .success-small										{background-position:-337px -22px;}
+.message-box .alert												{border-color:#FFC13A; background-color:#FFFCDF;}
+.message-box .alert .close										{margin:0; padding:0; width:8px; height:9px; display:block; background:url('/images/bento/bento-box-sprite.png') no-repeat -304px -51px; position:absolute; top:8px; right:8px;}
+.message-box .alert .icon										{margin:0; padding:0; width:29px; height:40px; display:block; background:url('/images/bento/bento-box-sprite.png') no-repeat -198px -18px; position:absolute; top:-8px; left:-11px;}
+.message-box .alert-small										{background-position:-319px -22px;}
+.message-box .error												{border-color:#D5212E; background-color:#FFF1D6;}
+.message-box .error .close										{margin:0; padding:0; width:8px; height:9px; display:block; background:url('/images/bento/bento-box-sprite.png') no-repeat -331px -51px; position:absolute; top:8px; right:8px;}
+.message-box .error .icon										{margin:0; padding:0; width:29px; height:40px; display:block; background:url('/images/bento/bento-box-sprite.png') no-repeat -234px -18px; position:absolute; top:-8px; left:-11px;}
+.message-box .error-small										{background-position:-301px -22px;}

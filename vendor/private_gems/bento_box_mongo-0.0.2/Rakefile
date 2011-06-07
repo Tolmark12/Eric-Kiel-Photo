@@ -1,0 +1,26 @@
+require 'rake'
+require 'rake/testtask'
+require 'rake/rdoctask'
+
+
+desc 'Test mongoid with bento_box.'
+Rake::TestTask.new(:test) do |t|
+  t.libs << 'lib'
+  t.libs << 'test'
+  t.pattern = 'test/**/*_test.rb'
+  t.verbose = true
+end
+
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |gemspec|
+    gemspec.name = "bento_box_mongo"
+    gemspec.summary = "Enables BentoBox to use Mongoid"
+    gemspec.files = Dir["{lib}/**/*", "{test}/**/*","[A-Z]*"]
+    gemspec.description = "Enables BentoBox to use Mongoid"
+    gemspec.add_dependency "bento_box"
+    gemspec.add_dependency "mongoid"
+  end
+rescue LoadError
+  puts "Jeweler not available. Install it with: gem install jeweler"
+end

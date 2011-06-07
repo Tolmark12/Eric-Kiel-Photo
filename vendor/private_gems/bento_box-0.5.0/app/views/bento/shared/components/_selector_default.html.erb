@@ -1,0 +1,148 @@
+<% object, object_class = pile.get_object, pile.get_object_class %>
+<% element_class, element_count, elements = pile.get_attribute_class, pile.get_attribute_count, pile.get_attribute_relation %>
+<% associated_elements = object.send("#{element_class}".tableize.to_sym) %>
+<% column_count, row_count, sort_row_count = pile.get_column_count, pile.get_row_count, (associated_elements.count / p.get_column_count) + 1 %>
+<div id="<%= pile.get_id %>" class="selector-wrapper default content-parent" style="float:left;">
+	<%= pile.paginatable_ajax if pile.paginatable? %>
+	<%= pile.filterable_ajax if pile.filterable? %>
+	<%= pile.sortable_ajax if pile.sortable? %>
+	<div class="button-bar">
+		<a class="button" href="#link" ><span class="check light"></span>Sortable / Filterable List</a>
+	</div>
+	<div class="grid-container" style="display:none;">
+	<table class="grid" >
+	  <thead>
+	  <tr>
+	    <% element_class.columns.each do |column| %>
+	      <% css_classes = [] 
+	         css_classes << "last" if  column.name == element_class.columns[-1].name
+	         css_classes << "active" if  pile.sortable? && column.name.to_s == pile.sort_column
+			  %>
+	      <th class="<%= css_classes.join(' ') %>"><%= (column.name.to_s.titleize unless pile.sortable? ) || pile.sortable(column.name, column.name.to_s.titleize, :class => 'box') %></th>
+	    <% end %>
+	  </tr>
+	  <% if pile.filterable? %>
+	    <tr class='second-row'>
+	    <% element_class.columns.each do |column| %>
+	    <% css_classes = []
+           css_classes << "last" if  column.name == element_class.columns[-1].name
+           css_classes << "active" if  column.name.to_s == pile.sort_column && pile.sortable?
+	       css_classes << "calendar" if  [:datetime, :timestamp, :time, :date].include?(column.type)
+	     %>
+	    <th class="<%= css_classes.join(' ') %>"><%= pile.filterable(column.name) %></th>
+	    <% end %>
+	    </tr>
+	  <% end %>
+	  </thead>
+	</table>
+	</div>
+        <%= pile.body %>	
+	<% if p.is_orderable? %>
+	<p class="drag-drop">Drag and Drop Items into your preferred sorting order</p>	
+	<div class="filter-bar">
+		<label>Automatically Order by</label>
+		<select id='sort_column' name="sort_column">
+			<% element_class.column_names.sort.each do |attr| %>
+				<option value="<%=attr%>"><%=attr.titleize%></option>
+			<% end %>
+		</select>
+		<label>in</label>
+		<select id='sort_direction' name="sort_direction">
+			<option value="asc">Ascending</option>
+			<option value="desc">Descending</option>
+		</select>
+		<label>order</label>
+		<span class="divider"></span>
+		<a href="<%= bento_sorter_path({:parent => "#{object_class}".underscore, :object => "#{element_class}".underscore,:sort_column => ':sort_column',:sort_direction => ':sort_direction',:ids => ':ids'}) %>"></a>
+		<input id="sort-order" class="button-thin sort-order" type="submit" value="Order">
+	</div>
+	<div class="chart-area">
+		<div class="titles">
+			<ul>
+			<% (0..column_count-1).each do |column_number| %>
+				<li class="<%= "last" if column_number == column_count-1 %>">
+					<%= (column_number * sort_row_count) + 1 %> - <%= (column_number + 1) * sort_row_count %>
+			    </li>
+			<% end %>				
+			</ul>
+		</div>
+		<div class="background-grey">
+			<% (0..column_count-1).each do |column_number| %>
+				<ul class="sortable connectedSortable <%= "last" if column_number == column_count-1 %>">
+					<% (0..sort_row_count-1).each do |row_number| %>
+					    <% element_index = (column_number)*sort_row_count+row_number %>
+					    <% if associated_elements[element_index] %>
+					    <% css_classes = []%>
+						<li id="<%= "sort_#{"#{element_class}".underscore}_#{associated_elements[element_index].id}" %>" class='ui-state-default'><span><%= element_index + 1%></span><a href="#link" title="<%= associated_elements[element_index].send(pile.get_attribute_label) %>" class="<%= css_classes.join(' ') %>">
+							 <% if p.is_label_image? then %>
+							 <%= image_tag(associated_elements[element_index].send(pile.get_attribute_label), {:size => "50x50"})%>
+							 <% else %>
+						     <%= associated_elements[element_index].send(pile.get_attribute_label)[0,9] %>...
+							 <% end %></a></li>
+						<% end %>
+					<% end %>
+			    </ul>
+			<% end %>
+		</div>
+	</div>
+	<script>
+	$(document).ready(function() {
+		$(".sortable").each(function(){
+		  	$(this).sortable({
+				placeholder: "ui-state-highlight",
+				forcePlaceholderSize: true,
+				connectWith: ".connectedSortable",
+				update: function(event, ui) {
+					var movedItem = $(ui.item);
+					var newPrev = movedItem.prev('#<%= pile.get_id %> .sortable > li');
+					newPrev = (newPrev.length > 0) ? $(newPrev[newPrev.length-1]) : null;
+					var inputItem = $('#<%= p.get_destination %>  input[value="' + movedItem.attr('id').replace("sort_<%="#{element_class}".underscore %>_", "") + '"]');
+					if (newPrev == null) {
+						$('#<%= p.get_destination %>').prepend(inputItem);
+					} else {
+						var prevInput = $('#<%= p.get_destination %> input[value="' + newPrev.attr('id').replace("sort_<%="#{element_class}".underscore %>_", "") + '"]');
+						inputItem.insertAfter(prevInput);
+					}
+					$("ul.sortable > li.ui-state-default > span").each(function(index, value) {
+						$(value).html(index + 1);
+					});
+					var maxHeight = $('ul.sortable').parent().height();
+					$('ul.sortable').css('min-height',maxHeight+'px');
+				}
+			}).disableSelection();
+	     });
+		$(".sortable li").each(function(){
+		  	$(this).mousedown(function(){$(this).addClass("active")});
+			$(this).mouseup(function(){$(this).removeClass("active")});
+	     });
+    	$('input#sort-order').unbind('click');
+    	$('input#sort-order').click(function () {
+			var target = $(this).prev('a').attr('href');
+			target = target.replace(':sort_column',$('select#sort_column').val());
+			target = target.replace(':sort_direction',$('select#sort_direction').val());
+			var ids = [];
+			$('#<%= pile.get_destination %> input').each(function(index, value) {
+				ids[index] = $(value).val();
+			});
+			target = target.replace(':ids',ids.join(","));
+			$.get(target,
+        	function(data) {
+				$('#<%= pile.get_destination %>').html(data["content"]);
+				var inputs = $('#<%= pile.get_destination %> input');
+				var sortableColumns = $('ul.sortable');
+				var perColumn = Math.ceil(inputs.length / sortableColumns.length);
+				$('#temp-box').remove();
+				$('body').append($('<ul id="temp-box" style="display:none;" />').append($('ul.sortable > li')));					
+				inputs.each(function(index, value) {
+					var col = sortableColumns.get(Math.floor(index/perColumn));
+					var sortItem = $("#sort_<%="#{element_class}".underscore %>_"+$(value).val());
+					sortItem.find('span').text(index+1);
+					$(col).append(sortItem);
+				});
+			}, 'json');
+		});
+	
+	});	
+	</script>
+	<% end %>
+</div>

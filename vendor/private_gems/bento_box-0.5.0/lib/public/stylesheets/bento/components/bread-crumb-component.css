@@ -1,0 +1,19 @@
+
+/* BREAD-CRUMB COMPONENT */
+.bread-crumb									{margin:0 auto 10px auto; padding:0; width:1000px; height:59px; background:url('/images/bento/horizontal-sprite.jpg') repeat-x 0 -75px; position:relative;}
+.bread-crumb .left-edge							{margin:0; padding:0; width:59px; height:59px; position:absolute; top:0; left:0; background:url('/images/bento/bento-box-sprite.png') no-repeat 0 0;}
+.bread-crumb .right-edge						{margin:0; padding:0; width:59px; height:59px; position:absolute; top:0; right:0; background:url('/images/bento/bento-box-sprite.png') no-repeat -60px 0;}
+.bread-crumb ul									{margin:0; padding:0; list-style-type:none; position:absolute; bottom:0; left:15px;}
+.bread-crumb ul li								{margin:0 10px 0 0; padding:0; float:left;}
+.bread-crumb ul li.last							{position:relative;}
+.bread-crumb ul li a							{margin:0; padding:8px 0 0 0; float:left; color:#231F20; font-size:15px;}
+.bread-crumb ul li a .arrow						{margin:7px 0 0 10px; padding:0; width:5px; height:7px; float:right; display:block; background:url('/images/bento/bento-box-sprite.png') no-repeat -124px 0;}
+.bread-crumb ul li a.last						{margin:0; padding:5px 8px; font-size:17px; font-weight:bold; background-color:#ffffff; -moz-box-shadow: 0px -2px 3px #d6d6d6; -webkit-box-shadow: 0px -2px 3px #d6d6d6; box-shadow: 0px -2px 3px #d6d6d6;}
+.bread-crumb .buttons-wrapper					{margin:0; padding:0; position:absolute; bottom:-15px; right:0px;}
+.bread-crumb .buttons-wrapper .left-edge		{margin:-6px 0 0 0; padding:0; width:11px; height:26px; display:block; background:url('/images/bento/bento-box-sprite.png') no-repeat -389px 0; }
+.bread-crumb .buttons							{margin:0 0 0 9px; padding:0 0 3px 3px; background-color:#fff; overflow:hidden; -moz-box-shadow: 1px -1px 2px #f1eff0; -webkit-box-shadow: 1px -1px 2px #f1eff0; box-shadow: 1px -1px 2px #f1eff0;}
+.bread-crumb .buttons input.cancel				{margin:9px 5px 0 5px; padding-left:15px; float:left; border-color:#919396; color:#919396; background:url('/images/bento/arrow-lg.png') no-repeat 5px center;}
+.bread-crumb .buttons input.delete				{margin:9px 5px 0 5px; padding-left:15px; float:left; border-color:#919396; color:#919396; background:url('/images/bento/close-r.png') no-repeat 5px center;}
+.bread-crumb .buttons input.save				{margin:5px 5px 0 5px; padding:0; float:left; border-color:#f18b21; color:#f18b21;}
+
+

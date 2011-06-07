@@ -1,0 +1,25 @@
+ <script type="text/javascript">
+//<![CDATA[
+$(document).ready( function() {
+  $('#<%= p.get_id %> thead a').click( function() {
+    sort_direction = 'asc';
+    if ($(this).hasClass('asc')) {
+      $(this).addClass('desc');
+      $(this).removeClass('asc');
+      sort_direction = 'desc';
+    } else if ($(this).hasClass('desc')) {
+      $(this).addClass('asc');
+      $(this).removeClass('desc');
+    } else {
+      $(this).addClass('asc');
+    }
+    $.get('<%= p.ajax_url %>',
+    $('#<%= p.get_id %> thead input').serialize() + '&<%= p.sort_symbol.to_s %>=' + this.id + '&<%= p.direction_symbol.to_s %>='+sort_direction ,
+    <%= p.ajax_success %>, 'json');
+    $('#<%= p.get_id %> thead th.active').removeClass('active');
+    $(this).parent().addClass('active');
+    return false;
+  });
+});
+//]]>
+</script>

@@ -1,0 +1,11 @@
+{
+	"toolbar" : <%= raw ActiveSupport::JSON.encode(yield :toolbar) %>,
+	
+	"breadcrumb" : <%= raw ActiveSupport::JSON.encode(yield :bread_crumb) %>,
+	
+	"javascript" : <%= raw ActiveSupport::JSON.encode(yield :javascript) %>,
+	
+	"content" : <%= raw ActiveSupport::JSON.encode(yield) %>
+
+
+}

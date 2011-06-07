@@ -1,0 +1,6 @@
+<%% body_only ||= nil %>
+<%%= grid(@<%= plural_table_name %>, :sortable => true, :filterable => true, :paginatable => true, :page => (params[:<%=singular_table_name%>_page] || 1), :ajax => body_only) do |g| %>
+  <%% g.default_action Proc.new {|<%=singular_table_name%>| %{ 	return ajaxClick('#{edit_<%= singular_url_helper %>_path(<%=singular_table_name%>)}'); } } %>
+  <% attributes.each do |attr| %>
+  <%% g.add_column :<%= attr.name %> %><% end %>
+<%% end %>

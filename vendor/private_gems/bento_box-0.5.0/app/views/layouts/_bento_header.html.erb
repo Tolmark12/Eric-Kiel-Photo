@@ -1,0 +1,22 @@
+<div class="header">
+  <div class="inner-header">
+    <%= link_to '', bento_home_path, :class => 'logo' %>
+    <div class="login-area">
+      <% if current_bento_user %>
+      <p>Logged in as: <%= link_to current_bento_user.username, bento_profile_view_path, :class => 'acount-name' %>
+      <% end %>
+        <span class="break">|</span><%= link_to "Account Settings", bento_profile_edit_path %><span class="break">|</span><%= link_to "Logout", :controller => '/bento/sessions', :action => 'destroy' %></p>
+    </div>
+  </div>
+</div>
+<div class="navigation">
+  <div class="inner-nav">
+      <%= menu BentoBox::Menu.items %>
+  </div>
+</div>
+<div class="bread-crumb">
+  <div class="left-edge"></div>
+  <%= yield :bread_crumb %>
+  <div class="right-edge"></div>
+  <div class="buttons-wrapper"><span class="left-edge"></span><div class="buttons"><div data-path="<%=request.env['PATH_INFO']%>"><%= yield :toolbar %></div></div></div>
+</div>

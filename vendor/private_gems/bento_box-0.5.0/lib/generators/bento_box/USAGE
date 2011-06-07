@@ -1,0 +1,8 @@
+Description:
+  The 'bento_box' command scaffolds a new Model which is managed by BentoBox.  
+
+Example:
+  rails g bento_box Product sku:text description:text inventory_count:integer
+
+  This generates a scaffolding of Product that is managed by BentoBox.
+  See the README in the newly created application to get going.

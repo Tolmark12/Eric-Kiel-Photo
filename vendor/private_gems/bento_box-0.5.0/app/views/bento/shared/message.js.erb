@@ -1,0 +1,24 @@
+$('#message-box').html('<%= escape_javascript(message(@respond_type, @message)) %>');
+<% if @respond_type.to_sym == :success %>
+$('.buttons > div:last > .back').click();
+<% end %>
+$(document).ready(function () {
+	<% if defined?(pile) -%>
+	$.getJSON("<%= pile.ajax_url %>", <%= pile.ajax_success %>);
+	<% end -%>
+	$('.message-box .message').each(function () {
+		var message 		= $(this);
+		var smallMessage 	= message.next('.message-small');
+		message.fadeIn('slow');
+		message.find('.close').click(function () {
+			message.fadeOut('fast', function () {
+				smallMessage.fadeIn('fast');
+			});
+		});
+		smallMessage.click(function () {
+			smallMessage.fadeOut('fast', function () {
+				message.fadeIn('fast');
+			});
+		});
+	});
+});

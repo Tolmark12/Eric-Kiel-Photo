@@ -1,0 +1,8 @@
+<ul>
+  <% pile.menu_items.each do |menu_item| %>
+  <li><%= link_to menu_item.label, menu_item.to %>
+    <% if menu_item.children.any? %>
+      <%= menu menu_item.children %>
+    <% end %></li>
+  <% end %>
+</ul>

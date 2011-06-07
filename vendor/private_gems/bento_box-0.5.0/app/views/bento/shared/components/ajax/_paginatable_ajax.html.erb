@@ -1,0 +1,19 @@
+ <script type="text/javascript">
+//<![CDATA[
+  $(document).ready( function() {
+    $('#<%=p.get_id%> input.paginatable').change(function() {
+      $.get('<%=p.ajax_url%>',
+      $('#<%=p.get_id%> thead input').serialize()  +
+      '&<%=p.page_string%>=' + this.value,
+      <%=p.ajax_success%>, 'json');
+    });
+    $('#<%=p.get_id%> a.paginatable').click(function() {
+      $.get('<%=p.ajax_url%>',
+      $('#<%=p.get_id%> thead input').serialize()  +
+      '&<%=p.page_string%>=' + this.href.replace(/(.*)<%=p.page_string%>=?([^&]*)/g,function ($0, $1, $2) { return $2;}),
+      <%= p.ajax_success %>, 'json');
+      return false;
+    });
+  });
+//]]>
+</script>

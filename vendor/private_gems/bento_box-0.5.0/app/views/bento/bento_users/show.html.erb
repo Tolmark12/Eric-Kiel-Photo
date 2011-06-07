@@ -1,0 +1,19 @@
+<% content_for :bread_crumb do %>
+	<%= bread_crumb bread_crumb_trail, @bento_user %>
+<% end %>
+<p id="notice"><%= notice %></p>
+<% content_for :toolbar do %>
+  <%= link_to bento_role_path(@role), :confirm => 'Are you sure?', :method => :delete  do %><input type="submit" value="Delete" class="button-thin delete" /><% end %>
+<% end %>
+<%= bento_form([:bento, @bento_user], :editable => false ) do |f| %>
+  <%= f.group :default, {} do |g| %>
+	<div class="left-container">	
+    <%= g.label :username %>
+	</div>
+    <%= g.text_field :username %><br />
+	<div class="left-container">
+    <%= g.label :email %>
+	</div>
+    <%= g.text_field :email %><br />
+  <% end %>
+<% end %>

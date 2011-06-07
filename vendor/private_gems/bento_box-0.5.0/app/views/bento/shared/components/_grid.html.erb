@@ -1,0 +1,34 @@
+<% columns = pile.get_columns 
+   last_key = columns.to_a[-1][0]
+   element_class = pile.get_element_class
+   javascript_action = '' %>
+<div id="<%= pile.get_id %>" class="grid-container">
+<%= pile.paginatable_ajax if pile.paginatable? %>
+<%= pile.filterable_ajax if pile.filterable? %>
+<%= pile.sortable_ajax if pile.sortable? %>
+<table class="grid content-parent">
+  <thead>
+  <tr>
+    <% columns.each do |name,options| %>
+      <% options[:css_class] ||= ""
+         options[:css_class] << " last" if  name == last_key
+         options[:css_class] << " active" if  pile.sortable? && name.to_s == pile.sort_column
+		  %>
+      <th class="<%= options[:css_class] %>"><%= (options[:title] unless pile.sortable? && options[:sortable] ) || pile.sortable(name, options[:title], :class => 'box') %></th>
+    <% end %>
+  </tr>
+  <% if pile.filterable? %>
+    <tr class='second-row'>
+    <% columns.each do |name,options| %>
+    <% css_classes = [options[:css_class]]
+       css_classes << "calendar" if  options[:column] && [:datetime, :timestamp, :time, :date].include?(options[:column].type.to_s.downcase.to_sym)
+     %>
+    <th class="<%= css_classes.join(' ') %>"><%= pile.filterable(name) %></th>
+    <% end %>
+    </tr>
+  <% end %>
+  </thead>
+  <%= pile.body %>
+</table>
+  <%= pile.grid_javascript %>
+</div>

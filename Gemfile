@@ -8,9 +8,9 @@ gem 'rails', '3.0.7'
 gem "mongoid", ">=2.0.2s"
 gem "bson_ext"
 
-gem 'blockpile', :git => 'git@github.com:tylerflint/blockpile.git'
-gem 'bento_box', :git => 'git@github.com:Tolmark12/bento.git'
-gem 'bento_box_mongo', :git => 'git@github.com:Tolmark12/bento-mongoid.git'
+gem 'blockpile', :path => 'vendor/private_gems/blockpile-0.5.1' #:git => 'git@github.com:tylerflint/blockpile.git'
+gem 'bento_box', :path => 'vendor/private_gems/bento_box-0.5.0' #:git => 'git@github.com:Tolmark12/bento.git'
+gem 'bento_box_mongo', :path => 'vendor/private_gems/bento_box_mongo-0.0.2' #:git => 'git@github.com:Tolmark12/bento-mongoid.git'
 
 # Use unicorn as the web server
 # gem 'unicorn'

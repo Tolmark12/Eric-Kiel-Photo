@@ -1,0 +1,11 @@
+ <script type="text/javascript">
+//<![CDATA[
+  $(document).ready( function() {
+    $('#<%=p.get_id%> thead input').keyup(function() {
+      $.get('<%=p.ajax_url%>',
+        $('#<%=p.get_id%> thead input').serialize() <%= "+ '&#{p.sort_symbol.to_s}=' + $('\##{p.get_id} thead th.active a').attr('id') + '&#{p.direction_symbol.to_s}='+ ($('\##{p.get_id} thead th.active a').hasClass('desc') ? 'desc' : 'asc')" if p.respond_to?(:sortable?) && p.sortable? %>,
+        <%=p.ajax_success%>, 'json');
+    });
+  });
+//]]>
+</script>

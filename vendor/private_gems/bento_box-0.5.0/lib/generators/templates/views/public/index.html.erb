@@ -1,0 +1,5 @@
+<br />
+<%%= grid(@<%= plural_table_name %>, <%= (attributes.collect {|a| a = ":#{a.name}"}).join(",")%>) do |g| %>
+  <%% g.default_action Proc.new {|<%=singular_table_name%>| %{ 	top.location.href = '#{<%= singular_url_helper %>_path(<%=singular_table_name%>)}'; } } %>
+  <%% g.add_column :show, {:title => '', :content => Proc.new {|<%=singular_table_name%>| link_to('Show', <%= singular_url_helper %>_path(<%=singular_table_name%>))}}%>
+<%% end %>

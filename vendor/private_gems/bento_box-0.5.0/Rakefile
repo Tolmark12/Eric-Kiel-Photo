@@ -1,0 +1,29 @@
+require 'rake'
+require 'rake/testtask'
+require 'rake/rdoctask'
+
+
+desc 'Test the bento box engine.'
+Rake::TestTask.new(:test) do |t|
+  t.libs << 'lib'
+  t.libs << 'test'
+  t.pattern = 'test/**/*_test.rb'
+  t.verbose = true
+end
+
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |gemspec|
+    gemspec.name = "bento_box"
+    gemspec.summary = "Administration for Rails 3"
+    gemspec.files = Dir["{lib}/**/*", "{app}/**/*", "{config}/**/*", "{test}/**/*","[A-Z]*"]
+    gemspec.description = "An admin panel for eCommerce on Rails 3"
+    gemspec.add_dependency "devise"
+    gemspec.add_dependency "blockpile"
+    gemspec.add_dependency "jrails"
+    gemspec.add_dependency "aws-s3"
+    #gemspec.add_dependency "mother"
+  end
+rescue LoadError
+  puts "Jeweler not available. Install it with: gem install jeweler"
+end

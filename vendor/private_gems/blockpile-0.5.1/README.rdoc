@@ -1,0 +1,137 @@
+== Blockpile
+
+Piles of extendable rails view blocks, triggered and masked behind simple helpers
+
+== What?
+
+Sometimes within rails, view logic can become complex. As complexity begins to increase, a common theme or pattern occurs:
+
+* View logic begins to grow overly complex for what makes sense in view templates. Lengthy, confusing, and downright dirty views cause you to loose sleep.
+* Logic can be broken out of the view templates and placed into the controller.
+* Eventually, when the view logic is needed in another request, the only solution is to pull the entire logic into a helper method.
+
+So what's the problem?
+
+Rails view helpers are great for view logic, and especially for small reusable view components. Unfortunately, complex view logic is almost always a rats nest of logic and string interpolation. In fact, I'm still not sure how this has become a viable solution for rails developers, as it seems to go against what I understand to be the "rails way". To their defense, there simply isn't any other way. Until now!
+
+To better illustrate the problem, I decided to insert a snippet of a rails view helper from a popular project management tool "Redmine":
+
+  def render_project_hierarchy(projects)
+    s = ''
+    if projects.any?
+      ancestors = []
+      projects.each do |project|
+        if (ancestors.empty? || project.is_descendant_of?(ancestors.last))
+          s << "<ul class='projects #{ ancestors.empty? ? 'root' : nil}'>\n"
+        else
+          ancestors.pop
+          s << "</li>"
+          while (ancestors.any? && !project.is_descendant_of?(ancestors.last)) 
+            ancestors.pop
+            s << "</ul></li>\n"
+          end
+        end
+        classes = (ancestors.empty? ? 'root' : 'child')
+        s << "<li class='#{classes}'><div class='#{classes}'>" +
+               link_to(h(project), {:controller => 'projects', :action => 'show', :id => project}, :class => "project #{User.current.member_of?(project) ? 'my-project' : nil}")
+        s << "<div class='wiki description'>#{textilizable(project.short_description, :project => project)}</div>" unless project.description.blank?
+        s << "</div>\n"
+        ancestors << project
+      end
+      s << ("</li></ul>\n" * ancestors.size)
+    end
+    s
+  end
+
+So even if you are talented enough to understand what this code is doing, let me ask 2 questions:
+
+* Do you mind if we upgrade the markup language to fit a new design?
+* Even though this is an acceptable solution, does it really feel good to have this nest under your hood?
+
+Before we move on, let me add that I'm not trashing the Redmine code-base. In fact, I chose an example from this project simply because the author is fantastic and this example mirrors at least one helper method in every rails app.
+
+== Enter Blockpile
+
+A blockpile solves this particular problem by slicing the view layer into 2 finer layers: logic, and template. It is no different than a controller/template relationship, except that a blockpile can be easily distributed across the application just as a helper method can.
+
+From a high level, a blockpile consists of 3 components:
+
+* A Ruby Class file
+* A template file (erb only for now, others coming soon)
+* A function call to include the blockpile in your existing templates
+
+== Example
+
+To keep this example simple, I'll show you one way to clean up the example above. Since I'm lazy, I'm not actually going to fix the example above but show the concept which could be filled in later.
+
+=== Ruby Class file
+	# app/helpers/blockpiles/project_hierarchy.erb
+
+	class ProjectHierarchy < Blockpile::Base
+
+	  def build(options={})
+		# use this instead of initialize
+		@projects = options[:project]
+		prepare_hierarchy
+	  end
+
+	  def prepare_hierarchy
+	    # fill in hierarchy here
+	  end
+
+	  def projects
+		# fill in code
+	  end
+
+	  def project_children(project)
+	    # could return project children
+	  end
+
+	end
+
+Here we can take care of all logic, in preparation for the view. We need not interpolate, as the template file will pull data from this class instance when needed. Here we can focus on the beauty and elegance of Ruby, and not on the mixture of presentation.
+
+=== A template file
+
+	# app/views/blockpiles/project_hierarchy.html.erb
+	
+	
+	<ul>
+		<% projects.each do |project| %>
+		
+			<li><%= project.name %></li>
+			
+			<% project_children(project).each do |child| %>
+				<li class="child"><%= child.name %></li>
+			<% end %>
+		
+		<% end %>
+	</ul>
+	
+The purpose of the template file is to "pull" logic from the Blockpile Class. We are assuming all logic will be taken care of in the class, and here we can simply focus on our view presentation, using only conditional logic (if else etc).
+
+=== helper-like function call
+
+	# app/views/{controller}/{action}.html.erb
+	
+	<%= project_hierarchy :project => @project %>
+
+There is no boiler plate for turning your Blockpile Class into a helper method, it happens under the hood. Notice we are passing @project, that will be available in your class through the options hash in the build function. The input of the builder method is completely up to you. In this example I chose to use an "options" hash. You could replace that with 3 input arguments instead if you prefer, in which case you would simply pass @project instead of assigning to a hash key.
+
+=== Summary
+	
+In essence, what could be a horrible nest of string interpolation and logic, can become a clean isolation of logic and markup language. I realize this sample solution is lacking, but I'll leave the actual logic to the developer. 
+
+=== Generator
+
+You can quickly create a Blockpile Class and Template pair by using the generator:
+
+	rails generate blockpile project_hierarchy
+	
+And thats it! You now have a Blockpile ready for use, with a helper method called "project_hierarchy".
+
+== Customize your piles
+
+Coming soon.
+
+Copyright (c) 2010 Tyler Flint, released under the MIT license

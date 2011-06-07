@@ -1,0 +1,67 @@
+
+/* SELECTOR COMPONENT */
+.selector-wrapper												{margin:0; padding:0; width:100%;}
+.selector-wrapper .button-bar									{margin:0; padding:10px 2px; overflow:hidden;}
+.selector-wrapper .button-bar a.button							{margin:0 20px 0 0; padding:5px 20px 5px 25px; font-size:; color:#000; display:block; float:left; position:relative; -moz-box-shadow: 0px 1px 4px #999; -webkit-box-shadow: 0px 1px 4px #999; box-shadow: 0px 1px 4px #999;}
+.selector-wrapper .button-bar a.button:hover					{background-color:#FCF0A1;}
+.selector-wrapper .button-bar a.button.active					{background-color:#FCF0A1;}
+.selector-wrapper .button-bar .check							{margin:0; padding:0; width:12px; height:9px; display:block; position:absolute; top:7px; left:5px; background:url('/images/bento/bento-box-sprite.png') no-repeat;}
+.selector-wrapper .button-bar .light							{background-position:-361px -50px;}
+.selector-wrapper .button-bar .dark								{background-position:-373px -50px;}
+.selector-wrapper .link-bar										{margin:0; padding:10px 0 0 0; overflow:hidden;}
+.selector-wrapper .link-bar a									{margin:0; padding:0 10px 0 7px; text-decoration:underline;}
+.selector-wrapper .link-bar a:hover								{text-decoration:none;}
+.selector-wrapper .link-bar .right-side							{margin:0; padding:0; float:right;}
+.selector-wrapper .link-bar .right-side p						{margin:0; padding:0 5px; float:left;}
+.selector-wrapper .link-bar .right-side input					{margin:0; padding:0; width:25px; height:10px; float:left; display:block;}
+.selector-wrapper .link-bar .right-side a.left-arrow			{margin:0 5px 0 0; padding:0; width:13px; height:15px; display:block; float:left; background:url('/images/bento/bento-box-sprite.png') no-repeat -300px -3px;}
+.selector-wrapper .link-bar .right-side a.right-arrow			{margin:0 0 0 5px; padding:0; width:13px; height:15px; display:block; float:left; background:url('/images/bento/bento-box-sprite.png') no-repeat -313px -3px;}
+.selector-wrapper .chart-area									{margin:0; padding:0 10px 8px 10px; width:98%; background-color:#484849;}
+.selector-wrapper .chart-area .titles							{margin:0; padding:2px 0; width:100%; overflow:hidden;}
+.selector-wrapper .chart-area .titles ul						{margin:0; padding:0; width:100%; list-style-type:none;}
+.selector-wrapper .chart-area .titles ul li						{margin:0 5.5px 0 0; padding:0; width:104px; color:#d6d6d6; float:left; text-align:center;}
+.selector-wrapper .chart-area .titles ul li.last				{margin:0;}	
+.selector-wrapper .chart-area .background-grey					{margin:0; padding:0; width:100%; background-color:#D8D9DA; overflow:hidden;}
+.selector-wrapper .chart-area .background-grey ul				{margin:0 5.5px 0 0; padding:0; list-style-type:none; float:left;}
+.selector-wrapper .chart-area .background-grey ul.last			{margin:0;}
+.selector-wrapper .chart-area .background-grey ul li			{margin:0; padding:0;}
+.selector-wrapper .chart-area .background-grey ul li a			{margin:0; padding:5px 0 5px 10px; width:94px; height:; color:#000; display:block;}
+.selector-wrapper .chart-area .background-grey ul li a.active	{background:#FDDF96 url('/images/bento/check-o.png') no-repeat 90% center;}
+.selector-wrapper .chart-area .background-grey ul li:nth-child(odd){background-color:#F3F3F4;}
+.selector-wrapper .chart-area .background-grey ul li:nth-child(even){background-color:#fff;}
+.selector-wrapper .chart-area .background-grey ul li:hover		{background-color:#FFF5D8;}
+.selector-wrapper .chart-area .background-grey ul li span		{margin:0 5px 0 0; padding:4px 0 5px 0; width:30px; text-align:center; color:#fff; background:#51B258; float:left;}
+.selector-wrapper .chart-area .background-grey ul li.active span{background:#F48B20;}
+.selector-wrapper .filter-bar									{margin:0; padding:10px 0; overflow:hidden;}
+.selector-wrapper .filter-bar label								{margin:0; padding:0; color:#919396;}		
+.selector-wrapper .filter-bar select							{margin:0 5px;}
+.selector-wrapper .filter-bar .divider							{margin:0 5px -6px; padding:0; width:1px; height:19px; background:#919396; display:inline-block;}
+.selector-wrapper .filter-bar input.refresh						{margin:0 0 2px; padding-left:17px; float:right; border-color:#919396; color:#919396; background:url('/images/bento/refresh.png') no-repeat 5px center;}
+.selector-wrapper p.drag-drop									{margin:0; padding:20px 0 10px; clear:both; font-size:14px; color:#231F20;}
+
+.selector-wrapper .info-wrapper									{margin:10px 15px; padding:0; position:relative; float:left; border:3px solid #fff; -moz-border-radius: 4px; border-radius: 4px; clear:both; -moz-box-shadow: 0px 4px 4px #999; -webkit-box-shadow: 0px 4px 4px #999; box-shadow: 0px 4px 4px #999;}
+.selector-wrapper .info-wrapper .background 					{background:#72BAE6; -moz-border-radius: 4px; border-radius: 4px;}	
+.selector-wrapper .info-wrapper .tab							{margin:0; padding:0; width:35px; height:18px; background:url('/images/bento/bento-box-sprite.png') no-repeat -106px -392px; position:absolute;}
+.selector-wrapper .info-wrapper.top .tab						{top:-18px; left:45%;}
+.selector-wrapper .info-wrapper.bottom .tab						{bottom:-18px; left:45%; background-position:-106px -409px;}
+.selector-wrapper .info-wrapper.left .tab						{top:61%; left:-18px; width:18px; height:35px; background-position:-106px -392px;}
+.selector-wrapper .info-wrapper.right .tab						{top:61%; right:-18px; width:18px; height:35px; background-position:-124px -392px;}			
+.selector-wrapper table.info-box								{margin:0; padding:0;}
+.selector-wrapper table.info-box tr								{background:transparent;}
+.selector-wrapper table.info-box tr.first td					{padding-top:5px;}
+.selector-wrapper table.info-box tr.last td						{padding-bottom:5px;}
+.selector-wrapper table.info-box td								{margin:0; padding:0; font-family:Courier New, monospace; font-size:13px;}
+.selector-wrapper table.info-box td.left						{margin:0; padding:0 0 0 15px; color:#fff; text-align:right;}
+.selector-wrapper table.info-box td.right						{margin:0; padding:0 15px 0 8px; color:#000; text-align:left;}
+.selector-wrapper table.info-box td span						{color:#edee66;}
+
+.ui-state-highlight 											{}
+
+/* JAVASCRIPT CSS FOR HOVER */
+.selector-wrapper #dhtmltooltip									{position: absolute; padding:0px; background:#72BAE6; border:3px solid #fff; -moz-border-radius: 4px; border-radius: 4px; clear:both; -moz-box-shadow: 0px 4px 4px #999; -webkit-box-shadow: 0px 4px 4px #999; box-shadow: 0px 4px 4px #999; visibility: hidden; z-index: 100;}
+.selector-wrapper #dhtmltooltip .background 					{background:#72BAE6; -moz-border-radius: 4px; border-radius: 4px;}	
+.selector-wrapper #dhtmltooltip .tab							{margin:0; padding:0; width:35px; height:18px; background:url('/images/bento/bento-box-sprite.png') no-repeat -106px -392px; position:absolute;}
+.selector-wrapper #dhtmltooltip.top .tab						{top:-18px; left:45%;}
+.selector-wrapper #dhtmltooltip.bottom .tab						{bottom:-18px; left:45%; background-position:-106px -409px;}
+.selector-wrapper #dhtmltooltip.left .tab						{top:61%; left:-18px; width:18px; height:35px; background-position:-106px -392px;}
+.selector-wrapper #dhtmltooltip.right .tab						{top:61%; right:-18px; width:18px; height:35px; background-position:-124px -392px;}			

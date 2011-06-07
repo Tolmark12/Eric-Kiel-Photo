@@ -1,0 +1,3 @@
+<% @objects.each do |obj| %>
+	<input type="hidden" name="<%=@parent_name%>[<%=@item_name%>][]" value="<%=if obj then obj.id else -1 end%>" />
+<%end%>

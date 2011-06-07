@@ -1,0 +1,3 @@
+function(data) { 
+   var content = data["content"];
+   $('#<%= p.get_id %> .updatable').replaceWith(content); eval(data["javascript"]); }

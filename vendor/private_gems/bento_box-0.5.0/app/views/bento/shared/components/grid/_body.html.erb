@@ -1,0 +1,42 @@
+<% elements          = p.get_relation
+   columns           = p.get_columns
+   last_key          = columns.to_a[-1][0]
+   element_class     = p.get_element_class
+   javascript_action = '' 
+   columns.each do |name,options|
+     options[:css_class] ||= ""
+     options[:css_class] << " last" if  name == last_key
+     options[:css_class] << " active" if  name.to_s == pile.sort_column && pile.sortable?
+   end
+%>
+<tfoot class="updatable">
+	<tr>
+	<td colspan="<%=columns.size%>">
+	<% if pile.paginatable? %>
+	  <%= pile.first_paginatable %>  
+	  <%= pile.prev_paginatable %>  
+	  <% start_page = (p.get_page_number < 11) ? 1 : p.get_page_number - 10  %>
+	  <% (0..20).each do |page_number| %>
+	    <%= pile.paginatable(start_page + page_number) %>
+	  <% end %>
+	  <%= pile.next_paginatable %>  
+	  <%= pile.last_paginatable %>  
+	<% end %>
+	</td>
+	</tr>
+</tfoot>
+<tbody class="updatable">
+<% elements.each do |element| %>
+	 <% row_id = "#{element_class}-#{element.id}" %>
+	 <% pile.add_javascript_action "$('\##{row_id}').click( function(e) { #{pile.get_default_action.call(element)} });" unless pile.get_default_action.nil? %>
+<tr id="<%= row_id %>">
+  <% columns.each do |name,options| %>
+    <td class="<%= options[:css_class] %>"><%= (options[:content].class == Proc)? options[:content].call(element) : options[:content] || element.send(name) %></td>
+  <% end %>
+</tr>
+<% end %>
+</tbody>
+<% if pile.get_options[:ajax] %>
+<%= pile.grid_javascript %>
+<%= p.paginatable_ajax  if p.paginatable? %>
+<% end %>

@@ -1,0 +1,30 @@
+<%%= seventy_thirty_container do |c| %>
+  <%%= c.left do %>  
+    <%%= bento_form([:bento, @<%= singular_table_name %>]) do |f| %>
+      <%% if @<%= singular_table_name %>.errors.any? %>
+        <div id="error_explanation">
+          <h2><%%= pluralize(@<%= singular_table_name %>.errors.count, "error") %> prohibited this <%= singular_table_name %> from being saved:</h2>
+    
+          <ul>
+          <%% @<%= singular_table_name %>.errors.full_messages.each do |msg| %>
+            <li><%%= msg %></li>
+          <%% end %>
+          </ul>
+        </div>
+      <%% end %>
+      <%%= f.group :default, {} do |g|%> 
+    <% for attribute in attributes -%>
+      <% if attribute.name != 'created_at' and attribute.name != 'updated_at' -%>
+		<div class="left-container">
+          <%%= g.label :<%= attribute.name %> %>
+		</div>
+          <%%= g.<%= attribute.field_type %> :<%= attribute.name %> %><br />
+      <% end -%>
+    <% end -%>
+      <%% end %>
+      <%%= f.submit %>
+    <%% end %>
+  <%% end %>
+  <%%= c.right do %>
+  <%% end %>
+<%% end %>

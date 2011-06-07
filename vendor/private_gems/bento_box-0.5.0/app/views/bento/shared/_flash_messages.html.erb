@@ -1,0 +1,31 @@
+<div id="message-box" class="message-box">
+	<% {:notice => "success", :error => "error", :alert => "alert"}.each_pair do |key, value| %>
+  	  <% if (flash[key]) %>
+  	  	<div style="" class="message <%=value%>">
+		  <a class="close" href="#link"></a>
+		 <%=flash[key]%>
+		  <div class="icon"></div>
+		</div>
+		<div style="display: none;" class="message-small <%=value%>-small"></div>
+	  <% end %>
+	<% end %>
+</div>
+<%= javascript_tag do %>
+	$(document).ready(function () {
+		$('.message-box .message').each(function () {
+			var message 		= $(this);
+			var smallMessage 	= message.next('.message-small');
+			message.fadeIn('slow');
+			message.find('.close').click(function () {
+				message.fadeOut('fast', function () {
+					smallMessage.fadeIn('fast');
+				});
+			});
+			smallMessage.click(function () {
+				smallMessage.fadeOut('fast', function () {
+					message.fadeIn('fast');
+				});
+			});
+		});
+	});
+<% end %>

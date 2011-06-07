@@ -1,0 +1,20 @@
+<%= seventy_thirty_container do |c| %>
+  <%= c.left do %>  
+<%= bento_form([:bento, @role]) do |f| %>
+	<%= f.group :default, {} do |g|%>
+		<div class="left-container">
+			<%= g.label :name %>
+		</div>
+      	<%= g.text_field :name %><br />
+
+		<div class="left-container">
+	    	<%= g.label :actions %>
+		</div>
+		<%= g.selector :actions, :label => :path %>
+	<% end %> <br/>
+	<%= f.submit %>
+<% end %>
+  <% end %>
+  <%= c.right do %>
+  <% end %>
+<% end %>

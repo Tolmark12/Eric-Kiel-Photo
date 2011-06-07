@@ -1,0 +1,83 @@
+<% element   = pile.get_element
+   options   = pile.get_options
+   first_key = (p.get_groups.size > 0) ? pile.get_groups[0]: ""
+   random    = rand(1000) %>
+<% if pile.is_editable %>
+   <% content_for :toolbar do %>
+      <%= pile.submit 'Save', {:id => "save-#{random}", :class => 'button-thick save'} %>
+   <% end %>
+   <%= javascript_tag do %>
+          $(document).ready(function(){
+            $('#<%= "#{element.class}-#{random} input.hidden" %>').hide();			
+            $('#<%= "save-#{random}" %>').click (function () {
+              $('#<%= "#{element.class}-#{random}" %>').submit();
+            });
+    	    $('.form-group').hide();
+            $('#<%= "#{first_key}" %>').show();
+		    <% pile.get_groups.each do |name| %>
+            $('#<%= "#{name}-link" %>').click (function () {
+			  $('.form-group').hide();
+			  $('.form-component li.active').removeClass('active');
+              $('#<%= "#{name}-link" %>').parent().addClass('active');
+              $('#<%= "#{name}" %>').show();
+            });
+		    <% end %>
+			$('.image-uploader').each(function(id, value){
+				var attributeParams = {"thumbnail": $(value).hasClass('thumbnail')};
+				var sizes   = $(value).children('span.sizes').text();
+				var fields  = $(value).children('span.fields').text();
+				var heights = $(value).children('span.size_heights').text();
+				if (sizes) {
+					attributeParams["sizes"]  = sizes;
+					attributeParams["fields"] = fields;
+					attributeParams["size_heights"]  = heights;
+				}
+				new qq.FileUploader({
+					element: value,
+				    action: '<%= bento_image_upload_path %>',
+					params: attributeParams,
+					allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+					onComplete: function(id, fileName, responseJSON) {
+						var inputValue = $(value).hasClass('thumbnail') ? fileName : responseJSON["url"];
+						var parent = $(value).parent();
+						parent.children('input.base').attr('value', inputValue);
+						for (var i = 0; i < responseJSON["other_sizes"].length; i++) {
+							field = responseJSON["other_sizes"][i]["field"];
+							size_url = responseJSON["other_sizes"][i]["url"];
+							parent.children('input.' + field).attr('value', size_url);
+						}
+						image = (parent.children('img') != null) ? parent.children('img') : $(document.createElement('img'));
+					 	image.attr('src', responseJSON["url"]);
+					 	image.attr('height', 100);
+					 	$(value).prepend(image);
+					 }
+				   	});
+			});
+          });
+  <% end %>
+<% end %>
+<div class="form-container">
+  <% if pile.get_groups.size > 1 %>
+  <ul class="form-component">
+    <% pile.get_groups.each do |name, content| %>
+      <li <%= raw 'class="active"' if name == first_key %>><%= link_to(name.to_s.humanize, '#', :id => "#{name}-link") %></li>
+    <% end %>
+  </ul>
+  <% end %>
+  <div class="form-content">
+    <%= form_for(*pile.get_form_options, :builder => BentoBox::FormBuilder, :html => {:id => "#{element.class}-#{random}", :remote => true }) do |f| %>
+    <% if element.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(element.errors.count, "error") %> prohibited this role from being saved:</h2>
+  
+        <ul>
+        <% element.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+	<%= p.get_content %>
+    <% end %>
+  </div>
+</div>

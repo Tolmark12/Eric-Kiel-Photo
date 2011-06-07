@@ -1,14 +1,5 @@
-GIT
-  remote: git@github.com:Tolmark12/bento-mongoid.git
-  revision: ab9b3a75115b19c91ff0e13a3b5f3c1bbd8d5064
-  specs:
-    bento_box_mongo (0.0.1)
-      bento_box
-      mongoid
-
-GIT
-  remote: git@github.com:Tolmark12/bento.git
-  revision: 68c0bbf617f31016bd70a4e8e627f0664221bc13
+PATH
+  remote: vendor/private_gems/bento_box-0.5.0
   specs:
     bento_box (0.5.0)
       aws-s3
@@ -20,9 +11,17 @@ GIT
       jrails
       rmagick
 
-GIT
-  remote: git@github.com:tylerflint/blockpile.git
-  revision: 90a94b312e2c8a6b7add48bb36b14312e2464da4
+PATH
+  remote: vendor/private_gems/bento_box_mongo-0.0.2
+  specs:
+    bento_box_mongo (0.0.2)
+      bento_box
+      bento_box
+      mongoid (>= 2.0.0.rc.6)
+      mongoid
+
+PATH
+  remote: vendor/private_gems/blockpile-0.5.1
   specs:
     blockpile (0.5.1)
 

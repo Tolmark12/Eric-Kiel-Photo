@@ -1,0 +1,7 @@
+<%% content_for :bread_crumb do %>
+	<%%= bread_crumb bread_crumb_trail, @<%= singular_table_name %> %>
+<%% end %>
+<%% content_for :toolbar do %>
+  <%%= link_to <%= singular_url_helper %>_path(@<%= singular_table_name %>), :confirm => 'Are you sure?', :method => :delete  do %><input type="submit" value="Delete" class="button-thin delete" /><%% end %>
+<%% end %>
+<%%= render 'form' %>

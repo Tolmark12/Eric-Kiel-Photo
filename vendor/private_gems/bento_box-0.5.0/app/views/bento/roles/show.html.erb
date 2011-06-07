@@ -1,0 +1,11 @@
+<% content_for :bread_crumb do %>
+	<%= bread_crumb bread_crumb_trail, @role %>
+<% end %>
+<%= bento_form([:bento, @role], :editable => false ) do |f| %>
+  <%= f.group :default, {} do |g| %>
+    <%= g.label :name %>
+    <%= g.text_field :name %><br />
+    <%= g.label :actions %>
+    <div><%= raw @role.actions.map(&:path).join(" <br/> ") %></div>
+  <% end %>
+<% end %>

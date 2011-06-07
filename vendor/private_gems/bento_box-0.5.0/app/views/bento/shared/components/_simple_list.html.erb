@@ -1,0 +1,12 @@
+<ul class="simple-list-component">
+  <li class="title"><%= (pile.get_title =~ /^<a.*<\/a>$/) ? pile.get_title : link_to(pile.get_title, '#') %></li>
+  <% elements = pile.get_elements 
+     elements.each do |element| 
+     css_class = ''
+     if element == elements[0]
+       css_class = "first"
+     elsif  element == elements[-1] 
+       css_class = "last"
+     end  %>
+    <li class="<%= css_class %>"><%= (element =~ /^<a.*<\/a>$/) ? element : link_to(element, '#') %></li>
+  <% end %></ul>

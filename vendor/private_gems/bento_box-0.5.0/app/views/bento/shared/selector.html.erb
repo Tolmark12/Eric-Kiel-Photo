@@ -1,0 +1,19 @@
+   <% options = {:type  => params[:type],
+            	 :attribute_label => params[:label],
+            	 :is_label_image  => params[:is_label_image],
+          		 :destination     => params[:destination], 
+				 :page => (params["#{params[:attribute]}_page".to_sym] || 1),
+          		 :paginatable => true, :orderable => params[:orderable], 
+				 :filterable => true, :sortable => true} %>
+   <% if params[:body_only] %>
+      <%= selector_instance(@object,@attribute_relation,options.merge({:ajax => true})).body %>
+   <% else %>
+   	  <% content_for :bread_crumb do %>
+   	  	<ul data-path="<%=request.env['PATH_INFO']%>"> 
+			<li><a href="<%=url_for({:controller => params[:object].pluralize})%>" rel="address:<%=url_for({:controller => params[:object].pluralize})%>"><%= params[:object].titleize %><span class="arrow"></span></a></li>
+			<li class="last"><a href="<%=url_for({:controller => params[:object].pluralize, :action => (params[:id]) ? :edit : :new, :id => params[:id]})%>" rel="address:<%=url_for({:controller => params[:object].pluralize, :action => (params[:id]) ? :edit : :new, :id => params[:id]})%>"><%= (params[:id]) ? params[:id].titleize : "New" %><span class="arrow"></span></a></li>
+			<li><a class="last" href="#"><%= params[:attribute].titleize %></a></li>
+		</ul>
+   	  <% end %>
+      <%= selector(@object,@attribute_relation, options) %>
+   <% end %>

@@ -1,0 +1,84 @@
+<% object, object_class = pile.get_object, pile.get_object_class %>
+<% column_count, row_count = pile.get_column_count, pile.get_row_count %>
+<% element_class, element_count, elements = pile.get_attribute_class, pile.get_attribute_count, pile.get_attribute_relation %>
+<% associated_elements = object.send("#{element_class}".tableize.to_sym) %>
+<div class="updatable">
+<div class="link-bar">
+	<%= link_to "#", :onclick=> "$('.chart-area li a:not(.active)').click(); return false;" do %>Select All<% end %>|
+	<%= link_to "#", :onclick=> "$('.chart-area li a.active').click(); return false;" do %>De-Select All<% end %>|
+	<%= link_to "#", :onclick=> "$('.chart-area li a').click(); return false;" do %>Toggle All<% end %>
+	<div class="right-side">
+		<% if p.paginatable? %>
+		<p>Page</p>
+		<%= p.prev_paginatable :title => '', :class => 'left-arrow' %>
+		<input type="text" name="page" class="paginatable" value="<%= p.get_page_number %>" />
+		<%= p.next_paginatable :title => '', :class => 'right-arrow' %>
+		<p>of</p>
+		<p><%= p.get_page_count %></p>
+		<% end %>
+	</div>
+</div>
+<div class="chart-area">
+	<div class="titles">
+		<ul>
+			<% (0..column_count-1).each do |column_number| %>
+				<li class="<%= "last" if column_number == column_count-1 %>">
+					<%= (column_number * row_count) + 1 %> - <%= (column_number + 1) * row_count %>
+			    </li>
+			<% end %>				
+		</ul>
+	</div>
+		<div class="background-grey">
+			<% (0..column_count-1).each do |column_number| %>
+				<ul class="<%= "last" if column_number == column_count-1 %>">
+					<% (0..row_count-1).each do |row_number| %>
+					    <% element_index = (column_number)*row_count+row_number %>
+					    <% if element_index < element_count %>
+					    <% css_classes = [("active" if associated_elements.include?(elements[element_index])) ]%>
+						<li><a id="<%= "#{"#{element_class}".underscore}_#{elements[element_index].id}" %>" href="#" title="<%= elements[element_index].send(pile.get_attribute_label) %>" class="<%= css_classes.join(' ') %>">
+							 <% if p.is_label_image? then %>
+							 <%= image_tag(elements[element_index].send(pile.get_attribute_label), {:size => "50x50"})%>
+							 <% else %>
+						     <%= elements[element_index].send(pile.get_attribute_label)[0,9] %>...
+							 <% end %></a></li>
+						<% end %>
+					<% end %>
+			    </ul>
+			<% end %>
+		</div>
+	</div>
+	<%= pile.paginatable_ajax if pile.paginatable? && p.get_options[:ajax] %>
+	<script type="text/javascript">
+//<![CDATA[
+$(document).ready(function() {
+    $('#<%= pile.get_id %> .updatable li a').click(function() {
+        if ($(this).hasClass('active')) {
+            $("#<%= pile.get_destination %> input[value='" + this.id.replace("<%="#{element_class}".underscore %>_", "") + "']").remove();
+            <%=raw %|
+                $('#sort_' + this.id).remove();
+                $("ul.sortable > li.ui-state-default > span").each(function(index, value) {
+                    $(value).html(index + 1);
+                });
+            | if p.is_orderable? %>
+        } else {
+            $('#<%= pile.get_destination %>').append("<input name='<%="#{object_class}".underscore %>[<%= "#{element_class}".underscore %>_ids][]' type='hidden' value='" + this.id.replace("<%="#{element_class}".underscore %>_", "") + "' />");
+            <%=raw %|
+                var lastInOrder = $('ul.sortable > li:last');
+                if (lastInOrder.length > 0) {
+                	var curNumber = parseInt(lastInOrder.children('span').text()) + 1;
+                	var sortableItem = $('<li id="sort_' + this.id + '" class="ui-state-default"><span>' + curNumber + '</span><a>' + $(this).html() + '</a></li>');
+                    lastInOrder.after(sortableItem);
+                 } else {
+	                var curNumber = 1;
+                	var sortableItem = $('<li id="sort_' + this.id + '" class="ui-state-default"><span>' + curNumber + '</span><a>' + $(this).html() + '</a></li>');
+                    $('ul.sortable:first').append(sortableItem);
+				}
+				| if p.is_orderable? %>
+            }
+            $(this).toggleClass('active');
+            return false;
+        });
+    });		
+	   //]]>
+	</script>
+</div>

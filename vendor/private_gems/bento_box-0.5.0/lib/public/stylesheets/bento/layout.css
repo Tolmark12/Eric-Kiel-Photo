@@ -1,0 +1,105 @@
+/***** CONTAINERS *****/
+@import url('containers/one-hundred-container.css');
+@import url('containers/fifty-fifty-container.css');
+@import url('containers/thirty-seventy-container.css');
+@import url('containers/seventy-thirty-container.css');
+@import url('containers/thirty-three-container.css');
+
+/***** COMPONENTS *****/
+@import url('components/file-uploader.css');
+@import url('components/simple-list-component.css');
+@import url('components/note-component.css');
+@import url('components/bread-crumb-component.css');
+@import url('components/grid-component.css');
+@import url('components/form-component.css');
+@import url('components/acl-component.css');
+@import url('components/messaging-component.css');
+@import url('components/selector-component.css');
+@import url('components/filter-component.css');
+@import url('components/view-port.css');
+
+/*******************General*********************/
+body		 									{margin:0; padding:0; font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+
+h1												{margin:0; padding:0 0 10px 0; font-size:25px; font-weight:normal;}
+h2												{margin:0; padding:0 0 8px 0; font-size:19px; font-weight:normal;}
+h3												{margin:0; padding:0 0 5px 0; font-size:15px; font-weight:normal;}
+h4,h5,h6    									{margin:0; padding:0 0 5px 0; font-size:12px; font-weight:normal;}
+
+p 												{margin:0; padding:0; font-size:12px; line-height:18px;}
+
+ol,ul,li										{margin:0; padding:0; font-size:12px;}
+
+a												{margin:0; padding:0; font-size:12px; color:#F79431; text-decoration:none;}
+a:hover											{color:#;}
+
+table											{margin:0; padding:0; border-collapse:collapse;}
+
+tr, td, th										{margin:0; padding:0; vertical-align:top;}
+
+form,input										{margin:0; padding:0;}
+
+img												{border:none;}
+
+.full-area										{margin:0 auto; padding:0; width:100%;}
+.inner-area										{margin:0 auto; padding:20px; width:1000px; position:relative;}
+
+.clear 											{clear:both;}
+.clear-left										{clear:left;}
+.clear-right									{clear:right;}
+
+.bold											{font-weight:bold;}
+.italic											{font-style:italic;}
+.center											{text-align:center;}
+/*****************header***********************/
+.header											{margin:0; padding:0; width:100%; background-color:#494B4F; position:relative; z-index:6;}
+.inner-header									{margin:0 auto; padding:0; width:1000px; height:85px; position:relative;}
+.logo											{margin:0; padding:0; width:222px; height:33px; display:block; background:url('/images/bento/logo.jpg') no-repeat; position:absolute; bottom:16px; left:36px;}
+.login-area										{margin:0; padding:0; position:absolute; bottom:11px; right:65px;}
+.login-area p									{margin:0; padding:0; color:#BCBEC0; font-size:11px;}
+.login-area p .break							{font-size:18px;}
+.login-area a									{margin:0; padding:0 20px; color:#ffffff; font-size:12px; text-decoration:none;}
+.login-area a.account-name						{margin:0; padding:0 20px 0 5px; color:#FFDC2C;}
+
+/***************navigation*********************/
+.navigation										{margin:0 0 20px 0; padding:0; width:100%; height:36px; border-bottom:1px solid #e7e7e7;}
+.inner-nav										{margin:0 auto; padding:0; width:1000px; height:36px; position:relative;}
+.inner-nav ul									{margin:0; padding:0; width:1000px; height:36px; list-style-type:none; position:relative; z-index:5;} 
+.inner-nav ul li:hover							{-moz-box-shadow: 0px -3px 9px #999; -webkit-box-shadow: 0px 0px 9px #999; box-shadow: 0px 0px 9px #999;}
+.inner-nav ul li								{margin:3px 0; padding:0; float:left; position:relative; border-left:1px solid #e7e7e7;}
+.inner-nav ul li.first							{border:none;}
+.inner-nav ul li.border-white					{border-color:#fff;}
+.inner-nav ul li a								{margin:0; padding:10px 15px 0 15px; height:20px; display:block; color:#F79431; font-size:13px; text-decoration:none;}
+.inner-nav ul li a.sub-arrow					{background:url('/images/bento/sub-arrow.jpg') no-repeat 97% 80%;}
+.inner-nav ul li a:hover						{color:#000000; background-color:#FFD05C;}
+.inner-nav ul li:hover							{margin:0; padding:3px 0 3px 1px; background-color:#FFD05C; border-left:none;}
+.inner-nav ul li:hover a						{color:#000000;}
+.inner-nav ul li ul								{margin:0; padding:0; width:auto; height:auto; display:none; position:absolute; top:36px; left:0px; z-index:-1;}
+.inner-nav ul li ul								{-moz-box-shadow: 0px 0px 9px #999; -webkit-box-shadow: 0px 0px 9px #999; box-shadow: 0px 0px 9px #999;}
+.inner-nav ul li:hover ul						{display:block;}
+.inner-nav ul li ul li							{margin:0; padding:0; border-top:1px dashed #BCBEC0; width:auto; border-left:none; float:none; background-color:#FFD05C;}
+.inner-nav ul li:hover ul li					{-moz-box-shadow: 0px 0px 0px #999; -webkit-box-shadow: 0px 0px 0px #999; box-shadow: 0px 0px 0px #999;}
+.inner-nav ul li:hover ul li					{padding:0;}
+.inner-nav ul li ul li a						{margin:0; color:#000000; white-space:nowrap;}
+.inner-nav ul li ul li a:hover					{background-color:#FCB551;}
+.inner-nav ul li ul li ul						{padding:0px 0 0 0; margin:10px 0 0 0; z-index:1;}
+.inner-nav ul li:hover ul li ul					{display:none; position:absolute; top:0px; left:70%;}
+.inner-nav ul li ul li:hover ul					{display:block;}
+
+/* LOGIN PAGE */
+.login											{margin:220px auto 0 auto; padding:0; width:894px; height:318px; position:relative; background:url('/images/bento/bento-box-sprite.png') no-repeat 0 -67px;}
+.login .logo									{margin:0; padding:0; width:97px; height:102px; display:block; background:url('/images/bento/bento-box-sprite.png') no-repeat 0 -386px; position:absolute; top:116px; left:200px;}
+.login .sign-in									{margin:0; padding:0; width:250px; position:absolute; top:105px; right:185px;}
+.login .sign-in label							{margin:0; padding:0; width:100%; color:#5C4833; font-size:13px;}
+.login .sign-in input							{margin:5px 0 10px 0; padding:0; width:100%; height:27px; border:1px solid #d6d6d6;}
+.login .sign-in a								{color:#155D78;}
+.login .sign-in a:hover							{text-decoration:underline;}
+.login .sign-in	input.login-btn					{margin-top:10px; border-color:#488EA8; color:#488EA8; float:right;}
+.login .sign-in	input.login-btn:hover			{text-decoration:none;}
+
+/* BUTTONS */
+.button-thick									{margin:0; padding:0 8px !important; width:auto !important; height:auto !important; cursor:pointer; background-color:#fff; font-size:14px; font-weight:bold; border:4px solid !important; -moz-border-radius: 6px; border-radius: 6px; -moz-box-shadow: 0px 1px 2px #999; -webkit-box-shadow: 0px 1px 2px #999; box-shadow: 0px 1px 2px #999;}
+.button-thin									{margin:0; padding:0 8px; font-size:13px; background-color:#fff; font-weight:bold; cursor:pointer; border:2px solid !important; -moz-border-radius: 6px; border-radius: 6px; -moz-box-shadow: 0px 1px 2px #999; -webkit-box-shadow: 0px 1px 2px #999; box-shadow: 0px 1px 2px #999;}
+input.new										{margin:0 0 2px; padding-left:17px; border-color:#919396; color:#919396; background:url('/images/bento/new.png') no-repeat 5px center;}
+input.arrow-up									{margin:0 0 2px; padding-left:17px; border-color:#919396; color:#919396; background:url('/images/bento/up-arrow.png') no-repeat 5px center;}
+input.sort-order								{margin:0 0 2px; padding-left:17px; border-color:#919396; color:#919396; background:url('/images/bento/sort-order.png') no-repeat 5px center;}
