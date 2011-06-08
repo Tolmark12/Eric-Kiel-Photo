@@ -21,7 +21,7 @@ module BentoBox
                   :attribute => relation_singular, :label => options[:label], :is_label_image => options[:is_label_image],
                   :id => object.id, :orderable => options[:orderable],
                   :destination => "#{object_class_str}-#{relation.to_s}"),
-                                  :rel =>"address:/#{Rails.application.routes.url_helpers.bento_selector_path(:type => (options[:type] || "default"), :object => object_class_str, 
+                                  :rel =>"address:#{Rails.application.routes.url_helpers.bento_selector_path(:type => (options[:type] || "default"), :object => object_class_str, 
                   :attribute => relation_singular, :label => options[:label], :is_label_image => options[:is_label_image],
                   :id => object.id, :orderable => options[:orderable],
                   :destination => "#{object_class_str}-#{relation.to_s}")}", :class => "selector-link")
