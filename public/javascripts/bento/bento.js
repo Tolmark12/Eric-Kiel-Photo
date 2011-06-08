@@ -1,7 +1,8 @@
 function moveToPane(href) {
-	history.pushState({}, '', href);
 	var pane = $('.view-port-container > div[data-path="'+href+'"]');
 	if (pane.length > 0) {
+		if (window.location.pathname != href) 
+			history.pushState({}, '', href);
 		$('.buttons').hide();
 		$('.buttons > div:not(div[data-path='+href+'])').hide();
 		$('.buttons > div[data-path='+href+']').nextAll('div').remove();
@@ -101,6 +102,8 @@ $(document).ready(function() {
         attachEvents();
     });
 	$(window).bind('popstate', function() {
-		moveToPane(location.pathname);
+		if(!moveToPane(location.pathname)) {
+			window.location = location;
+		};
 	});
 });
