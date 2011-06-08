@@ -1,4 +1,4 @@
-class ConfigSettingsController < ApplicationController
+class StockConfigsController < ApplicationController
 
   def index
     @stock_config = StockConfig.instance
