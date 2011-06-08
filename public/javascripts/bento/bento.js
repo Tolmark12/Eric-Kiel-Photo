@@ -89,7 +89,7 @@ function attachEvents() {
     });
     $('a[rel^="address:"]').unbind('click');
     $('a[rel^="address:"]').click(function(e) {
-    	ajaxClick(this.href.replace(/[A-Za-z]+\:\/\/[:.A-Za-z0-9]+/gi, ""));
+    	ajaxClick(this.href.replace(/[A-Za-z]+\:\/\/[:.\-\_A-Za-z0-9]+/gi, ""));
     	e.preventDefault();
     	return false; 
     });
