@@ -14,19 +14,18 @@ module BentoBox
       options            = args.extract_options!
       object_class_str   = (options[:object] || object.class.to_s.underscore)
       relation_singular  = relation.to_s.singularize
-      relation_object    = eval(relation_singular.classify)
+      relation_object    = Kernel.const_get(relation_singular.classify)
       options[:label]   ||= relation_object.respond_to?(:name) ? :name : relation_object.respond_to?(:title) ? :title : :id
       
-      selector_tag = link_to("",Rails.application.routes.url_helpers.bento_selector_path(:type => (options[:type] || "default"), :object => object_class_str, 
+      destination  = "#{object_class_str}-#{relation.to_s}"
+      url_location = Rails.application.routes.url_helpers.bento_selector_path(:type => (options[:type] || "default"), :object => object_class_str, 
                   :attribute => relation_singular, :label => options[:label], :is_label_image => options[:is_label_image],
                   :id => object.id, :orderable => options[:orderable],
-                  :destination => "#{object_class_str}-#{relation.to_s}"),
-                                  :rel =>"address:#{Rails.application.routes.url_helpers.bento_selector_path(:type => (options[:type] || "default"), :object => object_class_str, 
-                  :attribute => relation_singular, :label => options[:label], :is_label_image => options[:is_label_image],
-                  :id => object.id, :orderable => options[:orderable],
-                  :destination => "#{object_class_str}-#{relation.to_s}")}", :class => "selector-link")
+                  :destination => destination)
+      selector_tag = link_to("",url_location,
+                                  :rel =>"address:#{url_location}", :class => "selector-link")
       selector_tag << @template.submit_tag("Select #{relation.to_s.titleize}", :class => 'button-thin select-items', :onclick => '$(this).prev("a.selector-link").click(); return false;')
-      selector_tag << "<div id='#{object_class_str}-#{relation.to_s}'>".html_safe
+      selector_tag << "<div id='#{destination}'>".html_safe
       object.send(relation).each do |action|
         selector_tag << @template.hidden_field("#{@object_name}[#{relation_singular}_ids]", '', objectify_options({:id => "#{relation_singular}_#{action.id}",:value => action.id}))
       end

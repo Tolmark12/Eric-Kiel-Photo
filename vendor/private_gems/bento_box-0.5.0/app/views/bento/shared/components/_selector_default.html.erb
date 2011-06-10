@@ -1,5 +1,7 @@
-<% object, object_class = pile.get_object, pile.get_object_class %>
+<% object, object_class = pile.get_object, pile.get_object_class_str %>
+<% object_str_underscore = p.get_object_str_underscore %>
 <% element_class, element_count, elements = pile.get_attribute_class, pile.get_attribute_count, pile.get_attribute_relation %>
+<% element_str_underscore = p.get_attribute_str_underscore %>
 <% associated_elements = object.send("#{element_class}".tableize.to_sym) %>
 <% column_count, row_count, sort_row_count = pile.get_column_count, pile.get_row_count, (associated_elements.count / p.get_column_count) + 1 %>
 <div id="<%= pile.get_id %>" class="selector-wrapper default content-parent" style="float:left;">
@@ -53,7 +55,7 @@
 		</select>
 		<label>order</label>
 		<span class="divider"></span>
-		<a href="<%= bento_sorter_path({:parent => "#{object_class}".underscore, :object => "#{element_class}".underscore,:sort_column => ':sort_column',:sort_direction => ':sort_direction',:ids => ':ids'}) %>"></a>
+		<a href="<%= bento_sorter_path({:parent => object_str_underscore, :object => element_str_underscore,:sort_column => ':sort_column',:sort_direction => ':sort_direction',:ids => ':ids'}) %>"></a>
 		<input id="sort-order" class="button-thin sort-order" type="submit" value="Order">
 	</div>
 	<div class="chart-area">
@@ -73,16 +75,10 @@
 					    <% element_index = (column_number)*sort_row_count+row_number %>
 					    <% if associated_elements[element_index] %>
 					    <% css_classes = []%>
-						<li id="<%= "sort_#{"#{element_class}".underscore}_#{associated_elements[element_index].id}" %>" class='ui-state-default'><span><%= element_index + 1%></span><a href="#link" title="<%= associated_elements[element_index].send(pile.get_attribute_label) %>" class="<%= css_classes.join(' ') %>">
+						<li id="<%= "sort_#{element_str_underscore}_#{associated_elements[element_index].id}" %>" class='ui-state-default'><span><%= element_index + 1%></span><a href="#link" title="<%= associated_elements[element_index].send(pile.get_attribute_label) %>" class="<%= css_classes.join(' ') %>">
 							 <% if p.is_label_image? then %>
-							 <img class="loading" alt="Loading" src="/images/bento/loading.gif" />
-							 <% image_location = associated_elements[element_index].send(pile.get_attribute_label)%>
-							 <script>
-								$.get('<%=image_location%>',function(data) {
-							 		$('<%= "sort_#{"#{element_class}".underscore}_#{associated_elements[element_index].id}" %> img.loading').replaceWith('<%= image_tag(image_location, {:size => "50x50"})%>');
-								});
-							 </script>
-							 <% else %>
+							 <%= image_tag(associated_elements[element_index].send(pile.get_attribute_label), {:size => "50x50"})%>
+							<% else %>
 						     <%= associated_elements[element_index].send(pile.get_attribute_label)[0,9] %>...
 							 <% end %></a></li>
 						<% end %>
@@ -102,7 +98,7 @@
 					var movedItem = $(ui.item);
 					var newPrev = movedItem.prev('#<%= pile.get_id %> .sortable > li');
 					newPrev = (newPrev.length > 0) ? $(newPrev[newPrev.length-1]) : null;
-					var inputItem = $('#<%= p.get_destination %>  input[value="' + movedItem.attr('id').replace("sort_<%="#{element_class}".underscore %>_", "") + '"]');
+					var inputItem = $('#<%= p.get_destination %>  input[value="' + movedItem.attr('id').replace("sort_<%=element_str_underscore %>_", "") + '"]');
 					if (newPrev == null) {
 						$('#<%= p.get_destination %>').prepend(inputItem);
 					} else {
@@ -141,7 +137,7 @@
 				$('body').append($('<ul id="temp-box" style="display:none;" />').append($('ul.sortable > li')));					
 				inputs.each(function(index, value) {
 					var col = sortableColumns.get(Math.floor(index/perColumn));
-					var sortItem = $("#sort_<%="#{element_class}".underscore %>_"+$(value).val());
+					var sortItem = $("#sort_<%=element_str_underscore %>_"+$(value).val());
 					sortItem.find('span').text(index+1);
 					$(col).append(sortItem);
 				});

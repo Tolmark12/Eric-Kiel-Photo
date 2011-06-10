@@ -1,6 +1,8 @@
-<% object, object_class = pile.get_object, pile.get_object_class %>
+<% object, object_class = pile.get_object, pile.get_object_class_str %>
+<% object_str_underscore = p.get_object_str_underscore %>
 <% column_count, row_count = pile.get_column_count, pile.get_row_count %>
 <% element_class, element_count, elements = pile.get_attribute_class, pile.get_attribute_count, pile.get_attribute_relation %>
+<% element_str_underscore = p.get_attribute_str_underscore %>
 <% associated_elements = object.send("#{element_class}".tableize.to_sym) %>
 <div class="updatable">
 <div class="link-bar">
@@ -35,7 +37,7 @@
 					    <% element_index = (column_number)*row_count+row_number %>
 					    <% if element_index < element_count %>
 					    <% css_classes = [("active" if associated_elements.include?(elements[element_index])) ]%>
-						<li><a id="<%= "#{"#{element_class}".underscore}_#{elements[element_index].id}" %>" href="#" title="<%= elements[element_index].send(pile.get_attribute_label) %>" class="<%= css_classes.join(' ') %>">
+						<li><a id="<%= "#{element_str_underscore}_#{elements[element_index].id}" %>" href="#" title="<%= elements[element_index].send(pile.get_attribute_label) %>" class="<%= css_classes.join(' ') %>">
 							 <% if p.is_label_image? then %>
 							 <%= image_tag(elements[element_index].send(pile.get_attribute_label), {:size => "50x50"})%>
 							 <% else %>
@@ -53,7 +55,7 @@
 $(document).ready(function() {
     $('#<%= pile.get_id %> .updatable li a').click(function() {
         if ($(this).hasClass('active')) {
-            $("#<%= pile.get_destination %> input[value='" + this.id.replace("<%="#{element_class}".underscore %>_", "") + "']").remove();
+            $("#<%= pile.get_destination %> input[value='" + this.id.replace("<%=element_str_underscore %>_", "") + "']").remove();
             <%=raw %|
                 $('#sort_' + this.id).remove();
                 $("ul.sortable > li.ui-state-default > span").each(function(index, value) {
@@ -61,7 +63,7 @@ $(document).ready(function() {
                 });
             | if p.is_orderable? %>
         } else {
-            $('#<%= pile.get_destination %>').append("<input name='<%="#{object_class}".underscore %>[<%= "#{element_class}".underscore %>_ids][]' type='hidden' value='" + this.id.replace("<%="#{element_class}".underscore %>_", "") + "' />");
+            $('#<%= pile.get_destination %>').append("<input name='<%=object_str_underscore %>[<%=element_str_underscore %>_ids][]' type='hidden' value='" + this.id.replace("<%=element_str_underscore %>_", "") + "' />");
             <%=raw %|
                 var lastInOrder = $('ul.sortable > li:last');
                 if (lastInOrder.length > 0) {

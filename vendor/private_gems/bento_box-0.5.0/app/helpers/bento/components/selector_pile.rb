@@ -17,10 +17,10 @@ class SelectorPile < Blockpile::Base
     @type            = (@options[:type] || "default")
 
     @object       = object
-    @object_class = object.class.to_s
 
-    @attribute_relation = attribute_relation
-    @attribute_class    = @attribute_relation.klass
+    @attribute_relation  = attribute_relation
+    @attribute_class     = @attribute_relation.klass
+    @attribute_class_str = @attribute_class.to_s
 
     @id                 = "selector-container-#{@attribute_class}".downcase
     @attribute_relation = init_sortable(@attribute_relation) if sortable?
@@ -67,11 +67,27 @@ class SelectorPile < Blockpile::Base
   end
 
   def get_attribute_class
-    @attribute_class
+    @attribute_class  ||= @attribute_relation.klass
   end
 
-  def get_object_class
-    @object_class
+  def get_attribute_class_str
+    @attribute_class_str  ||= "#{get_attribute_class}"
+  end
+
+  def get_attribute_str_underscore
+    @attribute_str_underscore  ||= get_attribute_class_str.underscore
+  end
+
+  def get_object_str_underscore
+    @object_class ||= get_object_class.underscore
+  end
+  
+  def get_object_class_str
+    @object_class ||= get_object.class.to_s
+  end
+
+  def get_object_str_underscore
+    @object_class ||= get_object_class.underscore
   end
 
   def get_attribute_count

@@ -4,8 +4,8 @@ class Bento::BentoController < ApplicationController
   layout "bento_box"
 
   def selector_call
-    @object             = (params[:id]) ? eval(params[:object].classify).find(params[:id]) : eval(params[:object].classify).new
-    @attribute_relation = eval(params[:attribute].classify).scoped
+    @object             = (params[:id]) ? Kernel.const_get(params[:object].classify).find(params[:id]) : Kernel.const_get(params[:object].classify).new
+    @attribute_relation = Kernel.const_get(params[:attribute].classify).scoped
     
     respond_to do |format|
       format.html {render 'bento/shared/selector'}
@@ -17,7 +17,7 @@ class Bento::BentoController < ApplicationController
 
   def sorter
     ids          = params[:ids].split(',').map! {|id| {:_id => id}}
-    @objects     = eval(params[:object].classify).any_of(ids).order_by([params[:sort_column], params[:sort_direction]]).to_a   
+    @objects     = Kernel.const_get(params[:object].classify).any_of(ids).order_by([params[:sort_column], params[:sort_direction]]).to_a   
     @parent_name = params[:parent]
     @item_name   = (params[:item_name] || "#{params[:object]}_ids")
     
