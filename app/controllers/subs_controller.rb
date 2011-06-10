@@ -2,7 +2,9 @@ class SubsController < ApplicationController
   # GET /bento/sub_navs
   # GET /bento/sub_navs.xml
   def index
-    @subs = Sub.scoped
+    @subs = Rails.cache.fetch("subs_index", :expires_in => 5.minutes) do
+      Sub.scoped
+    end
 
     render :json => @subs
   end

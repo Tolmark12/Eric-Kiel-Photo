@@ -1,3 +1,5 @@
+var popstateLoaded = false;
+
 function moveToPane(href) {
 	var pane = $('.view-port-container > div[data-path="'+href+'"]');
 	if (pane.length > 0) {
@@ -51,7 +53,7 @@ function ajaxClick(href, title) {
 					// Adding breadcrumb
 					$('.buttons > div:last > .back').unbind('click');
 					$('.buttons > div:last > .back').click(function(e) {
-						moveToPane($(this).parent().prev().attr('data-path'));
+						history.back();
 						e.preventDefault();
         		        return false;
         		    });
@@ -102,8 +104,13 @@ $(document).ready(function() {
         attachEvents();
     });
 	$(window).bind('popstate', function() {
-		if(!moveToPane(location.pathname)) {
-			window.location = location;
-		};
+		if(!popstateLoaded) {
+			popstateLoaded = true;
+			return;
+		} else {
+			if(!moveToPane(location.pathname)) {
+				window.location = location;
+			};
+		}
 	});
 });

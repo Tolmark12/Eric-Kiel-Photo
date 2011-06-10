@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	  <title>Bento Box</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <%= csrf_meta_tag %>
+	<title>Bento Box</title>
     <%= stylesheet_link_tag 'bento/layout.css' %>
-    <%= javascript_include_tag 'bento/jquery-1.4.4.min', 'bento/rails', 'bento/bento','bento/jquery-easing', 'bento/fileuploader', 'bento/jquery-ui-1.8.8.custom.min', 'bento/jquery.ui.core.min','bento/jquery.ui.mouse.min', 'bento/jquery.ui.position.min','bento/jquery.ui.sortable.min', 'bento/jquery.ui.widget.min' %>
     <%= yield :head %>
+    <%= javascript_include_tag 'bento/jquery-1.4.4.min', 'bento/rails.min' %>
     <%= javascript_tag do %>
     	<%= yield :javascript %>
     <% end %>
-    <%= csrf_meta_tag %>
   </head>
   <body>
     <div class="full-area">
@@ -25,5 +25,6 @@
 		</div>
       </div>
     </div>
+    <%= javascript_include_tag 'bento/bento.min','bento/jquery-easing', 'bento/fileuploader.min', 'bento/jquery-ui-1.8.8.custom.min', 'bento/jquery.ui.core.min','bento/jquery.ui.mouse.min', 'bento/jquery.ui.position.min','bento/jquery.ui.sortable.min', 'bento/jquery.ui.widget.min' %>
   </body>
 </html>

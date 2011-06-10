@@ -8,7 +8,7 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  database: eric_kiel_photo_dev
+  database: kiel-photo
 
 test:
   <<: *defaults
@@ -16,4 +16,5 @@ test:
 
 # set these environment variables on your prod server
 production:
-  uri: <%= ENV['MONGOHQ_URL'] %>
+  database: kiel-photo
+#  uri: <%= ENV['MONGOHQ_URL'] %>

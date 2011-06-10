@@ -75,7 +75,13 @@
 					    <% css_classes = []%>
 						<li id="<%= "sort_#{"#{element_class}".underscore}_#{associated_elements[element_index].id}" %>" class='ui-state-default'><span><%= element_index + 1%></span><a href="#link" title="<%= associated_elements[element_index].send(pile.get_attribute_label) %>" class="<%= css_classes.join(' ') %>">
 							 <% if p.is_label_image? then %>
-							 <%= image_tag(associated_elements[element_index].send(pile.get_attribute_label), {:size => "50x50"})%>
+							 <img class="loading" alt="Loading" src="/images/bento/loading.gif" />
+							 <% image_location = associated_elements[element_index].send(pile.get_attribute_label)%>
+							 <script>
+								$.get('<%=image_location%>',function(data) {
+							 		$('<%= "sort_#{"#{element_class}".underscore}_#{associated_elements[element_index].id}" %> img.loading').replaceWith('<%= image_tag(image_location, {:size => "50x50"})%>');
+								});
+							 </script>
 							 <% else %>
 						     <%= associated_elements[element_index].send(pile.get_attribute_label)[0,9] %>...
 							 <% end %></a></li>
