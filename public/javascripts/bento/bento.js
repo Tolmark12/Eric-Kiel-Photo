@@ -1,14 +1,14 @@
 var popstateLoaded = false;
-
 function moveToPane(href) {
-	var pane = $('.view-port-container > div[data-path="'+href+'"]');
+	var pane = $('.view-port-container > div[data-path="'+href+'"]:first');
 	if (pane.length > 0) {
-		if (window.location.pathname != href) 
+		if (!(window.location.pathname == href || window.location.pathname == href.substring(0,href.indexOf('?')))) {
 			history.pushState({}, '', href);
+		}
 		$('.buttons').hide();
-		$('.buttons > div:not(div[data-path='+href+'])').hide();
-		$('.buttons > div[data-path='+href+']').nextAll('div').remove();
-		$('.buttons > div[data-path='+href+']').show();
+		$('.buttons > div:not(div[data-path='+href+']:first)').hide();
+		$('.buttons > div[data-path='+href+']:first').nextAll('div').remove();
+		$('.buttons > div[data-path='+href+']:first').show();
 		$('.buttons').fadeIn('slow'); // **MP** Changed to Fadein
 
 		var width = $('.view-port-container:first').width();
@@ -20,8 +20,8 @@ function moveToPane(href) {
 		$('.view-port-container:first').width(width-1014*(nextPanes.length-1));
 		nextPanes.remove();
 		$('.bread-crumb ul').hide();
-		$('.bread-crumb ul[data-path="'+href+'"]').nextAll('ul').remove();
-		$('.bread-crumb ul[data-path="'+href+'"]').show();
+		$('.bread-crumb ul[data-path='+href+']:first').nextAll('ul').remove();
+		$('.bread-crumb ul[data-path='+href+']:first').show();
 		return true;
 	} else {
 		return false;
@@ -34,6 +34,14 @@ function ajaxClick(href, title) {
 				window.location = href;
 			} else {			
 				history.pushState({}, '', href);
+				if(!popstateLoaded) {
+					popstateLoaded = true;
+					$(window).bind('popstate', function() {
+						if(!moveToPane(location.pathname)) {
+							window.location = location;
+						}
+					});
+				}
         		$.get(jsonLink,
         		function(data) {
 					// Adding new buttons
@@ -103,14 +111,4 @@ $(document).ready(function() {
     $(this).ajaxStop(function() {
         attachEvents();
     });
-	$(window).bind('popstate', function() {
-		if(!popstateLoaded) {
-			popstateLoaded = true;
-			return;
-		} else {
-			if(!moveToPane(location.pathname)) {
-				window.location = location;
-			};
-		}
-	});
 });
