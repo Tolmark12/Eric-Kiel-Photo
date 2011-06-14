@@ -1,7 +1,0 @@
-
-/* VIEW PORT */
-.view-port													{margin:0 auto; padding:0; width:1000px; overflow:hidden;}
-.view-port-container										{margin:0; padding:0; overflow:hidden; width:2000px;}
-.view-port .view-port-container .box01						{margin:0; padding:0; width:998px; height:198px; border:1px solid #000; background-color:#FFDC2C; float:left;}
-.view-port .view-port-container .box02						{margin:0; padding:0; width:998px; height:198px; border:1px solid #000; background-color:#47494E; float:left;}
-.clear:														{clear:both;}
