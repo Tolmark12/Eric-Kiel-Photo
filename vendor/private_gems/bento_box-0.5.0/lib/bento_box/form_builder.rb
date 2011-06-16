@@ -21,7 +21,7 @@ module BentoBox
       url_location = Rails.application.routes.url_helpers.bento_selector_path(:type => (options[:type] || "default"), :object => object_class_str, 
                   :attribute => relation_singular, :label => options[:label], :is_label_image => options[:is_label_image],
                   :id => object.id, :orderable => options[:orderable],
-                  :destination => destination)
+                  :destination => destination, :tooltip => options[:tooltip])
       selector_tag = link_to("",url_location,
                                   :rel =>"address:#{url_location}", :class => "selector-link")
       selector_tag << @template.submit_tag("Select #{relation.to_s.titleize}", :class => 'button-thin select-items', :onclick => '$(this).prev("a.selector-link").click(); return false;')

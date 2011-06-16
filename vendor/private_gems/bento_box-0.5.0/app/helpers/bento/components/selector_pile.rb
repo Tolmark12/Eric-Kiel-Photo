@@ -114,6 +114,10 @@ class SelectorPile < Blockpile::Base
     @is_label_image
   end
 
+  def get_tooltip
+    @tooltip ||= @options[:tooltip]
+  end
+
   def get_id
     @id
   end

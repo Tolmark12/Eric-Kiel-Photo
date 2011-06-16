@@ -24,14 +24,14 @@
 .selector-wrapper .chart-area .background-grey					{margin:0; padding:0; width:100%; background-color:#D8D9DA; overflow:hidden;}
 .selector-wrapper .chart-area .background-grey ul				{margin:0 5.5px 0 0; padding:0; list-style-type:none; float:left;}
 .selector-wrapper .chart-area .background-grey ul.last			{margin:0;}
-.selector-wrapper .chart-area .background-grey ul li			{margin:0; padding:0;}
-.selector-wrapper .chart-area .background-grey ul li a			{margin:0; padding:5px 0 5px 10px; width:94px; height:; color:#000; display:block;}
-.selector-wrapper .chart-area .background-grey ul li a.active	{background:#FDDF96 url('/images/bento/check-o.png') no-repeat 90% center;}
+.selector-wrapper .chart-area .background-grey ul li			{margin:0; padding:0;position:relative;}
+.selector-wrapper .chart-area .background-grey ul li>a			{margin:0; padding:5px 0 5px 10px; width:94px; height:; color:#000; display:block;}
+.selector-wrapper .chart-area .background-grey ul li>a.active	{background:#FDDF96 url('/images/bento/check-o.png') no-repeat 90% center;}
 .selector-wrapper .chart-area .background-grey ul li:nth-child(odd){background-color:#F3F3F4;}
 .selector-wrapper .chart-area .background-grey ul li:nth-child(even){background-color:#fff;}
 .selector-wrapper .chart-area .background-grey ul li:hover		{background-color:#FFF5D8;}
-.selector-wrapper .chart-area .background-grey ul li span		{margin:0 5px 0 0; padding:4px 0 5px 0; width:30px; text-align:center; color:#fff; background:#51B258; float:left;}
-.selector-wrapper .chart-area .background-grey ul li.active span{background:#F48B20;}
+.selector-wrapper .chart-area .background-grey ul li>span		{margin:0 5px 0 0; padding:4px 0 5px 0; width:30px; text-align:center; color:#fff; background:#51B258; float:left;}
+.selector-wrapper .chart-area .background-grey ul li.active>span{background:#F48B20;}
 .selector-wrapper .filter-bar									{margin:0; padding:10px 0; overflow:hidden;}
 .selector-wrapper .filter-bar label								{margin:0; padding:0; color:#919396;}		
 .selector-wrapper .filter-bar select							{margin:0 5px;}
@@ -39,7 +39,7 @@
 .selector-wrapper .filter-bar input.refresh						{margin:0 0 2px; padding-left:17px; float:right; border-color:#919396; color:#919396; background:url('/images/bento/refresh.png') no-repeat 5px center;}
 .selector-wrapper p.drag-drop									{margin:0; padding:20px 0 10px; clear:both; font-size:14px; color:#231F20;}
 
-.selector-wrapper .info-wrapper									{margin:10px 15px; padding:0; position:relative; float:left; border:3px solid #fff; -moz-border-radius: 4px; border-radius: 4px; clear:both; -moz-box-shadow: 0px 4px 4px #999; -webkit-box-shadow: 0px 4px 4px #999; box-shadow: 0px 4px 4px #999;}
+.selector-wrapper .info-wrapper									{margin:10px 15px; padding:0; position:absolute; float:left; border:3px solid #fff; -moz-border-radius: 4px; border-radius: 4px; clear:both; -moz-box-shadow: 0px 4px 4px #999; -webkit-box-shadow: 0px 4px 4px #999; box-shadow: 0px 4px 4px #999;}
 .selector-wrapper .info-wrapper .background 					{background:#72BAE6; -moz-border-radius: 4px; border-radius: 4px;}	
 .selector-wrapper .info-wrapper .tab							{margin:0; padding:0; width:35px; height:18px; background:url('/images/bento/bento-box-sprite.png') no-repeat -106px -392px; position:absolute;}
 .selector-wrapper .info-wrapper.top .tab						{top:-18px; left:45%;}
@@ -58,7 +58,7 @@
 .ui-state-highlight 											{}
 
 /* JAVASCRIPT CSS FOR HOVER */
-.selector-wrapper #dhtmltooltip									{position: absolute; padding:0px; background:#72BAE6; border:3px solid #fff; -moz-border-radius: 4px; border-radius: 4px; clear:both; -moz-box-shadow: 0px 4px 4px #999; -webkit-box-shadow: 0px 4px 4px #999; box-shadow: 0px 4px 4px #999; visibility: hidden; z-index: 100;}
+.selector-wrapper #dhtmltooltip									{position: absolute; padding:0px; background:#72BAE6; border:3px solid #fff; -moz-border-radius: 4px; border-radius: 4px; clear:both; -moz-box-shadow: 0px 4px 4px #999; -webkit-box-shadow: 0px 4px 4px #999; box-shadow: 0px 4px 4px #999; z-index: 100;}
 .selector-wrapper #dhtmltooltip .background 					{background:#72BAE6; -moz-border-radius: 4px; border-radius: 4px;}	
 .selector-wrapper #dhtmltooltip .tab							{margin:0; padding:0; width:35px; height:18px; background:url('/images/bento/bento-box-sprite.png') no-repeat -106px -392px; position:absolute;}
 .selector-wrapper #dhtmltooltip.top .tab						{top:-18px; left:45%;}

@@ -1,4 +1,5 @@
    <% options = {:type  => params[:type],
+  	 			 :tooltip => params[:tooltip],
             	 :attribute_label => params[:label],
             	 :is_label_image  => params[:is_label_image],
           		 :destination     => params[:destination], 
@@ -14,7 +15,7 @@
 			 			  rescue
 							false
 						  end %>
-   	  	<ul data-path="<%=request.env['PATH_INFO']%>"> 
+   	  	<ul data-path="<%=request.path%>"> 
 			<li class="<%= 'last' unless middle_crumb %>"><a href="<%=url_for({:controller => params[:object].pluralize})%>" rel="address:<%=url_for({:controller => params[:object].pluralize})%>"><%= params[:object].titleize %><span class="arrow"></span></a></li>
 			<% if middle_crumb then %>
 			<li class="last"><a href="<%=middle_crumb%>" rel="address:<%=middle_crumb%>"><%= (params[:id]) ? params[:id].titleize : "New" %><span class="arrow"></span></a></li>

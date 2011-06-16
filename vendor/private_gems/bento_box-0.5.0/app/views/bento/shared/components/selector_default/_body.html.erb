@@ -38,12 +38,30 @@
 					    <% if element_index < element_count 
 						   element = elements[element_index]%>
 					    <% css_classes = [("active" if associated_elements.include?(element)) ]%>
-						<li><a id="<%= "#{element_str_underscore}_#{element.id}" %>" href="#" title="<%= element.send(pile.get_attribute_label) %>" class="<%= css_classes.join(' ') %>">
+						<li id="<%= "li_#{element_str_underscore}_#{element.id}" %>" href="#" title="<%= element.send(pile.get_attribute_label) %>"><a id="<%= "#{element_str_underscore}_#{element.id}" %>" href="#" title="<%= element.send(pile.get_attribute_label) %>" class="<%= css_classes.join(' ') %>">
 							 <% if p.is_label_image? then %>
 							 <%= image_tag(element.send(pile.get_attribute_label), {:size => "50x50"})%>
 							 <% else %>
 						     <%= element.send(pile.get_attribute_label)[0,9] %>...
-							 <% end %></a></li>
+							 <% end %></a>
+							<% if p.get_tooltip then %>
+								<% tooltip = p.get_tooltip
+								   last_item =  tooltip[-1]%>
+								<div class="info-wrapper"  style="display:none;">
+									<div class="background">
+										<div class="tab"></div>
+										<table class="info-box">
+											<% tooltip.each { |t|%>
+												<tr class="<%= "#{"first" if t == tooltip[0]} #{"last" if t == tooltip[-1]}"%>">
+													<td class="left"><%=t.titleize%><span>:</span></td> 
+													<td class="right"><%=element.send(t)%></td>
+												</tr>
+											<% } %>
+										</table>
+									</div>
+								 </div>
+							<% end %>
+						</li>
 						<% end %>
 					<% end %>
 			    </ul>
@@ -52,9 +70,60 @@
 	</div>
 	<%= pile.paginatable_ajax if pile.paginatable? && p.get_options[:ajax] %>
 	<script type="text/javascript">
+	<% if p.get_tooltip then %>
+	var showTooltipTimeouts = new Array();
+	var isHovering = new Array();
+	var blockOthers = false;
+	function hideTooltip(liId) {
+		if (liId) {
+			var infoBox = $('#'+liId).children('.info-wrapper');
+			infoBox.fadeOut('fast',function() {
+								var infoBox = $(this);
+								infoBox.attr('id','');
+								infoBox.fadeOut();
+								infoBox.css('top','').css('bottom','').css('left','').css('right','');
+							});
+			blockOthers = false;
+		}
+	}
+	function showTooltip(liId) {
+		if (liId && isHovering[liId] && !blockOthers) {
+			blockOthers = true;
+			var li = $('#'+liId);
+			var infoBox = li.children('.info-wrapper');
+			var windowPane = li.parents('div:first');
+			var topOfWindow = windowPane.offset().top;
+			var leftOfWindow = windowPane.offset().left;
+			var topDistance = li.offset().top - topOfWindow;
+			var bottomDistance = (topOfWindow + windowPane.height()) - li.offset().top;
+			var leftDistance = li.offset().left - leftOfWindow;
+			var rightDistance = (leftOfWindow + windowPane.width()) - li.offset().left;
+			var max = Math.max(topDistance,bottomDistance,leftDistance,rightDistance);
+						
+			if (max == topDistance) {
+				infoBox.addClass('bottom');
+				infoBox.css('top', '-' + (infoBox.height()+20)+'px');
+			} else if (max == bottomDistance) {
+				infoBox.addClass('top');
+				infoBox.css('top', (infoBox.height()-20)+'px');
+			} else 	if (max == rightDistance) {
+				infoBox.addClass('left');
+				infoBox.css('top', '-'+(infoBox.height()/2)+'px');
+				infoBox.css('left', (infoBox.width()-20)+'px');
+			} else {
+				infoBox.addClass('right');
+				infoBox.css('top', '-'+(infoBox.height()/2)+'px');
+				infoBox.css('left', '-'+(li.width()+infoBox.width()-20)+'px');
+			}
+			infoBox.show();
+			infoBox.attr('id', 'dhtmltooltip');
+			infoBox.fadeIn();
+		}
+	}
+	<% end %>
 //<![CDATA[
 $(document).ready(function() {
-    $('#<%= pile.get_id %> .updatable li a').click(function() {
+    $('#<%= pile.get_id %> .updatable').delegate('li a','click',function() {
         if ($(this).hasClass('active')) {
             $("#<%= pile.get_destination %> input[value='" + this.id.replace("<%=element_str_underscore %>_", "") + "']").remove();
             <%=raw %|
@@ -81,6 +150,20 @@ $(document).ready(function() {
             $(this).toggleClass('active');
             return false;
         });
+		<% if p.get_tooltip then %>
+		$('#<%= pile.get_id %> .updatable').delegate('li','mouseenter',function () {
+			var id = $(this).attr('id');
+			isHovering[id] = true;	
+			showTooltipTimeouts[id] = setTimeout("showTooltip('"+id+"')",200);
+		});
+		$('#<%= pile.get_id %> .updatable').delegate('li', 'mouseleave',function () {
+			var id = $(this).attr('id');
+			delete isHovering[id];	
+			clearTimeout(showTooltipTimeouts[id]);
+			delete showTooltipTimeouts[id];
+			hideTooltip(id);
+		});
+		<% end %>
     });		
 	   //]]>
 	</script>

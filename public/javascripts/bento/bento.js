@@ -1,14 +1,14 @@
 var popstateLoaded = false;
 function moveToPane(href) {
-	var pane = $('.view-port-container > div[data-path="'+href+'"]:first');
+	var pane = $('div.view-port-container > div[data-path="'+href+'"]:first');
 	if (pane.length > 0) {
 		if (!(window.location.pathname == href || window.location.pathname == href.substring(0,href.indexOf('?')))) {
 			history.pushState({}, '', href);
 		}
 		$('.buttons').hide();
-		$('.buttons > div:not(div[data-path='+href+']:first)').hide();
-		$('.buttons > div[data-path='+href+']:first').nextAll('div').remove();
-		$('.buttons > div[data-path='+href+']:first').show();
+		$('.buttons > div:not(div[data-path="'+href+'"]:first)').hide();
+		$('.buttons > div[data-path="'+href+'"]:first').nextAll('div').remove();
+		$('.buttons > div[data-path="'+href+'"]:first').show();
 		$('.buttons').fadeIn('slow'); // **MP** Changed to Fadein
 
 		var width = $('.view-port-container:first').width();
@@ -20,8 +20,8 @@ function moveToPane(href) {
 		$('.view-port-container:first').width(width-1014*(nextPanes.length-1));
 		nextPanes.remove();
 		$('.bread-crumb ul').hide();
-		$('.bread-crumb ul[data-path='+href+']:first').nextAll('ul').remove();
-		$('.bread-crumb ul[data-path='+href+']:first').show();
+		$('.bread-crumb ul[data-path="'+href+'"]:first').nextAll('ul').remove();
+		$('.bread-crumb ul[data-path="'+href+'"]:first').show();
 		return true;
 	} else {
 		return false;
@@ -29,6 +29,7 @@ function moveToPane(href) {
 }
 function ajaxClick(href, title) {
 		(href.match(/\?/g) != null) ? jsonLink = href.replace(/\?/g, ".json?") : jsonLink = href + '.json';
+		windowId = href.substring(0,href.indexOf('?'));
 		if (!moveToPane(href)) {
 			if ($('.bread-crumb a[rel="address:'+href+'"] > span').length > 0) {
 				window.location = href;
@@ -46,7 +47,7 @@ function ajaxClick(href, title) {
         		function(data) {
 					// Adding new buttons
 					$('.buttons').hide();
-					$('.buttons').append("<div data-path='"+href+"'><input type=\"submit\" class=\"button-thin cancel back\" value=\"Back\">"+((data["toolbar"] != null) ? data["toolbar"] : "")+"</div>");
+					$('.buttons').append("<div data-path='"+windowId+"'><input type=\"submit\" class=\"button-thin cancel back\" value=\"Back\">"+((data["toolbar"] != null) ? data["toolbar"] : "")+"</div>");
 					$('.buttons > div:not(div:last)').hide();
 					// End adding new buttons
 					// Adding content pane
@@ -54,7 +55,7 @@ function ajaxClick(href, title) {
 	    		    var lastViewDiv = $('.view-port-container > div:last');
         		    var width = $('.view-port-container:first').width();
 	    		    var divCount = $('.view-port-container > div').length;
-        		    lastViewDiv.after($(content).attr('data-path',href));
+        		    lastViewDiv.after($(content).attr('data-path',windowId));
 				    $('.view-port-container > div').width(1005);
 	    		    $('.view-port-container > div:last').css('float','left');
 					// End adding content pane
@@ -66,9 +67,9 @@ function ajaxClick(href, title) {
         		        return false;
         		    });
         		    $('.bread-crumb ul').hide();
-        		    $('.bread-crumb ul:last').after($(data["breadcrumb"]).attr('data-path',href));
+        		    $('.bread-crumb ul:last').after($(data["breadcrumb"]).attr('data-path',windowId));
 					
-					moveToPane(href);
+					moveToPane(windowId);
             	
 					// End adding breadcrumb
 					eval(data["javascript"]);

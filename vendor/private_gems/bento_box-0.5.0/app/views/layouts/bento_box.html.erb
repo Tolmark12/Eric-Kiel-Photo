@@ -6,25 +6,26 @@
 	<title>Bento Box</title>
     <%= stylesheet_link_tag 'bento/layout.css' %>
     <%= yield :head %>
-    <%= javascript_include_tag 'bento/jquery-1.4.4.min', 'bento/rails.min' %>
+    <%= javascript_include_tag 'bento/jquery-1.6.1.min', 'bento/rails.min' %>
     <%= javascript_tag do %>
     	<%= yield :javascript %>
     <% end %>
   </head>
   <body>
+	<span id="scroll-location" style="width:0;height:0;position:fixed;top:0;left:0;"></span>
     <div class="full-area">
       <%= render :partial => 'layouts/bento_header' %>
       <div class="inner-area">
       	<%= render :partial => 'bento/shared/flash_messages' %>
 		<div class="view-port">
 			<div class="view-port-container" style="width:1014px;">
-				<div data-path="<%=request.env['PATH_INFO']%>" style="float:left;padding:5px;">
+				<div data-path="<%=request.path%>" style="float:left;padding:5px;">
                   <%= yield %>
 				</div>
 			</div>
 		</div>
       </div>
     </div>
-    <%= javascript_include_tag 'bento/bento.min','bento/jquery-easing', 'bento/fileuploader.min', 'bento/jquery-ui-1.8.8.custom.min', 'bento/jquery.ui.core.min','bento/jquery.ui.mouse.min', 'bento/jquery.ui.position.min','bento/jquery.ui.sortable.min', 'bento/jquery.ui.widget.min' %>
+    <%= javascript_include_tag 'bento/bento.min','bento/jquery-easing', 'bento/fileuploader.min', 'bento/jquery-ui-1.8.13.custom.min' %>
   </body>
 </html>
