@@ -2,7 +2,7 @@ class SubNav < Nav
   
   def as_json(options = {})
     { :name           => self.name,
-      :pages          => self.nav_items.as_json,
+      :pages          => self.nav_items.to_a.as_json,
       :kind           => 'subNav'
       }
   end

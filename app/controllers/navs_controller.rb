@@ -2,7 +2,7 @@ class NavsController < ApplicationController
   # GET /bento/navs
   # GET /bento/navs.xml
   def index
-    @navs = Nav.scoped
+    @navs = Nav.scoped.to_a
 
     render :json => @navs
   end

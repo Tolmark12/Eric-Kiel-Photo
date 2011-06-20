@@ -3,7 +3,7 @@ class CategoriesController < ApplicationController
   # GET /bento/tags.xml
   def index
     @categories = Rails.cache.fetch("categories_index", :expires_in => 5.minutes) do
-      Category.scoped
+      Category.scoped.to_a
     end
     render :json => { :categories => @categories }
   end

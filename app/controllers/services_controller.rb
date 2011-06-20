@@ -2,7 +2,7 @@ class ServicesController < ApplicationController
   # GET /bento/services
   # GET /bento/services.xml
   def index
-    @services = Service.scoped
+    @services = Service.scoped.to_a
 
     render :json => @services
   end

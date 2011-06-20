@@ -2,9 +2,6 @@ var popstateLoaded = false;
 function moveToPane(href) {
 	var pane = $('div.view-port-container > div[data-path="'+href+'"]:first');
 	if (pane.length > 0) {
-		if (!(window.location.pathname == href || window.location.pathname == href.substring(0,href.indexOf('?')))) {
-			history.pushState({}, '', href);
-		}
 		$('.buttons').hide();
 		$('.buttons > div:not(div[data-path="'+href+'"]:first)').hide();
 		$('.buttons > div[data-path="'+href+'"]:first').nextAll('div').remove();
@@ -29,18 +26,20 @@ function moveToPane(href) {
 }
 function ajaxClick(href, title) {
 		(href.match(/\?/g) != null) ? jsonLink = href.replace(/\?/g, ".json?") : jsonLink = href + '.json';
-		windowId = href.substring(0,href.indexOf('?'));
-		if (!moveToPane(href)) {
-			if ($('.bread-crumb a[rel="address:'+href+'"] > span').length > 0) {
-				window.location = href;
+		windowId = (href.indexOf('?') > 0) ? href.substring(0,href.indexOf('?')) : href;
+		if (!moveToPane(windowId)) {
+			if ($('.bread-crumb a[rel="address:'+windowId+'"] > span').length > 0) {
+				document.location.reload(true);
 			} else {			
-				history.pushState({}, '', href);
 				if(!popstateLoaded) {
 					popstateLoaded = true;
-					$(window).bind('popstate', function() {
-						if(!moveToPane(location.pathname)) {
-							window.location = location;
+				} else {
+					$(window).bind('popstate', function(event) {
+						var link = (document.location.pathname.indexOf('?') > 0) ? document.location.pathname.substring(0,document.location.pathname.indexOf('?')) : document.location.pathname;
+						if (!moveToPane(link)) {
+							document.location.reload(true);
 						}
+						return true;
 					});
 				}
         		$.get(jsonLink,
@@ -69,8 +68,10 @@ function ajaxClick(href, title) {
         		    $('.bread-crumb ul').hide();
         		    $('.bread-crumb ul:last').after($(data["breadcrumb"]).attr('data-path',windowId));
 					
-					moveToPane(windowId);
-            	
+					if (moveToPane(windowId)) {
+						history.pushState({'isBento':true}, '', href);
+					}
+            		
 					// End adding breadcrumb
 					eval(data["javascript"]);
         		},

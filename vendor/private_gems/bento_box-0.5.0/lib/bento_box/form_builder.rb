@@ -26,7 +26,7 @@ module BentoBox
                                   :rel =>"address:#{url_location}", :class => "selector-link")
       selector_tag << @template.submit_tag("Select #{relation.to_s.titleize}", :class => 'button-thin select-items', :onclick => '$(this).prev("a.selector-link").click(); return false;')
       selector_tag << "<div id='#{destination}'>".html_safe
-      object.send(relation).each do |action|
+      object.send(relation).to_a.each do |action|
         selector_tag << @template.hidden_field("#{@object_name}[#{relation_singular}_ids]", '', objectify_options({:id => "#{relation_singular}_#{action.id}",:value => action.id}))
       end
       selector_tag << "</div>".html_safe

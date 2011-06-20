@@ -3,7 +3,7 @@
 <% column_count, row_count = pile.get_column_count, pile.get_row_count %>
 <% element_class, element_count, elements = pile.get_attribute_class, pile.get_attribute_count, pile.get_attribute_relation.to_a %>
 <% element_str_underscore = p.get_attribute_str_underscore %>
-<% associated_elements = object.send("#{element_class}".tableize.to_sym) %>
+<% associated_elements = object.send("#{element_str_underscore}_ids".to_sym) %>
 <div class="updatable">
 <div class="link-bar">
 	<%= link_to "#", :onclick=> "$('.chart-area li a:not(.active)').click(); return false;" do %>Select All<% end %>|
@@ -37,7 +37,7 @@
 					    <% element_index = (column_number)*row_count+row_number %>
 					    <% if element_index < element_count 
 						   element = elements[element_index]%>
-					    <% css_classes = [("active" if associated_elements.include?(element)) ]%>
+					    <% css_classes = [("active" if associated_elements.include?(element.id)) ]%>
 						<li id="<%= "li_#{element_str_underscore}_#{element.id}" %>" href="#" title="<%= element.send(pile.get_attribute_label) %>"><a id="<%= "#{element_str_underscore}_#{element.id}" %>" href="#" title="<%= element.send(pile.get_attribute_label) %>" class="<%= css_classes.join(' ') %>">
 							 <% if p.is_label_image? then %>
 							 <%= image_tag(element.send(pile.get_attribute_label), {:size => "50x50"})%>

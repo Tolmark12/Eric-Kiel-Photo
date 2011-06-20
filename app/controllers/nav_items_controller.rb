@@ -2,7 +2,7 @@ class NavItemsController < ApplicationController
   # GET /bento/nav_items
   # GET /bento/nav_items.xml
   def index
-    @nav_items = NavItem.scoped
+    @nav_items = NavItem.scoped.to_a
 
     respond_to do |format|
       format.html # index.html.erb

@@ -1,4 +1,3 @@
-"entity_id","attribute_set_name","attribute_code","value"
 12,"data_feed","name","get_nav"
 12,"data_feed","tags",""
 12,"data_feed","data_service",12

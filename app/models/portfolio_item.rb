@@ -18,7 +18,7 @@ class PortfolioItem < Service
     json = {
       :name => self.name,
       :tags => ["default_portfolio"],
-      :photo_tags => self.categories.map(&:text_id),
+      :photo_tags => self.categories.to_a.map(&:text_id),
       :src => self.src,
       :low_res_src => self.low_res_src,
       :is_active => {:label=>"Enabled",:value => 1}

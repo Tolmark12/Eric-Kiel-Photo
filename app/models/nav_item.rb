@@ -27,17 +27,21 @@ class NavItem
   end
 
   def as_json(options={})
-    { 
+    json = { 
+      :entity_id      => self.id,
       :name           => self.name,
       :url_id         => self.url_id,
       :text           => self.text,
-      :data_service   => (self.service.nil?)? "" : self.service.url,
-      :is_logo        => self.is_logo,
-      :sub            => self.sub.as_json,
-      :page_type      => self.page_type,
+      :is_active      => { :label => "Enabled", :value => 1},
       :nav_filter_tag => self.nav_filter_tag,
-      :is_default     => self.is_default,
       :sort           => self.sort.to_s
     }
+    
+    json[:sub] = self.sub.as_json unless self.sub.nil?
+    json[:data_service] = self.service.url unless self.service.nil?
+    json[:is_logo] = self.is_logo unless self.is_logo.nil?
+    json[:is_default] = self.is_default unless self.is_default.nil?
+    json[:page_type] = self.page_type unless self.page_type.nil?
+    json
   end
 end

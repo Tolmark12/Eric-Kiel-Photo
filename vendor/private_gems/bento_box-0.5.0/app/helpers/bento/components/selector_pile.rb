@@ -87,7 +87,7 @@ class SelectorPile < Blockpile::Base
   end
 
   def get_object_str_underscore
-    @object_class ||= get_object_class.underscore
+    @object_class_underscore ||= get_object_class_str.underscore
   end
 
   def get_attribute_count

@@ -28,7 +28,7 @@
         <div class="left-container">
           <%= g.label :portfolio_items %>
         </div>
-          <%= g.selector :portfolio_items, {:label => :low_res_src, :is_label_image => true, :orderable => true} %><br />
+          <%= g.selector :portfolio_items, {:label => :low_res_src, :is_label_image => true, :tooltip => [:name,:item_type], :orderable => true} %><br />
       <% end %>
       <%= f.submit %>
     <% end %>

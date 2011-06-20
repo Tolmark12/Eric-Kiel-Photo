@@ -5,7 +5,7 @@ class Nav < Sub
     
   def as_json(options={})
     { :name => self.name,
-      :pages => self.nav_items.as_json}
+      :pages => self.nav_items.to_a.as_json}
   end
 
 end

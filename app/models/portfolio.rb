@@ -16,7 +16,7 @@ class Portfolio < Service
 
   def as_json(options={})
     { :name => self.name,
-      :images => self.portfolio_items.as_json,
+      :images => self.portfolio_items.to_a.as_json,
       :sort_on => "null",
       :is_active => {:label=>"Enabled",:value => 1}
     }
