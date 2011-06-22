@@ -1,4 +1,3 @@
-var popstateLoaded = false;
 function moveToPane(href) {
 	var pane = $('div.view-port-container > div[data-path="'+href+'"]:first');
 	if (pane.length > 0) {
@@ -31,9 +30,6 @@ function ajaxClick(href, title) {
 			if ($('.bread-crumb a[rel="address:'+windowId+'"] > span').length > 0) {
 				document.location.reload(true);
 			} else {			
-				if(!popstateLoaded) {
-					popstateLoaded = true;
-				} else {
 					$(window).bind('popstate', function(event) {
 						var link = (document.location.pathname.indexOf('?') > 0) ? document.location.pathname.substring(0,document.location.pathname.indexOf('?')) : document.location.pathname;
 						if (!moveToPane(link)) {
@@ -41,7 +37,6 @@ function ajaxClick(href, title) {
 						}
 						return true;
 					});
-				}
         		$.get(jsonLink,
         		function(data) {
 					// Adding new buttons
