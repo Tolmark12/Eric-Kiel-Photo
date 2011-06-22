@@ -24,8 +24,8 @@ private
   def update_portfolio_items
     for portfolio_item in self.portfolio_items
       portfolio_item.category_ids ||= []
-      unless portfolio_item.categories.include?(self)
-        portfolio_item.categories << self
+      unless portfolio_item.category_ids.include?(self.id)
+        portfolio_item.category_ids << self.id
         portfolio_item.save
       end
     end
