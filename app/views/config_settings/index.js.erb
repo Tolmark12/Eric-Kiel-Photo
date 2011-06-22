@@ -1,5 +1,7 @@
 {
 	"name" : "root",
+	"is_active":{"label":"Enabled","value":1},
+	"root_services" : ["<%= sub_url(@config_settings.default_nav) %>"],
 	"get_nav" : "<%= sub_url(@config_settings.default_nav) %>",
 	"background_image": "<%= @config_settings.background_image %>",
 	"available_filters": "<%= @config_settings.filters %>"

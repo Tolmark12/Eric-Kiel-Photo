@@ -39,8 +39,8 @@ class NavItem
     
     json[:sub] = self.sub.as_json unless self.sub.nil?
     json[:data_service] = self.service.url unless self.service.nil?
-    json[:is_logo] = self.is_logo unless self.is_logo.nil?
-    json[:is_default] = self.is_default unless self.is_default.nil?
+    json[:is_logo] = self.is_logo if self.is_logo
+    json[:is_default] = self.is_default if self.is_default
     json[:page_type] = self.page_type unless self.page_type.nil?
     json
   end
