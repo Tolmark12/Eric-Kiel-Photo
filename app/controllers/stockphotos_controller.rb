@@ -9,7 +9,8 @@ class StockphotosController < ApplicationController
   # GET /bento/tags/1
   # GET /bento/tags/1.xml
   def by_tag
-    @tags = Tag.where({:text_id => params[:tag]})
-    render :json => @tags.to_a.map(&:stockphotos).flatten.uniq 
+    @tags = Tag.where({:text_id => params[:tag]}).to_a
+    @stock_photos = Stockphoto.any_of(@tags.map(&:stockphoto_ids).flatten.map {|sp| {:_id => sp}}).to_a
+    render :json => @stock_photos 
   end
 end
