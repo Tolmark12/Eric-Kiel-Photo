@@ -12,7 +12,10 @@ class SubsController < ApplicationController
   # GET /bento/sub_navs/1
   # GET /bento/sub_navs/1.xml
   def show
-    @sub = Sub.find(params[:id])
+    
+    @sub = Rails.cache.fetch("config_#{params[:id]}", :expires_in => 5.minutes) do
+        Sub.find(params[:id])
+      end
 
     render :json => @sub
   end
