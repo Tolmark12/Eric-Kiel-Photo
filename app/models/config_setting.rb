@@ -4,7 +4,7 @@ class ConfigSetting
   include Singleton
   include Mongoid::Document 
   
-  references_one :nav, :autosave => true
+  field :default_nav, :type => String
   field :background_image, :type => String
   field :filters, :type => String
     
