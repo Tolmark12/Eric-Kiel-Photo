@@ -9,6 +9,13 @@ class Service
   field :name, :type => String
   
   key :name
+
+  set_callback(:save, :after) do |document|
+      document.clear_cache
+  end
+  set_callback(:destroy, :after) do |document|
+      document.clear_cache
+  end
   
   def url
     @url ||= service_path({:id => self.id })
@@ -20,4 +27,9 @@ class Service
     }
   end
   
+  protected
+  def clear_cache
+    expire_page(:controller=>"services",:action=>"show",:id=>self.id)
+    expire_page(:controller=>"services",:action=>"index")
+  end
 end

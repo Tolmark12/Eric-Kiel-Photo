@@ -1,9 +1,8 @@
 class ConfigSettingsController < ApplicationController
+  caches_page :index
 
   def index
-    @config_settings = Rails.cache.fetch("config_settings", :expires_in => 5.minutes) do
-        ConfigSetting.instance
-      end
+    @config_settings = ConfigSetting.instance
   end
 
 end

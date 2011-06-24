@@ -8,6 +8,10 @@ class ConfigSetting
   field :background_image, :type => String
   field :filters, :type => String
     
+  set_callback(:save, :after) do |document|
+      document.clear_cache
+  end
+
   def initialize(*args)
     @settings ||= ConfigSetting.first()
     if !@settings.nil?
@@ -19,5 +23,9 @@ class ConfigSetting
     end
     @settings
   end
-  
+
+  protected
+  def clear_cache
+    expire_page(:controller=>"config_settings",:action=>"index")
+  end
 end
