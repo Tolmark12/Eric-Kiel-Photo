@@ -17,7 +17,7 @@ class Stockphoto
     json              = {
       :id                => self.id,
       :name              => self.name,
-      :tags              => self.tags.to_a,
+      :tags              => self.tag_ids.map{|id| {:name => id, :id => id, :rank => '1'}},
       :small_image       => self.small_image,
       :mid_image         => self.mid_image,
       :image             => self.image,

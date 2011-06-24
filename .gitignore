@@ -21,3 +21,5 @@ vendor/bundle
 public/subs/*
 public/services/*
 public/vladmin/*
+public/tags/*
+public/stock/*
