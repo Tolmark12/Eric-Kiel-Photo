@@ -7,7 +7,6 @@ import app.model.vo.StageResizeVo;
 import flash.filters.*;
 import flash.utils.Timer;
 import flash.events.*;
-import flash.external.ExternalInterface;
 
 public class RootHider extends Sprite
 {
@@ -18,8 +17,6 @@ public class RootHider extends Sprite
 		this.buttonMode = true;
 		this.useHandCursor = false;
 		this.filters = [ new BlurFilter(20, 5, BitmapFilterQuality.MEDIUM ) ];
-		
-		ExternalInterface.addCallback("showRoot", showRoot);
 	}
 	
 	public function hideRoot (  ):void

@@ -120,8 +120,8 @@ public class LightBoxProxy extends Proxy implements IProxy
 	*/
 	public function getLightBoxURL (  ):String
 	{
-		var externalDataProxy:ExternalDataProxy = facade.retrieveProxy( ExternalDataProxy.NAME ) as ExternalDataProxy;
-		return externalDataProxy.server + "?" + _lightBoxStack.join( "/" );
+		//var externalDataProxy:ExternalDataProxy = facade.retrieveProxy( ExternalDataProxy.NAME ) as ExternalDataProxy;
+		return "http://www.kielphotostock.com" + "?" + _lightBoxStack.join( "/" );
 	}
 	
 	public function updateTotalItemsInLightbox (  ):void

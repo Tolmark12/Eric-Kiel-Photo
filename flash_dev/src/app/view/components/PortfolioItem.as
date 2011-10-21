@@ -12,6 +12,7 @@ import flash.filters.BitmapFilter;
 import flash.filters.BitmapFilterQuality;
 import flash.filters.GlowFilter;
 import app.view.components.swc.SeeFilmBtn;
+import caurina.transitions.Tweener;
 
 public class PortfolioItem extends Sprite
 {
@@ -29,6 +30,7 @@ public class PortfolioItem extends Sprite
 	// Video Btns, I should probably move these into a sub class at some point..
 	private var _viewVideoBtn:SeeFilmBtn;
 	private var _playBtn:FilmPlayButton_swc;
+	private var _descriptiveVideoText:NavText_swc;
 	
 	public function PortfolioItem():void
 	{
@@ -67,8 +69,10 @@ public class PortfolioItem extends Sprite
 			if( !_portfolioItemVo.isOnlyVideo )
 				_viewVideoBtn = new SeeFilmBtn_swc();
 			// this is a photo with only video...	
-			else
+			else{
 				_playBtn = new FilmPlayButton_swc();
+				_descriptiveVideoText = new NavText_swc();
+			}
 		}
 			
 	}
@@ -179,6 +183,8 @@ public class PortfolioItem extends Sprite
 	
 	private function _onClick ( e:Event ):void
 	{
+		trace( "hi" + '  :  ' + _portfolioItemVo );
+		
 		var navEvent:NavEvent = new NavEvent( NavEvent.PORTFOLIO_ITEM_CLICK, true );
 		navEvent.portfolioItemIndex = _portfolioItemVo.index;
 		dispatchEvent( navEvent );
@@ -192,6 +198,8 @@ public class PortfolioItem extends Sprite
 	private function _onMouseOver ( e:Event ):void {
 		if( !isActive )
 			this.alpha = 1;
+		
+		//trace( _portfolioItemVo.src );
 	}
 	
 	private function _onMouseOut ( e:Event ):void {
@@ -223,10 +231,21 @@ public class PortfolioItem extends Sprite
 		}
 		
 		if( _playBtn != null ) {
+			// If it's a video, add a play button
 			this.addChild( _playBtn );
 			_playBtn.scaleX = _playBtn.scaleY = 1/_portfolioImages.shrinkPercentage;
 			_playBtn.x = _portfolioImages.activeWidth/2 - _playBtn.width/2;
 			_playBtn.y = 250-_playBtn.height/2;
+			
+			// Also add title text
+			this.addChild( _descriptiveVideoText );
+			_descriptiveVideoText.text = _portfolioItemVo.name;
+			_descriptiveVideoText.y = 505;
+			var tFormat = _descriptiveVideoText.tField.getTextFormat();
+			tFormat.size = 38;
+			_descriptiveVideoText.tField.setTextFormat( tFormat );
+			//Tweener.addTween(_descriptiveVideoText, {_color: 0xFFFFFF, time:0});  // Uncomment this text to change the color to white
+			
 		}
 	}
 	

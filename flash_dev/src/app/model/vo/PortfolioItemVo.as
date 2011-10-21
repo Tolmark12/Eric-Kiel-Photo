@@ -42,7 +42,9 @@ public class PortfolioItemVo
 	
 	public function toString (  ):String
 	{
-		return name + '  :  ' + src;
+		var str:String = "";
+		str += "name"  + '  :  ' + name;
+		return str;
 	}
 
 }

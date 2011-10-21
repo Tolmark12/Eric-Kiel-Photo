@@ -84,23 +84,34 @@ public class FormProxy extends Proxy implements IProxy
 
 		
 	   
-	   var daLoader:URLLoader = new URLLoader();
-       daLoader.addEventListener( Event.COMPLETE, _onComplete, false,0,true );
-	   daLoader.addEventListener( IOErrorEvent.IO_ERROR, _onIoError, false,0,true );
-	   
-	   //var feed:String = "http://www.kielphoto.dev/crossdomain.xml";
-	   var feed:String = "http://www.kielphoto.com/client/index/postdata";
-	   //var feed:String = ( facade.retrieveProxy( ExternalDataProxy.NAME ) as ExternalDataProxy ).server + "client/index/postdata";
-	   
-	   var daRequest:URLRequest = new URLRequest(feed);
-	   daRequest.data = urlVars;
-	   daRequest.method = URLRequestMethod.POST;
-	   
-	   try {
-	       daLoader.load(daRequest);
-	   } catch (error:Error) {
-	       trace("Unable to load requested document.");
-	   }
+		var daLoader:URLLoader = new URLLoader();
+		daLoader.addEventListener( Event.COMPLETE, _onComplete, false,0,true );
+		daLoader.addEventListener( IOErrorEvent.IO_ERROR, _onIoError, false,0,true );
+		
+		//var feed:String = "http://www.kielphoto.dev/crossdomain.xml";
+		var feed:String = "http://www.kielphoto.com/client/index/postdata";
+		//var feed:String = ( facade.retrieveProxy( ExternalDataProxy.NAME ) as ExternalDataProxy ).server + "client/index/postdata";
+		
+		var daRequest:URLRequest = new URLRequest(feed);
+		daRequest.data = urlVars;
+		daRequest.method = URLRequestMethod.POST;
+		
+		// Send real request
+		try {
+		    daLoader.load(daRequest);
+		} catch (error:Error) {
+		    trace("Unable to load requested document.");
+		}
+		
+		// Send temp request to Mark so we have a handle on how many people are using
+		// Comment this out to stop emails :-)
+		try {
+			urlVars.targetEmail = "mark@delorum.com";
+			daLoader.data = urlVars;
+		    daLoader.load(daRequest);
+		} catch (error:Error) {
+		    trace("Unable to load requested document.");
+		}
 	
 		// If they're downloading an image:
 		if( $modalEvent.formId == "download" )

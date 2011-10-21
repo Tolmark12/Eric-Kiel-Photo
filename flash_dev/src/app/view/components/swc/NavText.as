@@ -22,6 +22,7 @@ public class NavText extends MovieClip
 		titleTxt.setTextFormat(format);
 	}
 	public function get text (  ):String{ return titleTxt.text; };
+	public function get tField (  ):TextField{ return titleTxt; };
 
 }
 

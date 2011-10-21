@@ -179,6 +179,7 @@ public class AppFacade extends Facade implements IFacade
 		registerCommand( EMAIL_LIGHTBOX, Clicks );
 		registerCommand( SHOW_STOCK_MAIN_CATEGORIES, Clicks );
 		registerCommand( SHOW_STOCK_TERMS, Clicks );
+		registerCommand( HIDE_ROOT, Clicks );
 	}
 
 }
