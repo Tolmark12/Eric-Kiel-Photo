@@ -273,7 +273,8 @@ public class Portfolio extends Page
 		// We were running into issues where there were only three images, and 
 		// centering on the image was strange and cause images to appear off screen. 
 		// We will probably need to address this further as we get more videos... 
-		if( _scrollWindowWidth > _imageHolder.width ) {
+		
+		if( StageResizeVo.lastResize.width < _imageHolder.width ) {
 			_distributeObjects(0,true,$speed2);
 			_lastXmouse = this.mouseX;
 			var xTarg:Number = (_currentItem != null)? StageResizeVo.CENTER - _currentItem.targetX - _currentItemWidth/2 : StageResizeVo.lastResize.left ;

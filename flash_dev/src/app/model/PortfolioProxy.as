@@ -261,5 +261,10 @@ public class PortfolioProxy extends Proxy implements IProxy
 		}
 		return null;
 	}
+	
+	public function get activeItemIndex (  ):Number
+	{
+		return _sequence.currentIndex;
+	}
 }
 }

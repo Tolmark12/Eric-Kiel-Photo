@@ -28,7 +28,6 @@ public class Kiel09 extends Sprite
 
 				if( urlPath.indexOf("kielphotostock") != -1)
 					defaultPage = "/stock";
-					
 			}else{
 				defaultPage = "there is sub page"
 			}

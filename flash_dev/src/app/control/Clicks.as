@@ -7,6 +7,7 @@ import app.model.*;
 import app.model.vo.*;
 import app.AppFacade;
 import app.view.components.events.*;
+import delorum.utils.echo;
 
 public class Clicks extends SimpleCommand implements ICommand
 {
@@ -19,6 +20,8 @@ public class Clicks extends SimpleCommand implements ICommand
 		var tagsProxy:TagsProxy 					= facade.retrieveProxy( TagsProxy.NAME ) as TagsProxy;
 		var formProxy:FormProxy 					= facade.retrieveProxy( FormProxy.NAME ) as FormProxy;
 		var lightBoxProxy:LightBoxProxy 			= facade.retrieveProxy( LightBoxProxy.NAME ) as LightBoxProxy;
+		
+		echo( "seems to be working" );
 		
 		switch (note.getName())
 		{
@@ -104,6 +107,10 @@ public class Clicks extends SimpleCommand implements ICommand
 			break;
 			case AppFacade.SHOW_STOCK_TERMS :
 				stockProxy.showPricingTerms();
+			break;
+			case AppFacade.HIDE_ROOT :
+				echo( "hide" );
+				portfolioProxy.changeActiveItemByIndex( portfolioProxy.activeItemIndex );
 			break;
 		}
 	}

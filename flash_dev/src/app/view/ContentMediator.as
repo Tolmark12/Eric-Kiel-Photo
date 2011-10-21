@@ -8,6 +8,7 @@ import app.view.components.*;
 import flash.events.*;
 import app.view.components.events.*;
 import flash.display.Sprite;
+import flash.external.ExternalInterface;
 
 public class ContentMediator extends Mediator implements IMediator
 {	
@@ -28,7 +29,10 @@ public class ContentMediator extends Mediator implements IMediator
 		_dialogueBox.x = 417;
 		
 		$root.addChildAt( _background, 0 );
-		$root.addChild( _dialogueBox )
+		$root.addChild( _dialogueBox );
+		
+		// javascript call that hides the video blurred thing...
+		ExternalInterface.addCallback( "showRoot", _onRootHiderClick );
 	}
 	
 	// PureMVC: List notifications
@@ -90,7 +94,7 @@ public class ContentMediator extends Mediator implements IMediator
 	
 	// _____________________________ Event Handlers
 	
-	private function _onRootHiderClick ( e:Event ):void {
+	private function _onRootHiderClick ( e:Event=null ):void {
 		sendNotification( AppFacade.HIDE_ROOT );
 	}
 	
