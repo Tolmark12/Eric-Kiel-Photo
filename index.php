@@ -59,6 +59,7 @@ require_once $mageFilename;
 
 Mage::setIsDeveloperMode(true);
 
+ini_set('memory_limit', '500M');
 ini_set('display_errors', 1);
 
 umask(0);
