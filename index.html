@@ -1,74 +1,79 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-		<meta name="google-site-verification" content="ThapWA-I8m4EN0v0Nxl5QN_WB9PsJq7FgiEXEBRL7gs" />
-		<link rel="shortcut icon" href="favicon.ico" />
-		<title>Eric Kiel | stills.film.stock</title>
-		<script type="text/css" src="style.css" ></script>
-		<script type="text/javascript" src="prototype/js/swfobject/swfobject.js"></script>
-		<script type="text/javascript" src="prototype/js/swfaddress/swfaddress.js"></script>
-		<script type="text/javascript" src="prototype/js/swffit/swffit.js"></script>
-		
-		<!-- VIDEO SCRIPTS/STYLES -->
-		<link href="prototype/style.css" media="screen" rel="stylesheet" type="text/css" />
-		<link href="prototype/lightbox.css" media="screen" rel="stylesheet" type="text/css" />
-		<script type="text/javascript" src="js/prototype/prototype.js"></script>
-		<script type="text/javascript" src="js/scriptaculous/builder.js"></script>
-		<script type="text/javascript" src="js/scriptaculous/effects.js"></script>
-		<script type="text/javascript" src="prototype/js/lightbox/lightbox.js"></script>
-		
-		<script type="text/javascript">
-			//<![CDATA[
-				//Create a new lightbox
-				document.observe('dom:loaded', function () {
-					lightbox = new Lightbox();
-				});
-			
-				var flashvars = {
-									 configData	: "http://www.kielphoto.com/vladmin/api/",
-									 server		: "http://www.kielphoto.com/"
-								};
-				var params = {bgcolor:"#222222"};
-				var attributes = {id: "kiel_swf"};
-				swfobject.embedSWF("prototype/Kiel09.swf", "my_flash", "1135", "450", "9.0.0", "", flashvars, params, attributes);
-				swffit.fit("kiel_swf",1135,450);
-			//]]>
-		</script>
-		<script type="text/javascript">
-			//<![CDATA[
-				function playVideo($source)
-				{			
-					lightbox.start();
-					$('video-player').innerHTML = $source;
-					$('video-player').show();
-				}
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+        <link rel="shortcut icon" href="favicon.ico">
+        <title>Eric Kiel | stills.film.stock</title>
+        <script type="text/css" src="style.css" ></script>
+        <script type="text/javascript" src="prototype/js/swfobject/swfobject.js"></script>
+        <script type="text/javascript" src="prototype/js/swfaddress/swfaddress.js"></script>
+        <script type="text/javascript" src="prototype/js/swffit/swffit.js"></script>
+        
+        <!-- VIDEO SCRIPTS/STYLES -->
+        <link href="prototype/style.css" media="screen" rel="stylesheet" type="text/css" />
+        <link href="prototype/lightbox.css" media="screen" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="js/prototype/prototype.js"></script>
+        <script type="text/javascript" src="js/scriptaculous/builder.js"></script>
+        <script type="text/javascript" src="js/scriptaculous/effects.js"></script>
+        <script type="text/javascript" src="prototype/js/lightbox/lightbox.js"></script>
+        
+        <script type="text/javascript">
+            //<![CDATA[
+                //Create a new lightbox
+                document.observe('dom:loaded', function () {
+                    lightbox = new Lightbox();
+                });
+            
+                var flashvars = {
+                                     configData : "http://www.kielphoto.com/vladmin/api/",
+                                     server     : "http://www.kielphoto.com/"
+                                };
+                var params = {bgcolor:"#222222"};
+                var attributes = {id: "kiel_swf"};
+                swfobject.embedSWF("prototype/Kiel09.swf", "my_flash", "1135", "450", "9.0.0", "", flashvars, params, attributes);
+                swffit.fit("kiel_swf",1135,450);
+            //]]>
+        </script>
+    </head>
+    
+    <body>
+        <div id='my-flash-wrapper'>
+            <div id="my_flash">
+                <a href="http://www.adobe.com/go/getflashplayer"><img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" title="Get Adobe Flash player" /></a><br />
+                You need <a href="http://www.adobe.com/go/getflashplayer">Flash Player 9</a> and allow javascript to see the content of this site..
+            </div>
+        </div>
+        
+        <div id='video-player-wrapper'>
+            <div id='video-player' style='display:none;'>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+	    //<![CDATA[
+	        function playVideo($source)
+	        {           
+	            lightbox.start();
 
-				var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-				document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	            $('video-player').innerHTML = $source;
+	            $('video-player').show();
 
-				try
-				{
-					var pageTracker = _gat._getTracker("UA-760419-9");
-					pageTracker._trackPageview();
-				} catch(err) { console.log(err) }
-			//]]>
-		</script>
-	</head>
+	            //<object width="730" height="410"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=9419266&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" /><embed src="http://vimeo.com/moogaloop.swf?clip_id=9419266&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="730" height="410"></embed></object>
+	        }
+	</script>
 	
-	<body>
-		<div id='my-flash-wrapper'>
-			<div id="my_flash">
-				<a href="http://www.adobe.com/go/getflashplayer"><img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" title="Get Adobe Flash player" /></a><br />
-				You need <a href="http://www.adobe.com/go/getflashplayer">Flash Player 9</a> and allow javascript to see the content of this site..
-			</div>
-		</div>
-		
-		<div id='video-player-wrapper'>
-			<div id='video-player' style='display:none;'>
-			</div>
-		</div>
-	</body>
+    <script type="text/javascript">
+	        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+
+	        try
+	        {
+	            var pageTracker = _gat._getTracker("UA-760419-9");
+	            pageTracker._trackPageview();
+	        } catch(err) {}
+	    //]]>
+	</script>
+	
 </html>
 
