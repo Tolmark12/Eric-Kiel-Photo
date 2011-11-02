@@ -7,6 +7,8 @@ import app.model.vo.*;
 import app.AppFacade;
 import flash.external.ExternalInterface;
 import Kiel09;
+import delorum.utils.echo;
+
 public class NavProxy extends Proxy implements IProxy
 {
 	public static const NAME:String = "nav_proxy";
@@ -106,7 +108,7 @@ public class NavProxy extends Proxy implements IProxy
 	
 	private function _sendToAnalytics ( $url:String ):void
 	{
-		ExternalInterface.call( "_gaq.push", [$url] );
+		ExternalInterface.call( "track", $url );
 	}
 	
 }
