@@ -53,7 +53,6 @@ public class DataLoader extends BaseLoader implements LoaderIF
 {
 	private var _dataRequest:URLRequest;
 	private var _dataLoader:URLLoader
-	
 	private var _loadedCallBack:Function;
 	
 	/** 

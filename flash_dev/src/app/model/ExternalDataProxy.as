@@ -17,6 +17,7 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	public static const NAME:String = "external_data_proxy";
 	private var _server:String;
 	private var _configVo:ConfigVo;
+	private var _currentLoadAction:String = "";
 	
 	// Constructor
 	public function ExternalDataProxy( ):void { super( NAME ); };
@@ -41,8 +42,10 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	// Load Navigation data
 	public function loadNavData (  ):void
 	{
+		
 		var ldr:DataLoader = new DataLoader( _configVo.getNav );
 		ldr.addEventListener( Event.COMPLETE, _onNavLoad, false,0,true );
+		ldr.addEventListener( IOErrorEvent.IO_ERROR, _onError)
 		ldr.loadItem();
 	}
 	
@@ -56,6 +59,7 @@ public class ExternalDataProxy extends Proxy implements IProxy
 			
 		var ldr:DataLoader = new DataLoader( $feed );
 		ldr.addEventListener( Event.COMPLETE, _onPortfolioDataLoad, false,0,true );
+		ldr.addEventListener( IOErrorEvent.IO_ERROR, _onError)
 		ldr.loadItem();
 	}
 	
@@ -66,6 +70,7 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	{
 		var ldr:DataLoader = new DataLoader( $feed );
 		ldr.addEventListener( Event.COMPLETE, _onStockConfigDataLoad, false,0,true );
+		ldr.addEventListener( IOErrorEvent.IO_ERROR, _onError)
 		ldr.loadItem();
 		
 		loadAllStockTags();
@@ -81,6 +86,7 @@ public class ExternalDataProxy extends Proxy implements IProxy
 		_lastSearchTerm = $searchTerm;
 		var ldr:DataLoader = new DataLoader( _server + "stock/api/getStockPhotosByTag/text/" + $searchTerm );
 		ldr.addEventListener( Event.COMPLETE, _onStockDataSetLoaded, false,0,true );
+		ldr.addEventListener( IOErrorEvent.IO_ERROR, _onError)
 		ldr.loadItem();
 	}
 	
@@ -91,6 +97,7 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	{
 		var ldr:DataLoader = new DataLoader( _server + "stock/api/getAllStockTags" );
 		ldr.addEventListener( Event.COMPLETE, _onStockTagsLoaded, false,0,true );
+		ldr.addEventListener( IOErrorEvent.IO_ERROR, _onError)
 		ldr.loadItem();
 	}
 	
@@ -102,6 +109,7 @@ public class ExternalDataProxy extends Proxy implements IProxy
 	{
 		var ldr:DataLoader = new DataLoader( _server + "stock/api/getStockPhotosByIds/ids/" + $items );
 		ldr.addEventListener( Event.COMPLETE, _onLightBoxItemsLoaded, false,0,true );
+		ldr.addEventListener( IOErrorEvent.IO_ERROR, _onError)
 		ldr.loadItem();
 	}
 
