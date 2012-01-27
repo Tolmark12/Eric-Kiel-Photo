@@ -17,8 +17,8 @@ PATH
     bento_box_mongo (0.0.2)
       bento_box
       bento_box
-      mongoid (>= 2.0.0.rc.6)
       mongoid
+      mongoid (>= 2.0.0.rc.6)
 
 PATH
   remote: vendor/private_gems/blockpile-0.5.1

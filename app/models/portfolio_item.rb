@@ -1,4 +1,5 @@
 class PortfolioItem < Service
+  include Mongoid::Document 
   
   field :src, :type => String
   field :low_res_src, :type => String

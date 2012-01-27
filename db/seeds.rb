@@ -53,13 +53,13 @@ main_nav_items      = [{:name => 'Reel', :text => 'Film Reels',
                                       :page_type => 'stock',
                                       :url_id => '/stock', :sort => 3}]
 
-main_nav_items.map! { |ni| puts ni[:name];  record = NavItem.create(ni); record.id }
+main_nav_items.map! { |ni| record = NavItem.create(ni); record.id }
 main_nav.nav_item_ids = main_nav_items
 main_nav.save!
 categories = [{:name => 'Current',:text_id => 'current' ,:rank => 1},
                               {:name => 'Default Portfolio',:text_id => 'default_profile' ,:rank => 1},
                               {:name => 'People',:text_id => 'people' ,:rank => 2}]
-categories.map! {|c| record = Category.create(c); record.id }
+categories.map {|c| puts c[:name]; record = Category.create(c);  record.id}
 main_portfolio       = Portfolio.create({:name => 'Main Photo Portfolio', :portfolio_item_ids => []})
 portfolio_nav_item   = NavItem.find('portfolio')
 portfolio_nav_item.service_id = main_portfolio.id
