@@ -3,7 +3,7 @@ class Sub
   include Mongoid::Timestamps 
   
 
-  references_many :nav_items, inverse_of: :subs, :autosave => true
+  has_many :nav_items, inverse_of: :sub, :autosave => true
   
   field :name, :type => String
   field :type, :type => String, :default => 'Sub'
