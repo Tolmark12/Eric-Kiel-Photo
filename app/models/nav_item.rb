@@ -7,23 +7,14 @@ class NavItem
   field :url_id, :type => String
   field :text, :type => String
   field :is_logo, :type => Boolean
-  belongs_to :sub, inverse_of: :nav_items
+  belongs_to :sub, class_name: 'Sub', inverse_of: :nav_item
   field :page_type, :type => String
   field :nav_filter_tag, :type => String
   field :is_default, :type => Boolean
   field :sort, :type => Integer
-  referenced_in :service
-  references_and_referenced_in_many :navs, inverse_of: :nav_items
+  belongs_to :service, class_name: 'Service', inverse_of: :nav_item
+  references_and_referenced_in_many :navs, class_name: 'Nav', inverse_of: :nav_items
   key :name
-
-  # TODO: What are you doing mongoid?  Why the heck do you need an entries method?
-  def entries
-    []
-  end
-  
-  def self.entries
-    []
-  end
 
   def as_json(options={})
     json = { 

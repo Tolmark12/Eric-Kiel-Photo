@@ -13,7 +13,7 @@ EricKielPhoto::Application.configure do
   config.consider_all_requests_local       = true
   config.action_view.debug_rjs             = true
 
-  config.action_controller.perform_caching = true
+  config.action_controller.perform_caching = false
   config.cache_store = :dalli_store
 
   # Don't care if the mailer can't send

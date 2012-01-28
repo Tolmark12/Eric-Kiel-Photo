@@ -4,7 +4,7 @@ class Service
   include Mongoid::Timestamps
   include Mongoid::NamedScope
 
-  references_one :nav_items, :autosave => true
+  has_one :nav_item, inverse_of: :service,:autosave => true
 
   field :name, :type => String
   
