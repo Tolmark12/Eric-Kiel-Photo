@@ -1,19 +1,21 @@
 require 'base64'
 require 'yaml'
-require 'aws/s3'
+require 'aws'
 require 'net/http'
-
-include AWS::S3
+require 'csv'
 
 namespace :load do
   task :build_buckets => :environment do
     establish_connection
     for bucket in [s3_yaml['production']["bucket"],s3_yaml['production']["bucket_mid"],s3_yaml['production']["bucket_small"],s3_yaml['production']["bucket_thumb"]]
       begin
-        Bucket.create(bucket)
-      rescue
-        nil
+        puts 'Creating bucket ' + bucket
+        s3.buckets.create(bucket)
+        puts '... done'
+      rescue Exception=>e
+        puts e
       end
+      s3.buckets.map {|b| puts b.name} 
     end
   end
   task :items => :environment do
@@ -111,15 +113,16 @@ class PortfolioItemHandler < DefaultHandler
       end
     end     
     if fields[2] =~ /src/ then
-      aws_repeat {
-        image = fields[3].match(/[^\/]+$/)[0]
+        image = fields[3].match(/[^\/]+$/)[0].gsub(/"/, '')
         image_data = nil
-        Net::HTTP.start("www.kielphoto.com") { |http|
-          image_data = http.get("/media/template#{fields[3].gsub(/^"/, '')}").body
-          S3Object.store(image, image_data, s3_yaml['production']["bucket"], :access => :public_read)      
-        }
-        fields[3] = %{"#{S3Object.url_for(image, bucket, :authenticated => false)}"}
-      }
+        s3_image = s3.buckets[s3_yaml['production']["bucket"]].objects[image]
+        unless s3_image.exists? then
+          Net::HTTP.start("www.kielphoto.com") { |http|
+            image_data = http.get("/media/template#{fields[3].gsub(/"/, '')}").body
+            s3_image.write(image_data, {:acl => :public_read})      
+          }
+        end
+        fields[3] = %{"#{s3_image.public_url}"}
     end
     super(obj, fields)
   end
@@ -133,21 +136,23 @@ class StockPhotoHandler < DefaultHandler
       image_map.each_pair { |field, value|
         fields[2] = field
         image_data = nil
-        aws_repeat {
-          Net::HTTP.start("www.kielphoto.com") { |http|
-            image_data = http.get(value).body
-            bucket = case 
-                    when field == "image"
-                      s3_yaml['production']["bucket"]
-                    when field == "small_image"
-                      s3_yaml['production']["bucket_small"]
-                    else 
-                       s3_yaml['production']["bucket_mid"]
-                    end
-            S3Object.store(image, image_data, bucket, :access => :public_read)
-          }
-          fields[3] = %{"#{S3Object.url_for(image, bucket, :authenticated => false)}"}
-        }
+        bucket = case 
+                when field == "image"
+                  s3_yaml['production']["bucket"]
+                when field == "small_image"
+                  s3_yaml['production']["bucket_small"]
+                else 
+                   s3_yaml['production']["bucket_mid"]
+                end
+          s3_image = s3.buckets[s3_yaml['production']["bucket"]].objects[image]
+          unless s3_image.exists? then
+            Net::HTTP.start("www.kielphoto.com") { |http|
+              image_data = http.get(value).body
+              s3_image = s3.buckets[s3_yaml['production']["bucket"]].objects[image]
+              s3_image.write(image_data, {:acl => :public_read})      
+            }
+          end
+          fields[3] = %{"#{s3_image.public_url}"}
         super(obj, fields)
       }
     else
@@ -161,44 +166,16 @@ class DummyClass
   end
 end
 
-def aws_repeat(description = nil)
-  # Calls the block up to 3 times, allowing for AWS connection reset problems
-  for i in 1..3
-    begin
-      yield
-    rescue Errno::ECONNRESET => e
-      ok = false
-      ActiveRecord::Base.logger.error \
-           "AWS::S3 *** Errno::ECONNRESET => sleeping"
-      sleep(1)
-      if i == 1
-        # reset connection
-        establish_connection # re-login in to AWS
-        ActiveRecord::Base.logger.error \
-           "AWS::S3 *** Errno::ECONNRESET => reset connection"
-      end        
-    else
-      ok = true
-      break
-    end
-  end
-
-  unless ok
-    msg = "AWS::S3 *** FAILURE #{description.to_s}"
-    ActiveRecord::Base.logger.error msg
-  end
-
-  ok
+def s3
+  @s3 ||= AWS::S3.new  
 end
 
 def establish_connection
-  puts s3_yaml['production']['access_key_id']
-  puts s3_yaml['production']['secret_access_key']
-  Base.establish_connection!(
-      :server => 's3.amazonaws.com',
+  AWS.config({
+      :server => s3_yaml['url'],
       :access_key_id     => s3_yaml['production']['access_key_id'],
       :secret_access_key => s3_yaml['production']['secret_access_key']
-  )
+  })
 end
 
 def s3_yaml

@@ -1,10 +1,7 @@
 class Bento::ImageController < Bento::BentoController
   require 'base64'
   require 'yaml'
-  require 'aws/s3'
-  
-  
-  include AWS::S3
+  require 'aws'
 
   before_filter :establish_connection
   
@@ -12,7 +9,7 @@ class Bento::ImageController < Bento::BentoController
     params[:file].tempfile.open
     data = params[:file].tempfile.read
     params[:file].tempfile.close
-    S3Object.store(params[:qqfile], data, s3_yaml[Rails.env]['bucket'], :access => :public_read)
+    s3.buckets[s3_yaml[Rails.env]["bucket"]].objects[params[:qqfile]].write(data, {:acl => :public_read})
     sizes          = params[:sizes]  ? params[:sizes].split(',')  : []
     fields         = params[:fields] ? params[:fields].split(',') : []
     size_heights   = params[:size_heights] ? params[:size_heights].split(',') : []
@@ -24,25 +21,29 @@ class Bento::ImageController < Bento::BentoController
       bucket      = resize_and_upload(params[:qqfile], size_name, size_height)
       resized_images << %{\{  "size"  : "#{size_name}",
                               "field" : "#{field}",
-                              "url"   : "#{S3Object.url_for(params[:qqfile], bucket, :authenticated => false)}"\}}
+                              "url"   : "#{s3.buckets[bucket].objects[params[:qqfile]].public_url}"\}}
     }
     if params[:thumbnail] == true then
       bucket = resize_and_upload(params[:qqfile], 'thumb', 250)
     else
       bucket = s3_yaml[Rails.env]['bucket']
     end
-    render :json => %{ \{ "success": #{Service.response.success?},"url" : "#{S3Object.url_for(params[:qqfile], bucket, :authenticated => false)}", "other_sizes" : [#{resized_images.join(',')}] \} }
+    render :json => %{ \{ "success": #{Service.response.success?},"url" : "#{s3.buckets[bucket].objects[params[:qqfile]].public_url}", "other_sizes" : [#{resized_images.join(',')}] \} }
   end
   
   private
   def establish_connection
-    Base.establish_connection!(
-        :server => 's3.amazonaws.com',
+    AWS.config({
+        :server => s3_yaml['url'],
         :access_key_id     => s3_yaml[Rails.env]['access_key_id'],
         :secret_access_key => s3_yaml[Rails.env]['secret_access_key']
-    )
+    })
   end
   
+  def s3
+    @s3 ||= AWS::S3.new
+  end
+
   def s3_yaml
     @s3_yaml ||= YAML.load_file(Rails.root.join("config", "s3.yml"))
   end
@@ -60,7 +61,7 @@ class Bento::ImageController < Bento::BentoController
     img.change_geometry!("#{width}x#{height}") { |cols, rows| img.thumbnail! cols, rows }  
     img.write(params[:file].tempfile.path)    
     params[:file].tempfile.open
-    S3Object.store(file_name, params[:file].tempfile, s3_yaml[Rails.env]["bucket_#{size_name}"], :access => :public_read)
+    s3.buckets[s3_yaml[Rails.env]["bucket_#{size_name}"]].objects[file_name].write(params[:file].tempfile)
     bucket = s3_yaml[Rails.env]["bucket_#{size_name}"]
     params[:file].tempfile.close
     bucket

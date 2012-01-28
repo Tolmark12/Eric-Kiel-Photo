@@ -21,7 +21,7 @@ begin
     gemspec.add_dependency "devise"
     gemspec.add_dependency "blockpile"
     gemspec.add_dependency "jrails"
-    gemspec.add_dependency "aws-s3"
+    gemspec.add_dependency "aws-sdk"
     #gemspec.add_dependency "mother"
   end
 rescue LoadError

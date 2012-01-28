@@ -1,3 +1,4 @@
+url: s3-website-us-east-1.amazonaws.com
 development:
   bucket: bentobox2
   bucket_mid: bentobox2
@@ -10,7 +11,7 @@ test:
   access_key_id: xxx
   secret_access_key: xxx
 production:
-  bucket: kiel
+  bucket: kiel1
   bucket_mid: kiel_mid
   bucket_small: kiel_small
   bucket_thumb: kiel_thumb

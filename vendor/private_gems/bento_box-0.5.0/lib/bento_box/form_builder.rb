@@ -1,9 +1,8 @@
 # These methods are added to the FormHelper
-require 'aws/s3'
+require 'aws'
 
 module BentoBox
   class FormBuilder < ActionView::Helpers::FormBuilder
-    include AWS::S3
     include ActionView::Helpers::UrlHelper
     
     def fields_for(record_or_name_or_array, *args, &block)
@@ -52,7 +51,7 @@ module BentoBox
       unless img_src.nil? or img_src.empty?
         if options[:thumbnail] then
           establish_connection unless options[:thumbnail_path]
-          img_src = options[:thumbnail_path] ? "#{options[:thumbnail_path]}/#{img_src}" : S3Object.url_for(img_src, s3_yaml[Rails.env]['bucket_thumb'], :authenticated => false)
+          img_src = options[:thumbnail_path] ? "#{options[:thumbnail_path]}/#{img_src}" : s3.buckets[s3_yaml[Rails.env]['bucket_thumb']].objects[img_src].public_url
         end
         image_upload_tag << "<img src='#{img_src}' height='100' />".html_safe
       end
@@ -68,16 +67,20 @@ module BentoBox
     
     private 
     
+    def s3
+      @s3 ||= AWS::S3.new
+    end
+
     def s3_yaml
       @s3_yaml ||= YAML.load_file( Rails.root.join("config", "s3.yml"))
     end
 
     def establish_connection
-      Base.establish_connection!(
-          :server => 's3.amazonaws.com',
+      AWS.config({
+          :server => s3_yaml['url'],
           :access_key_id     => s3_yaml[Rails.env]['access_key_id'],
           :secret_access_key => s3_yaml[Rails.env]['secret_access_key']
-      )
+      })
     end
 
   end

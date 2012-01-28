@@ -1,4 +1,4 @@
-gem "aws-s3"
+gem "aws-sdk"
 gem "devise"
 gem "rmagick", :require => 'RMagick'
 gem 'blockpile', :path => '../blockpile-0.5.1'#:git => 'git@github.com:tylerflint/blockpile.git'
