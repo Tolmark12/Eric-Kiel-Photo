@@ -13,8 +13,8 @@ class NavItem
   field :is_default, :type => Boolean
   field :sort, :type => Integer
   referenced_in :service
-  referenced_in :subs
-  references_and_referenced_in_many :navs
+  references_and_referenced_in_many :subs, inverse_of: :nav_items
+  references_and_referenced_in_many :navs, inverse_of: :nav_items
   key :name
 
   # TODO: What are you doing mongoid?  Why the heck do you need an entries method?

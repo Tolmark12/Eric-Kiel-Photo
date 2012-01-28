@@ -1,6 +1,6 @@
 class Nav < Sub 
     
-  references_and_referenced_in_many :nav_items
+  references_and_referenced_in_many :nav_items, inverse_of: :navs
   
     
   def as_json(options={})
