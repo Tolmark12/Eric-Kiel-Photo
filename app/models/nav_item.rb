@@ -35,7 +35,6 @@ class NavItem
       :nav_filter_tag => self.nav_filter_tag,
       :sort           => self.sort.to_s
     }
-    
     json[:sub] = self.sub.as_json unless self.sub.nil?
     json[:data_service] = self.service.url unless self.service.nil?
     json[:is_logo] = self.is_logo if self.is_logo
