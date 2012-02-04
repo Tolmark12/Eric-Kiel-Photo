@@ -144,11 +144,11 @@ class StockPhotoHandler < DefaultHandler
                 else 
                    s3_yaml['production']["bucket_mid"]
                 end
-          s3_image = s3.buckets[s3_yaml['production']["bucket"]].objects[image]
+          s3_image = s3.buckets[bucket].objects[image]
           unless s3_image.exists? then
             Net::HTTP.start("www.kielphoto.com") { |http|
               image_data = http.get(value).body
-              s3_image = s3.buckets[s3_yaml['production']["bucket"]].objects[image]
+              s3_image = s3.buckets[bucket].objects[image]
               s3_image.write(image_data, {:acl => :public_read})      
             }
           end
