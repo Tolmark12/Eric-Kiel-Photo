@@ -35,7 +35,7 @@
 				<ul class="<%= "last" if column_number == column_count-1 %>">
 					<% (0..row_count-1).each do |row_number| %>
 					    <% element_index = (column_number)*row_count+row_number %>
-					    <% if element_index < element_count 
+					    <% if element_index < element_count && !elements[element_index].nil?
 						   element = elements[element_index]%>
 					    <% css_classes = [("active" if associated_elements.include?(element.id)) ]%>
 						<li id="<%= "li_#{element_str_underscore}_#{element.id}" %>" href="#" title="<%= element.send(pile.get_attribute_label) %>"><a id="<%= "#{element_str_underscore}_#{element.id}" %>" href="#" title="<%= element.send(pile.get_attribute_label) %>" class="<%= css_classes.join(' ') %>">

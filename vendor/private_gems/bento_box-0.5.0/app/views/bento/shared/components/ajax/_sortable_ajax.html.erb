@@ -1,5 +1,4 @@
  <script type="text/javascript">
-//<![CDATA[
 $(document).ready( function() {
   $('#<%= p.get_id %> thead a').click( function() {
     sort_direction = 'asc';
@@ -13,7 +12,7 @@ $(document).ready( function() {
     } else {
       $(this).addClass('asc');
     }
-    $.get('<%= p.ajax_url %>',
+    $.get('<%= p.ajax_url.gsub('&amp;','&') %>',
     $('#<%= p.get_id %> thead input').serialize() + '&<%= p.sort_symbol.to_s %>=' + this.id + '&<%= p.direction_symbol.to_s %>='+sort_direction ,
     <%= p.ajax_success %>, 'json');
     $('#<%= p.get_id %> thead th.active').removeClass('active');
@@ -21,5 +20,4 @@ $(document).ready( function() {
     return false;
   });
 });
-//]]>
 </script>
