@@ -2,7 +2,7 @@
 <% object_str_underscore = p.get_object_str_underscore %>
 <% element_class, element_count, elements = pile.get_attribute_class, pile.get_attribute_count, pile.get_attribute_relation %>
 <% element_str_underscore = p.get_attribute_str_underscore %>
-<% associated_elements = object.send("#{element_class}".tableize.to_sym) %>
+<% associated_elements = object.send(p.get_sorted_relation) %>
 <% column_count, row_count, sort_row_count = pile.get_column_count, pile.get_row_count, (associated_elements.count / p.get_column_count) + 1 %>
 <div id="<%= pile.get_id %>" class="selector-wrapper default content-parent" style="float:left;">
 	<%= pile.paginatable_ajax if pile.paginatable? %>

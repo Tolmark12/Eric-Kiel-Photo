@@ -45,7 +45,6 @@ class Bento::PortfoliosController < Bento::BentoController
   # POST /bento/portfolios
   # POST /bento/portfolios.xml
   def create
-    puts params[:portfolio]
     @portfolio = Portfolio.new(params[:portfolio])
     respond_to do |format|
       if @portfolio.save
@@ -67,11 +66,15 @@ class Bento::PortfoliosController < Bento::BentoController
   # PUT /bento/portfolios/1
   # PUT /bento/portfolios/1.xml
   def update
-    puts "Here are the params: #{params[:portfolio]}"
     @portfolio = Portfolio.find(params[:id])
     @portfolio.portfolio_item_ids = []
     respond_to do |format|
       if @portfolio.update_attributes(params[:portfolio])
+        params[:portfolio][:portfolio_item_ids].each_index { |index|
+          pi = PortfolioItem.find(params[:portfolio][:portfolio_item_ids][index])
+          pi.order = index
+          pi.save
+        }
         @respond_type = :success
         @message = 'Portfolio was successfully updated.'
         format.js   { render(*grid_instance(Portfolio).message) }

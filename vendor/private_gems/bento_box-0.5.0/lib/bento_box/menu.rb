@@ -4,9 +4,8 @@ module BentoBox
   module Menu
     class Item
       attr_accessor :children, :to, :name, :label, :priority
-      
+
       def initialize(name, label, to, priority)
-        super
         @name = name
         @label = label
         @to = to

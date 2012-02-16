@@ -5,7 +5,8 @@
           		 :destination     => params[:destination], 
 				 :page => (params["#{params[:attribute]}_page".to_sym] || 1),
           		 :paginatable => true, :orderable => params[:orderable], 
-				 :filterable => true, :sortable => true} %>
+				 :filterable => true, :sortable => true,
+				 :sorted_relation => params[:sorted_relation]} %>
    <% if params[:body_only] %>
       <%= selector_instance(@object,@attribute_relation,options.merge({:ajax => true})).body %>
    <% else %>

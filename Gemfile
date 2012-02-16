@@ -1,11 +1,11 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.7'
+gem 'rails', '3.2.1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem "mongoid", ">=2.0.2s"
+gem "mongoid", ">=2.4.0"
 gem "bson_ext"
 
 gem "dalli"
@@ -35,3 +35,6 @@ gem 'bento_box_mongo', :path => 'vendor/private_gems/bento_box_mongo-0.0.2'  #:g
 # group :development, :test do
 #   gem 'webrat'
 # end
+group :production do
+  gem 'thin'
+end

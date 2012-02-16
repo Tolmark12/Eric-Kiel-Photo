@@ -1,7 +1,7 @@
 <% element   = pile.get_element
    options   = pile.get_options
    first_key = (p.get_groups.size > 0) ? pile.get_groups[0]: ""
-   random    = rand(1000) %>
+   random    = p.get_random %>
 <% if pile.is_editable %>
    <% content_for :toolbar do %>
       <%= pile.submit 'Save', {:id => "save-#{random}", :class => 'button-thick save'} %>
@@ -65,7 +65,7 @@
   </ul>
   <% end %>
   <div class="form-content">
-    <%= form_for(*pile.get_form_options, :builder => BentoBox::FormBuilder, :html => {:id => "#{element.class}-#{random}", :remote => true }) do |f| %>
+    <%= form_for(p.get_form_element,pile.get_form_options) do |f| %>
     <% if element.errors.any? %>
       <div id="error_explanation">
         <h2><%= pluralize(element.errors.count, "error") %> prohibited this role from being saved:</h2>

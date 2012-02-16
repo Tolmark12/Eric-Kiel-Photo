@@ -5,7 +5,7 @@ class Bento::BentoController < ApplicationController
 
   def selector_call
     @object             = (params[:id]) ? Kernel.const_get(params[:object].classify).find(params[:id]) : Kernel.const_get(params[:object].classify).new
-    @attribute_relation = Kernel.const_get(params[:attribute].classify).scoped
+    @attribute_relation = Kernel.const_get((params[:attribute_class]||params[:attribute]).classify).scoped
     
     respond_to do |format|
       format.html {render 'bento/shared/selector'}

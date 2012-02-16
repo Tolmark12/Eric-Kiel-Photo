@@ -7,6 +7,7 @@ class PortfolioItem < Service
   field :is_video_only, :type => Boolean
   field :item_type, :type => String, :default => 'Image'
   field :rank, :type => Integer
+  field :order, :type => Integer
   
   belongs_to_related :service
   

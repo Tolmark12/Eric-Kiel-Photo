@@ -1,9 +1,11 @@
 class Blockpile::Base
+  include ActionView::Helpers::CaptureHelper
   
   def initialize(helper, *args, &block)
     @helper = helper
     build *args
     @content = capture(self, &block) if block_given?
+    self
   end
   
   def to_html

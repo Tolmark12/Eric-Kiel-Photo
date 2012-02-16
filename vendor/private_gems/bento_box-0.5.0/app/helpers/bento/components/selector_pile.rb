@@ -20,6 +20,7 @@ class SelectorPile < Blockpile::Base
 
     @attribute_relation  = attribute_relation
     @attribute_class     = @attribute_relation.klass
+    @sorted_relation     = (@options[:sorted_relation] || "#{@attribute_class}".tableize.to_sym)
     @attribute_class_str = @attribute_class.to_s
 
     @id                 = "selector-container-#{@attribute_class}".downcase
@@ -96,6 +97,10 @@ class SelectorPile < Blockpile::Base
 
   def get_attribute_label
     @attribute_label
+  end
+
+  def get_sorted_relation
+    @sorted_relation
   end
 
   def get_destination

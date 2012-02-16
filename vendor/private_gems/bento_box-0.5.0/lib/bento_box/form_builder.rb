@@ -12,7 +12,7 @@ module BentoBox
     def selector(relation, *args)
       options            = args.extract_options!
       object_class_str   = (options[:object] || object.class.to_s.underscore)
-      relation_singular  = relation.to_s.singularize
+      relation_singular  = (options[:attribute_class]||relation).to_s.singularize
       relation_object    = Kernel.const_get(relation_singular.classify)
       options[:label]   ||= relation_object.respond_to?(:name) ? :name : relation_object.respond_to?(:title) ? :title : :id
       
@@ -20,7 +20,7 @@ module BentoBox
       url_location = Rails.application.routes.url_helpers.bento_selector_path(:type => (options[:type] || "default"), :object => object_class_str, 
                   :attribute => relation_singular, :label => options[:label], :is_label_image => options[:is_label_image],
                   :id => object.id, :orderable => options[:orderable],
-                  :destination => destination, :tooltip => options[:tooltip])
+                  :destination => destination, :tooltip => options[:tooltip], :sorted_relation => options[:sorted_relation])
       selector_tag = link_to("",url_location,
                                   :rel =>"address:#{url_location}", :class => "selector-link")
       selector_tag << @template.submit_tag("Select #{relation.to_s.titleize}", :class => 'button-thin select-items', :onclick => '$(this).prev("a.selector-link").click(); return false;')
