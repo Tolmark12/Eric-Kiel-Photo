@@ -56,7 +56,7 @@ public class NavItem extends Sprite
 	protected function _build ( $navItemVo:NavItemVo ):void
 	{
 		if( !$navItemVo.isLogo ) {
-			
+			this.visible = false;
 			// Text
 			_txt = new NavText_swc();
 			this.addChild( _txt );

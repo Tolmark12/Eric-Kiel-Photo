@@ -45,7 +45,13 @@ public class NavProxy extends Proxy implements IProxy
 				
 			// else there is no redirect from main url, goto default page : 
 			else
-				changePage( _navVo.defaultNavItem.id )
+
+				// IMPORTANT
+				// To change default page to the value that is passed in via json, 
+				// uncomment the line below
+
+				//changePage( _navVo.defaultNavItem.id )
+				changePage( "/stock" )
 		}
 		
 	}

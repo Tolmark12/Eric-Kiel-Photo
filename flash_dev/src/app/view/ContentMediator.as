@@ -63,7 +63,11 @@ public class ContentMediator extends Mediator implements IMediator
 //			break;
 			case AppFacade.CONFIG_LOADED_AND_PARSED :
 				var configVo:ConfigVo = note.getBody() as ConfigVo;
-				_background.loadSet( configVo.background, configVo.background );
+
+				// IMPORTANT
+				// UNCOMMENT TO LOAD IN BACKGROUND IMAGE
+
+				//_background.loadSet( configVo.background, configVo.background );
 			break;
 			case AppFacade.REMOVE_CURRENT_PAGE :
 				if( _currentMediator != null ){
